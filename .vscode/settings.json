@@ -1,0 +1,9 @@
+{
+  "VsCodeTaskButtons.tasks": [
+    {
+      "label": "$(cloud-upload) Push to Shopify",
+      "task": "Push to Shopify",
+      "tooltip": "Push theme to Shopify store"
+    }
+  ]
+}

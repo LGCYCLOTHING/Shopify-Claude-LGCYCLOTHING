@@ -1,0 +1,430 @@
+{% schema %}
+{
+  "name": "LGCY FAQ Section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "faq_bg_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "color",
+      "id": "faq_overlay_color",
+      "label": "Background Overlay Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "faq_overlay_opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "label": "Background Overlay Darkness",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "FAQ Card"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card Color",
+      "default": "#e8e6e1"
+    },
+    {
+      "type": "range",
+      "id": "card_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Card Opacity (0 = invisible, 100 = solid)",
+      "default": 75
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "faq_title",
+      "label": "Section Title",
+      "default": "FAQs"
+    },
+    {
+      "type": "text",
+      "id": "faq_subtitle",
+      "label": "Section Subtitle",
+      "default": "Your questions, answered."
+    },
+    {
+      "type": "range",
+      "id": "font_scale",
+      "min": 80,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "label": "Font Size (100% = default)",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "text_color_secondary",
+      "label": "Subtitle & Answer Text Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider Line Color",
+      "default": "#000000"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Your question here?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Your answer goes here.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LGCY FAQ Section",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Our orders are typically <strong>processed within 1-3 business days</strong>.</p><p><strong>Estimated Shipping Times:</strong></p><p>United States &amp; Canada: 7-12 business days</p><p>Europe: 7-12 business days</p><p>UAE &amp; Middle East: 10-14 business days</p><p>Rest of the World: 7-12 business days</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What does the warranty include?",
+            "answer": "<p>Our warranty <strong>does not cover damage caused by personal misuse or destruction</strong>, and applies only to <strong>defects resulting from manufacturing errors</strong> or material faults.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Any question?",
+            "answer": "<p>You can reach us through our <a href=\"/pages/contact\">contact page</a>. We will be happy to assist you.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% assign overlay_opacity = section.settings.faq_overlay_opacity | divided_by: 100.0 %}
+{% assign card_opacity_decimal = section.settings.card_opacity | divided_by: 100.0 %}
+{% assign font_multiplier = section.settings.font_scale | divided_by: 100.0 %}
+
+{% comment %} Base font sizes scaled by multiplier {% endcomment %}
+{% assign title_size    = 2.0 | times: font_multiplier %}
+{% assign subtitle_size = 0.9 | times: font_multiplier %}
+{% assign question_size = 0.95 | times: font_multiplier %}
+{% assign answer_size   = 0.9 | times: font_multiplier %}
+
+<style>
+  #lgcy-faq-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    min-height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 2rem;
+    box-sizing: border-box;
+    background-color: #1a1a1a;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: padding 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  #lgcy-faq-{{ section.id }}.lgcy-faq--expanded {
+    padding-top: 12rem;
+    padding-bottom: 12rem;
+  }
+
+  #lgcy-faq-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: {{ section.settings.faq_overlay_color }};
+    opacity: {{ overlay_opacity }};
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-faq-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1100px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  @media (min-width: 860px) {
+    #lgcy-faq-{{ section.id }} .lgcy-faq-card {
+      flex-direction: row;
+      min-height: 380px;
+    }
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-faq-intro {
+    padding: 3.5rem 3rem;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 860px) {
+    #lgcy-faq-{{ section.id }} .lgcy-faq-intro {
+      width: 32%;
+      padding: 4rem 3.5rem;
+      border-right: 1px solid {{ section.settings.divider_color }}1f;
+    }
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-faq-intro h2 {
+    font-family: inherit;
+    font-size: {{ title_size }}rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0;
+    color: {{ section.settings.text_color }};
+    line-height: 1.1;
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-faq-intro p {
+    font-family: inherit;
+    font-size: {{ subtitle_size }}rem;
+    letter-spacing: 0.03em;
+    color: {{ section.settings.text_color_secondary }};
+    margin: 0;
+    line-height: 1.6;
+    font-weight: 500;
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-accordion-panel {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-accordion {
+    border-bottom: 1px solid {{ section.settings.divider_color }}1f;
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-accordion:last-child {
+    border-bottom: none;
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-accordion summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 1.75rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s ease;
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-accordion summary:hover {
+    background: rgba(0,0,0,0.04);
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-accordion summary::-webkit-details-marker {
+    display: none;
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-accordion-question {
+    font-family: inherit;
+    font-size: {{ question_size }}rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: {{ section.settings.text_color }};
+    flex: 1;
+    line-height: 1.4;
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-chevron {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid {{ section.settings.text_color }}33;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.25s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    color: {{ section.settings.text_color }};
+    background: transparent;
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-accordion[open] .lgcy-chevron {
+    transform: rotate(180deg);
+    background: {{ section.settings.text_color }}18;
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-accordion-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-accordion[open] .lgcy-accordion-body {
+    grid-template-rows: 1fr;
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-accordion-body-inner {
+    overflow: hidden;
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-accordion-content {
+    padding: 0 3rem 1.75rem 3rem;
+    font-family: inherit;
+    font-size: {{ answer_size }}rem;
+    line-height: 1.9;
+    letter-spacing: 0.02em;
+    color: {{ section.settings.text_color_secondary }};
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.35s ease 0.12s, transform 0.35s ease 0.12s;
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-accordion[open] .lgcy-accordion-content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-accordion-content p {
+    margin: 0 0 0.5rem;
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-accordion-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-accordion-content strong {
+    font-weight: 700;
+    color: {{ section.settings.text_color }};
+  }
+
+  #lgcy-faq-{{ section.id }} .lgcy-accordion-content a {
+    color: {{ section.settings.text_color }};
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>
+
+<div
+  id="lgcy-faq-{{ section.id }}"
+  {% if section.settings.faq_bg_image %}
+    style="background-image: url('{{ section.settings.faq_bg_image | image_url: width: 1920 }}');"
+  {% endif %}
+>
+  <div
+    class="lgcy-faq-card"
+    data-card-color="{{ section.settings.card_color }}"
+    data-card-opacity="{{ card_opacity_decimal }}"
+  >
+    <div class="lgcy-faq-intro">
+      <h2>{{ section.settings.faq_title }}</h2>
+      <p>{{ section.settings.faq_subtitle }}</p>
+    </div>
+
+    <div class="lgcy-accordion-panel">
+      {% for block in section.blocks %}
+        {% if block.type == 'faq_item' %}
+          <details class="lgcy-accordion" {{ block.shopify_attributes }}>
+            <summary>
+              <span class="lgcy-accordion-question">{{ block.settings.question }}</span>
+              <span class="lgcy-chevron" aria-hidden="true">
+                <svg width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 1.5L5 5.5L9 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </summary>
+            <div class="lgcy-accordion-body">
+              <div class="lgcy-accordion-body-inner">
+                <div class="lgcy-accordion-content">
+                  {{ block.settings.answer }}
+                </div>
+              </div>
+            </div>
+          </details>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var section = document.getElementById('lgcy-faq-{{ section.id }}');
+  if (!section) return;
+
+  /* Apply card color + opacity correctly via JS rgba conversion */
+  var card = section.querySelector('.lgcy-faq-card');
+  if (card) {
+    var hex = card.getAttribute('data-card-color') || '#e8e6e1';
+    var opacity = parseFloat(card.getAttribute('data-card-opacity')) || 0.75;
+    var r = parseInt(hex.slice(1, 3), 16);
+    var g = parseInt(hex.slice(3, 5), 16);
+    var b = parseInt(hex.slice(5, 7), 16);
+    card.style.backgroundColor = 'rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')';
+  }
+
+  /* Accordion toggle */
+  var accordions = section.querySelectorAll('.lgcy-accordion');
+  accordions.forEach(function(details) {
+    details.addEventListener('toggle', function() {
+      if (details.open) {
+        accordions.forEach(function(other) {
+          if (other !== details && other.open) other.open = false;
+        });
+      }
+      var anyOpen = Array.from(accordions).some(function(d) { return d.open; });
+      section.classList.toggle('lgcy-faq--expanded', anyOpen);
+    });
+  });
+})();
+</script>

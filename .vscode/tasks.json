@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Push to Shopify",
+      "type": "shell",
+      "command": "shopify theme push --store 0dc7p1-tw.myshopify.com",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    }
+  ]
+}

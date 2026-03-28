@@ -1,0 +1,72 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "background_video_WTHRPk": {
+      "type": "background-video",
+      "blocks": {
+        "video_gbTacA": {
+          "type": "video",
+          "settings": {
+            "video_link": "https://cdn.shopify.com/videos/c/o/v/21d1b3e0c558412081d9ea6dc0701fb6.mp4",
+            "video_image": "shopify://shop_images/Untitled_Project_7.png",
+            "title": "LGCYCLOTHING",
+            "text": "",
+            "color_text": "#ffffff",
+            "button_label": "SHOP NOW",
+            "button_link": "shopify://collections/all",
+            "color_btn_bg": "rgba(0,0,0,0)",
+            "color_btn_text": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "video_gbTacA"
+      ],
+      "settings": {}
+    },
+    "image_banner_eHm8Mp": {
+      "type": "image-banner",
+      "blocks": {
+        "buttons_ViX67z": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "SOCIALS",
+            "button_link_1": "https://www.instagram.com/lgcyclothing.store/",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "buttons_ViX67z"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Blurry_road.jpg",
+        "image_overlay_opacity": 0,
+        "image_height": "large",
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-5",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    }
+  },
+  "order": [
+    "background_video_WTHRPk",
+    "image_banner_eHm8Mp"
+  ]
+}

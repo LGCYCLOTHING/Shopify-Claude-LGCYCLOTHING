@@ -1,0 +1,585 @@
+{% comment %}
+  LGCYCLOTHING — Product Card Snippet
+  Save as: snippets/lgcy-product-card.liquid
+{% endcomment %}
+
+<style>
+  .lgcy-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .lgcy-card__image-wrap {
+    position: relative;
+    overflow: hidden;
+    background: #f7f7f7;
+    aspect-ratio: 3 / 4;
+    width: 100%;
+  }
+
+  .lgcy-card__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .lgcy-card__image--hover {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .lgcy-card:hover .lgcy-card__image--hover {
+    opacity: 1;
+  }
+
+  /* Size panel — hidden by default, controlled by JS */
+  .lgcy-card__quick-add {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background: transparent;
+    transform: translateY(100%);
+    transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 12px 10px 14px;
+  }
+
+  .lgcy-card__sizes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;
+  }
+
+  .lgcy-card__size-btn {
+    flex-shrink: 0;
+    min-width: 38px;
+    height: 38px;
+    padding: 0 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-family: inherit;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    outline: 1px solid rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.85);
+    color: #000;
+    border: none;
+    cursor: pointer;
+    transition: outline-color 0.15s ease, background 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .lgcy-card__size-btn:hover {
+    background: #fff;
+    outline: 1px solid #000;
+    outline-offset: -1px;
+    z-index: 1;
+  }
+
+  .lgcy-card__size-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    text-decoration: line-through;
+  }
+
+  .lgcy-card__size-btn.lgcy-adding {
+    background: #000;
+    color: #fff;
+    outline-color: #000;
+  }
+
+  /* Plus button — transparent bg, black icon */
+  .lgcy-card__plus-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 11;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .lgcy-card__plus-btn svg {
+    width: 14px;
+    height: 14px;
+    stroke: #000;
+  }
+
+  /* JS-controlled hidden state for the plus button */
+  .lgcy-card__plus-btn.lgcy-plus--hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Card footer */
+  .lgcy-card__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 0 0;
+  }
+
+  @media (min-width: 768px) {
+    .lgcy-card__footer {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 14px 0 10px;
+    }
+  }
+
+  .lgcy-card__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .lgcy-card__title {
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0;
+    color: #000;
+    line-height: 1.3;
+  }
+
+  .lgcy-card__color {
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: #888;
+    text-transform: capitalize;
+    line-height: 1.3;
+  }
+
+  .lgcy-card__color-count {
+    margin-left: 4px;
+    color: #aaa;
+  }
+
+  .lgcy-card__price {
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #000;
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .lgcy-card__price--sale { color: #c62f2f; }
+
+  .lgcy-card__price--compare {
+    color: #aaa;
+    text-decoration: line-through;
+    margin-right: 5px;
+  }
+
+  /* Toast */
+  .lgcy-cart-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #000;
+    color: #fff;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .lgcy-cart-toast.lgcy-toast--show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+
+{%- liquid
+  assign product_title = product.title
+  assign product_url   = product.url
+  assign featured_img  = product.featured_media
+  assign hover_img     = product.media[1]
+  assign price         = product.price
+  assign compare_price = product.compare_at_price
+  assign on_sale       = false
+  if compare_price > price
+    assign on_sale = true
+  endif
+  assign color_option = ''
+  assign color_count  = 0
+  for option in product.options_with_values
+    if option.name == 'Color' or option.name == 'Colour'
+      assign color_option = option.values | first
+      assign color_count  = option.values.size
+    endif
+  endfor
+  assign size_option_index = nil
+  for option in product.options_with_values
+    if option.name == 'Size' or option.name == 'size'
+      assign size_option_index = forloop.index0
+    endif
+  endfor
+-%}
+
+<a
+  href="{{ product_url }}"
+  class="lgcy-card"
+  data-product-id="{{ product.id }}"
+  aria-label="{{ product_title | escape }}"
+>
+  <div class="lgcy-card__image-wrap" data-quick-add-wrap>
+
+    {%- if featured_img -%}
+      <img
+        src="{{ featured_img | image_url: width: 800 }}"
+        alt="{{ featured_img.alt | escape | default: product_title }}"
+        width="{{ featured_img.preview_image.width }}"
+        height="{{ featured_img.preview_image.height }}"
+        loading="{{ lazy | default: 'lazy' }}"
+        class="lgcy-card__image"
+      >
+    {%- endif -%}
+
+    {%- if hover_img -%}
+      <img
+        src="{{ hover_img | image_url: width: 800 }}"
+        alt="{{ hover_img.alt | escape | default: product_title }}"
+        loading="lazy"
+        class="lgcy-card__image lgcy-card__image--hover"
+      >
+    {%- endif -%}
+
+    <button
+      type="button"
+      class="lgcy-card__plus-btn"
+      data-plus-btn
+      aria-label="Quick add {{ product_title | escape }}"
+    >
+      <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M7 1v12M1 7h12" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <div class="lgcy-card__quick-add" data-quick-add-panel>
+      <div class="lgcy-card__sizes">
+        {%- for variant in product.variants -%}
+          {%- if size_option_index == 0 -%}
+            {%- assign size_label = variant.option1 -%}
+          {%- elsif size_option_index == 1 -%}
+            {%- assign size_label = variant.option2 -%}
+          {%- elsif size_option_index == 2 -%}
+            {%- assign size_label = variant.option3 -%}
+          {%- else -%}
+            {%- assign size_label = variant.title | split: ' / ' | first -%}
+          {%- endif -%}
+          <button
+            type="button"
+            class="lgcy-card__size-btn"
+            data-variant-id="{{ variant.id }}"
+            {% unless variant.available %}disabled{% endunless %}
+            aria-label="Add {{ size_label | escape }} to cart"
+          >
+            {{- size_label -}}
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+
+  </div>
+
+  <div class="lgcy-card__footer">
+    <div class="lgcy-card__meta">
+      <h3 class="lgcy-card__title">{{ product_title }}</h3>
+      {%- if color_option != '' -%}
+        <span class="lgcy-card__color">
+          <span>{{ color_option }}</span>
+          {%- if color_count > 1 -%}
+            <span class="lgcy-card__color-count">{{ color_count }} Colors</span>
+          {%- endif -%}
+        </span>
+      {%- endif -%}
+    </div>
+    <div class="lgcy-card__price{% if on_sale %} lgcy-card__price--sale{% endif %}">
+      {%- if on_sale -%}
+        <span class="lgcy-card__price--compare">{{ compare_price | money }}</span>
+      {%- endif -%}
+      <span>{{ price | money }}</span>
+    </div>
+  </div>
+</a>
+
+<script>
+(function() {
+  if (window.__lgcyCardInit) return;
+  window.__lgcyCardInit = true;
+
+  /* ── Toast ── */
+  var toast = document.createElement('div');
+  toast.className = 'lgcy-cart-toast';
+  toast.setAttribute('aria-live', 'polite');
+  document.body.appendChild(toast);
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('lgcy-toast--show');
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(function() {
+      toast.classList.remove('lgcy-toast--show');
+    }, 2200);
+  }
+
+  /* ── Helpers ── */
+  function openPanel(wrap) {
+    var panel = wrap.querySelector('[data-quick-add-panel]');
+    if (panel) panel.style.transform = 'translateY(0)';
+  }
+
+  function closePanel(wrap) {
+    var panel = wrap.querySelector('[data-quick-add-panel]');
+    if (panel) panel.style.transform = 'translateY(100%)';
+  }
+
+  function hidePlus(wrap) {
+    var btn = wrap.querySelector('[data-plus-btn]');
+    if (btn) btn.classList.add('lgcy-plus--hidden');
+  }
+
+  function showPlus(wrap) {
+    var btn = wrap.querySelector('[data-plus-btn]');
+    if (btn) btn.classList.remove('lgcy-plus--hidden');
+  }
+
+  /* ── Full reset when mouse leaves the entire image wrap ── */
+  function bindWrap(wrap) {
+    wrap.addEventListener('mouseleave', function() {
+      closePanel(wrap);
+      showPlus(wrap);
+    });
+  }
+
+  document.querySelectorAll('[data-quick-add-wrap]').forEach(bindWrap);
+
+  /* ── mouseover: plus btn hover → hide plus + open panel ── */
+  document.addEventListener('mouseover', function(e) {
+    var plusBtn = e.target.closest('[data-plus-btn]');
+    if (plusBtn) {
+      var wrap = plusBtn.closest('[data-quick-add-wrap]');
+      if (wrap) {
+        hidePlus(wrap);
+        openPanel(wrap);
+      }
+      return;
+    }
+
+    /* Hovering inside the panel itself → keep open */
+    var panel = e.target.closest('[data-quick-add-panel]');
+    if (panel) {
+      panel.style.transform = 'translateY(0)';
+    }
+  });
+
+  /* ── mouseout: leaving plus btn or panel ── */
+  document.addEventListener('mouseout', function(e) {
+    /* Leaving the plus button */
+    var plusBtn = e.target.closest('[data-plus-btn]');
+    if (plusBtn) {
+      var wrap = plusBtn.closest('[data-quick-add-wrap]');
+      if (!wrap) return;
+      var related = e.relatedTarget;
+      /* Mouse moving into the panel — keep state, don't reset */
+      if (related && related.closest('[data-quick-add-panel]')) return;
+      /* Mouse left to somewhere outside panel — close + restore plus */
+      closePanel(wrap);
+      showPlus(wrap);
+      return;
+    }
+
+    /* Leaving the panel */
+    var panel = e.target.closest('[data-quick-add-panel]');
+    if (panel) {
+      var related = e.relatedTarget;
+      var wrap = panel.closest('[data-quick-add-wrap]');
+      /* Moving back onto the plus button — keep state */
+      if (related && related.closest('[data-plus-btn]')) return;
+      /* Still inside the wrap (e.g. between size buttons) — do nothing */
+      if (related && related.closest('[data-quick-add-wrap]') === wrap) return;
+      /* Left the panel entirely — close + restore plus */
+      if (wrap) {
+        closePanel(wrap);
+        showPlus(wrap);
+      }
+    }
+  });
+
+  /* ── Update cart using Dawn's Section Rendering API ── */
+  /* Dawn re-renders the cart drawer by fetching the section HTML,
+     then swaps it in — exactly how Dawn's own quick-add works. */
+  function updateCartSections(callback) {
+    fetch('/?sections=cart-drawer,cart-icon-bubble', {
+      headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(sections) {
+
+      /* Update cart-drawer HTML */
+      if (sections['cart-drawer']) {
+        var drawerEl = document.getElementById('cart-drawer');
+        if (!drawerEl) drawerEl = document.querySelector('cart-drawer');
+        if (drawerEl) {
+          var tmp = document.createElement('div');
+          tmp.innerHTML = sections['cart-drawer'];
+          var newDrawer = tmp.querySelector('cart-drawer') || tmp.firstElementChild;
+          if (newDrawer) {
+            /* Swap inner HTML to preserve the custom element & its event listeners */
+            drawerEl.innerHTML = newDrawer.innerHTML;
+          }
+        }
+      }
+
+      /* Update cart icon bubble */
+      if (sections['cart-icon-bubble']) {
+        var bubbleEl = document.getElementById('cart-icon-bubble');
+        if (!bubbleEl) bubbleEl = document.querySelector('#cart-icon-bubble, .cart-count-bubble');
+        if (bubbleEl) {
+          var tmp2 = document.createElement('div');
+          tmp2.innerHTML = sections['cart-icon-bubble'];
+          var newBubble = tmp2.firstElementChild;
+          if (newBubble) bubbleEl.innerHTML = newBubble.innerHTML;
+        }
+      }
+
+      if (callback) callback();
+    })
+    .catch(function() {
+      if (callback) callback();
+    });
+  }
+
+  /* ── Open the cart drawer ── */
+  /* Dawn themes use a global publish/subscribe event bus.
+     'cart-drawer:open' is the canonical event Dawn listens for. */
+  function openCartDrawer() {
+    /* 1. Try Dawn's publish() event bus (Dawn 9+) */
+    if (typeof window.publish === 'function') {
+      window.publish('cart-drawer:open');
+      return;
+    }
+
+    /* 2. Try dispatching on document (some Dawn versions listen here) */
+    document.dispatchEvent(new CustomEvent('cart-drawer:open', { bubbles: true }));
+
+    /* 3. Directly call open() on the cart-drawer custom element */
+    var drawerEl = document.getElementById('cart-drawer');
+    if (!drawerEl) drawerEl = document.querySelector('cart-drawer');
+    if (!drawerEl) return;
+
+    drawerEl.removeAttribute('hidden');
+
+    /* Dawn's CartDrawer custom element exposes open() */
+    if (typeof drawerEl.open === 'function') {
+      drawerEl.open();
+      return;
+    }
+
+    /* 4. Last resort: manually remove the hidden attribute and add 'active' class
+       which Dawn uses to show the drawer + overlay */
+    drawerEl.classList.add('active');
+    var overlay = document.getElementById('CartDrawer-Overlay');
+    if (!overlay) overlay = document.querySelector('.drawer__overlay, .cart-drawer__overlay');
+    if (overlay) {
+      overlay.removeAttribute('hidden');
+      overlay.classList.add('active');
+    }
+  }
+
+  /* ── Add to cart ── */
+  function addToCart(variantId, btn) {
+    btn.classList.add('lgcy-adding');
+    btn.disabled = true;
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      },
+      body: JSON.stringify({ id: variantId, quantity: 1 })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.status && data.status !== 200) {
+        showToast(data.description || 'Could not add to cart');
+        return;
+      }
+      updateCartSections(function() {
+        openCartDrawer();
+        showToast('Added to cart');
+      });
+    })
+    .catch(function() {
+      showToast('Something went wrong');
+    })
+    .finally(function() {
+      btn.classList.remove('lgcy-adding');
+      btn.disabled = false;
+    });
+  }
+
+  /* ── Size button click → add to cart ── */
+  document.addEventListener('click', function(e) {
+    var sizeBtn = e.target.closest('.lgcy-card__size-btn');
+    if (sizeBtn && !sizeBtn.disabled) {
+      e.preventDefault();
+      e.stopPropagation();
+      var variantId = sizeBtn.getAttribute('data-variant-id');
+      if (variantId) addToCart(parseInt(variantId, 10), sizeBtn);
+    }
+  });
+
+  /* ── Re-bind wraps added dynamically (infinite scroll etc.) ── */
+  var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      m.addedNodes.forEach(function(node) {
+        if (node.nodeType !== 1) return;
+        var wraps = node.querySelectorAll ? node.querySelectorAll('[data-quick-add-wrap]') : [];
+        wraps.forEach(bindWrap);
+      });
+    });
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+
+})();
+</script>

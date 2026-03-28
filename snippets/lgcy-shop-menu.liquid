@@ -1,0 +1,660 @@
+{% comment %}
+  LGCYCLOTHING — Shop Side Panel
+  Save as: snippets/lgcy-shop-menu.liquid
+
+  SCHEMA BLOCKS to add to header.liquid {% schema %}:
+  Add to "blocks" array (alongside the @app block):
+
+  {
+    "type": "shop_link",
+    "name": "Shop Panel Link",
+    "settings": [
+      { "type": "text", "id": "label", "label": "Label", "default": "Collection Name" },
+      { "type": "url", "id": "url", "label": "Link URL" },
+      {
+        "type": "select",
+        "id": "section",
+        "label": "Section",
+        "options": [
+          { "value": "shop", "label": "Shop" },
+          { "value": "explore", "label": "Explore" },
+          { "value": "support", "label": "Support" }
+        ],
+        "default": "shop"
+      },
+      { "type": "checkbox", "id": "show_arrow", "label": "Show arrow", "default": true }
+    ]
+  },
+  {
+    "type": "shop_image",
+    "name": "Shop Panel Image",
+    "settings": [
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "text", "id": "label", "label": "Image label", "default": "Collection" },
+      { "type": "url", "id": "url", "label": "Discover link URL" }
+    ]
+  }
+
+  Also add to "settings" array:
+  {
+    "type": "header",
+    "content": "Shop Panel"
+  },
+  {
+    "type": "checkbox",
+    "id": "shop_panel_show_shop_label",
+    "label": "Show 'Shop' section label",
+    "default": true
+  },
+  {
+    "type": "checkbox",
+    "id": "shop_panel_show_explore_label",
+    "label": "Show 'Explore' section label",
+    "default": true
+  },
+  {
+    "type": "checkbox",
+    "id": "shop_panel_show_support_label",
+    "label": "Show 'Support' section label",
+    "default": true
+  }
+{% endcomment %}
+
+<style>
+
+  /* ── Tighter header ── */
+  .header {
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
+  }
+
+  /* ── Shop trigger ── */
+  .lgcy-shop-trigger-wrap {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 0;
+    mix-blend-mode: normal !important;
+    isolation: isolate;
+  }
+
+  .lgcy-shop-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    font-style: normal;
+    letter-spacing: 0.04em;
+    color: currentColor;
+    padding: 0;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    text-decoration: none;
+    mix-blend-mode: normal !important;
+  }
+
+  /* Center-out underline on Shop trigger */
+  .lgcy-shop-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: width 0.5s ease;
+  }
+
+  .lgcy-shop-btn:hover::after,
+  .lgcy-shop-btn.lgcy-active::after {
+    width: 100%;
+  }
+
+  /* ── Overlay ── */
+  .lgcy-menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 899;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .lgcy-menu-overlay.lgcy-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ── Side panel ── */
+  .lgcy-side-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 900;
+    width: 620px;
+    background: #fff;
+    transform: translateX(-100%);
+    transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    overflow: hidden;
+  }
+
+  .lgcy-side-panel.lgcy-open {
+    transform: translateX(0);
+  }
+
+  /* ── Left nav column ── */
+  .lgcy-panel-nav {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 60px 0 40px;
+    border-right: 1px solid #f0f0f0;
+  }
+
+  /* ── Section labels ── */
+  .lgcy-panel-section-label {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #aaa;
+    padding: 0 28px 8px;
+    margin-top: 24px;
+  }
+
+  .lgcy-panel-section-label:first-child {
+    margin-top: 0;
+  }
+
+  /* ── Nav links with center-out underline ── */
+  .lgcy-panel-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 28px;
+    text-decoration: none;
+    color: #000;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    position: relative;
+  }
+
+  /* Center-out underline on nav links */
+  .lgcy-panel-link__text {
+    position: relative;
+    display: inline-block;
+  }
+
+  .lgcy-panel-link__text::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 1.5px;
+    background: #000;
+    transition: width 0.4s ease;
+  }
+
+  .lgcy-panel-link:hover .lgcy-panel-link__text::after {
+    width: 100%;
+  }
+
+  /* Secondary links */
+  .lgcy-panel-link--secondary {
+    font-weight: 400;
+    color: #777;
+    font-size: 11px;
+    padding: 8px 28px;
+    letter-spacing: 0.03em;
+    text-transform: none;
+  }
+
+  .lgcy-panel-link--secondary .lgcy-panel-link__text::after {
+    background: #777;
+    height: 1px;
+  }
+
+  .lgcy-panel-link--secondary:hover .lgcy-panel-link__text::after {
+    width: 100%;
+  }
+
+  /* Arrow */
+  .lgcy-panel-link__arrow {
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    flex-shrink: 0;
+    margin-left: 10px;
+  }
+
+  .lgcy-panel-link:hover .lgcy-panel-link__arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .lgcy-panel-divider {
+    height: 1px;
+    background: #ebebeb;
+    margin: 14px 0;
+  }
+
+  /* Close button */
+  .lgcy-panel-close {
+    position: absolute;
+    top: 18px;
+    left: 222px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #000;
+    padding: 0;
+    opacity: 0.35;
+    transition: opacity 0.15s ease;
+    z-index: 10;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .lgcy-panel-close:hover { opacity: 1; }
+
+  /* ── Right image column ── */
+  .lgcy-panel-images {
+    display: grid;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .lgcy-panel-images--1 { grid-template-rows: 1fr; }
+  .lgcy-panel-images--2 { grid-template-rows: 1fr 1fr; }
+  .lgcy-panel-images--3 { grid-template-rows: 1fr 1fr 1fr; }
+
+  /* ── Image wrap with hover blur + discover ── */
+  .lgcy-panel-image-wrap {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .lgcy-panel-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: filter 0.3s ease, transform 0.4s ease;
+  }
+
+  /* Dark base overlay */
+  .lgcy-panel-image-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.15);
+    transition: background 0.3s ease;
+    z-index: 1;
+  }
+
+  /* Discover button — hidden by default */
+  .lgcy-panel-image-discover {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    text-decoration: none;
+  }
+
+  .lgcy-panel-image-discover span {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.7);
+    padding: 10px 20px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.25);
+    transition: background 0.2s ease;
+  }
+
+  .lgcy-panel-image-discover span:hover {
+    background: rgba(0,0,0,0.5);
+  }
+
+  /* Image caption */
+  .lgcy-panel-image-label {
+    position: absolute;
+    bottom: 12px;
+    left: 14px;
+    z-index: 3;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+  }
+
+  /* On hover: blur image, darken overlay, show discover */
+  .lgcy-panel-image-wrap:hover img {
+    filter: blur(3px);
+    transform: scale(1.02);
+  }
+
+  .lgcy-panel-image-wrap:hover .lgcy-panel-image-overlay {
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  .lgcy-panel-image-wrap:hover .lgcy-panel-image-discover {
+    opacity: 1;
+  }
+
+  .lgcy-panel-image-wrap:hover .lgcy-panel-image-label {
+    opacity: 0;
+  }
+
+  /* Placeholder */
+  .lgcy-panel-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    color: #bbb;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 20px;
+  }
+
+  @media (max-width: 989px) {
+    .lgcy-shop-trigger-wrap,
+    .lgcy-side-panel,
+    .lgcy-menu-overlay {
+      display: none !important;
+    }
+  }
+</style>
+
+{%- comment %} ── Trigger ── {% endcomment %}
+<div class="lgcy-shop-trigger-wrap" id="lgcy-shop-trigger-wrap">
+  <button
+    class="lgcy-shop-btn"
+    id="lgcy-shop-btn"
+    type="button"
+    aria-haspopup="dialog"
+    aria-expanded="false"
+    aria-controls="lgcy-side-panel"
+  >
+    Shop
+  </button>
+</div>
+
+<div class="lgcy-menu-overlay" id="lgcy-menu-overlay" aria-hidden="true"></div>
+
+{%- comment %} ── Panel ── {% endcomment %}
+<div
+  class="lgcy-side-panel"
+  id="lgcy-side-panel"
+  role="dialog"
+  aria-label="Shop menu"
+  aria-hidden="true"
+>
+  <button class="lgcy-panel-close" id="lgcy-panel-close" aria-label="Close menu" type="button">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  {%- comment %} ── LEFT: Nav — built from blocks ── {% endcomment %}
+  <nav class="lgcy-panel-nav" aria-label="Shop navigation">
+
+    {%- comment %} Separate blocks by section ── {% endcomment %}
+    {%- assign shop_links    = section.blocks | where: 'type', 'shop_link' -%}
+    {%- assign shop_section  = shop_links | where: 'settings.section', 'shop' -%}
+    {%- assign explore_section = shop_links | where: 'settings.section', 'explore' -%}
+    {%- assign support_section = shop_links | where: 'settings.section', 'support' -%}
+
+    {%- if shop_section.size > 0 -%}
+      {%- if section.settings.shop_panel_show_shop_label -%}
+        <span class="lgcy-panel-section-label">Shop</span>
+      {%- endif -%}
+      {%- for block in shop_section -%}
+        <a href="{{ block.settings.url }}" class="lgcy-panel-link" {{ block.shopify_attributes }}>
+          <span class="lgcy-panel-link__text">{{ block.settings.label }}</span>
+          {%- if block.settings.show_arrow -%}
+            <svg class="lgcy-panel-link__arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          {%- endif -%}
+        </a>
+      {%- endfor -%}
+    {%- else -%}
+      {%- comment %} Fallback defaults if no blocks set ── {% endcomment %}
+      <span class="lgcy-panel-section-label">Shop</span>
+      <a href="/collections/the-legacy-collection" class="lgcy-panel-link">
+        <span class="lgcy-panel-link__text">LGCYCLOTHING</span>
+        <svg class="lgcy-panel-link__arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="/collections/lgcy-glasses" class="lgcy-panel-link">
+        <span class="lgcy-panel-link__text">LGCY.</span>
+        <svg class="lgcy-panel-link__arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="/collections/all" class="lgcy-panel-link">
+        <span class="lgcy-panel-link__text">All Products</span>
+        <svg class="lgcy-panel-link__arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    {%- endif -%}
+
+    {%- if explore_section.size > 0 -%}
+      <div class="lgcy-panel-divider"></div>
+      {%- if section.settings.shop_panel_show_explore_label -%}
+        <span class="lgcy-panel-section-label">Explore</span>
+      {%- endif -%}
+      {%- for block in explore_section -%}
+        <a href="{{ block.settings.url }}" class="lgcy-panel-link" {{ block.shopify_attributes }}>
+          <span class="lgcy-panel-link__text">{{ block.settings.label }}</span>
+          {%- if block.settings.show_arrow -%}
+            <svg class="lgcy-panel-link__arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          {%- endif -%}
+        </a>
+      {%- endfor -%}
+    {%- else -%}
+      <div class="lgcy-panel-divider"></div>
+      <span class="lgcy-panel-section-label">Explore</span>
+      <a href="/pages/about" class="lgcy-panel-link">
+        <span class="lgcy-panel-link__text">About</span>
+        <svg class="lgcy-panel-link__arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="/pages/contact" class="lgcy-panel-link">
+        <span class="lgcy-panel-link__text">Contact</span>
+        <svg class="lgcy-panel-link__arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="/apps/aftership" class="lgcy-panel-link">
+        <span class="lgcy-panel-link__text">Track Order</span>
+        <svg class="lgcy-panel-link__arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    {%- endif -%}
+
+    {%- if support_section.size > 0 -%}
+      <div class="lgcy-panel-divider"></div>
+      {%- if section.settings.shop_panel_show_support_label -%}
+        <span class="lgcy-panel-section-label">Support</span>
+      {%- endif -%}
+      {%- for block in support_section -%}
+        <a href="{{ block.settings.url }}" class="lgcy-panel-link lgcy-panel-link--secondary" {{ block.shopify_attributes }}>
+          <span class="lgcy-panel-link__text">{{ block.settings.label }}</span>
+        </a>
+      {%- endfor -%}
+    {%- else -%}
+      <div class="lgcy-panel-divider"></div>
+      <span class="lgcy-panel-section-label">Support</span>
+      <a href="/policies/shipping-policy" class="lgcy-panel-link lgcy-panel-link--secondary">
+        <span class="lgcy-panel-link__text">Shipping Policy</span>
+      </a>
+      <a href="/policies/refund-policy" class="lgcy-panel-link lgcy-panel-link--secondary">
+        <span class="lgcy-panel-link__text">Returns & Refunds</span>
+      </a>
+      <a href="/policies/terms-of-service" class="lgcy-panel-link lgcy-panel-link--secondary">
+        <span class="lgcy-panel-link__text">Terms of Service</span>
+      </a>
+      <a href="/policies/privacy-policy" class="lgcy-panel-link lgcy-panel-link--secondary">
+        <span class="lgcy-panel-link__text">Privacy Policy</span>
+      </a>
+    {%- endif -%}
+
+  </nav>
+
+  {%- comment %} ── RIGHT: Images — built from blocks ── {% endcomment %}
+  {%- assign image_blocks = section.blocks | where: 'type', 'shop_image' -%}
+  {%- assign image_count = image_blocks.size -%}
+  {%- if image_count == 0 -%}{%- assign image_count = 2 -%}{%- endif -%}
+
+  <div class="lgcy-panel-images lgcy-panel-images--{{ image_count }}">
+
+    {%- if image_blocks.size > 0 -%}
+      {%- for block in image_blocks -%}
+        <div class="lgcy-panel-image-wrap" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img
+              src="{{ block.settings.image | image_url: width: 800 }}"
+              alt="{{ block.settings.image.alt | default: block.settings.label }}"
+              loading="lazy"
+              width="800"
+              height="1200"
+            >
+            <div class="lgcy-panel-image-overlay"></div>
+            {%- if block.settings.url != blank -%}
+              <a href="{{ block.settings.url }}" class="lgcy-panel-image-discover">
+                <span>Discover</span>
+              </a>
+            {%- endif -%}
+            <span class="lgcy-panel-image-label">{{ block.settings.label }}</span>
+          {%- else -%}
+            <div class="lgcy-panel-image-placeholder">Add image in<br>Theme Editor</div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      {%- comment %} Fallback placeholders ── {% endcomment %}
+      <div class="lgcy-panel-image-wrap">
+        <div class="lgcy-panel-image-placeholder">Add image block<br>in Theme Editor</div>
+      </div>
+      <div class="lgcy-panel-image-wrap">
+        <div class="lgcy-panel-image-placeholder">Add image block<br>in Theme Editor</div>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.__lgcyShopMenuInit) return;
+  window.__lgcyShopMenuInit = true;
+
+  var btn      = document.getElementById('lgcy-shop-btn');
+  var panel    = document.getElementById('lgcy-side-panel');
+  var overlay  = document.getElementById('lgcy-menu-overlay');
+  var closeBtn = document.getElementById('lgcy-panel-close');
+
+  if (!btn || !panel || !overlay) return;
+
+  var hoverTimer;
+  var isOpen = false;
+
+  function openPanel() {
+    clearTimeout(hoverTimer);
+    if (isOpen) return;
+    isOpen = true;
+    panel.classList.add('lgcy-open');
+    overlay.classList.add('lgcy-open');
+    btn.classList.add('lgcy-active');
+    btn.setAttribute('aria-expanded', 'true');
+    panel.setAttribute('aria-hidden', 'false');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePanel() {
+    clearTimeout(hoverTimer);
+    if (!isOpen) return;
+    isOpen = false;
+    panel.classList.remove('lgcy-open');
+    overlay.classList.remove('lgcy-open');
+    btn.classList.remove('lgcy-active');
+    btn.setAttribute('aria-expanded', 'false');
+    panel.setAttribute('aria-hidden', 'true');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  function scheduleClose() {
+    hoverTimer = setTimeout(closePanel, 150);
+  }
+
+  btn.addEventListener('mouseenter', openPanel);
+  btn.addEventListener('mouseleave', scheduleClose);
+  panel.addEventListener('mouseenter', function () { clearTimeout(hoverTimer); });
+  panel.addEventListener('mouseleave', scheduleClose);
+  btn.addEventListener('click', function () { isOpen ? closePanel() : openPanel(); });
+  if (closeBtn) closeBtn.addEventListener('click', closePanel);
+  overlay.addEventListener('click', closePanel);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && isOpen) closePanel();
+  });
+
+  /* Move Shop trigger to front of Dawn nav */
+  var inlineMenu  = document.querySelector('.header__inline-menu');
+  var triggerWrap = document.getElementById('lgcy-shop-trigger-wrap');
+  if (inlineMenu && triggerWrap) {
+    inlineMenu.insertBefore(triggerWrap, inlineMenu.firstChild);
+    triggerWrap.style.display = 'inline-flex';
+  }
+})();
+</script>

@@ -1,0 +1,223 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "background_video_WTHRPk": {
+      "type": "background-video",
+      "blocks": {
+        "video_gbTacA": {
+          "type": "video",
+          "settings": {
+            "video_link": "https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/27eb46307c3641019749fdfb4fc0573d.mp4",
+            "video_image": "shopify:\/\/shop_images\/Untitled_Project_7.png",
+            "title": "THE DEBUT COLLECTION.",
+            "text": "",
+            "color_text": "#ffffff",
+            "button_label": "SHOP",
+            "button_link": "shopify:\/\/collections\/frontpage",
+            "color_btn_bg": "rgba(0,0,0,0)",
+            "color_btn_text": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "video_gbTacA"
+      ],
+      "settings": {}
+    },
+    "image_banner_eHm8Mp": {
+      "type": "image-banner",
+      "blocks": {
+        "buttons_ViX67z": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "THE DEBUT COLLECTION",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "buttons_ViX67z"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/fog-on-dark-waters-edge.jpg",
+        "image_overlay_opacity": 0,
+        "image_height": "large",
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-5",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>THE DEBUT COLLECTION.<\/strong>",
+            "heading_size": "h1"
+          }
+        },
+        "text_XwfEnW": {
+          "type": "text",
+          "settings": {
+            "text": "<em>\"A Legacy Built on Strength and Submission\"<\/em>",
+            "text_style": "subtitle"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "SHOP",
+            "button_link_1": "shopify:\/\/collections\/all",
+            "button_style_secondary_1": true,
+            "button_label_2": "ABOUT",
+            "button_link_2": "shopify:\/\/pages\/about",
+            "button_style_secondary_2": true
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text_XwfEnW",
+        "button"
+      ],
+      "disabled": true,
+      "custom_css": [],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/Printify_Hoodie_Mockup.jpg",
+        "image_overlay_opacity": 20,
+        "image_height": "adapt",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "image_behavior": "fixed",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "image_banner_BdTppn": {
+      "type": "image-banner",
+      "blocks": {
+        "buttons_PKGmgh": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "WE ARE LGCYCLOTHING",
+            "button_link_1": "shopify:\/\/pages\/about",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "buttons_PKGmgh"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/Printify_Hoodie_Mockup_b8163667-65fb-42b3-8340-3a2437e9b45d.jpg",
+        "image_overlay_opacity": 0,
+        "image_height": "large",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "disabled": true,
+      "settings": {
+        "title": "The Debut Collection 1.0",
+        "heading_size": "h1",
+        "description": "<p>A new beginning.<strong> <\/strong>Marked by the Debut of the 'Path to Legacy' Hoodie.<\/p>",
+        "show_description": false,
+        "description_style": "uppercase",
+        "collection": "all",
+        "products_to_show": 9,
+        "columns_desktop": 6,
+        "full_width": true,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "rich_text_88ajnD": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_nA38FY": {
+          "type": "heading",
+          "settings": {
+            "heading": "'BUILT FOR THOSE WITH PURPOSE AND VISION'",
+            "heading_size": "h1"
+          }
+        },
+        "button_WWaiA8": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "shopify:\/\/pages\/about",
+            "button_style_secondary": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_nA38FY",
+        "button_WWaiA8"
+      ],
+      "custom_css": [],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 24,
+        "padding_bottom": 44
+      }
+    }
+  },
+  "order": [
+    "background_video_WTHRPk",
+    "image_banner_eHm8Mp",
+    "image_banner",
+    "image_banner_BdTppn",
+    "featured_collection",
+    "rich_text_88ajnD"
+  ]
+}
