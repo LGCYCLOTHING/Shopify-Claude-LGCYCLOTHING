@@ -301,32 +301,9 @@
     </script>
   {% include 'pagefly-app-header' %}
 
-  <!-- ── Grid Wipe Transition ── -->
-  <style>
-    #grid-wipe-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 999999;
-      pointer-events: none;
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: repeat(8, 1fr);
-    }
-    .gw-tile {
-      background: #ffffff;
-      transform: scale(0);
-      transform-origin: top left;
-      will-change: transform;
-    }
-  </style>
-
 </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
-
-    <!-- Grid wipe tile container (populated by JS) -->
-    <div id="grid-wipe-overlay" aria-hidden="true"></div>
-
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
@@ -458,6 +435,20 @@ svg.icon.icon-cart {
     text-decoration: none;
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1/bundled/lenis.min.js"></script>
+<script>
+  console.log("lenis loaded?", typeof Lenis);
+
+  const lenis = new Lenis();
+
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
+  console.log("lenis running");
+</script>
   {%- render "ecom_footer"-%}
 
 <!-- GSAP -->
@@ -473,107 +464,6 @@ svg.icon.icon-cart {
   requestAnimationFrame(raf);
 </script>
 
-
-  <!-- ── Grid Wipe Transition Logic ── -->
-  <script>
-  (function () {
-    // Wait for GSAP (loaded just above via CDN)
-    function initGridWipe() {
-      if (typeof gsap === 'undefined') {
-        setTimeout(initGridWipe, 50);
-        return;
-      }
-
-      var COLS = 12, ROWS = 8;
-      var TILE_DUR = 0.36;
-      var STAGGER  = 0.030;
-
-      /* ── Build tiles ── */
-      var overlay = document.getElementById('grid-wipe-overlay');
-      for (var r = 0; r < ROWS; r++) {
-        for (var c = 0; c < COLS; c++) {
-          var tile = document.createElement('div');
-          tile.className = 'gw-tile';
-          tile.dataset.diag = String(r + c);
-          overlay.appendChild(tile);
-        }
-      }
-
-      // Sort tiles so stagger fires in diagonal strips: top-left → bottom-right
-      var allTiles  = Array.from(overlay.children);
-      var byDiag    = allTiles.slice().sort(function (a, b) {
-        return Number(a.dataset.diag) - Number(b.dataset.diag);
-      });
-
-      /* ── Sweep IN: white tiles cascade over viewport ── */
-      function sweepIn(onComplete) {
-        overlay.style.pointerEvents = 'all';
-        gsap.killTweensOf(byDiag);
-        gsap.set(byDiag, { scale: 0, transformOrigin: 'top left' });
-        gsap.to(byDiag, {
-          scale: 1,
-          duration: TILE_DUR,
-          ease: 'power3.inOut',
-          stagger: STAGGER,
-          onComplete: onComplete
-        });
-      }
-
-      /* ── Sweep OUT: tiles retract revealing new page ── */
-      function sweepOut() {
-        gsap.killTweensOf(byDiag);
-        // Retract toward top-left so the diagonal reveal follows the same direction
-        gsap.set(byDiag, { scale: 1, transformOrigin: 'top left' });
-        gsap.to(byDiag, {
-          scale: 0,
-          duration: TILE_DUR,
-          ease: 'power3.inOut',
-          stagger: STAGGER,
-          onComplete: function () {
-            overlay.style.pointerEvents = 'none';
-          }
-        });
-      }
-
-      /* ── On page load: if we arrived via logo click, sweep out ── */
-      if (sessionStorage.getItem('gridWipePending') === '1') {
-        sessionStorage.removeItem('gridWipePending');
-        // Pre-set all tiles to visible so the sweep-out feels continuous
-        gsap.set(byDiag, { scale: 1 });
-        overlay.style.pointerEvents = 'all';
-        // Tiny delay lets the new page paint before we reveal it
-        gsap.delayedCall(0.08, sweepOut);
-      }
-
-      /* ── Intercept logo + discover/banner button clicks ── */
-      document.addEventListener('click', function (e) {
-        var link = e.target.closest('a.header__heading-link, .banner__buttons a[href]');
-        if (!link) return;
-
-        var href = link.getAttribute('href');
-        if (!href || href === '#') return;
-
-        // For banner buttons, always animate. For logo, skip if same page.
-        var isLogo = link.classList.contains('header__heading-link');
-        if (isLogo) {
-          try {
-            var dest = new URL(link.href, window.location.origin);
-            if (dest.pathname === window.location.pathname && dest.search === window.location.search) return;
-          } catch (_) { return; }
-        }
-
-        e.preventDefault();
-        sessionStorage.setItem('gridWipePending', '1');
-
-        sweepIn(function () {
-          window.location.href = link.href;
-        });
-      });
-    }
-
-    initGridWipe();
-  })();
-  </script>
-
+  
 </body>
 </html>
