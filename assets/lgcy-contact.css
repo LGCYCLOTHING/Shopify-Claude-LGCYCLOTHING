@@ -324,4 +324,13 @@
     grid-template-columns: 1fr;
     gap: 20px;
   }
+
+  .lgcy-faq {
+    padding: 60px 24px;
+  }
+
+  .lgcy-faq__heading {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
 }
