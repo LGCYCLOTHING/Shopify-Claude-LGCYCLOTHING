@@ -1,9 +1,24 @@
 /* ── Invert header on white contact page ────────────────────────────── */
 
 #shopify-section-header .header-wrapper {
-  --color-foreground: 18, 18, 18 !important;
-  --color-background: 255, 255, 255 !important;
   background-color: #fff !important;
+}
+
+#shopify-section-header a,
+#shopify-section-header button,
+#shopify-section-header .header__heading-link,
+#shopify-section-header .header__menu-item,
+#shopify-section-header .link--text,
+#shopify-section-header .header__icon,
+#shopify-section-header summary {
+  color: #000 !important;
+}
+
+#shopify-section-header svg,
+#shopify-section-header .icon {
+  color: #000 !important;
+  fill: #000 !important;
+  stroke: #000 !important;
 }
 
 /* ── LGCY Contact Page ───────────────────────────────────────────────── */
