@@ -1,0 +1,172 @@
+/* ── LGCY Contact Page ───────────────────────────────────────────────── */
+
+.lgcy-contact {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  padding: 100px 60px 80px;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.lgcy-contact__inner {
+  display: grid;
+  grid-template-columns: 45% 55%;
+  gap: 80px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+/* ── Left Column ─────────────────────────────────────────────────────── */
+
+.lgcy-contact__heading {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: 52px;
+  letter-spacing: -0.03em;
+  color: #000;
+  line-height: 1;
+  margin: 0 0 20px;
+}
+
+.lgcy-contact__sub {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: #999;
+  margin: 0 0 14px;
+}
+
+.lgcy-contact__email {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #999;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.lgcy-contact__email:hover {
+  color: #000;
+}
+
+/* ── Right Column / Form ─────────────────────────────────────────────── */
+
+.lgcy-contact__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+.lgcy-field {
+  position: relative;
+}
+
+.lgcy-field--full {
+  margin-bottom: 40px;
+}
+
+.lgcy-field__input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  border-radius: 0;
+  padding: 10px 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #000;
+  outline: none;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+}
+
+.lgcy-field__input::placeholder {
+  color: #999;
+}
+
+.lgcy-field__input:focus {
+  border-bottom-color: #000;
+}
+
+.lgcy-field__label {
+  display: none;
+}
+
+.lgcy-field__textarea {
+  resize: none;
+  min-height: 120px;
+  display: block;
+}
+
+.lgcy-contact__submit {
+  width: 100%;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  padding: 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-top: 8px;
+}
+
+.lgcy-contact__submit:hover {
+  background: #222;
+}
+
+/* Status messages */
+.lgcy-contact__success {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #000;
+  margin-bottom: 32px;
+  letter-spacing: 0.02em;
+}
+
+.lgcy-contact__error {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #c00;
+  margin-bottom: 24px;
+}
+
+/* ── Mobile ──────────────────────────────────────────────────────────── */
+
+@media screen and (max-width: 749px) {
+  .lgcy-contact {
+    padding: 80px 24px 60px;
+    align-items: flex-start;
+  }
+
+  .lgcy-contact__inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .lgcy-contact__left {
+    text-align: center;
+  }
+
+  .lgcy-contact__heading {
+    font-size: 38px;
+  }
+
+  .lgcy-contact__row {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
