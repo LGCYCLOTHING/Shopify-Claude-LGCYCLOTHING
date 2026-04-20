@@ -1,0 +1,39 @@
+{{ 'lgcy-collection.css' | asset_url | stylesheet_tag }}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+
+<div class="lgcy-col-hero lgcy-col-hero--anim">
+  {%- if section.settings.hero_image != blank -%}
+    <div class="lgcy-col-hero__bg" style="background-image: url('{{ section.settings.hero_image | image_url: width: 2400 }}');"></div>
+  {%- else -%}
+    <div class="lgcy-col-hero__bg lgcy-col-hero__bg--dark"></div>
+  {%- endif -%}
+  <div class="lgcy-col-hero__overlay"></div>
+  <div class="lgcy-col-hero__content">
+    <h1 class="lgcy-col-hero__title">THE LEGACY COLLECTION</h1>
+    <p class="lgcy-col-hero__sub">The drop is here. The legacy starts now.</p>
+  </div>
+</div>
+
+<script>
+  requestAnimationFrame(function () {
+    setTimeout(function () {
+      var el = document.querySelector('.lgcy-col-hero--anim');
+      if (el) el.classList.add('lgcy-col-hero--visible');
+    }, 60);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Collection Hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero background image"
+    }
+  ],
+  "presets": [{ "name": "Collection Hero" }]
+}
+{% endschema %}
