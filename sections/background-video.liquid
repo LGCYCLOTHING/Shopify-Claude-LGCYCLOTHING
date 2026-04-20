@@ -38,21 +38,29 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 9999;
-  width: min(680px, calc(100vw - 80px));
-  max-width: 680px;
-  margin: 0 auto;
+  width: min(520px, calc(100vw - 48px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Force Omnisend embed to fill and center */
+#password-header-form > div:first-child {
+  width: 100%;
+}
+
+#password-header-form > div:first-child > * {
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
 /* Mobile */
 @media (max-width: 768px) {
-
-  #password-header-form{
-    transform: translate(-50%, -50%) scale(0.82);
-    transform-origin: center;
-    width: 120%;
+  #password-header-form {
+    width: calc(100vw - 32px);
+    top: 52%;
   }
-
-}-vi
+}
 
 </style>
 
