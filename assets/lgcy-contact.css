@@ -191,6 +191,105 @@
   transform: translateX(0);
 }
 
+/* ── FAQ Section ─────────────────────────────────────────────────────── */
+
+.lgcy-faq {
+  background: #fff;
+  padding: 100px 60px;
+  border-top: 1px solid #ebebeb;
+}
+
+.lgcy-faq__inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.lgcy-faq__eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #999;
+  margin: 0 0 16px;
+}
+
+.lgcy-faq__heading {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: 36px;
+  letter-spacing: -0.03em;
+  color: #000;
+  margin: 0 0 56px;
+}
+
+.lgcy-faq__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.lgcy-faq__item {
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.lgcy-faq__question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 22px 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: #000;
+  cursor: pointer;
+  text-align: left;
+  gap: 16px;
+}
+
+.lgcy-faq__icon {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  color: #999;
+}
+
+.lgcy-faq__item.is-open .lgcy-faq__icon {
+  transform: rotate(180deg);
+}
+
+.lgcy-faq__answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.lgcy-faq__item.is-open .lgcy-faq__answer {
+  max-height: 300px;
+}
+
+.lgcy-faq__answer p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #666;
+  padding-bottom: 22px;
+  margin: 0;
+}
+
+/* FAQ entrance animation */
+.lgcy-anim-faq {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+}
+.lgcy-anim-faq--in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ── Header: force dark icons on right panel, white on left ──────────── */
 #shopify-section-header .header-wrapper {
   background-color: transparent !important;
