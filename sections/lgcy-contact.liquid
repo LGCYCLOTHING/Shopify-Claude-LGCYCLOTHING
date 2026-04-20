@@ -5,10 +5,35 @@
 
 <div class="lgcy-contact">
 
-  <!-- Left: black panel -->
+  <!-- Left: black panel with heading + FAQ -->
   <div class="lgcy-contact__left lgcy-anim-left">
-    <p class="lgcy-contact__eyebrow">LGCYCLOTHING</p>
-    <h1 class="lgcy-contact__heading">LET'S<br>TALK.</h1>
+    <div class="lgcy-contact__left-top">
+      <p class="lgcy-contact__eyebrow">LGCYCLOTHING</p>
+      <h1 class="lgcy-contact__heading">LET'S<br>TALK.</h1>
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+    <div class="lgcy-faq">
+      <p class="lgcy-faq__eyebrow">FAQ</p>
+      <div class="lgcy-faq__list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq' -%}
+            <div class="lgcy-faq__item" {{ block.shopify_attributes }}>
+              <button class="lgcy-faq__question" aria-expanded="false">
+                <span>{{ block.settings.question }}</span>
+                <svg class="lgcy-faq__icon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="lgcy-faq__answer">
+                <p>{{ block.settings.answer }}</p>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    {%- endif -%}
   </div>
 
   <!-- Right: form panel -->
@@ -57,48 +82,17 @@
 
 </div>
 
-<!-- FAQ Section -->
-{%- if section.blocks.size > 0 -%}
-<div class="lgcy-faq lgcy-anim-faq">
-  <div class="lgcy-faq__inner">
-    <p class="lgcy-faq__eyebrow">FAQ</p>
-    <h2 class="lgcy-faq__heading">Frequently Asked</h2>
-    <div class="lgcy-faq__list">
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'faq' -%}
-          <div class="lgcy-faq__item" {{ block.shopify_attributes }}>
-            <button class="lgcy-faq__question" aria-expanded="false">
-              <span>{{ block.settings.question }}</span>
-              <svg class="lgcy-faq__icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-            <div class="lgcy-faq__answer">
-              <p>{{ block.settings.answer }}</p>
-            </div>
-          </div>
-        {%- endif -%}
-      {%- endfor -%}
-    </div>
-  </div>
-</div>
-{%- endif -%}
-
 <script>
   (function () {
-    // Entrance animations
     var left = document.querySelector('.lgcy-anim-left');
     var right = document.querySelector('.lgcy-anim-right');
-    var faq = document.querySelector('.lgcy-anim-faq');
     requestAnimationFrame(function () {
       setTimeout(function () {
         if (left) left.classList.add('lgcy-anim-left--in');
         if (right) right.classList.add('lgcy-anim-right--in');
-        if (faq) faq.classList.add('lgcy-anim-faq--in');
       }, 80);
     });
 
-    // FAQ accordion
     document.querySelectorAll('.lgcy-faq__question').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var item = btn.closest('.lgcy-faq__item');
@@ -126,18 +120,8 @@
       "type": "faq",
       "name": "FAQ Item",
       "settings": [
-        {
-          "type": "text",
-          "id": "question",
-          "label": "Question",
-          "default": "What is your return policy?"
-        },
-        {
-          "type": "textarea",
-          "id": "answer",
-          "label": "Answer",
-          "default": "We accept returns within 30 days of purchase. Items must be unworn and in original condition."
-        }
+        { "type": "text", "id": "question", "label": "Question", "default": "What is your return policy?" },
+        { "type": "textarea", "id": "answer", "label": "Answer", "default": "We accept returns within 30 days of purchase." }
       ]
     }
   ],
@@ -148,7 +132,7 @@
         { "type": "faq", "settings": { "question": "How long does shipping take?", "answer": "Domestic orders ship within 2–4 business days. International orders typically arrive within 7–14 business days." } },
         { "type": "faq", "settings": { "question": "Can I exchange an item?", "answer": "Yes — reach out via this form within 30 days of receiving your order and we'll sort it out." } },
         { "type": "faq", "settings": { "question": "Do you ship internationally?", "answer": "We ship worldwide. Duties and taxes may apply depending on your country." } },
-        { "type": "faq", "settings": { "question": "How do I track my order?", "answer": "You'll receive a tracking link via email once your order ships. If you haven't received it, check your spam folder or contact us." } }
+        { "type": "faq", "settings": { "question": "How do I track my order?", "answer": "You'll receive a tracking link via email once your order ships. Check your spam folder or contact us if you haven't received it." } }
       ]
     }
   ]
