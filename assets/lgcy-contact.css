@@ -1,97 +1,98 @@
-/* ── Invert header on white contact page ────────────────────────────── */
-
-#shopify-section-header .header-wrapper {
-  background-color: #fff !important;
-}
-
-#shopify-section-header a,
-#shopify-section-header button,
-#shopify-section-header .header__heading-link,
-#shopify-section-header .header__menu-item,
-#shopify-section-header .link--text,
-#shopify-section-header .header__icon,
-#shopify-section-header summary {
-  color: #000 !important;
-}
-
-#shopify-section-header svg,
-#shopify-section-header .icon {
-  color: #000 !important;
-  fill: #000 !important;
-  stroke: #000 !important;
-}
-
 /* ── LGCY Contact Page ───────────────────────────────────────────────── */
 
 .lgcy-contact {
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  padding: 100px 60px;
-  box-sizing: border-box;
-  background: #fff;
-}
-
-.lgcy-contact__inner {
   display: grid;
-  grid-template-columns: 45% 55%;
-  gap: 0;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  align-items: center;
-  position: relative;
+  grid-template-columns: 42% 58%;
 }
 
-/* ── Vertical divider ────────────────────────────────────────────────── */
-
-.lgcy-contact__divider {
-  position: absolute;
-  left: 45%;
-  top: 10%;
-  height: 80%;
-  width: 1px;
-  background: #f0f0f0;
-  pointer-events: none;
-}
-
-/* ── Left Column ─────────────────────────────────────────────────────── */
+/* ── Left Panel (black) ──────────────────────────────────────────────── */
 
 .lgcy-contact__left {
-  padding-right: 60px;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 60px 52px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Large decorative background text */
+.lgcy-contact__left::before {
+  content: 'LG';
+  position: absolute;
+  bottom: -20px;
+  left: -10px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: 240px;
+  line-height: 1;
+  color: #fff;
+  opacity: 0.04;
+  letter-spacing: -0.05em;
+  pointer-events: none;
+  user-select: none;
+}
+
+.lgcy-contact__eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin: 0 0 24px;
 }
 
 .lgcy-contact__heading {
   font-family: 'Inter', sans-serif;
   font-weight: 900;
-  font-size: 64px;
+  font-size: 58px;
   letter-spacing: -0.03em;
-  color: #000;
+  color: #fff;
   line-height: 1;
-  margin: 0;
+  margin: 0 0 32px;
 }
 
-/* ── Right Column / Form ─────────────────────────────────────────────── */
+.lgcy-contact__tagline {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 220px;
+}
+
+/* ── Right Panel (white) ─────────────────────────────────────────────── */
 
 .lgcy-contact__right {
-  padding-left: 60px;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 64px;
 }
 
-.lgcy-contact__label {
+.lgcy-contact__form-label {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 10px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: #999;
-  margin: 0 0 28px;
+  margin: 0 0 36px;
 }
+
+/* ── Form fields ─────────────────────────────────────────────────────── */
 
 .lgcy-contact__row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  margin-bottom: 32px;
+  gap: 28px;
+  margin-bottom: 28px;
 }
 
 .lgcy-field {
@@ -99,14 +100,14 @@
 }
 
 .lgcy-field--full {
-  margin-bottom: 40px;
+  margin-bottom: 36px;
 }
 
 .lgcy-field__input {
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 1px solid #bbb;
+  border-bottom: 1px solid #ccc;
   border-radius: 0;
   padding: 10px 0;
   font-family: 'Inter', sans-serif;
@@ -120,7 +121,7 @@
 }
 
 .lgcy-field__input::placeholder {
-  color: #888;
+  color: #aaa;
 }
 
 .lgcy-field__input:focus {
@@ -145,13 +146,12 @@
   border-radius: 2px;
   padding: 16px;
   font-family: 'Inter', sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   cursor: pointer;
   transition: background 0.2s ease;
-  margin-top: 8px;
 }
 
 .lgcy-contact__submit:hover {
@@ -162,10 +162,8 @@
 .lgcy-contact__success {
   font-family: 'Inter', sans-serif;
   font-size: 13px;
-  font-weight: 400;
   color: #000;
   margin-bottom: 32px;
-  letter-spacing: 0.02em;
 }
 
 .lgcy-contact__error {
@@ -179,10 +177,9 @@
 
 .lgcy-anim-left {
   opacity: 0;
-  transform: translateX(-28px);
+  transform: translateX(-24px);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
-
 .lgcy-anim-left--in {
   opacity: 1;
   transform: translateX(0);
@@ -190,35 +187,34 @@
 
 .lgcy-anim-right {
   opacity: 0;
-  transform: translateX(28px);
-  transition: opacity 0.7s ease 0.12s, transform 0.7s ease 0.12s;
+  transform: translateX(24px);
+  transition: opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s;
 }
-
 .lgcy-anim-right--in {
   opacity: 1;
   transform: translateX(0);
+}
+
+/* ── Header: force dark icons on right panel, white on left ──────────── */
+#shopify-section-header .header-wrapper {
+  background-color: transparent !important;
 }
 
 /* ── Mobile ──────────────────────────────────────────────────────────── */
 
 @media screen and (max-width: 749px) {
   .lgcy-contact {
-    padding: 80px 24px 60px;
-    align-items: flex-start;
-  }
-
-  .lgcy-contact__inner {
     grid-template-columns: 1fr;
-    gap: 48px;
-  }
-
-  .lgcy-contact__divider {
-    display: none;
+    min-height: unset;
   }
 
   .lgcy-contact__left {
-    text-align: center;
-    padding-right: 0;
+    padding: 80px 28px 48px;
+    min-height: 280px;
+  }
+
+  .lgcy-contact__left::before {
+    font-size: 140px;
   }
 
   .lgcy-contact__heading {
@@ -226,11 +222,11 @@
   }
 
   .lgcy-contact__right {
-    padding-left: 0;
+    padding: 48px 28px 60px;
   }
 
   .lgcy-contact__row {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 20px;
   }
 }
