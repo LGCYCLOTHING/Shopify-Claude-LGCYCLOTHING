@@ -9,13 +9,11 @@
   <div class="lgcy-contact__left lgcy-anim-left">
     <p class="lgcy-contact__eyebrow">LGCYCLOTHING</p>
     <h1 class="lgcy-contact__heading">LET'S<br>TALK.</h1>
-    <p class="lgcy-contact__tagline">We read every message and respond within 24 hours.</p>
   </div>
 
   <!-- Right: form panel -->
   <div class="lgcy-contact__right lgcy-anim-right">
     {%- form 'contact', id: 'LgcyContactForm' -%}
-
       {%- if form.posted_successfully? -%}
         <p class="lgcy-contact__success">Message sent — we'll be in touch soon.</p>
       {%- elsif form.errors -%}
@@ -29,62 +27,91 @@
 
       <div class="lgcy-contact__row">
         <div class="lgcy-field">
-          <input
-            class="lgcy-field__input"
-            type="text"
-            id="LgcyContactForm-name"
-            name="contact[{{ 'templates.contact.form.name' | t }}]"
-            autocomplete="name"
+          <input class="lgcy-field__input" type="text" id="LgcyContactForm-name"
+            name="contact[{{ 'templates.contact.form.name' | t }}]" autocomplete="name"
             value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
-            placeholder="{{ 'templates.contact.form.name' | t }}"
-          >
+            placeholder="{{ 'templates.contact.form.name' | t }}">
           <label class="lgcy-field__label" for="LgcyContactForm-name">{{ 'templates.contact.form.name' | t }}</label>
         </div>
         <div class="lgcy-field">
-          <input
-            class="lgcy-field__input"
-            type="email"
-            id="LgcyContactForm-email"
-            name="contact[email]"
-            autocomplete="email"
-            spellcheck="false"
-            autocapitalize="off"
+          <input class="lgcy-field__input" type="email" id="LgcyContactForm-email"
+            name="contact[email]" autocomplete="email" spellcheck="false" autocapitalize="off"
             aria-required="true"
             {% if form.errors contains 'email' %}aria-invalid="true"{% endif %}
             value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
-            placeholder="{{ 'templates.contact.form.email' | t }}"
-          >
+            placeholder="{{ 'templates.contact.form.email' | t }}">
           <label class="lgcy-field__label" for="LgcyContactForm-email">{{ 'templates.contact.form.email' | t }}</label>
         </div>
       </div>
 
       <div class="lgcy-field lgcy-field--full">
-        <textarea
-          class="lgcy-field__input lgcy-field__textarea"
-          id="LgcyContactForm-body"
+        <textarea class="lgcy-field__input lgcy-field__textarea" id="LgcyContactForm-body"
           name="contact[{{ 'templates.contact.form.comment' | t }}]"
-          placeholder="{{ 'templates.contact.form.comment' | t }}"
-        >{{- form.body -}}</textarea>
+          placeholder="{{ 'templates.contact.form.comment' | t }}">{{- form.body -}}</textarea>
         <label class="lgcy-field__label" for="LgcyContactForm-body">{{ 'templates.contact.form.comment' | t }}</label>
       </div>
 
       <button type="submit" class="lgcy-contact__submit">SEND MESSAGE</button>
-
     {%- endform -%}
   </div>
 
 </div>
 
+<!-- FAQ Section -->
+{%- if section.blocks.size > 0 -%}
+<div class="lgcy-faq lgcy-anim-faq">
+  <div class="lgcy-faq__inner">
+    <p class="lgcy-faq__eyebrow">FAQ</p>
+    <h2 class="lgcy-faq__heading">Frequently Asked</h2>
+    <div class="lgcy-faq__list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'faq' -%}
+          <div class="lgcy-faq__item" {{ block.shopify_attributes }}>
+            <button class="lgcy-faq__question" aria-expanded="false">
+              <span>{{ block.settings.question }}</span>
+              <svg class="lgcy-faq__icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="lgcy-faq__answer">
+              <p>{{ block.settings.answer }}</p>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+{%- endif -%}
+
 <script>
   (function () {
+    // Entrance animations
     var left = document.querySelector('.lgcy-anim-left');
     var right = document.querySelector('.lgcy-anim-right');
-    if (!left || !right) return;
+    var faq = document.querySelector('.lgcy-anim-faq');
     requestAnimationFrame(function () {
       setTimeout(function () {
-        left.classList.add('lgcy-anim-left--in');
-        right.classList.add('lgcy-anim-right--in');
+        if (left) left.classList.add('lgcy-anim-left--in');
+        if (right) right.classList.add('lgcy-anim-right--in');
+        if (faq) faq.classList.add('lgcy-anim-faq--in');
       }, 80);
+    });
+
+    // FAQ accordion
+    document.querySelectorAll('.lgcy-faq__question').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var item = btn.closest('.lgcy-faq__item');
+        var isOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.lgcy-faq__item.is-open').forEach(function (el) {
+          el.classList.remove('is-open');
+          el.querySelector('.lgcy-faq__question').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
     });
   })();
 </script>
@@ -94,7 +121,36 @@
   "name": "LGCY Contact",
   "tag": "section",
   "class": "section",
-  "settings": [],
-  "presets": [{ "name": "LGCY Contact" }]
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is your return policy?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "We accept returns within 30 days of purchase. Items must be unworn and in original condition."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LGCY Contact",
+      "blocks": [
+        { "type": "faq", "settings": { "question": "How long does shipping take?", "answer": "Domestic orders ship within 2–4 business days. International orders typically arrive within 7–14 business days." } },
+        { "type": "faq", "settings": { "question": "Can I exchange an item?", "answer": "Yes — reach out via this form within 30 days of receiving your order and we'll sort it out." } },
+        { "type": "faq", "settings": { "question": "Do you ship internationally?", "answer": "We ship worldwide. Duties and taxes may apply depending on your country." } },
+        { "type": "faq", "settings": { "question": "How do I track my order?", "answer": "You'll receive a tracking link via email once your order ships. If you haven't received it, check your spam folder or contact us." } }
+      ]
+    }
+  ]
 }
 {% endschema %}
