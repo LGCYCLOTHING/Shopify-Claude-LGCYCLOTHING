@@ -6,32 +6,58 @@
  
 {% if template == 'password' %}
   <style>
-/* Desktop */
+    #password-header-form {
+      position: absolute;
+      top: 50%; /* Vertically center */
+      left: 50%; /* Horizontally center */
+      transform: translate(-50%, -50%); /* Adjust to center the form */
+      z-index: 9999;
+    }
+
+    /* Mobile-specific styles */
+    @media (max-width: 768px) {
+      #password-header-form {
+        position: absolute; /* Fixed position for better mobile experience */
+        top: 50%; /* Vertically center */
+        left: 50%; /* Horizontally center */
+        transform: translate(-50%, -50%); /* Center the form */
+        width: 100%; /* Adjust the form width on mobile */
+        padding: 0 10px;
+        box-sizing: border-box;
+        font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif; /* Ensure Helvetica Neue is applied */
+        font-weight: bold; /* Ensure bold font style */
+      }
+    }
+  </style>
+  
+  <style>
 #password-header-form {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  width: min(520px, calc(100vw - 48px));
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  z-index: 9999;
+  pointer-events: none;
 }
 
-/* Force Omnisend embed to fill */
+#password-header-form > * {
+  pointer-events: auto;
+}
+
 #password-header-form > div:first-child {
-  width: 100%;
+  width: min(520px, calc(100vw - 48px));
 }
 
-/* Mobile */
 @media (max-width: 768px) {
-  #password-header-form {
+  #password-header-form > div:first-child {
     width: calc(100vw - 32px);
-    top: 52%;
   }
 }
-
 </style>
 
 <div id="password-header-form">
