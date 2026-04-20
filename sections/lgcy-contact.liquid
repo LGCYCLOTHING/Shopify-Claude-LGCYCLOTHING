@@ -6,19 +6,16 @@
 <section class="lgcy-contact">
   <div class="lgcy-contact__inner">
 
+    <!-- Vertical divider -->
+    <div class="lgcy-contact__divider" aria-hidden="true"></div>
+
     <!-- Left column -->
-    <div class="lgcy-contact__left">
+    <div class="lgcy-contact__left lgcy-anim-left">
       <h1 class="lgcy-contact__heading">LET'S TALK.</h1>
-      <p class="lgcy-contact__sub">We respond within 24 hours.</p>
-      {%- if section.settings.contact_email != blank -%}
-        <a class="lgcy-contact__email" href="mailto:{{ section.settings.contact_email }}">
-          {{ section.settings.contact_email }}
-        </a>
-      {%- endif -%}
     </div>
 
     <!-- Right column: form -->
-    <div class="lgcy-contact__right">
+    <div class="lgcy-contact__right lgcy-anim-right">
       {%- form 'contact', id: 'LgcyContactForm' -%}
 
         {%- if form.posted_successfully? -%}
@@ -29,6 +26,8 @@
             {{ form.errors.messages.email }}
           </p>
         {%- endif -%}
+
+        <p class="lgcy-contact__label">CONTACT</p>
 
         <!-- Name + Email row -->
         <div class="lgcy-contact__row">
@@ -87,19 +86,26 @@
   </div>
 </section>
 
+<script>
+  (function () {
+    var left = document.querySelector('.lgcy-anim-left');
+    var right = document.querySelector('.lgcy-anim-right');
+    if (!left || !right) return;
+    requestAnimationFrame(function () {
+      setTimeout(function () {
+        left.classList.add('lgcy-anim-left--in');
+        right.classList.add('lgcy-anim-right--in');
+      }, 80);
+    });
+  })();
+</script>
+
 {% schema %}
 {
   "name": "LGCY Contact",
   "tag": "section",
   "class": "section",
-  "settings": [
-    {
-      "type": "text",
-      "id": "contact_email",
-      "label": "Contact email",
-      "default": "hello@lgcyclothing.com"
-    }
-  ],
+  "settings": [],
   "presets": [
     {
       "name": "LGCY Contact"
