@@ -60,6 +60,33 @@
 }
 </style>
 
+<script>
+(function() {
+  function centerOmnisend() {
+    var els = document.querySelectorAll('[id*="omnisend-embedded"]');
+    els.forEach(function(el) {
+      el.style.setProperty('position', 'fixed', 'important');
+      el.style.setProperty('top', '50%', 'important');
+      el.style.setProperty('left', '50%', 'important');
+      el.style.setProperty('right', 'auto', 'important');
+      el.style.setProperty('bottom', 'auto', 'important');
+      el.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
+      el.style.setProperty('z-index', '9998', 'important');
+      el.style.setProperty('margin', '0', 'important');
+      el.style.setProperty('width', 'min(520px, calc(100vw - 48px))', 'important');
+    });
+  }
+  var observer = new MutationObserver(centerOmnisend);
+  document.addEventListener('DOMContentLoaded', function() {
+    observer.observe(document.body, { childList: true, subtree: true });
+    centerOmnisend();
+  });
+  window.addEventListener('load', centerOmnisend);
+  setTimeout(centerOmnisend, 1000);
+  setTimeout(centerOmnisend, 2500);
+})();
+</script>
+
 <div id="password-header-form">
   <div id="omnisend-embedded-v2-69b47c72e1b57dccf6b8730a"></div>
   <div class="password-form-stack">
