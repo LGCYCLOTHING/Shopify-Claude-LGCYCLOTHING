@@ -69,6 +69,66 @@
     background: var(--gradient-background) !important;
     mix-blend-mode: normal;
   }
+
+  /* ── Clean search modal ── */
+  details[open] > .search-modal {
+    background: #0a0a0a;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .search-modal {
+    background: #0a0a0a;
+  }
+
+  /* Replace muddy semi-transparent overlay with clean solid */
+  details[open] .modal-overlay::after {
+    background-color: rgba(0, 0, 0, 0.75) !important;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+
+  /* Search input clean styling */
+  .search-modal .field__input,
+  .search-modal .search__input {
+    background: rgba(255,255,255,0.06) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    border-radius: 2px !important;
+    color: #ffffff !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.05em !important;
+    caret-color: #fff;
+  }
+
+  .search-modal .field__input::placeholder,
+  .search-modal .search__input::placeholder {
+    color: rgba(255,255,255,0.35) !important;
+    font-family: 'Inter', sans-serif !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    font-size: 12px !important;
+  }
+
+  .search-modal .field__input:focus,
+  .search-modal .search__input:focus {
+    border-color: rgba(255,255,255,0.3) !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Icons white */
+  .search-modal svg,
+  .search-modal .icon {
+    color: rgba(255,255,255,0.6) !important;
+    stroke: rgba(255,255,255,0.6) !important;
+  }
+
+  .search-modal .search-modal__close-button svg,
+  .search-modal .search-modal__close-button .icon {
+    color: rgba(255,255,255,0.5) !important;
+    stroke: rgba(255,255,255,0.5) !important;
+  }
 </style>
 
 {%- unless request.page_type == 'index' -%}
