@@ -1,1 +1,62 @@
-{"sections":{"background_video_cGChwt":{"type":"background-video","blocks":{"video_8Y6qPx":{"type":"video","settings":{"video_link":"https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/21d1b3e0c558412081d9ea6dc0701fb6.mp4","title":"","text":"","color_text":"#ffffff","button_label":"","button_link":"","color_btn_bg":"#ffffff","color_btn_text":"#ffffff"}}},"block_order":["video_8Y6qPx"],"custom_css":[],"name":"Video Background","settings":{}},"custom_liquid_bAeY4A":{"type":"custom-liquid","name":"t:sections.custom-liquid.presets.name","settings":{"custom_liquid":"<div id=\"hero-title-collection\" style=\"\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  z-index: 10;\n  mix-blend-mode: exclusion;\n  pointer-events: none;\n  text-align: center;\n  width: 90vw;\n  max-width: 100%;\n\">\n  <h1 style=\"\n    font-family: 'Inter', Helvetica, Arial, sans-serif;\n    font-size: clamp(28px, 8vw, 77px);\n    font-weight: 900;\n    letter-spacing: -3px;\n    color: #ffffff;\n    margin: 0;\n    padding: 0;\n    line-height: 1.1;\n    text-transform: uppercase;\n    mix-blend-mode: exclusion;\n    -webkit-mix-blend-mode: exclusion;\n    white-space: nowrap;\n  \">THE LEGACY COLLECTION.<\/h1>\n<\/div>\n<style>\n  @media (max-width: 768px) {\n    #hero-title-collection h1 {\n      font-size: clamp(20px, 7vw, 45px) !important;\n      letter-spacing: -1px !important;\n      white-space: nowrap;\n    }\n  }\n<\/style>","color_scheme":"","padding_top":0,"padding_bottom":0}},"custom_liquid_y4tFFP":{"type":"custom-liquid","name":"t:sections.custom-liquid.presets.name","settings":{"custom_liquid":"<script src=\"https:\/\/cdn.jsdelivr.net\/npm\/alpinejs@3.x.x\/dist\/cdn.min.js\" defer><\/script>\n\n<style>\n  .lgcy-description-wrapper {\n    display: none;\n  }\n\n  @media screen and (max-width: 749px) {\n    .lgcy-description-wrapper {\n      display: block;\n    }\n\n    .lgcy-description-full {\n      display: none;\n    }\n\n    .lgcy-read-btn {\n      background: none;\n      border: none;\n      padding: 0;\n      cursor: pointer;\n      font-family: 'Inter', sans-serif;\n      font-size: 13px;\n      font-weight: 400;\n      letter-spacing: 0.04em;\n      text-decoration: underline;\n      text-underline-offset: 3px;\n      color: #111;\n      margin-top: 4px;\n      display: inline-block;\n    }\n  }\n<\/style>\n\n<script>\ndocument.addEventListener('DOMContentLoaded', function () {\n  if (window.innerWidth >= 750) return;\n\n  const desc = document.querySelector('.collection-hero__description');\n  if (!desc) return;\n\n  const fullHTML = desc.innerHTML;\n\n  desc.innerHTML = '';\n\n  \/\/ Truncated preview wrapper\n  const preview = document.createElement('div');\n  preview.className = 'lgcy-description-preview';\n  preview.innerHTML = fullHTML;\n  preview.style.cssText = 'overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;';\n\n  \/\/ Full text wrapper\n  const full = document.createElement('div');\n  full.className = 'lgcy-description-full';\n  full.innerHTML = fullHTML;\n  full.style.display = 'none';\n\n  \/\/ Read more button\n  const btn = document.createElement('button');\n  btn.className = 'lgcy-read-btn';\n  btn.textContent = 'read more';\n\n  let expanded = false;\n  btn.addEventListener('click', function () {\n    expanded = !expanded;\n    if (expanded) {\n      preview.style.display = 'none';\n      full.style.display = 'block';\n      btn.textContent = 'read less';\n    } else {\n      preview.style.display = '-webkit-box';\n      full.style.display = 'none';\n      btn.textContent = 'read more';\n    }\n  });\n\n  desc.appendChild(preview);\n  desc.appendChild(full);\n  desc.appendChild(btn);\n});\n<\/script>","color_scheme":"","padding_top":0,"padding_bottom":0}},"banner":{"type":"main-collection-banner","custom_css":[],"settings":{"show_collection_description":true,"show_collection_image":true,"color_scheme":"scheme-1"}},"product-grid":{"type":"main-collection-product-grid","settings":{"products_per_page":16,"columns_desktop":4,"color_scheme":"scheme-1","image_ratio":"square","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"quick_add":"none","enable_filtering":false,"filter_type":"drawer","enable_sorting":false,"columns_mobile":"2","padding_top":36,"padding_bottom":36}},"lgcy_faq_TMGqdE":{"type":"lgcy-faq","blocks":{"faq_item_KqCtqX":{"type":"faq_item","settings":{"question":"How long does shipping take?","answer":"<p>Our orders are typically <strong>processed within 1–3 business days<\/strong>.<\/p><p><strong>Estimated Shipping Times:<\/strong><\/p><p>United States & Canada: 7–12 business days<\/p><p>Europe: 7–12 business days<\/p><p>UAE & Middle East: 10–14 business days<\/p><p>Rest of the World: 7–12 business days<\/p>"}},"faq_item_NGq9Uw":{"type":"faq_item","settings":{"question":"What does the warranty include?","answer":"<p>Our warranty <strong>does not cover damage caused by personal misuse or destruction<\/strong>, and applies only to <strong>defects resulting from manufacturing errors<\/strong> or material faults.<\/p>"}},"faq_item_jdJxaf":{"type":"faq_item","settings":{"question":"Any question?","answer":"<p>You can reach us through our <a href=\"\/pages\/contact\">contact page<\/a>. We will be happy to assist you.<\/p>"}}},"block_order":["faq_item_KqCtqX","faq_item_NGq9Uw","faq_item_jdJxaf"],"name":"LGCY FAQ Section","settings":{"faq_bg_image":"shopify:\/\/shop_images\/download_1.jpg","faq_overlay_color":"#000000","faq_overlay_opacity":35,"card_color":"#ffffff","card_opacity":65,"faq_title":"FAQs","faq_subtitle":"Your questions, answered.","font_scale":120,"text_color":"#000000","text_color_secondary":"#333333","divider_color":"#000000"}},"image_banner_CMGXpP":{"type":"image-banner","blocks":{"heading_Azc6RD":{"type":"heading","settings":{"heading":"'ICONIC VISIONARY'","heading_size":"h2"}}},"block_order":["heading_Azc6RD"],"name":"t:sections.image-banner.presets.name","settings":{"image":"shopify:\/\/shop_images\/download_1.jpg","image_overlay_opacity":0,"image_height":"large","desktop_content_position":"middle-center","show_text_box":false,"desktop_content_alignment":"center","color_scheme":"scheme-3","image_behavior":"none","mobile_content_alignment":"center","stack_images_on_mobile":true,"show_text_below":false}}},"order":["background_video_cGChwt","custom_liquid_bAeY4A","custom_liquid_y4tFFP","banner","product-grid","lgcy_faq_TMGqdE","image_banner_CMGXpP"]}
+{
+  "sections": {
+    "lgcy-hero": {
+      "type": "lgcy-collection-hero",
+      "settings": {
+        "hero_image": "shopify://shop_images/download_1.jpg"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 16,
+        "columns_desktop": 3,
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "enable_filtering": false,
+        "filter_type": "drawer",
+        "enable_sorting": false,
+        "columns_mobile": "1",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "lgcy_faq_TMGqdE": {
+      "type": "lgcy-faq",
+      "blocks": {
+        "faq_item_KqCtqX": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Our orders are typically <strong>processed within 1–3 business days</strong>.</p><p><strong>Estimated Shipping Times:</strong></p><p>United States & Canada: 7–12 business days</p><p>Europe: 7–12 business days</p><p>UAE & Middle East: 10–14 business days</p><p>Rest of the World: 7–12 business days</p>"
+          }
+        },
+        "faq_item_NGq9Uw": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What does the warranty include?",
+            "answer": "<p>Our warranty <strong>does not cover damage caused by personal misuse or destruction</strong>, and applies only to <strong>defects resulting from manufacturing errors</strong> or material faults.</p>"
+          }
+        },
+        "faq_item_jdJxaf": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Any questions?",
+            "answer": "<p>You can reach us through our <a href=\"/pages/contact\">contact page</a>. We will be happy to assist you.</p>"
+          }
+        }
+      },
+      "block_order": ["faq_item_KqCtqX", "faq_item_NGq9Uw", "faq_item_jdJxaf"],
+      "settings": {
+        "faq_title": "FAQs",
+        "faq_subtitle": "Your questions, answered."
+      }
+    }
+  },
+  "order": ["lgcy-hero", "product-grid", "lgcy_faq_TMGqdE"]
+}
