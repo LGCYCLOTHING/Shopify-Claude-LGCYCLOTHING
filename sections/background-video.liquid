@@ -6,31 +6,6 @@
  
 {% if template == 'password' %}
   <style>
-    #password-header-form {
-      position: absolute;
-      top: 50%; /* Vertically center */
-      left: 50%; /* Horizontally center */
-      transform: translate(-50%, -50%); /* Adjust to center the form */
-      z-index: 9999;
-    }
-
-    /* Mobile-specific styles */
-    @media (max-width: 768px) {
-      #password-header-form {
-        position: absolute; /* Fixed position for better mobile experience */
-        top: 50%; /* Vertically center */
-        left: 50%; /* Horizontally center */
-        transform: translate(-50%, -50%); /* Center the form */
-        width: 100%; /* Adjust the form width on mobile */
-        padding: 0 10px;
-        box-sizing: border-box;
-        font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif; /* Ensure Helvetica Neue is applied */
-        font-weight: bold; /* Ensure bold font style */
-      }
-    }
-  </style>
-  
-  <style>
 /* Desktop */
 #password-header-form {
   position: fixed;
