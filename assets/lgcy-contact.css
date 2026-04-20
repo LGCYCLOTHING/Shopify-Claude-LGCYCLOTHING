@@ -6,14 +6,14 @@
   grid-template-columns: 42% 58%;
 }
 
-/* ── Left Panel (black) ──────────────────────────────────────────────── */
+/* ── Left Panel (dark) ───────────────────────────────────────────────── */
 
 .lgcy-contact__left {
   background: #0d0d0d;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 60px 52px;
+  justify-content: space-between;
+  padding: 80px 52px 60px;
   position: relative;
   overflow: hidden;
 }
@@ -22,13 +22,18 @@
 .lgcy-contact__left::before {
   content: '';
   position: absolute;
-  top: 30%;
-  left: -60px;
-  width: 320px;
-  height: 320px;
-  background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 70%);
-  filter: blur(40px);
+  top: 20%;
+  left: -80px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+  filter: blur(50px);
   pointer-events: none;
+}
+
+.lgcy-contact__left-top {
+  position: relative;
+  z-index: 1;
 }
 
 .lgcy-contact__eyebrow {
@@ -48,24 +53,16 @@
   letter-spacing: -0.03em;
   color: #fff;
   line-height: 1;
-  margin: 0 0 32px;
-}
-
-.lgcy-contact__tagline {
-  font-family: 'Inter', sans-serif;
-  font-weight: 300;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  color: rgba(255,255,255,0.4);
-  line-height: 1.6;
   margin: 0;
-  max-width: 220px;
 }
 
-/* ── Right Panel (white) ─────────────────────────────────────────────── */
+/* ── Right Panel (white + gradient) ─────────────────────────────────── */
 
 .lgcy-contact__right {
-  background: linear-gradient(145deg, #ffffff 0%, #f4f4f4 60%, #ececec 100%);
+  background:
+    radial-gradient(ellipse at 10% 90%, rgba(200,200,200,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 10%, rgba(180,180,180,0.12) 0%, transparent 50%),
+    linear-gradient(160deg, #ffffff 0%, #f5f5f5 50%, #eeeeee 100%);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -154,7 +151,6 @@
   background: #222;
 }
 
-/* Status messages */
 .lgcy-contact__success {
   font-family: 'Inter', sans-serif;
   font-size: 13px;
@@ -167,6 +163,90 @@
   font-size: 12px;
   color: #c00;
   margin-bottom: 24px;
+}
+
+/* ── FAQ (dark panel) ────────────────────────────────────────────────── */
+
+.lgcy-faq {
+  position: relative;
+  z-index: 1;
+  margin-top: 56px;
+}
+
+.lgcy-faq__eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin: 0 0 20px;
+}
+
+.lgcy-faq__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.lgcy-faq__item {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.lgcy-faq__question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 16px 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  text-align: left;
+  gap: 12px;
+  transition: color 0.2s ease;
+}
+
+.lgcy-faq__question:hover {
+  color: #fff;
+}
+
+.lgcy-faq__icon {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  color: rgba(255,255,255,0.3);
+}
+
+.lgcy-faq__item.is-open .lgcy-faq__icon {
+  transform: rotate(180deg);
+  color: rgba(255,255,255,0.6);
+}
+
+.lgcy-faq__item.is-open .lgcy-faq__question {
+  color: #fff;
+}
+
+.lgcy-faq__answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.lgcy-faq__item.is-open .lgcy-faq__answer {
+  max-height: 200px;
+}
+
+.lgcy-faq__answer p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.45);
+  padding-bottom: 16px;
+  margin: 0;
 }
 
 /* ── Entrance animations ─────────────────────────────────────────────── */
@@ -191,110 +271,6 @@
   transform: translateX(0);
 }
 
-/* ── FAQ Section ─────────────────────────────────────────────────────── */
-
-.lgcy-faq {
-  background: #fff;
-  padding: 100px 60px;
-  border-top: 1px solid #ebebeb;
-}
-
-.lgcy-faq__inner {
-  max-width: 760px;
-  margin: 0 auto;
-}
-
-.lgcy-faq__eyebrow {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: 10px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: #999;
-  margin: 0 0 16px;
-}
-
-.lgcy-faq__heading {
-  font-family: 'Inter', sans-serif;
-  font-weight: 900;
-  font-size: 36px;
-  letter-spacing: -0.03em;
-  color: #000;
-  margin: 0 0 56px;
-}
-
-.lgcy-faq__list {
-  display: flex;
-  flex-direction: column;
-}
-
-.lgcy-faq__item {
-  border-bottom: 1px solid #e8e8e8;
-}
-
-.lgcy-faq__question {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: none;
-  border: none;
-  padding: 22px 0;
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  font-size: 15px;
-  color: #000;
-  cursor: pointer;
-  text-align: left;
-  gap: 16px;
-}
-
-.lgcy-faq__icon {
-  flex-shrink: 0;
-  transition: transform 0.3s ease;
-  color: #999;
-}
-
-.lgcy-faq__item.is-open .lgcy-faq__icon {
-  transform: rotate(180deg);
-}
-
-.lgcy-faq__answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.35s ease;
-}
-
-.lgcy-faq__item.is-open .lgcy-faq__answer {
-  max-height: 300px;
-}
-
-.lgcy-faq__answer p {
-  font-family: 'Inter', sans-serif;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 1.7;
-  color: #666;
-  padding-bottom: 22px;
-  margin: 0;
-}
-
-/* FAQ entrance animation */
-.lgcy-anim-faq {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
-}
-.lgcy-anim-faq--in {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ── Header: force dark icons on right panel, white on left ──────────── */
-#shopify-section-header .header-wrapper {
-  background-color: transparent !important;
-}
-
 /* ── Mobile ──────────────────────────────────────────────────────────── */
 
 @media screen and (max-width: 749px) {
@@ -305,11 +281,7 @@
 
   .lgcy-contact__left {
     padding: 80px 28px 48px;
-    min-height: 280px;
-  }
-
-  .lgcy-contact__left::before {
-    font-size: 140px;
+    min-height: 360px;
   }
 
   .lgcy-contact__heading {
@@ -323,14 +295,5 @@
   .lgcy-contact__row {
     grid-template-columns: 1fr;
     gap: 20px;
-  }
-
-  .lgcy-faq {
-    padding: 60px 24px;
-  }
-
-  .lgcy-faq__heading {
-    font-size: 28px;
-    margin-bottom: 40px;
   }
 }
