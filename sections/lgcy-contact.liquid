@@ -1,0 +1,109 @@
+{{ 'lgcy-contact.css' | asset_url | stylesheet_tag }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+
+<section class="lgcy-contact">
+  <div class="lgcy-contact__inner">
+
+    <!-- Left column -->
+    <div class="lgcy-contact__left">
+      <h1 class="lgcy-contact__heading">LET'S TALK.</h1>
+      <p class="lgcy-contact__sub">We respond within 24 hours.</p>
+      {%- if section.settings.contact_email != blank -%}
+        <a class="lgcy-contact__email" href="mailto:{{ section.settings.contact_email }}">
+          {{ section.settings.contact_email }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <!-- Right column: form -->
+    <div class="lgcy-contact__right">
+      {%- form 'contact', id: 'LgcyContactForm' -%}
+
+        {%- if form.posted_successfully? -%}
+          <p class="lgcy-contact__success">Message sent — we'll be in touch soon.</p>
+        {%- elsif form.errors -%}
+          <p class="lgcy-contact__error">
+            {{ form.errors.translated_fields.email | capitalize }}
+            {{ form.errors.messages.email }}
+          </p>
+        {%- endif -%}
+
+        <!-- Name + Email row -->
+        <div class="lgcy-contact__row">
+          <div class="lgcy-field">
+            <input
+              class="lgcy-field__input"
+              type="text"
+              id="LgcyContactForm-name"
+              name="contact[{{ 'templates.contact.form.name' | t }}]"
+              autocomplete="name"
+              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+              placeholder="{{ 'templates.contact.form.name' | t }}"
+            >
+            <label class="lgcy-field__label" for="LgcyContactForm-name">
+              {{ 'templates.contact.form.name' | t }}
+            </label>
+          </div>
+          <div class="lgcy-field">
+            <input
+              class="lgcy-field__input"
+              type="email"
+              id="LgcyContactForm-email"
+              name="contact[email]"
+              autocomplete="email"
+              spellcheck="false"
+              autocapitalize="off"
+              aria-required="true"
+              {% if form.errors contains 'email' %}aria-invalid="true"{% endif %}
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              placeholder="{{ 'templates.contact.form.email' | t }}"
+            >
+            <label class="lgcy-field__label" for="LgcyContactForm-email">
+              {{ 'templates.contact.form.email' | t }}
+            </label>
+          </div>
+        </div>
+
+        <!-- Message -->
+        <div class="lgcy-field lgcy-field--full">
+          <textarea
+            class="lgcy-field__input lgcy-field__textarea"
+            id="LgcyContactForm-body"
+            name="contact[{{ 'templates.contact.form.comment' | t }}]"
+            placeholder="{{ 'templates.contact.form.comment' | t }}"
+          >{{- form.body -}}</textarea>
+          <label class="lgcy-field__label" for="LgcyContactForm-body">
+            {{ 'templates.contact.form.comment' | t }}
+          </label>
+        </div>
+
+        <button type="submit" class="lgcy-contact__submit">SEND MESSAGE</button>
+
+      {%- endform -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LGCY Contact",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Contact email",
+      "default": "hello@lgcyclothing.com"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LGCY Contact"
+    }
+  ]
+}
+{% endschema %}
