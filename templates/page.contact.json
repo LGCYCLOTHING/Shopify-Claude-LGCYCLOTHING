@@ -2,9 +2,38 @@
   "sections": {
     "lgcy-contact": {
       "type": "lgcy-contact",
-      "settings": {
-        "contact_email": "hello@lgcyclothing.com"
-      }
+      "blocks": {
+        "faq1": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "Domestic orders ship within 2–4 business days. International orders typically arrive within 7–14 business days."
+          }
+        },
+        "faq2": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I exchange an item?",
+            "answer": "Yes — reach out via this form within 30 days of receiving your order and we'll sort it out."
+          }
+        },
+        "faq3": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "We ship worldwide. Duties and taxes may apply depending on your country."
+          }
+        },
+        "faq4": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I track my order?",
+            "answer": "You'll receive a tracking link via email once your order ships. Check your spam folder or contact us if you haven't received it."
+          }
+        }
+      },
+      "block_order": ["faq1", "faq2", "faq3", "faq4"],
+      "settings": {}
     }
   },
   "order": ["lgcy-contact"]
