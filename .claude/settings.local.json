@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(shopify theme *)"
+      "Bash(shopify theme *)",
+      "Skill(update-config)",
+      "Skill(update-config:*)"
     ]
   }
 }

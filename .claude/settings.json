@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"c:\\Users\\zaina\\OneDrive\\Desktop\\LGCYCLOTHING- CODE\" && git add . && git commit -m \"auto: update theme files\" && git push origin main 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
+  }
+}
