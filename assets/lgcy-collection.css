@@ -1,0 +1,253 @@
+/* ── Collection Hero ─────────────────────────────────────────────────── */
+
+.lgcy-col-hero {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.lgcy-col-hero--visible {
+  opacity: 1;
+}
+
+.lgcy-col-hero__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.04);
+  transition: transform 1.2s ease;
+}
+
+.lgcy-col-hero--visible .lgcy-col-hero__bg {
+  transform: scale(1);
+}
+
+.lgcy-col-hero__bg--dark {
+  background: #111;
+}
+
+.lgcy-col-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.6) 100%);
+  z-index: 1;
+}
+
+.lgcy-col-hero__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.lgcy-col-hero__title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: 48px;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin: 0 0 12px;
+  line-height: 1;
+}
+
+.lgcy-col-hero__sub {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+/* ── Product Grid overrides ──────────────────────────────────────────── */
+
+.collection .grid {
+  --grid-desktop-horizontal-spacing: 24px !important;
+  --grid-desktop-vertical-spacing: 24px !important;
+  --grid-mobile-horizontal-spacing: 16px !important;
+  --grid-mobile-vertical-spacing: 16px !important;
+}
+
+/* 3 cols desktop */
+@media screen and (min-width: 990px) {
+  .collection .grid--3-col-desktop {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  .collection .grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* 2 cols tablet */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .collection .grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* 1 col mobile */
+@media screen and (max-width: 749px) {
+  .collection .grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Card border */
+.collection .card-wrapper {
+  border: 1px solid #e5e5e5;
+}
+
+/* Product title */
+.collection .card__heading,
+.collection .card__heading a,
+.collection .card__heading .link {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  color: #111 !important;
+}
+
+/* Price */
+.collection .price__regular .price-item,
+.collection .price .price-item,
+.collection .price {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 300 !important;
+  font-size: 13px !important;
+  color: #555 !important;
+}
+
+/* Hover image scale */
+.collection .card__media,
+.collection .media {
+  overflow: hidden;
+}
+
+.collection .card__media img,
+.collection .media img {
+  transition: transform 0.4s ease !important;
+}
+
+.collection .card-wrapper:hover .card__media img,
+.collection .card-wrapper:hover .media img {
+  transform: scale(1.03) !important;
+}
+
+/* ── FAQ Section ─────────────────────────────────────────────────────── */
+
+.lgcy-faq-clean {
+  background: #fff;
+  padding: 80px 60px;
+}
+
+.lgcy-faq-clean__inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.lgcy-faq-clean__eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #111;
+  margin: 0 0 10px;
+}
+
+.lgcy-faq-clean__subtitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  color: #999;
+  margin: 0 0 48px;
+}
+
+.lgcy-faq-clean__item {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.lgcy-faq-clean__item:first-of-type {
+  border-top: 1px solid #e5e5e5;
+}
+
+.lgcy-faq-clean__question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 20px 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #111;
+  cursor: pointer;
+  text-align: left;
+  gap: 16px;
+}
+
+.lgcy-faq-clean__chevron {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  color: #111;
+}
+
+.lgcy-faq-clean__item.is-open .lgcy-faq-clean__chevron {
+  transform: rotate(180deg);
+}
+
+.lgcy-faq-clean__answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.lgcy-faq-clean__item.is-open .lgcy-faq-clean__answer {
+  max-height: 400px;
+}
+
+.lgcy-faq-clean__answer-inner {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #666;
+  padding-bottom: 20px;
+}
+
+.lgcy-faq-clean__answer-inner p,
+.lgcy-faq-clean__answer-inner a {
+  margin: 0 0 8px;
+  color: #666;
+}
+
+.lgcy-faq-clean__answer-inner strong {
+  font-weight: 500;
+  color: #444;
+}
+
+@media screen and (max-width: 749px) {
+  .lgcy-faq-clean {
+    padding: 60px 24px;
+  }
+
+  .lgcy-col-hero__title {
+    font-size: 32px;
+  }
+
+  .lgcy-col-hero__sub {
+    font-size: 13px;
+  }
+}
