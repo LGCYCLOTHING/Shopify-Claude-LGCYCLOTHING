@@ -303,7 +303,7 @@
 
 </head>
 
-  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}{% if template.name == 'product' %} template-product{% endif %}">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
@@ -312,13 +312,15 @@
       {%- render 'cart-drawer' -%}
     {%- endif -%}
 
-    {% sections 'header-group' %}
+    <div id="page-content">
+      {% sections 'header-group' %}
 
-    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
-      {{ content_for_layout }}
-    </main>
+      <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+        {{ content_for_layout }}
+      </main>
 
-    {% sections 'footer-group' %}
+      {% sections 'footer-group' %}
+    </div>
 
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
@@ -464,6 +466,57 @@ svg.icon.icon-cart {
   requestAnimationFrame(raf);
 </script>
 
-  
+
+{% if template == 'index' %}
+<script>
+(function() {
+  function initHeroExit() {
+    var label = document.getElementById('explore-label');
+    var indicator = document.getElementById('scroll-indicator');
+    var glasses = document.getElementById('glassesReveal');
+
+    if (!label || !indicator || !glasses) return;
+
+    var glassesSection = glasses.closest('.shopify-section') || glasses;
+    var ticking = false;
+
+    function update() {
+      var rect = glassesSection.getBoundingClientRect();
+      var winH = window.innerHeight;
+      var isMobile = window.innerWidth <= 768;
+      var baseY = isMobile ? 48 : 100;
+      var yShift = 0;
+
+      if (rect.bottom <= 0) {
+        yShift = winH;
+      } else if (rect.bottom < winH) {
+        yShift = winH - rect.bottom;
+      }
+
+      var newY = baseY - yShift;
+      var t = 'translate(-50%, ' + newY + 'px)';
+      indicator.style.setProperty('transform', t, 'important');
+      label.style.setProperty('transform', t, 'important');
+
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroExit);
+  } else {
+    initHeroExit();
+  }
+})();
+</script>
+{% endif %}
+
 </body>
 </html>

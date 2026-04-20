@@ -76,11 +76,12 @@
     text-transform: uppercase;
     outline: 1px solid rgba(255,255,255,0.8);
     background: rgba(255,255,255,0.85);
-    color: #000;
+    color: #000 !important;
     border: none;
     cursor: pointer;
     transition: outline-color 0.15s ease, background 0.15s ease;
     -webkit-tap-highlight-color: transparent;
+    -webkit-text-fill-color: #000;
   }
 
   .lgcy-card__size-btn:hover {
@@ -122,16 +123,40 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  .lgcy-card__plus-btn {
+    color: #000;
+  }
+
   .lgcy-card__plus-btn svg {
     width: 14px;
     height: 14px;
-    stroke: #000;
+    stroke: #000 !important;
   }
 
   /* JS-controlled hidden state for the plus button */
   .lgcy-card__plus-btn.lgcy-plus--hidden {
     opacity: 0;
     pointer-events: none;
+  }
+
+  /* Toggle between + and × icons */
+  .lgcy-close-icon { display: none; }
+  .lgcy-card__plus-btn.lgcy-panel-open .lgcy-plus-icon { display: none; }
+  .lgcy-card__plus-btn.lgcy-panel-open .lgcy-close-icon { display: block; }
+
+  /* Mobile: size row scrolls horizontally */
+  @media (hover: none) and (pointer: coarse) {
+    .lgcy-card__sizes {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      justify-content: flex-start;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .lgcy-card__sizes::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   /* Card footer */
@@ -252,6 +277,16 @@
       assign size_option_index = forloop.index0
     endif
   endfor
+  assign has_sizes = false
+  if product.variants.size > 1
+    assign has_sizes = true
+  elsif product.variants.size == 1 and product.variants.first.title != 'Default Title'
+    assign has_sizes = true
+  endif
+  assign single_variant_id = ''
+  unless has_sizes
+    assign single_variant_id = product.variants.first.id | append: ''
+  endunless
 -%}
 
 <a
@@ -277,6 +312,8 @@
       <img
         src="{{ hover_img | image_url: width: 800 }}"
         alt="{{ hover_img.alt | escape | default: product_title }}"
+        width="{{ hover_img.preview_image.width }}"
+        height="{{ hover_img.preview_image.height }}"
         loading="lazy"
         class="lgcy-card__image lgcy-card__image--hover"
       >
@@ -286,37 +323,43 @@
       type="button"
       class="lgcy-card__plus-btn"
       data-plus-btn
+      {% unless has_sizes %}data-single-variant="{{ single_variant_id }}"{% endunless %}
       aria-label="Quick add {{ product_title | escape }}"
     >
-      <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M7 1v12M1 7h12" stroke-width="1.5" stroke-linecap="round"/>
+      <svg class="lgcy-plus-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="14" height="14">
+        <path d="M7 1v12M1 7h12" stroke-width="1.5" stroke-linecap="round" stroke="currentColor"/>
+      </svg>
+      <svg class="lgcy-close-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="14" height="14">
+        <path d="M1 1l12 12M13 1L1 13" stroke-width="1.5" stroke-linecap="round" stroke="currentColor"/>
       </svg>
     </button>
 
-    <div class="lgcy-card__quick-add" data-quick-add-panel>
-      <div class="lgcy-card__sizes">
-        {%- for variant in product.variants -%}
-          {%- if size_option_index == 0 -%}
-            {%- assign size_label = variant.option1 -%}
-          {%- elsif size_option_index == 1 -%}
-            {%- assign size_label = variant.option2 -%}
-          {%- elsif size_option_index == 2 -%}
-            {%- assign size_label = variant.option3 -%}
-          {%- else -%}
-            {%- assign size_label = variant.title | split: ' / ' | first -%}
-          {%- endif -%}
-          <button
-            type="button"
-            class="lgcy-card__size-btn"
-            data-variant-id="{{ variant.id }}"
-            {% unless variant.available %}disabled{% endunless %}
-            aria-label="Add {{ size_label | escape }} to cart"
-          >
-            {{- size_label -}}
-          </button>
-        {%- endfor -%}
+    {%- if has_sizes -%}
+      <div class="lgcy-card__quick-add" data-quick-add-panel>
+        <div class="lgcy-card__sizes">
+          {%- for variant in product.variants -%}
+            {%- if size_option_index == 0 -%}
+              {%- assign size_label = variant.option1 -%}
+            {%- elsif size_option_index == 1 -%}
+              {%- assign size_label = variant.option2 -%}
+            {%- elsif size_option_index == 2 -%}
+              {%- assign size_label = variant.option3 -%}
+            {%- else -%}
+              {%- assign size_label = variant.title | split: ' / ' | first -%}
+            {%- endif -%}
+            <button
+              type="button"
+              class="lgcy-card__size-btn"
+              data-variant-id="{{ variant.id }}"
+              {% unless variant.available %}disabled{% endunless %}
+              aria-label="Add {{ size_label | escape }} to cart"
+            >
+              {{- size_label -}}
+            </button>
+          {%- endfor -%}
+        </div>
       </div>
-    </div>
+    {%- endif -%}
 
   </div>
 
@@ -392,10 +435,12 @@
 
   document.querySelectorAll('[data-quick-add-wrap]').forEach(bindWrap);
 
-  /* ── mouseover: plus btn hover → hide plus + open panel ── */
+  /* ── mouseover: plus btn hover → hide plus + open panel (multi-variant only) ── */
   document.addEventListener('mouseover', function(e) {
     var plusBtn = e.target.closest('[data-plus-btn]');
     if (plusBtn) {
+      /* Single-variant: keep the + visible, don't open any panel */
+      if (plusBtn.getAttribute('data-single-variant')) return;
       var wrap = plusBtn.closest('[data-quick-add-wrap]');
       if (wrap) {
         hidePlus(wrap);
@@ -444,91 +489,16 @@
     }
   });
 
-  /* ── Update cart using Dawn's Section Rendering API ── */
-  /* Dawn re-renders the cart drawer by fetching the section HTML,
-     then swaps it in — exactly how Dawn's own quick-add works. */
-  function updateCartSections(callback) {
-    fetch('/?sections=cart-drawer,cart-icon-bubble', {
-      headers: { 'X-Requested-With': 'XMLHttpRequest' }
-    })
-    .then(function(r) { return r.json(); })
-    .then(function(sections) {
-
-      /* Update cart-drawer HTML */
-      if (sections['cart-drawer']) {
-        var drawerEl = document.getElementById('cart-drawer');
-        if (!drawerEl) drawerEl = document.querySelector('cart-drawer');
-        if (drawerEl) {
-          var tmp = document.createElement('div');
-          tmp.innerHTML = sections['cart-drawer'];
-          var newDrawer = tmp.querySelector('cart-drawer') || tmp.firstElementChild;
-          if (newDrawer) {
-            /* Swap inner HTML to preserve the custom element & its event listeners */
-            drawerEl.innerHTML = newDrawer.innerHTML;
-          }
-        }
-      }
-
-      /* Update cart icon bubble */
-      if (sections['cart-icon-bubble']) {
-        var bubbleEl = document.getElementById('cart-icon-bubble');
-        if (!bubbleEl) bubbleEl = document.querySelector('#cart-icon-bubble, .cart-count-bubble');
-        if (bubbleEl) {
-          var tmp2 = document.createElement('div');
-          tmp2.innerHTML = sections['cart-icon-bubble'];
-          var newBubble = tmp2.firstElementChild;
-          if (newBubble) bubbleEl.innerHTML = newBubble.innerHTML;
-        }
-      }
-
-      if (callback) callback();
-    })
-    .catch(function() {
-      if (callback) callback();
-    });
-  }
-
-  /* ── Open the cart drawer ── */
-  /* Dawn themes use a global publish/subscribe event bus.
-     'cart-drawer:open' is the canonical event Dawn listens for. */
-  function openCartDrawer() {
-    /* 1. Try Dawn's publish() event bus (Dawn 9+) */
-    if (typeof window.publish === 'function') {
-      window.publish('cart-drawer:open');
-      return;
-    }
-
-    /* 2. Try dispatching on document (some Dawn versions listen here) */
-    document.dispatchEvent(new CustomEvent('cart-drawer:open', { bubbles: true }));
-
-    /* 3. Directly call open() on the cart-drawer custom element */
-    var drawerEl = document.getElementById('cart-drawer');
-    if (!drawerEl) drawerEl = document.querySelector('cart-drawer');
-    if (!drawerEl) return;
-
-    drawerEl.removeAttribute('hidden');
-
-    /* Dawn's CartDrawer custom element exposes open() */
-    if (typeof drawerEl.open === 'function') {
-      drawerEl.open();
-      return;
-    }
-
-    /* 4. Last resort: manually remove the hidden attribute and add 'active' class
-       which Dawn uses to show the drawer + overlay */
-    drawerEl.classList.add('active');
-    var overlay = document.getElementById('CartDrawer-Overlay');
-    if (!overlay) overlay = document.querySelector('.drawer__overlay, .cart-drawer__overlay');
-    if (overlay) {
-      overlay.removeAttribute('hidden');
-      overlay.classList.add('active');
-    }
-  }
-
-  /* ── Add to cart ── */
+  /* ── Add to cart — uses Dawn's renderContents so the drawer opens exactly
+     like the native add-to-cart button does ── */
   function addToCart(variantId, btn) {
     btn.classList.add('lgcy-adding');
     btn.disabled = true;
+
+    var cartDrawer = document.querySelector('cart-drawer');
+    var sections = cartDrawer && typeof cartDrawer.getSectionsToRender === 'function'
+      ? cartDrawer.getSectionsToRender().map(function(s) { return s.id; })
+      : ['cart-drawer', 'cart-icon-bubble'];
 
     fetch('/cart/add.js', {
       method: 'POST',
@@ -536,7 +506,12 @@
         'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest'
       },
-      body: JSON.stringify({ id: variantId, quantity: 1 })
+      body: JSON.stringify({
+        id: variantId,
+        quantity: 1,
+        sections: sections,
+        sections_url: window.location.pathname
+      })
     })
     .then(function(res) { return res.json(); })
     .then(function(data) {
@@ -544,10 +519,13 @@
         showToast(data.description || 'Could not add to cart');
         return;
       }
-      updateCartSections(function() {
-        openCartDrawer();
+      /* Hand off to Dawn's CartDrawer.renderContents() — this updates the
+         drawer HTML with fresh cart data AND opens the drawer */
+      if (cartDrawer && typeof cartDrawer.renderContents === 'function') {
+        cartDrawer.renderContents(data);
+      } else {
         showToast('Added to cart');
-      });
+      }
     })
     .catch(function() {
       showToast('Something went wrong');
@@ -558,14 +536,79 @@
     });
   }
 
-  /* ── Size button click → add to cart ── */
+  /* ── Mobile helper ── */
+  function isTouchDevice() {
+    return window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  }
+
+  function closeMobilePanel(wrap) {
+    closePanel(wrap);
+    var btn = wrap.querySelector('[data-plus-btn]');
+    if (btn) btn.classList.remove('lgcy-panel-open');
+  }
+
+  function closeAllMobilePanels() {
+    document.querySelectorAll('.lgcy-card__plus-btn.lgcy-panel-open').forEach(function(b) {
+      var w = b.closest('[data-quick-add-wrap]');
+      if (w) closeMobilePanel(w);
+    });
+  }
+
+  /* ── Click handlers ── */
   document.addEventListener('click', function(e) {
+    /* Tapping outside any card on mobile → close open panels */
+    if (isTouchDevice() && !e.target.closest('[data-quick-add-wrap]')) {
+      closeAllMobilePanels();
+      return;
+    }
+
+    /* Plus button clicked */
+    var plusBtn = e.target.closest('[data-plus-btn]');
+    if (plusBtn) {
+      var singleId = plusBtn.getAttribute('data-single-variant');
+
+      /* Single-variant: add directly to cart on all devices */
+      if (singleId) {
+        e.preventDefault();
+        e.stopPropagation();
+        addToCart(parseInt(singleId, 10), plusBtn);
+        return;
+      }
+
+      /* Multi-variant on mobile: toggle size panel open/closed */
+      if (isTouchDevice()) {
+        e.preventDefault();
+        e.stopPropagation();
+        var wrap = plusBtn.closest('[data-quick-add-wrap]');
+        if (!wrap) return;
+        var isOpen = plusBtn.classList.contains('lgcy-panel-open');
+        /* Close any other open panels first */
+        closeAllMobilePanels();
+        if (!isOpen) {
+          openPanel(wrap);
+          plusBtn.classList.add('lgcy-panel-open');
+        }
+        return;
+      }
+
+      /* Desktop: do nothing on click (hover handles it) */
+      return;
+    }
+
+    /* Size button → add selected variant to cart */
     var sizeBtn = e.target.closest('.lgcy-card__size-btn');
     if (sizeBtn && !sizeBtn.disabled) {
       e.preventDefault();
       e.stopPropagation();
       var variantId = sizeBtn.getAttribute('data-variant-id');
-      if (variantId) addToCart(parseInt(variantId, 10), sizeBtn);
+      if (variantId) {
+        addToCart(parseInt(variantId, 10), sizeBtn);
+        /* Close panel on mobile after size selection */
+        if (isTouchDevice()) {
+          var wrap = sizeBtn.closest('[data-quick-add-wrap]');
+          if (wrap) closeMobilePanel(wrap);
+        }
+      }
     }
   });
 

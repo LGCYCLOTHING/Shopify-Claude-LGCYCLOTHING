@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "lgcy-about": {
+      "type": "lgcy-about",
+      "settings": {
+        "hero_image": "shopify://shop_images/Blurry_road.jpg"
+      }
+    }
+  },
+  "order": ["lgcy-about"]
+}

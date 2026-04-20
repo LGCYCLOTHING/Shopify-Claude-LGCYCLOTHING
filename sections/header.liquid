@@ -1,11 +1,40 @@
 <style>
+  /* Pin the entire header section to the very top of the viewport */
+  .section-header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 1000 !important;
+    margin: 0 !important;
+  }
+
+  sticky-header {
+    display: block;
+    position: static !important;
+  }
+
+  .shopify-section-header-sticky {
+    display: block;
+  }
+
+  /* Full-width header — items hug the screen edges */
+  .header.page-width {
+    max-width: 100% !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+
   .header-wrapper {
-    position: absolute;
+    position: relative !important;
+    top: auto !important;
     width: 100%;
     background: transparent !important;
   }
 
   .header-wrapper .list-menu span,
+  .lgcy-shop-btn,
   details[open]>.header__menu-item,
   .header-wrapper summary svg,
   .header-wrapper a svg,
@@ -13,8 +42,21 @@
   .header-wrapper details>span,
   .header-wrapper .disclosure__button>span,
   .header-wrapper .disclosure__button svg {
-    color: #ffffff;
+    color: {% if request.page_type == 'product' %}#000000{% else %}#ffffff{% endif %} !important;
   }
+
+  {% if request.page_type == 'product' %}
+  .header__heading-logo {
+    filter: invert(1);
+    mix-blend-mode: normal;
+  }
+
+  @media screen and (max-width: 989px) {
+    .header-wrapper {
+      position: relative !important;
+    }
+  }
+  {% endif %}
 
   .header-wrapper--border-bottom {
     border-bottom: .1rem solid rgba(255, 255, 255, .08);
@@ -32,8 +74,9 @@
 {%- unless request.page_type == 'index' -%}
 <style>
   .section-header {
-    position: relative;
-    z-index: 3;
+    position: fixed !important;
+    top: 0 !important;
+    z-index: 1000 !important;
   }
   .header__inline-menu .list-menu__item--link,
 .lgcy-shop-btn,
@@ -132,14 +175,9 @@
   }
 
   .section-header {
-    position: sticky; /* This is for fixing a Safari z-index issue. PR #2147 */
-    margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
-  }
-
-  @media screen and (min-width: 750px) {
-    .section-header {
-      margin-bottom: {{ section.settings.margin_bottom }}px;
-    }
+    position: fixed !important;
+    top: 0 !important;
+    margin: 0 !important;
   }
 
   @media screen and (min-width: 990px) {

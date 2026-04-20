@@ -1,0 +1,121 @@
+{% comment %}theme-check-disable UndefinedObject{% endcomment %}
+{{ 'lgcy-about.css' | asset_url | stylesheet_tag }}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&family=Inter:wght@300;400;900&display=swap" rel="stylesheet">
+
+{%- style -%}
+  body { background-color: #000; }
+{%- endstyle -%}
+
+<!-- ── Section 1: Hero ─────────────────────────────────────────────────── -->
+<section class="lgcy-hero" aria-label="Hero">
+  {%- if section.settings.hero_image != blank -%}
+    <div
+      class="lgcy-hero__bg"
+      style="background-image: url('{{ section.settings.hero_image | image_url: width: 2400 }}');"
+    ></div>
+  {%- else -%}
+    {%- assign fallback_url = 'Blurry_road.jpg' | file_url -%}
+    <div
+      class="lgcy-hero__bg"
+      style="background-image: url('{{ fallback_url }}');"
+    ></div>
+  {%- endif -%}
+  <div class="lgcy-hero__overlay"></div>
+  <div class="lgcy-hero__content">
+    <h1 class="lgcy-hero__title">A PATH TO LEGACY.</h1>
+  </div>
+  <div class="lgcy-hero__scroll" aria-hidden="true">
+    <span class="lgcy-hero__scroll-arrow">↓</span>
+  </div>
+</section>
+
+<!-- ── Section 2: Brand Statement ─────────────────────────────────────── -->
+<section class="lgcy-statement lgcy-reveal" aria-label="Brand statement">
+  <div class="lgcy-statement__inner page-width">
+    <div class="lgcy-statement__number" aria-hidden="true">01</div>
+    <div class="lgcy-statement__content">
+      <p class="lgcy-statement__headline">We don't make clothes. We build legacies.</p>
+      <p class="lgcy-statement__body">LGCYCLOTHING was built for those who move with intention. Every piece is a marker — not just of style, but of a standard. Worn by the visionary. Made for the legacy.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 3: Values Grid ─────────────────────────────────────────── -->
+<section class="lgcy-values lgcy-reveal" aria-label="Brand values">
+  <div class="lgcy-values__grid page-width">
+    <div class="lgcy-values__col">
+      <span class="lgcy-values__num">01</span>
+      <h2 class="lgcy-values__word">FAITH</h2>
+      <p class="lgcy-values__desc">Built on belief before proof. Every move made with conviction.</p>
+    </div>
+    <div class="lgcy-values__col">
+      <span class="lgcy-values__num">02</span>
+      <h2 class="lgcy-values__word">PURPOSE</h2>
+      <p class="lgcy-values__desc">Intentional in design. Deliberate in direction. Nothing wasted.</p>
+    </div>
+    <div class="lgcy-values__col">
+      <span class="lgcy-values__num">03</span>
+      <h2 class="lgcy-values__word">LEGACY</h2>
+      <p class="lgcy-values__desc">What you leave behind outlives what you wore. Make it matter.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Section 4: Pull Quote ───────────────────────────────────────────── -->
+<section class="lgcy-quote lgcy-reveal" aria-label="Brand quote">
+  <div class="lgcy-quote__inner">
+    <p class="lgcy-quote__text">&#8216;Iconic Visionary.&#8217;</p>
+  </div>
+</section>
+
+<!-- ── Section 5: Closing ─────────────────────────────────────────────── -->
+<section class="lgcy-closing lgcy-reveal" aria-label="Closing">
+  <div class="lgcy-closing__inner page-width">
+    <div class="lgcy-closing__left">
+      <span class="lgcy-closing__brand">LGCYCLOTHING</span>
+    </div>
+    <div class="lgcy-closing__right">
+      <span class="lgcy-closing__est">Est. 2026</span>
+      <a href="{{ routes.all_products_collection_url }}" class="lgcy-closing__btn">SHOP NOW →</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var els = document.querySelectorAll('.lgcy-reveal');
+    if (!els.length || !window.IntersectionObserver) {
+      els.forEach(function (el) { el.classList.add('lgcy-reveal--visible'); });
+      return;
+    }
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('lgcy-reveal--visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    els.forEach(function (el) { observer.observe(el); });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "About Page",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Background Image"
+    }
+  ]
+}
+{% endschema %}

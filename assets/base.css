@@ -2113,7 +2113,7 @@ input[type='checkbox'] {
 .cart-count-bubble {
   position: absolute;
   background-color: rgb(var(--color-button));
-  color: rgb(var(--color-button-text));
+  color: rgb(0, 0, 0);
   height: 1.7rem;
   width: 1.7rem;
   border-radius: 100%;
@@ -2124,6 +2124,12 @@ input[type='checkbox'] {
   bottom: 0.8rem;
   left: 2.2rem;
   line-height: calc(1 + 0.1 / var(--font-body-scale));
+}
+
+/* product page cart count bubble override */
+.template-product .cart-count-bubble {
+  background-color: rgb(92, 92, 92);
+  color: rgb(0, 0, 0);
 }
 
 /* utility-bar */
@@ -3747,6 +3753,41 @@ header {
   background: transparent !important;
   background-color: transparent !important;
 }
+/* ================================
+   PRODUCT PAGE: BLACK HEADER TEXT
+================================ */
+
+body.template-product .header-wrapper .list-menu span,
+body.template-product .header-wrapper .header__menu-item,
+body.template-product details[open] > .header__menu-item,
+body.template-product .header-wrapper summary svg,
+body.template-product .header-wrapper a svg,
+body.template-product .header-wrapper h1.header__heading span.h2,
+body.template-product .header-wrapper .disclosure__button > span,
+body.template-product .header-wrapper .disclosure__button svg,
+body.template-product .header-wrapper .header__menu-item span,
+body.template-product .header-wrapper .link {
+  color: #000000 !important;
+  fill: #000000 !important;
+}
+
+body.template-product .header-wrapper svg {
+  color: #000000 !important;
+  fill: currentColor !important;
+}
+
+body.template-product .header-wrapper .header__icon {
+  color: #000000 !important;
+}
+
+/* Mobile hamburger icon on product pages */
+@media (max-width: 989px) {
+  body.template-product details:not([open]) > .header__icon--menu .icon-hamburger,
+  body.template-product details[open] > .header__icon--menu .icon-close {
+    color: #000000 !important;
+  }
+}
+
 /* Fix: Force Inter weight on iOS Safari */
 @media only screen and (max-width: 749px) {
   h1, h2, h3, h4, h5,
