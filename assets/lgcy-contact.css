@@ -1,3 +1,11 @@
+/* ── Invert header on white contact page ────────────────────────────── */
+
+#shopify-section-header .header-wrapper {
+  --color-foreground: 18, 18, 18 !important;
+  --color-background: 255, 255, 255 !important;
+  background-color: #fff !important;
+}
+
 /* ── LGCY Contact Page ───────────────────────────────────────────────── */
 
 .lgcy-contact {
