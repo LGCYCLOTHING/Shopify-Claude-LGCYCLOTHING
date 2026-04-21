@@ -5,12 +5,14 @@ const filePath = path.join(__dirname, 'templates', 'collection.json');
 const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 
 const faqHtml = `<style>
-.lgcy-faq3-section{position:relative;width:100%;padding:7rem 2rem;box-sizing:border-box;background:#0d0d0d;display:flex;align-items:center;justify-content:center;}
+.lgcy-faq3-section{position:relative;width:100%;padding:7rem 2rem;box-sizing:border-box;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.lgcy-faq3-bg{position:absolute;inset:0;background-image:url('https://cdn.shopify.com/s/files/1/0688/4537/1578/files/download_1.jpg');background-size:cover;background-position:center;filter:blur(0px);transform:scale(1.05);}
+.lgcy-faq3-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.62);}
 .lgcy-faq3-inner{position:relative;z-index:1;width:100%;max-width:1000px;}
 .lgcy-faq3-header{margin-bottom:2rem;}
 .lgcy-faq3-eyebrow{font-family:system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;font-size:9px;font-weight:900;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin:0 0 10px;}
 .lgcy-faq3-title{font-family:system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;font-weight:900;font-size:clamp(2.2rem,5vw,3.8rem);letter-spacing:-0.05em;text-transform:uppercase;color:#ffffff;line-height:0.95;margin:0;}
-.lgcy-faq3-card{background:rgba(255,255,255,0.03);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);border-radius:0;}
+.lgcy-faq3-card{background:rgba(255,255,255,0.04);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,0.1);border-radius:0;}
 .lgcy-faq3-item{border-bottom:1px solid rgba(255,255,255,0.08);}
 .lgcy-faq3-item:last-child{border-bottom:none;}
 .lgcy-faq3-item summary{list-style:none;cursor:pointer;padding:22px 32px;display:flex;align-items:center;justify-content:space-between;gap:2rem;user-select:none;-webkit-tap-highlight-color:transparent;transition:background 0.2s ease;}
@@ -22,14 +24,16 @@ const faqHtml = `<style>
 .lgcy-faq3-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows 0.45s cubic-bezier(0.4,0,0.2,1);}
 .lgcy-faq3-item[open] .lgcy-faq3-body{grid-template-rows:1fr;}
 .lgcy-faq3-body-inner{overflow:hidden;}
-.lgcy-faq3-answer{padding:0 32px 22px 32px;font-family:system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;font-size:13px;line-height:1.9;letter-spacing:-0.01em;color:rgba(255,255,255,0.4);font-weight:400;opacity:0;transform:translateY(-4px);transition:opacity 0.3s ease 0.08s,transform 0.3s ease 0.08s;}
+.lgcy-faq3-answer{padding:0 32px 22px 32px;font-family:system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;font-size:13px;line-height:1.9;letter-spacing:-0.01em;color:rgba(255,255,255,0.45);font-weight:400;opacity:0;transform:translateY(-4px);transition:opacity 0.3s ease 0.08s,transform 0.3s ease 0.08s;}
 .lgcy-faq3-item[open] .lgcy-faq3-answer{opacity:1;transform:translateY(0);}
 .lgcy-faq3-answer p{margin:0 0 0.4rem;}
 .lgcy-faq3-answer p:last-child{margin-bottom:0;}
-.lgcy-faq3-answer strong{font-weight:700;color:rgba(255,255,255,0.65);}
+.lgcy-faq3-answer strong{font-weight:700;color:rgba(255,255,255,0.7);}
 .lgcy-faq3-answer a{color:#ffffff;text-decoration:underline;text-underline-offset:3px;}
 </style>
 <div class="lgcy-faq3-section">
+  <div class="lgcy-faq3-bg"></div>
+  <div class="lgcy-faq3-overlay"></div>
   <div class="lgcy-faq3-inner">
     <div class="lgcy-faq3-header">
       <p class="lgcy-faq3-eyebrow">Support</p>
