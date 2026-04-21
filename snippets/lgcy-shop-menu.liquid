@@ -449,38 +449,7 @@
     background: transparent !important;
   }
 
-  /* ── When panel is open: all header text + icons go black ── */
-  body.lgcy-panel-open .header-wrapper .list-menu span,
-  body.lgcy-panel-open .lgcy-shop-btn,
-  body.lgcy-panel-open .header-wrapper h1.header__heading span,
-  body.lgcy-panel-open .header-wrapper details > span,
-  body.lgcy-panel-open .header-wrapper .disclosure__button > span,
-  body.lgcy-panel-open .header-wrapper summary svg,
-  body.lgcy-panel-open .header-wrapper a svg {
-    color: #000 !important;
-  }
-
-  body.lgcy-panel-open .header__inline-menu .list-menu__item--link,
-  body.lgcy-panel-open .lgcy-shop-btn,
-  body.lgcy-panel-open .header__heading-link,
-  body.lgcy-panel-open .header__icon {
-    color: #000 !important;
-    mix-blend-mode: normal !important;
-  }
-
-  /* Invert the logo to dark when panel is open (white logo → dark) */
-  body.lgcy-panel-open .header__heading-logo {
-    filter: invert(1) !important;
-    mix-blend-mode: normal !important;
-  }
-
-  /* SVG icon paths (cart, search, account) */
-  body.lgcy-panel-open .header__icon svg path,
-  body.lgcy-panel-open .header__icon svg circle,
-  body.lgcy-panel-open .header__icon svg rect {
-    stroke: #000 !important;
-    fill: none;
-  }
+  /* Panel is dark glass — header stays white when open */
 
   /* Smooth color transition on nav items */
   .lgcy-shop-btn,
