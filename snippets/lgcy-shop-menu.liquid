@@ -712,16 +712,10 @@
     {%- endif -%}
 
   </div>
-</div>
+  </div>{%- comment %} end lgcy-panel-content--shop {% endcomment %}
 
-{%- comment %} ── Legacy panel ── {% endcomment %}
-<div
-  class="lgcy-side-panel lgcy-legacy-panel"
-  id="lgcy-legacy-panel"
-  role="dialog"
-  aria-label="Legacy signup"
-  aria-hidden="true"
->
+  {%- comment %} ── Legacy content ── {% endcomment %}
+  <div class="lgcy-panel-content lgcy-panel-content--legacy">
   <div class="lgcy-panel-nav lgcy-legacy-nav">
     <div class="lgcy-legacy-content">
       <p class="lgcy-legacy-eyebrow">The Inner Circle</p>
@@ -756,6 +750,7 @@
       <p class="lgcy-legacy-disclaimer">No spam. Unsubscribe anytime.</p>
     </div>
   </div>
+  </div>{%- comment %} end lgcy-panel-content--legacy {% endcomment %}
 </div>
 
 <style>
