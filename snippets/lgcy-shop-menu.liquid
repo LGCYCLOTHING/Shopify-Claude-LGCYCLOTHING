@@ -707,6 +707,189 @@
   </div>
 </div>
 
+{%- comment %} ── Legacy panel ── {% endcomment %}
+<div
+  class="lgcy-side-panel lgcy-legacy-panel"
+  id="lgcy-legacy-panel"
+  role="dialog"
+  aria-label="Legacy signup"
+  aria-hidden="true"
+>
+  <div class="lgcy-panel-nav lgcy-legacy-nav">
+    <div class="lgcy-legacy-content">
+      <p class="lgcy-legacy-eyebrow">The Inner Circle</p>
+      <h2 class="lgcy-legacy-heading">Join The<br>Legacy.</h2>
+      <p class="lgcy-legacy-sub">Be first. Get exclusive drops, early access to new collections, and member-only discounts — straight to your inbox.</p>
+
+      <ul class="lgcy-legacy-perks">
+        <li>Early access to every drop</li>
+        <li>Member-only discounts</li>
+        <li>Behind the scenes content</li>
+        <li>Free shipping on first order</li>
+      </ul>
+
+      {%- form 'customer', id: 'lgcy-newsletter-form', class: 'lgcy-newsletter-form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter,legacy">
+        <div class="lgcy-newsletter-row">
+          <input
+            type="email"
+            name="contact[email]"
+            class="lgcy-newsletter-input"
+            placeholder="YOUR@EMAIL.COM"
+            autocomplete="email"
+            required
+          >
+          <button type="submit" class="lgcy-newsletter-btn">JOIN</button>
+        </div>
+        {%- if form.posted_successfully? -%}
+          <p class="lgcy-newsletter-success">You're in. Welcome to the Legacy.</p>
+        {%- endif -%}
+      {%- endform -%}
+
+      <p class="lgcy-legacy-disclaimer">No spam. Unsubscribe anytime.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .lgcy-legacy-nav {
+    justify-content: center !important;
+    padding: 60px 40px !important;
+  }
+
+  .lgcy-legacy-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 360px;
+  }
+
+  .lgcy-legacy-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin: 0 0 14px;
+  }
+
+  .lgcy-legacy-heading {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(38px, 6vw, 56px);
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #ffffff;
+    line-height: 1;
+    margin: 0 0 20px;
+  }
+
+  .lgcy-legacy-sub {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.55);
+    margin: 0 0 24px;
+    letter-spacing: 0;
+  }
+
+  .lgcy-legacy-perks {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .lgcy-legacy-perks li {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .lgcy-legacy-perks li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .lgcy-newsletter-form {
+    width: 100%;
+  }
+
+  .lgcy-newsletter-row {
+    display: flex;
+    gap: 0;
+    width: 100%;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .lgcy-newsletter-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 14px 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: #ffffff;
+    text-transform: uppercase;
+  }
+
+  .lgcy-newsletter-input::placeholder {
+    color: rgba(255,255,255,0.3);
+  }
+
+  .lgcy-newsletter-btn {
+    background: #ffffff;
+    border: none;
+    padding: 14px 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #000000;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .lgcy-newsletter-btn:hover {
+    background: rgba(255,255,255,0.85);
+  }
+
+  .lgcy-newsletter-success {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.7);
+    margin: 12px 0 0;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .lgcy-legacy-disclaimer {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.25);
+    margin: 12px 0 0;
+    letter-spacing: 0.04em;
+  }
+</style>
+
 <script>
 (function () {
   if (window.__lgcyShopMenuInit) return;
