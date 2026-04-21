@@ -998,8 +998,10 @@
       legacyBtn.classList.remove('lgcy-active');
       legacyBtn.setAttribute('aria-expanded', 'false');
       legacyPanel.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('lgcy-panel-open');
-      document.body.style.overflow = '';
+      if (!isOpen) {
+        document.body.classList.remove('lgcy-panel-open');
+        document.body.style.overflow = '';
+      }
     }
 
     function scheduleLegacyClose() {
