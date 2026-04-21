@@ -7,6 +7,19 @@
       padding-bottom: calc({{ settings.media_shadow_vertical_offset | at_least: 0 }}px + 2rem);
     }
   }
+
+  .collection-hero__title {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.03em !important;
+  }
+
+  .collection-hero__description,
+  .collection-hero__description p,
+  .collection-hero__description li {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+    font-weight: 500 !important;
+  }
 {%- endstyle -%}
 
 <div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
