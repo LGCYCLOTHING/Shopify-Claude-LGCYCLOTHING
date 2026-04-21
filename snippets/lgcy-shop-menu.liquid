@@ -667,6 +667,8 @@
 
   var hoverTimer;
   var isOpen = false;
+  var mouseInBtn = false;
+  var mouseInPanel = false;
 
   function openPanel() {
     clearTimeout(hoverTimer);
@@ -697,13 +699,16 @@
   }
 
   function scheduleClose() {
-    hoverTimer = setTimeout(closePanel, 150);
+    clearTimeout(hoverTimer);
+    hoverTimer = setTimeout(function () {
+      if (!mouseInBtn && !mouseInPanel) closePanel();
+    }, 200);
   }
 
-  btn.addEventListener('mouseenter', openPanel);
-  btn.addEventListener('mouseleave', scheduleClose);
-  panel.addEventListener('mouseenter', function () { clearTimeout(hoverTimer); });
-  panel.addEventListener('mouseleave', scheduleClose);
+  btn.addEventListener('mouseenter', function () { mouseInBtn = true; openPanel(); });
+  btn.addEventListener('mouseleave', function () { mouseInBtn = false; scheduleClose(); });
+  panel.addEventListener('mouseenter', function () { mouseInPanel = true; clearTimeout(hoverTimer); });
+  panel.addEventListener('mouseleave', function () { mouseInPanel = false; scheduleClose(); });
   btn.addEventListener('click', function () { isOpen ? closePanel() : openPanel(); });
   if (closeBtn) closeBtn.addEventListener('click', closePanel);
   overlay.addEventListener('click', closePanel);
