@@ -607,6 +607,17 @@
       </a>
     {%- endif -%}
 
+    {%- comment %} ── Bottom pinned links ── {% endcomment %}
+    <div class="lgcy-panel-bottom">
+      <div class="lgcy-panel-divider"></div>
+      <a href="{{ routes.account_url }}" class="lgcy-panel-link lgcy-panel-link--bottom">
+        <span class="lgcy-panel-link__text">Orders</span>
+      </a>
+      <a href="{{ routes.account_url }}" class="lgcy-panel-link lgcy-panel-link--bottom">
+        <span class="lgcy-panel-link__text">Profile</span>
+      </a>
+    </div>
+
   </nav>
 
   {%- comment %} ── RIGHT: Images — built from blocks ── {% endcomment %}
