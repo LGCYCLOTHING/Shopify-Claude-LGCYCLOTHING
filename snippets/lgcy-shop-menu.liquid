@@ -618,9 +618,6 @@
 
     {%- if explore_section.size > 0 -%}
       <div class="lgcy-panel-divider"></div>
-      {%- if section.settings.shop_panel_show_explore_label -%}
-        <span class="lgcy-panel-section-label">Explore</span>
-      {%- endif -%}
       {%- for block in explore_section -%}
         <a href="{{ block.settings.url }}" class="lgcy-panel-link" {{ block.shopify_attributes }}>
           <span class="lgcy-panel-link__text">{{ block.settings.label }}</span>
