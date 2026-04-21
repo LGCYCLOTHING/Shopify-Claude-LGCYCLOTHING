@@ -503,6 +503,17 @@
     mix-blend-mode: normal !important;
     color: #ffffff !important;
   }
+
+  /* Content switching — only active pane visible */
+  .lgcy-panel-content {
+    display: none;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+  .lgcy-panel-content.lgcy-active {
+    display: flex;
+  }
 </style>
 
 {%- comment %} ── Triggers ── {% endcomment %}
