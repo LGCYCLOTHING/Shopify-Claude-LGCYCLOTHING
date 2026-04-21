@@ -996,7 +996,7 @@
       document.body.style.overflow = 'hidden';
     }
 
-    function closeLegacy() {
+    function closeLegacy(keepBodyClass) {
       clearTimeout(legacyTimer);
       if (!legacyOpen) return;
       legacyOpen = false;
@@ -1005,7 +1005,7 @@
       legacyBtn.classList.remove('lgcy-active');
       legacyBtn.setAttribute('aria-expanded', 'false');
       legacyPanel.setAttribute('aria-hidden', 'true');
-      if (!isOpen) {
+      if (!keepBodyClass) {
         document.body.classList.remove('lgcy-panel-open');
         document.body.style.overflow = '';
       }
