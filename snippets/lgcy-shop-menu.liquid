@@ -922,6 +922,7 @@
 
   function openPanel() {
     clearTimeout(hoverTimer);
+    if (legacyOpen) closeLegacy(true); /* switching from legacy — keep body class */
     if (isOpen) return;
     isOpen = true;
     panel.classList.add('lgcy-open');
@@ -934,7 +935,7 @@
     document.body.style.overflow = 'hidden';
   }
 
-  function closePanel() {
+  function closePanel(keepBodyClass) {
     clearTimeout(hoverTimer);
     if (!isOpen) return;
     isOpen = false;
@@ -944,7 +945,7 @@
     btn.setAttribute('aria-expanded', 'false');
     panel.setAttribute('aria-hidden', 'true');
     overlay.setAttribute('aria-hidden', 'true');
-    if (!legacyOpen) {
+    if (!keepBodyClass) {
       document.body.classList.remove('lgcy-panel-open');
       document.body.style.overflow = '';
     }
