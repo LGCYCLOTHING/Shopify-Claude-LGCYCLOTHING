@@ -128,18 +128,17 @@
     width: 70%;
   }
 
-  /* Legacy button: overflow-visible so image shows but doesn't push underline down */
+  /* Legacy button: fix height to match SHOP so underline gap is identical */
+  .lgcy-shop-btn {
+    height: 2.8rem;
+  }
   .lgcy-legacy-btn {
-    overflow: visible;
-    padding-bottom: 1.2rem !important;
+    gap: 5px;
   }
   .lgcy-legacy-btn img {
-    position: absolute;
-    right: -36px;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 28px;
+    height: 22px;
     width: auto;
+    flex-shrink: 0;
   }
 
   /* ── Overlay ── */
