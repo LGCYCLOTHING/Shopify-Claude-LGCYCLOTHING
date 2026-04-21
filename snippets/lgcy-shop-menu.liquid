@@ -960,6 +960,62 @@
     if (e.key === 'Escape' && isOpen) closePanel();
   });
 
+  /* ── Legacy panel ── */
+  var legacyBtn   = document.getElementById('lgcy-legacy-btn');
+  var legacyPanel = document.getElementById('lgcy-legacy-panel');
+  var legacyOpen  = false;
+  var mouseInLegacyBtn   = false;
+  var mouseInLegacyPanel = false;
+  var legacyTimer;
+
+  if (legacyBtn && legacyPanel) {
+    if (pageContent && pageContent.parentNode) {
+      pageContent.parentNode.insertBefore(legacyPanel, pageContent.nextSibling);
+    }
+
+    function openLegacy() {
+      clearTimeout(legacyTimer);
+      closePanel(); /* close shop panel if open */
+      if (legacyOpen) return;
+      legacyOpen = true;
+      legacyPanel.classList.add('lgcy-open');
+      overlay.classList.add('lgcy-open');
+      legacyBtn.classList.add('lgcy-active');
+      legacyBtn.setAttribute('aria-expanded', 'true');
+      legacyPanel.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lgcy-panel-open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLegacy() {
+      clearTimeout(legacyTimer);
+      if (!legacyOpen) return;
+      legacyOpen = false;
+      legacyPanel.classList.remove('lgcy-open');
+      overlay.classList.remove('lgcy-open');
+      legacyBtn.classList.remove('lgcy-active');
+      legacyBtn.setAttribute('aria-expanded', 'false');
+      legacyPanel.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('lgcy-panel-open');
+      document.body.style.overflow = '';
+    }
+
+    function scheduleLegacyClose() {
+      clearTimeout(legacyTimer);
+      legacyTimer = setTimeout(function () {
+        if (!mouseInLegacyBtn && !mouseInLegacyPanel) closeLegacy();
+      }, 200);
+    }
+
+    legacyBtn.addEventListener('mouseenter', function () { mouseInLegacyBtn = true; openLegacy(); });
+    legacyBtn.addEventListener('mouseleave', function () { mouseInLegacyBtn = false; scheduleLegacyClose(); });
+    legacyPanel.addEventListener('mouseenter', function () { mouseInLegacyPanel = true; clearTimeout(legacyTimer); });
+    legacyPanel.addEventListener('mouseleave', function () { mouseInLegacyPanel = false; scheduleLegacyClose(); });
+    legacyBtn.addEventListener('click', function () { legacyOpen ? closeLegacy() : openLegacy(); });
+    overlay.addEventListener('click', closeLegacy);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && legacyOpen) closeLegacy(); });
+  }
+
   /* Move Shop trigger to front of Dawn nav */
   var inlineMenu  = document.querySelector('.header__inline-menu');
   var triggerWrap = document.getElementById('lgcy-shop-trigger-wrap');
