@@ -159,26 +159,13 @@
     justify-content: center;
     padding: 8rem 2rem;
     box-sizing: border-box;
-    background-color: #1a1a1a;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: linear-gradient(145deg, #000000 0%, #1a1a1a 35%, #4a4a4a 70%, #999999 100%);
     transition: padding 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   #lgcy-faq-{{ section.id }}.lgcy-faq--expanded {
     padding-top: 12rem;
     padding-bottom: 12rem;
-  }
-
-  #lgcy-faq-{{ section.id }}::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: {{ section.settings.faq_overlay_color }};
-    opacity: {{ overlay_opacity }};
-    pointer-events: none;
-    z-index: 0;
   }
 
   #lgcy-faq-{{ section.id }} .lgcy-faq-card {
@@ -190,6 +177,10 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   @media (min-width: 860px) {
@@ -212,26 +203,26 @@
     #lgcy-faq-{{ section.id }} .lgcy-faq-intro {
       width: 32%;
       padding: 4rem 3.5rem;
-      border-right: 1px solid {{ section.settings.divider_color }}1f;
+      border-right: 1px solid rgba(255,255,255,0.12);
     }
   }
 
   #lgcy-faq-{{ section.id }} .lgcy-faq-intro h2 {
-    font-family: inherit;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: {{ title_size }}rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-weight: 900;
+    letter-spacing: -0.04em;
     text-transform: uppercase;
     margin: 0;
-    color: {{ section.settings.text_color }};
-    line-height: 1.1;
+    color: #ffffff;
+    line-height: 1.05;
   }
 
   #lgcy-faq-{{ section.id }} .lgcy-faq-intro p {
-    font-family: inherit;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: {{ subtitle_size }}rem;
-    letter-spacing: 0.03em;
-    color: {{ section.settings.text_color_secondary }};
+    letter-spacing: -0.01em;
+    color: rgba(255,255,255,0.5);
     margin: 0;
     line-height: 1.6;
     font-weight: 500;
@@ -245,7 +236,7 @@
   }
 
   #lgcy-faq-{{ section.id }} .lgcy-accordion {
-    border-bottom: 1px solid {{ section.settings.divider_color }}1f;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
   }
 
   #lgcy-faq-{{ section.id }} .lgcy-accordion:last-child {
@@ -266,7 +257,7 @@
   }
 
   #lgcy-faq-{{ section.id }} .lgcy-accordion summary:hover {
-    background: rgba(0,0,0,0.04);
+    background: rgba(255,255,255,0.05);
   }
 
   #lgcy-faq-{{ section.id }} .lgcy-accordion summary::-webkit-details-marker {
@@ -274,12 +265,12 @@
   }
 
   #lgcy-faq-{{ section.id }} .lgcy-accordion-question {
-    font-family: inherit;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: {{ question_size }}rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    font-weight: 900;
+    letter-spacing: -0.03em;
     text-transform: uppercase;
-    color: {{ section.settings.text_color }};
+    color: #ffffff;
     flex: 1;
     line-height: 1.4;
   }
@@ -289,18 +280,18 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 1px solid {{ section.settings.text_color }}33;
+    border: 1px solid rgba(255,255,255,0.3);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: background 0.25s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    color: {{ section.settings.text_color }};
+    color: #ffffff;
     background: transparent;
   }
 
   #lgcy-faq-{{ section.id }} .lgcy-accordion[open] .lgcy-chevron {
     transform: rotate(180deg);
-    background: {{ section.settings.text_color }}18;
+    background: rgba(255,255,255,0.12);
   }
 
   #lgcy-faq-{{ section.id }} .lgcy-accordion-body {
@@ -319,11 +310,11 @@
 
   #lgcy-faq-{{ section.id }} .lgcy-accordion-content {
     padding: 0 3rem 1.75rem 3rem;
-    font-family: inherit;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: {{ answer_size }}rem;
     line-height: 1.9;
-    letter-spacing: 0.02em;
-    color: {{ section.settings.text_color_secondary }};
+    letter-spacing: -0.01em;
+    color: rgba(255,255,255,0.55);
     font-weight: 500;
     opacity: 0;
     transform: translateY(-4px);
@@ -345,11 +336,11 @@
 
   #lgcy-faq-{{ section.id }} .lgcy-accordion-content strong {
     font-weight: 700;
-    color: {{ section.settings.text_color }};
+    color: rgba(255,255,255,0.85);
   }
 
   #lgcy-faq-{{ section.id }} .lgcy-accordion-content a {
-    color: {{ section.settings.text_color }};
+    color: #ffffff;
     text-decoration: underline;
     text-underline-offset: 3px;
   }
