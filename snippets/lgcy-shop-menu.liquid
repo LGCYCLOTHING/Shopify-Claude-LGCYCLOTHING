@@ -968,6 +968,8 @@
     overlay.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('lgcy-panel-open');
     document.body.style.overflow = '';
+    shopBtn.classList.remove('lgcy-active');
+    if (legacyBtn) legacyBtn.classList.remove('lgcy-active');
   }
 
   function scheduleClose() {
