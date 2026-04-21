@@ -497,6 +497,12 @@
   .header__icon {
     transition: color 0.25s ease, mix-blend-mode 0s;
   }
+
+  /* Buttons always visible above panel — no blending */
+  .lgcy-shop-trigger-wrap .lgcy-shop-btn {
+    mix-blend-mode: normal !important;
+    color: #ffffff !important;
+  }
 </style>
 
 {%- comment %} ── Triggers ── {% endcomment %}
