@@ -5,9 +5,13 @@ const filePath = path.join(__dirname, 'templates', 'collection.json');
 const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 
 const faqHtml = `<style>
-.lgcy-faq3-section{position:relative;width:100%;padding:7rem 2rem;box-sizing:border-box;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-.lgcy-faq3-bg{position:absolute;inset:0;background-image:url('https://cdn.shopify.com/s/files/1/0688/4537/1578/files/download_1.jpg');background-size:cover;background-position:center;filter:blur(0px);transform:scale(1.05);}
-.lgcy-faq3-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.62);}
+/* Force section wrapper dark */
+.shopify-section:has(.lgcy-faq3-section) {
+  background: #0d0d0d !important;
+}
+.lgcy-faq3-section{position:relative;width:100%;padding:7rem 2rem;box-sizing:border-box;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0d0d0d;}
+.lgcy-faq3-bg{position:absolute;inset:0;background-image:url('https://cdn.shopify.com/s/files/1/0688/4537/1578/files/download_1.jpg');background-size:cover;background-position:center;transform:scale(1.05);}
+.lgcy-faq3-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.6);}
 .lgcy-faq3-inner{position:relative;z-index:1;width:100%;max-width:1000px;}
 .lgcy-faq3-header{margin-bottom:2rem;}
 .lgcy-faq3-eyebrow{font-family:system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;font-size:9px;font-weight:900;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin:0 0 10px;}
@@ -56,7 +60,18 @@ const faqHtml = `<style>
   </div>
 </div>
 <script>
-(function(){document.querySelectorAll(".lgcy-faq3-item").forEach(function(d){d.addEventListener("toggle",function(){if(d.open)document.querySelectorAll(".lgcy-faq3-item").forEach(function(o){if(o!==d&&o.open)o.open=false;});});});})();
+(function(){
+  // Fix section wrapper background in case :has() not supported
+  var el = document.querySelector('.lgcy-faq3-section');
+  if (el && el.parentElement) {
+    el.parentElement.style.background = '#0d0d0d';
+  }
+  document.querySelectorAll(".lgcy-faq3-item").forEach(function(d){
+    d.addEventListener("toggle",function(){
+      if(d.open)document.querySelectorAll(".lgcy-faq3-item").forEach(function(o){if(o!==d&&o.open)o.open=false;});
+    });
+  });
+})();
 </script>`;
 
 data.sections['lgcy_faq_TMGqdE'].settings.custom_liquid = faqHtml;
