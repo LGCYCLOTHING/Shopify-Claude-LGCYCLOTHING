@@ -988,14 +988,6 @@
   overlay.addEventListener('click', closePanel);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen) closePanel(); });
 
-  /* Test: force font via inline style */
-  shopBtn.style.fontFamily = "'Comic Sans MS', cursive";
-  shopBtn.style.fontSize = "17px";
-  if (legacyBtn) {
-    legacyBtn.style.fontFamily = "'Comic Sans MS', cursive";
-    legacyBtn.style.fontSize = "17px";
-  }
-
   /* Move Shop trigger to front of Dawn nav */
   var inlineMenu  = document.querySelector('.header__inline-menu');
   var triggerWrap = document.getElementById('lgcy-shop-trigger-wrap');
