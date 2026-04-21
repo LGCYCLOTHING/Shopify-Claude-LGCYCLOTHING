@@ -345,12 +345,7 @@
   }
 </style>
 
-<div
-  id="lgcy-faq-{{ section.id }}"
-  {% if section.settings.faq_bg_image %}
-    style="background-image: url('{{ section.settings.faq_bg_image | image_url: width: 1920 }}');"
-  {% endif %}
->
+<div id="lgcy-faq-{{ section.id }}">
   <div
     class="lgcy-faq-card"
     data-card-color="{{ section.settings.card_color }}"
