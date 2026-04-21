@@ -908,131 +908,85 @@
   if (window.__lgcyShopMenuInit) return;
   window.__lgcyShopMenuInit = true;
 
-  var btn      = document.getElementById('lgcy-shop-btn');
-  var panel    = document.getElementById('lgcy-side-panel');
-  var overlay  = document.getElementById('lgcy-menu-overlay');
-  var closeBtn = document.getElementById('lgcy-panel-close');
+  var shopBtn   = document.getElementById('lgcy-shop-btn');
+  var legacyBtn = document.getElementById('lgcy-legacy-btn');
+  var panel     = document.getElementById('lgcy-side-panel');
+  var overlay   = document.getElementById('lgcy-menu-overlay');
+  var closeBtn  = document.getElementById('lgcy-panel-close');
+  var shopContent   = panel && panel.querySelector('.lgcy-panel-content--shop');
+  var legacyContent = panel && panel.querySelector('.lgcy-panel-content--legacy');
 
-  if (!btn || !panel || !overlay) return;
+  if (!shopBtn || !panel || !overlay) return;
 
-  /* Move panel and overlay outside #page-content so they aren't blurred */
   var pageContent = document.getElementById('page-content');
   if (pageContent && pageContent.parentNode) {
     pageContent.parentNode.insertBefore(overlay, pageContent.nextSibling);
     pageContent.parentNode.insertBefore(panel, pageContent.nextSibling);
   }
 
-  var hoverTimer;
   var isOpen = false;
-  var mouseInBtn = false;
+  var activeTab = 'shop';
+  var hoverTimer;
   var mouseInPanel = false;
+  var mouseInShopBtn = false;
+  var mouseInLegacyBtn = false;
 
-  function openPanel() {
+  function setTab(tab) {
+    activeTab = tab;
+    if (shopContent)   shopContent.classList.toggle('lgcy-active', tab === 'shop');
+    if (legacyContent) legacyContent.classList.toggle('lgcy-active', tab === 'legacy');
+    shopBtn.classList.toggle('lgcy-active', tab === 'shop');
+    if (legacyBtn) legacyBtn.classList.toggle('lgcy-active', tab === 'legacy');
+  }
+
+  function openPanel(tab) {
     clearTimeout(hoverTimer);
-    if (legacyOpen) closeLegacy(true); /* switching from legacy — keep body class */
+    setTab(tab);
     if (isOpen) return;
     isOpen = true;
     panel.classList.add('lgcy-open');
     overlay.classList.add('lgcy-open');
-    btn.classList.add('lgcy-active');
-    btn.setAttribute('aria-expanded', 'true');
     panel.setAttribute('aria-hidden', 'false');
     overlay.setAttribute('aria-hidden', 'false');
     document.body.classList.add('lgcy-panel-open');
     document.body.style.overflow = 'hidden';
   }
 
-  function closePanel(keepBodyClass) {
+  function closePanel() {
     clearTimeout(hoverTimer);
     if (!isOpen) return;
     isOpen = false;
     panel.classList.remove('lgcy-open');
     overlay.classList.remove('lgcy-open');
-    btn.classList.remove('lgcy-active');
-    btn.setAttribute('aria-expanded', 'false');
     panel.setAttribute('aria-hidden', 'true');
     overlay.setAttribute('aria-hidden', 'true');
-    if (!keepBodyClass) {
-      document.body.classList.remove('lgcy-panel-open');
-      document.body.style.overflow = '';
-    }
+    document.body.classList.remove('lgcy-panel-open');
+    document.body.style.overflow = '';
   }
 
   function scheduleClose() {
     clearTimeout(hoverTimer);
     hoverTimer = setTimeout(function () {
-      if (!mouseInBtn && !mouseInPanel) closePanel();
+      if (!mouseInShopBtn && !mouseInLegacyBtn && !mouseInPanel) closePanel();
     }, 200);
   }
 
-  btn.addEventListener('mouseenter', function () { mouseInBtn = true; openPanel(); });
-  btn.addEventListener('mouseleave', function () { mouseInBtn = false; scheduleClose(); });
+  shopBtn.addEventListener('mouseenter', function () { mouseInShopBtn = true; openPanel('shop'); });
+  shopBtn.addEventListener('mouseleave', function () { mouseInShopBtn = false; scheduleClose(); });
+  shopBtn.addEventListener('click', function () { isOpen && activeTab === 'shop' ? closePanel() : openPanel('shop'); });
+
+  if (legacyBtn) {
+    legacyBtn.addEventListener('mouseenter', function () { mouseInLegacyBtn = true; openPanel('legacy'); });
+    legacyBtn.addEventListener('mouseleave', function () { mouseInLegacyBtn = false; scheduleClose(); });
+    legacyBtn.addEventListener('click', function () { isOpen && activeTab === 'legacy' ? closePanel() : openPanel('legacy'); });
+  }
+
   panel.addEventListener('mouseenter', function () { mouseInPanel = true; clearTimeout(hoverTimer); });
   panel.addEventListener('mouseleave', function () { mouseInPanel = false; scheduleClose(); });
-  btn.addEventListener('click', function () { isOpen ? closePanel() : openPanel(); });
+
   if (closeBtn) closeBtn.addEventListener('click', closePanel);
   overlay.addEventListener('click', closePanel);
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && isOpen) closePanel();
-  });
-
-  /* ── Legacy panel ── */
-  var legacyBtn   = document.getElementById('lgcy-legacy-btn');
-  var legacyPanel = document.getElementById('lgcy-legacy-panel');
-  var legacyOpen  = false;
-  var mouseInLegacyBtn   = false;
-  var mouseInLegacyPanel = false;
-  var legacyTimer;
-
-  if (legacyBtn && legacyPanel) {
-    if (pageContent && pageContent.parentNode) {
-      pageContent.parentNode.insertBefore(legacyPanel, pageContent.nextSibling);
-    }
-
-    function openLegacy() {
-      clearTimeout(legacyTimer);
-      closePanel(true); /* switching from shop — keep body class */
-      if (legacyOpen) return;
-      legacyOpen = true;
-      legacyPanel.classList.add('lgcy-open');
-      overlay.classList.add('lgcy-open');
-      legacyBtn.classList.add('lgcy-active');
-      legacyBtn.setAttribute('aria-expanded', 'true');
-      legacyPanel.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('lgcy-panel-open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeLegacy(keepBodyClass) {
-      clearTimeout(legacyTimer);
-      if (!legacyOpen) return;
-      legacyOpen = false;
-      legacyPanel.classList.remove('lgcy-open');
-      overlay.classList.remove('lgcy-open');
-      legacyBtn.classList.remove('lgcy-active');
-      legacyBtn.setAttribute('aria-expanded', 'false');
-      legacyPanel.setAttribute('aria-hidden', 'true');
-      if (!keepBodyClass) {
-        document.body.classList.remove('lgcy-panel-open');
-        document.body.style.overflow = '';
-      }
-    }
-
-    function scheduleLegacyClose() {
-      clearTimeout(legacyTimer);
-      legacyTimer = setTimeout(function () {
-        if (!mouseInLegacyBtn && !mouseInLegacyPanel) closeLegacy();
-      }, 200);
-    }
-
-    legacyBtn.addEventListener('mouseenter', function () { mouseInLegacyBtn = true; openLegacy(); });
-    legacyBtn.addEventListener('mouseleave', function () { mouseInLegacyBtn = false; scheduleLegacyClose(); });
-    legacyPanel.addEventListener('mouseenter', function () { mouseInLegacyPanel = true; clearTimeout(legacyTimer); });
-    legacyPanel.addEventListener('mouseleave', function () { mouseInLegacyPanel = false; scheduleLegacyClose(); });
-    legacyBtn.addEventListener('click', function () { legacyOpen ? closeLegacy() : openLegacy(); });
-    overlay.addEventListener('click', closeLegacy);
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && legacyOpen) closeLegacy(); });
-  }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen) closePanel(); });
 
   /* Move Shop trigger to front of Dawn nav */
   var inlineMenu  = document.querySelector('.header__inline-menu');
@@ -1049,15 +1003,10 @@
       if (window.innerWidth > 989) return;
       e.preventDefault();
       e.stopImmediatePropagation();
-
-      /* Close the Dawn drawer if it somehow opened */
       var drawerDetails = document.querySelector('header-drawer details');
-      if (drawerDetails && drawerDetails.open) {
-        drawerDetails.removeAttribute('open');
-      }
-
-      isOpen ? closePanel() : openPanel();
-    }, true); /* capture phase so we run before Dawn's handler */
+      if (drawerDetails && drawerDetails.open) drawerDetails.removeAttribute('open');
+      isOpen ? closePanel() : openPanel('shop');
+    }, true);
   }
 })();
 </script>
