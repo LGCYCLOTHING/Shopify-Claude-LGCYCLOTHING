@@ -580,9 +580,6 @@
     {%- assign support_section = shop_links | where: 'settings.section', 'support' -%}
 
     {%- if shop_section.size > 0 -%}
-      {%- if section.settings.shop_panel_show_shop_label -%}
-        <span class="lgcy-panel-section-label">Shop</span>
-      {%- endif -%}
       {%- for block in shop_section -%}
         <a href="{{ block.settings.url }}" class="lgcy-panel-link" {{ block.shopify_attributes }}>
           <span class="lgcy-panel-link__text">{{ block.settings.label }}</span>
