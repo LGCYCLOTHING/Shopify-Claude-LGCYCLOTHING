@@ -984,7 +984,7 @@
 
     function openLegacy() {
       clearTimeout(legacyTimer);
-      closePanel(); /* close shop panel if open */
+      closePanel(true); /* switching from shop — keep body class */
       if (legacyOpen) return;
       legacyOpen = true;
       legacyPanel.classList.add('lgcy-open');
