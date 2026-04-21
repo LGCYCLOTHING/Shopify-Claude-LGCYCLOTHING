@@ -21,12 +21,11 @@ const faqHtml = `<style>
 .lgcy-faq3-item summary::-webkit-details-marker{display:none;}
 .lgcy-faq3-q{font-family:system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;font-size:clamp(13px,2vw,15px);font-weight:900;letter-spacing:-0.03em;text-transform:uppercase;color:#ffffff;flex:1;line-height:1.3;}
 .lgcy-faq3-chevron{flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;transition:background 0.25s ease,transform 0.4s cubic-bezier(0.34,1.56,0.64,1);color:rgba(255,255,255,0.4);}
-.lgcy-faq3-item[open] .lgcy-faq3-chevron{transform:rotate(180deg);background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.25);}
+.lgcy-faq3-chevron.is-open{transform:rotate(180deg);background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.25);}
+/* Body: always starts collapsed — JS drives open state */
 .lgcy-faq3-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows 0.5s cubic-bezier(0.4,0,0.2,1);}
-.lgcy-faq3-item[open] .lgcy-faq3-body{grid-template-rows:1fr;}
 .lgcy-faq3-body-inner{overflow:hidden;}
 .lgcy-faq3-answer{padding:0 32px 22px 32px;font-family:system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;font-size:13px;line-height:1.9;letter-spacing:-0.01em;color:rgba(255,255,255,0.45);font-weight:400;opacity:0;transform:translateY(-6px);transition:opacity 0.4s ease 0.15s,transform 0.4s ease 0.15s;}
-.lgcy-faq3-item[open] .lgcy-faq3-answer{opacity:1;transform:translateY(0);}
 .lgcy-faq3-answer p{margin:0 0 0.4rem;}
 .lgcy-faq3-answer p:last-child{margin-bottom:0;}
 .lgcy-faq3-answer strong{font-weight:700;color:rgba(255,255,255,0.7);}
@@ -61,35 +60,53 @@ const faqHtml = `<style>
   var el = document.querySelector('.lgcy-faq3-section');
   if (el && el.parentElement) el.parentElement.style.background = '#0d0d0d';
 
+  function openItem(details) {
+    var body = details.querySelector('.lgcy-faq3-body');
+    var answer = details.querySelector('.lgcy-faq3-answer');
+    var chevron = details.querySelector('.lgcy-faq3-chevron');
+    // Force collapsed before opening so transition always plays
+    body.style.gridTemplateRows = '0fr';
+    answer.style.opacity = '0';
+    answer.style.transform = 'translateY(-6px)';
+    details.open = true;
+    // Double rAF ensures the collapsed state is painted before we animate
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        body.style.gridTemplateRows = '1fr';
+        answer.style.opacity = '1';
+        answer.style.transform = 'translateY(0)';
+        if (chevron) chevron.classList.add('is-open');
+      });
+    });
+  }
+
+  function closeItem(details, cb) {
+    var body = details.querySelector('.lgcy-faq3-body');
+    var answer = details.querySelector('.lgcy-faq3-answer');
+    var chevron = details.querySelector('.lgcy-faq3-chevron');
+    body.style.gridTemplateRows = '0fr';
+    answer.style.opacity = '0';
+    answer.style.transform = 'translateY(-6px)';
+    if (chevron) chevron.classList.remove('is-open');
+    setTimeout(function(){
+      details.open = false;
+      body.style.gridTemplateRows = '';
+      answer.style.cssText = '';
+      if (cb) cb();
+    }, 520);
+  }
+
   document.querySelectorAll('.lgcy-faq3-item').forEach(function(details) {
-    var summary = details.querySelector('summary');
-    summary.addEventListener('click', function(e) {
+    details.querySelector('summary').addEventListener('click', function(e) {
       e.preventDefault();
       if (details.open) {
-        var body = details.querySelector('.lgcy-faq3-body');
-        var answer = details.querySelector('.lgcy-faq3-answer');
-        body.style.gridTemplateRows = '0fr';
-        answer.style.opacity = '0';
-        answer.style.transform = 'translateY(-6px)';
-        setTimeout(function(){ details.open = false; body.style.gridTemplateRows = ''; answer.style.cssText = ''; }, 500);
+        closeItem(details);
       } else {
+        // Close any open sibling first
         document.querySelectorAll('.lgcy-faq3-item').forEach(function(other) {
-          if (other !== details && other.open) {
-            var b = other.querySelector('.lgcy-faq3-body');
-            var a = other.querySelector('.lgcy-faq3-answer');
-            b.style.gridTemplateRows = '0fr';
-            a.style.opacity = '0';
-            a.style.transform = 'translateY(-6px)';
-            setTimeout(function(){ other.open = false; b.style.gridTemplateRows = ''; a.style.cssText = ''; }, 500);
-          }
+          if (other !== details && other.open) closeItem(other);
         });
-        details.open = true;
-        requestAnimationFrame(function(){
-          requestAnimationFrame(function(){
-            var body = details.querySelector('.lgcy-faq3-body');
-            body.style.gridTemplateRows = '1fr';
-          });
-        });
+        openItem(details);
       }
     });
   });
