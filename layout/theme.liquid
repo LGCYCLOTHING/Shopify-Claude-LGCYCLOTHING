@@ -562,6 +562,22 @@ svg.icon.icon-cart {
 
   if(sessionStorage.getItem('tt-nav')){sessionStorage.removeItem('tt-nav');waveOut();}
 
+  // Test: wave in then back out
+  window.__ttTest=function(){waveIn('__test__');setTimeout(function(){navigating=false;waveOut();},TOTAL+200);};
+  // Override waveIn to handle test
+  var _origWaveIn=waveIn;
+  waveIn=function(url){
+    if(url==='__test__'){
+      if(navigating)return;navigating=true;
+      ov.classList.add('tt-active');reset(false);
+      requestAnimationFrame(function(){requestAnimationFrame(function(){
+        tiles.forEach(function(t){t.style.animationDelay=(parseInt(t.dataset.col)*DELAY)+'ms';t.classList.add('tt-in');});
+      });});
+      return;
+    }
+    _origWaveIn(url);
+  };
+
   function isInternal(href){
     if(!href||/^(javascript:|mailto:|tel:)/.test(href))return false;
     try{
