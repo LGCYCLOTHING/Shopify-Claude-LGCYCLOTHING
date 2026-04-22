@@ -304,7 +304,16 @@
     </script>
   {% include 'pagefly-app-header' %}
 
-  <link rel="stylesheet" href="{{ 'tile-transition.css' | asset_url }}">
+  <style>
+    #tile-transition-overlay{position:fixed;inset:0;z-index:99999;pointer-events:none;display:grid;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(6,1fr);}
+    #tile-transition-overlay.tt-active{pointer-events:all;}
+    .tt-tile{background:#000;transform:scaleY(0);transform-origin:top center;will-change:transform;}
+    .tt-tile.tt-covered{transform:scaleY(1);}
+    .tt-tile.tt-in{animation:ttIn .35s cubic-bezier(.77,0,.18,1) both;}
+    .tt-tile.tt-out{animation:ttOut .35s cubic-bezier(.77,0,.18,1) both;}
+    @keyframes ttIn{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+    @keyframes ttOut{from{transform:scaleY(1)}to{transform:scaleY(0)}}
+  </style>
 </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}{% if template.name == 'product' %} template-product{% endif %}">
