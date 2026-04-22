@@ -1,0 +1,39 @@
+#tile-transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  pointer-events: none;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+}
+
+#tile-transition-overlay.is-active {
+  pointer-events: all;
+}
+
+.tile-transition-tile {
+  background: #000;
+  transform: scaleY(0);
+  transform-origin: top center;
+  will-change: transform;
+}
+
+.tile-transition-tile.tile-in {
+  animation: tileSlideIn 0.35s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+}
+
+.tile-transition-tile.tile-out {
+  transform: scaleY(1);
+  animation: tileSlideOut 0.35s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+}
+
+@keyframes tileSlideIn {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+@keyframes tileSlideOut {
+  from { transform: scaleY(1); }
+  to   { transform: scaleY(0); }
+}
