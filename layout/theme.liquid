@@ -539,6 +539,7 @@ svg.icon.icon-cart {
   var COLS=10,ROWS=6,DELAY=55,DUR=350,TOTAL=(COLS-1)*DELAY+DUR;
   var ov=document.getElementById('tile-transition-overlay');
   if(!ov)return;
+  document.body.appendChild(ov); // move to end of body so it's on top of everything
   for(var r=0;r<ROWS;r++){for(var c=0;c<COLS;c++){var t=document.createElement('div');t.className='tt-tile';t.dataset.col=c;ov.appendChild(t);}}
   var tiles=Array.from(ov.querySelectorAll('.tt-tile'));
   var navigating=false;
