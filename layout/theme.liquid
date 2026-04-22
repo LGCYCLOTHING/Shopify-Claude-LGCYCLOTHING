@@ -304,6 +304,7 @@
     </script>
   {% include 'pagefly-app-header' %}
 
+  <link rel="stylesheet" href="{{ 'tile-transition.css' | asset_url }}">
 </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}{% if template.name == 'product' %} template-product{% endif %}">
