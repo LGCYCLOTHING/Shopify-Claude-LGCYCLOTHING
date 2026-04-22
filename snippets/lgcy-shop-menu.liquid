@@ -761,7 +761,7 @@
       </ul>
 
       {%- form 'customer', id: 'lgcy-newsletter-form', class: 'lgcy-newsletter-form' -%}
-        <input type="hidden" name="contact[tags]" value="newsletter,legacy">
+        <input type="hidden" name="contact[tags]" value="newsletter,legacy,sms">
         <div class="lgcy-newsletter-row">
           <input
             type="email"
@@ -773,12 +773,22 @@
           >
           <button type="submit" class="lgcy-newsletter-btn">JOIN</button>
         </div>
+        <div class="lgcy-newsletter-row lgcy-newsletter-row--phone">
+          <input
+            type="tel"
+            name="contact[phone]"
+            class="lgcy-newsletter-input"
+            placeholder="+1 (000) 000-0000"
+            autocomplete="tel"
+          >
+          <span class="lgcy-newsletter-sms-label">SMS</span>
+        </div>
         {%- if form.posted_successfully? -%}
           <p class="lgcy-newsletter-success">You're in. Welcome to the Legacy.</p>
         {%- endif -%}
       {%- endform -%}
 
-      <p class="lgcy-legacy-disclaimer">No spam. Unsubscribe anytime.</p>
+      <p class="lgcy-legacy-disclaimer">No spam. Unsubscribe anytime. By entering your phone number you agree to receive SMS marketing.</p>
     </div>
   </div>
   </div>{%- comment %} end lgcy-panel-content--legacy {% endcomment %}
