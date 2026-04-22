@@ -540,12 +540,15 @@ svg.icon.icon-cart {
   if(!ov)return;
   for(var r=0;r<ROWS;r++){for(var c=0;c<COLS;c++){var t=document.createElement('div');t.className='tt-tile';t.dataset.col=c;ov.appendChild(t);}}
   var tiles=Array.from(ov.querySelectorAll('.tt-tile'));
+  var navigating=false;
+
   function reset(covered){tiles.forEach(function(t){t.className='tt-tile'+(covered?' tt-covered':'');t.style.animationDelay='';});ov.offsetHeight;}
-  function waveIn(cb){
+  function waveIn(url){
+    if(navigating)return;navigating=true;
     ov.classList.add('tt-active');reset(false);
     requestAnimationFrame(function(){requestAnimationFrame(function(){
       tiles.forEach(function(t){t.style.animationDelay=(parseInt(t.dataset.col)*DELAY)+'ms';t.classList.add('tt-in');});
-      setTimeout(cb,TOTAL);
+      setTimeout(function(){sessionStorage.setItem('tt-nav','1');location.href=url;},TOTAL);
     });});
   }
   function waveOut(){
@@ -555,16 +558,45 @@ svg.icon.icon-cart {
       setTimeout(function(){reset(false);ov.classList.remove('tt-active');},TOTAL);
     });});
   }
+
   if(sessionStorage.getItem('tt-nav')){sessionStorage.removeItem('tt-nav');waveOut();}
+
+  function isInternal(href){
+    if(!href||/^(javascript:|mailto:|tel:)/.test(href))return false;
+    try{
+      var u=new URL(href,location.href);
+      return u.hostname===location.hostname||u.hostname.endsWith('.myshopify.com');
+    }catch(x){return false;}
+  }
+
+  // Intercept <a> clicks
   document.addEventListener('click',function(e){
+    // scroll-label spans (navigate via JS, not <a>)
+    var label=e.target.closest('.scroll-label');
+    if(label){
+      var url=label.getAttribute('data-url');
+      if(url&&isInternal(url)){e.stopImmediatePropagation();waveIn(url);}
+      return;
+    }
     var a=e.target.closest('a[href]');if(!a)return;
-    var h=a.getAttribute('href');if(!h)return;
-    if(/^(#|javascript:|mailto:|tel:)/.test(h)||a.target==='_blank')return;
-    try{var u=new URL(h,location.href);if(u.hostname!==location.hostname)return;}catch(x){return;}
+    if(a.target==='_blank')return;
+    // For #scroll-discover, use the live href property (set dynamically by JS)
+    var h=a.id==='scroll-discover'?a.href:a.getAttribute('href');
+    if(!h||h==='#'||!isInternal(h))return;
     e.preventDefault();
-    sessionStorage.setItem('tt-nav','1');
-    waveIn(function(){location.href=h;});
+    waveIn(h);
   },true);
+
+  // Intercept videoBox clicks
+  document.addEventListener('DOMContentLoaded',function(){
+    var vb=document.querySelector('.videoBox');
+    if(!vb)return;
+    vb.addEventListener('click',function(e){
+      if(e.target.closest('#scroll-indicator')||e.target.closest('#explore-label'))return;
+      var active=Array.from(document.querySelectorAll('.scroll-label')).find(function(l){return parseFloat(l.style.opacity)>=1;})||document.querySelector('.scroll-label');
+      if(active){var url=active.getAttribute('data-url');if(url&&isInternal(url)){e.stopImmediatePropagation();waveIn(url);}}
+    },true);
+  });
 })();
 </script>
 </body>
