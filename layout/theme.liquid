@@ -304,16 +304,6 @@
     </script>
   {% include 'pagefly-app-header' %}
 
-  <style>
-    #tile-transition-overlay{position:fixed;inset:0;z-index:2147483647;pointer-events:none;display:grid;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(6,1fr);isolation:isolate;}
-    #tile-transition-overlay.tt-active{pointer-events:all;}
-    .tt-tile{background:#fff;transform:scaleY(0);transform-origin:top center;}
-    .tt-tile.tt-covered{transform:scaleY(1);}
-    .tt-tile.tt-in{animation:ttIn .35s cubic-bezier(.77,0,.18,1) both;}
-    .tt-tile.tt-out{animation:ttOut .35s cubic-bezier(.77,0,.18,1) both;}
-    @keyframes ttIn{from{transform:scaleY(0)}to{transform:scaleY(1)}}
-    @keyframes ttOut{from{transform:scaleY(1)}to{transform:scaleY(0)}}
-  </style>
 </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}{% if template.name == 'product' %} template-product{% endif %}">
@@ -324,9 +314,6 @@
     {%- if settings.cart_type == 'drawer' -%}
       {%- render 'cart-drawer' -%}
     {%- endif -%}
-
-    <div id="tile-transition-overlay"></div>
-    <button id="tt-test-btn" style="position:fixed;bottom:20px;right:20px;z-index:999999;background:red;color:#fff;padding:10px 18px;font-size:14px;font-weight:700;border:none;cursor:pointer;border-radius:4px;">TEST TILES</button>
 
     <div id="page-content">
       {% sections 'header-group' %}
@@ -534,86 +521,5 @@ svg.icon.icon-cart {
 </script>
 {% endif %}
 
-<script>
-(function(){
-  var COLS=10,ROWS=6,DELAY=55,DUR=350,TOTAL=(COLS-1)*DELAY+DUR;
-  var ov=document.getElementById('tile-transition-overlay');
-  if(!ov)return;
-  document.body.appendChild(ov); // move to end of body so it's on top of everything
-  for(var r=0;r<ROWS;r++){for(var c=0;c<COLS;c++){var t=document.createElement('div');t.className='tt-tile';t.dataset.col=c;ov.appendChild(t);}}
-  var tiles=Array.from(ov.querySelectorAll('.tt-tile'));
-  var navigating=false;
-
-  function reset(covered){tiles.forEach(function(t){t.className='tt-tile'+(covered?' tt-covered':'');t.style.animationDelay='';});ov.offsetHeight;}
-  function waveIn(url){
-    if(navigating)return;navigating=true;
-    ov.classList.add('tt-active');reset(false);
-    requestAnimationFrame(function(){requestAnimationFrame(function(){
-      tiles.forEach(function(t){t.style.animationDelay=(parseInt(t.dataset.col)*DELAY)+'ms';t.classList.add('tt-in');});
-      setTimeout(function(){sessionStorage.setItem('tt-nav','1');location.href=url;},TOTAL);
-    });});
-  }
-  function waveOut(){
-    ov.classList.add('tt-active');reset(true);
-    requestAnimationFrame(function(){requestAnimationFrame(function(){
-      tiles.forEach(function(t){t.style.animationDelay=(parseInt(t.dataset.col)*DELAY)+'ms';t.classList.add('tt-out');});
-      setTimeout(function(){reset(false);ov.classList.remove('tt-active');},TOTAL);
-    });});
-  }
-
-  if(sessionStorage.getItem('tt-nav')){sessionStorage.removeItem('tt-nav');waveOut();}
-
-  // Test: wave in then back out (no navigation)
-  function runTest(){
-    if(navigating)return;navigating=true;
-    ov.classList.add('tt-active');reset(false);
-    requestAnimationFrame(function(){requestAnimationFrame(function(){
-      tiles.forEach(function(t){t.style.animationDelay=(parseInt(t.dataset.col)*DELAY)+'ms';t.classList.add('tt-in');});
-      setTimeout(function(){navigating=false;waveOut();},TOTAL+300);
-    });});
-  }
-  var btn=document.getElementById('tt-test-btn');
-  if(btn)btn.addEventListener('click',runTest);
-  // Auto-fire after 2s so we can see it without clicking
-  setTimeout(runTest,2000);
-
-  function isInternal(href){
-    if(!href||/^(javascript:|mailto:|tel:)/.test(href))return false;
-    try{
-      var u=new URL(href,location.href);
-      return u.hostname===location.hostname||u.hostname.endsWith('.myshopify.com');
-    }catch(x){return false;}
-  }
-
-  // Intercept <a> clicks
-  document.addEventListener('click',function(e){
-    // scroll-label spans (navigate via JS, not <a>)
-    var label=e.target.closest('.scroll-label');
-    if(label){
-      var url=label.getAttribute('data-url');
-      if(url&&isInternal(url)){e.stopImmediatePropagation();waveIn(url);}
-      return;
-    }
-    var a=e.target.closest('a[href]');if(!a)return;
-    if(a.target==='_blank')return;
-    // For #scroll-discover, use the live href property (set dynamically by JS)
-    var h=a.id==='scroll-discover'?a.href:a.getAttribute('href');
-    if(!h||h==='#'||!isInternal(h))return;
-    e.preventDefault();
-    waveIn(h);
-  },true);
-
-  // Intercept videoBox clicks
-  document.addEventListener('DOMContentLoaded',function(){
-    var vb=document.querySelector('.videoBox');
-    if(!vb)return;
-    vb.addEventListener('click',function(e){
-      if(e.target.closest('#scroll-indicator')||e.target.closest('#explore-label'))return;
-      var active=Array.from(document.querySelectorAll('.scroll-label')).find(function(l){return parseFloat(l.style.opacity)>=1;})||document.querySelector('.scroll-label');
-      if(active){var url=active.getAttribute('data-url');if(url&&isInternal(url)){e.stopImmediatePropagation();waveIn(url);}}
-    },true);
-  });
-})();
-</script>
 </body>
 </html>
