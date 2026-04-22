@@ -19,13 +19,16 @@
   will-change: transform;
 }
 
+.tile-transition-tile.tile-covered {
+  transform: scaleY(1);
+}
+
 .tile-transition-tile.tile-in {
-  animation: tileSlideIn 0.35s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+  animation: tileSlideIn 0.35s cubic-bezier(0.77, 0, 0.18, 1) both;
 }
 
 .tile-transition-tile.tile-out {
-  transform: scaleY(1);
-  animation: tileSlideOut 0.35s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+  animation: tileSlideOut 0.35s cubic-bezier(0.77, 0, 0.18, 1) both;
 }
 
 @keyframes tileSlideIn {
