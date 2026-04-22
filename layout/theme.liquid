@@ -533,6 +533,39 @@ svg.icon.icon-cart {
 </script>
 {% endif %}
 
-<script src="{{ 'tile-transition.js' | asset_url }}" defer></script>
+<script>
+(function(){
+  var COLS=10,ROWS=6,DELAY=55,DUR=350,TOTAL=(COLS-1)*DELAY+DUR;
+  var ov=document.getElementById('tile-transition-overlay');
+  if(!ov)return;
+  for(var r=0;r<ROWS;r++){for(var c=0;c<COLS;c++){var t=document.createElement('div');t.className='tt-tile';t.dataset.col=c;ov.appendChild(t);}}
+  var tiles=Array.from(ov.querySelectorAll('.tt-tile'));
+  function reset(covered){tiles.forEach(function(t){t.className='tt-tile'+(covered?' tt-covered':'');t.style.animationDelay='';});ov.offsetHeight;}
+  function waveIn(cb){
+    ov.classList.add('tt-active');reset(false);
+    requestAnimationFrame(function(){requestAnimationFrame(function(){
+      tiles.forEach(function(t){t.style.animationDelay=(parseInt(t.dataset.col)*DELAY)+'ms';t.classList.add('tt-in');});
+      setTimeout(cb,TOTAL);
+    });});
+  }
+  function waveOut(){
+    ov.classList.add('tt-active');reset(true);
+    requestAnimationFrame(function(){requestAnimationFrame(function(){
+      tiles.forEach(function(t){t.style.animationDelay=(parseInt(t.dataset.col)*DELAY)+'ms';t.classList.add('tt-out');});
+      setTimeout(function(){reset(false);ov.classList.remove('tt-active');},TOTAL);
+    });});
+  }
+  if(sessionStorage.getItem('tt-nav')){sessionStorage.removeItem('tt-nav');waveOut();}
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href]');if(!a)return;
+    var h=a.getAttribute('href');if(!h)return;
+    if(/^(#|javascript:|mailto:|tel:)/.test(h)||a.target==='_blank')return;
+    try{var u=new URL(h,location.href);if(u.hostname!==location.hostname)return;}catch(x){return;}
+    e.preventDefault();
+    sessionStorage.setItem('tt-nav','1');
+    waveIn(function(){location.href=h;});
+  },true);
+})();
+</script>
 </body>
 </html>
