@@ -262,13 +262,12 @@
       <button type="button" class="lgcy-signup__tab" role="tab" aria-selected="false" aria-controls="lgcy-signup-sms" data-lgcy-tab="sms">SMS</button>
     </div>
 
-    {%- comment %} ── Email form ── {% endcomment %}
-    {%- form 'customer', id: 'lgcy-signup-email', class: 'lgcy-signup__form lgcy-signup__form--email is-active' -%}
-      <input type="hidden" name="contact[tags]" value="newsletter,legacy">
+    {%- comment %} ── Email form (Omnisend) ── {% endcomment %}
+    <form class="lgcy-signup__form lgcy-signup__form--email is-active" data-lgcy-method="email" novalidate>
       <div class="lgcy-signup__row">
         <input
           type="email"
-          name="contact[email]"
+          name="email"
           class="lgcy-signup__input"
           placeholder="YOUR@EMAIL.COM"
           autocomplete="email"
@@ -276,22 +275,15 @@
         >
         <button type="submit" class="lgcy-signup__btn">Join</button>
       </div>
-      {%- if form.posted_successfully? -%}
-        <p class="lgcy-signup__msg lgcy-signup__msg--success">You're in. Welcome to the Legacy.</p>
-      {%- elsif form.errors -%}
-        <p class="lgcy-signup__msg lgcy-signup__msg--error">
-          {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
-        </p>
-      {%- endif -%}
-    {%- endform -%}
+      <p class="lgcy-signup__msg" data-lgcy-msg hidden></p>
+    </form>
 
-    {%- comment %} ── SMS form ── {% endcomment %}
-    {%- form 'customer', id: 'lgcy-signup-sms', class: 'lgcy-signup__form lgcy-signup__form--sms' -%}
-      <input type="hidden" name="contact[tags]" value="newsletter,legacy,sms">
+    {%- comment %} ── SMS form (Omnisend) ── {% endcomment %}
+    <form class="lgcy-signup__form lgcy-signup__form--sms" data-lgcy-method="sms" novalidate>
       <div class="lgcy-signup__row">
         <input
           type="tel"
-          name="contact[phone]"
+          name="phone"
           class="lgcy-signup__input"
           placeholder="+1 (000) 000-0000"
           autocomplete="tel"
@@ -299,14 +291,8 @@
         >
         <button type="submit" class="lgcy-signup__btn">Join</button>
       </div>
-      {%- if form.posted_successfully? -%}
-        <p class="lgcy-signup__msg lgcy-signup__msg--success">You're in. Welcome to the Legacy.</p>
-      {%- elsif form.errors -%}
-        <p class="lgcy-signup__msg lgcy-signup__msg--error">
-          {{ form.errors.translated_fields.phone | capitalize }} {{ form.errors.messages.phone }}
-        </p>
-      {%- endif -%}
-    {%- endform -%}
+      <p class="lgcy-signup__msg" data-lgcy-msg hidden></p>
+    </form>
 
     <p class="lgcy-signup__disclaimer">{{ section.settings.disclaimer }}</p>
   </div>
