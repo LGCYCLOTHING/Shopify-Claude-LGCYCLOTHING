@@ -95,105 +95,30 @@
     color: rgba(255,255,255,0.4);
   }
 
-  /* ── Form ── */
-  .lgcy-signup__form {
+  /* ── Form slot (holds Omnisend embedded form app block) ── */
+  .lgcy-signup__form-slot {
     width: 100%;
+    margin-bottom: 8px;
   }
 
-  .lgcy-signup__field {
-    display: block;
-    width: 100%;
-    border: 1px solid rgba(255,255,255,0.3);
-    background: rgba(255,255,255,0.02);
-    margin-bottom: 10px;
-    position: relative;
+  .lgcy-signup__app-block + .lgcy-signup__app-block {
+    margin-top: 12px;
   }
 
-  .lgcy-signup__label {
-    display: block;
-    font-weight: 900;
-    font-size: 9px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.45);
-    padding: 12px 18px 0;
-  }
-
-  .lgcy-signup__label-optional {
-    color: rgba(255,255,255,0.3);
-    font-weight: 700;
-    margin-left: 6px;
-  }
-
-  .lgcy-signup__input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    outline: none;
-    padding: 6px 18px 14px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.04em;
-    color: #ffffff;
-  }
-
-  .lgcy-signup__input::placeholder {
-    color: rgba(255,255,255,0.25);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+  .lgcy-signup__empty-slot {
+    border: 1px dashed rgba(255,255,255,0.25);
+    padding: 18px 20px;
+    color: rgba(255,255,255,0.55);
     font-size: 12px;
+    line-height: 1.6;
   }
 
-  .lgcy-signup__btn {
-    width: 100%;
-    background: #ffffff;
-    border: none;
-    padding: 16px 28px;
-    margin-top: 6px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    font-size: 12px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #000000;
-    cursor: pointer;
-    transition: background 0.2s ease;
+  .lgcy-signup__empty-slot p {
+    margin: 0 0 6px;
   }
 
-  .lgcy-signup__btn:hover {
-    background: rgba(255,255,255,0.85);
-  }
-
-  .lgcy-signup__btn:disabled,
-  .lgcy-signup__input:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  .lgcy-signup__hint {
-    font-size: 11px;
-    font-weight: 400;
-    color: rgba(255,255,255,0.35);
-    margin: 2px 0 14px;
-    letter-spacing: 0.02em;
-    line-height: 1.5;
-  }
-
-  .lgcy-signup__msg {
-    font-size: 12px;
-    font-weight: 700;
-    margin: 14px 0 0;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
-  .lgcy-signup__msg--success {
-    color: #8fffb0;
-  }
-
-  .lgcy-signup__msg--error {
-    color: #ff9a9a;
+  .lgcy-signup__empty-slot p:last-child {
+    margin: 0;
   }
 
   .lgcy-signup__disclaimer {
