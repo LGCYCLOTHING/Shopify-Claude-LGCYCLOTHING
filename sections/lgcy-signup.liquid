@@ -303,12 +303,8 @@
     var root = document.querySelector('.lgcy-signup');
     if (!root) return;
 
-    var STORAGE_KEY = 'lgcy-signup-submitted';
     var tabs = root.querySelectorAll('[data-lgcy-tab]');
-    var formMap = {
-      email: root.querySelector('.lgcy-signup__form--email'),
-      sms: root.querySelector('.lgcy-signup__form--sms')
-    };
+    var forms = root.querySelectorAll('[data-lgcy-method]');
 
     function activate(target) {
       tabs.forEach(function (t) {
@@ -316,9 +312,8 @@
         t.classList.toggle('is-active', active);
         t.setAttribute('aria-selected', active ? 'true' : 'false');
       });
-      Object.keys(formMap).forEach(function (key) {
-        if (!formMap[key]) return;
-        formMap[key].classList.toggle('is-active', key === target);
+      forms.forEach(function (f) {
+        f.classList.toggle('is-active', f.getAttribute('data-lgcy-method') === target);
       });
     }
 
@@ -328,27 +323,94 @@
       });
     });
 
-    // Remember which form was submitted so we only show success on the right one
-    Object.keys(formMap).forEach(function (key) {
-      var form = formMap[key];
-      if (!form) return;
-      form.addEventListener('submit', function () {
-        try { sessionStorage.setItem(STORAGE_KEY, key); } catch (e) {}
-      });
-    });
-
-    // After Shopify reloads the page, fix up state based on what was actually submitted
-    var submitted = null;
-    try { submitted = sessionStorage.getItem(STORAGE_KEY); } catch (e) {}
-    if (submitted) {
-      try { sessionStorage.removeItem(STORAGE_KEY); } catch (e) {}
-      var other = submitted === 'email' ? 'sms' : 'email';
-      if (formMap[other]) {
-        var strayMsg = formMap[other].querySelector('.lgcy-signup__msg');
-        if (strayMsg) strayMsg.remove();
-      }
-      activate(submitted);
+    function showMsg(form, text, type) {
+      var el = form.querySelector('[data-lgcy-msg]');
+      if (!el) return;
+      el.textContent = text;
+      el.classList.remove('lgcy-signup__msg--success', 'lgcy-signup__msg--error');
+      el.classList.add('lgcy-signup__msg--' + type);
+      el.hidden = false;
     }
+
+    function setBusy(form, busy) {
+      var btn = form.querySelector('.lgcy-signup__btn');
+      var input = form.querySelector('.lgcy-signup__input');
+      if (btn) btn.disabled = busy;
+      if (input) input.disabled = busy;
+    }
+
+    // Omnisend's queue is set up by their app snippet — guard in case it isn't ready yet.
+    function omnisendPush(args) {
+      window.omnisend = window.omnisend || [];
+      window.omnisend.push(args);
+    }
+
+    function isEmail(v) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    }
+
+    function normalizePhone(v) {
+      var digits = v.replace(/[^\d+]/g, '');
+      if (digits && digits.charAt(0) !== '+') digits = '+' + digits.replace(/^0+/, '');
+      return digits;
+    }
+
+    forms.forEach(function (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var method = form.getAttribute('data-lgcy-method');
+        var input = form.querySelector('.lgcy-signup__input');
+        var value = (input.value || '').trim();
+
+        if (method === 'email') {
+          if (!isEmail(value)) {
+            showMsg(form, 'Enter a valid email address.', 'error');
+            return;
+          }
+        } else {
+          var phone = normalizePhone(value);
+          if (phone.replace(/\D/g, '').length < 8) {
+            showMsg(form, 'Enter a valid phone number with country code.', 'error');
+            return;
+          }
+          value = phone;
+        }
+
+        setBusy(form, true);
+
+        var contact = { tags: ['newsletter', 'legacy'] };
+        if (method === 'email') {
+          contact.email = value;
+          contact.emailStatus = 'subscribed';
+        } else {
+          contact.phone = value;
+          contact.smsStatus = 'subscribed';
+          contact.tags.push('sms');
+        }
+
+        try {
+          omnisendPush(['identifyContact', contact]);
+          omnisendPush(['track', '$subscribed']);
+          showMsg(form, "You're in. Welcome to the Legacy.", 'success');
+          input.value = '';
+        } catch (err) {
+          showMsg(form, 'Something went wrong. Try again.', 'error');
+        } finally {
+          setBusy(form, false);
+        }
+      });
+
+      // Clear the message once the user starts editing again
+      var input = form.querySelector('.lgcy-signup__input');
+      if (input) {
+        input.addEventListener('input', function () {
+          var el = form.querySelector('[data-lgcy-msg]');
+          if (el && !el.hidden && !el.classList.contains('lgcy-signup__msg--success')) {
+            el.hidden = true;
+          }
+        });
+      }
+    });
   })();
 </script>
 
