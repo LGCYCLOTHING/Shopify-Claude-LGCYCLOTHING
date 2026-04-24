@@ -806,111 +806,39 @@
     font-size: 13px;
     line-height: 1.6;
     color: rgba(255,255,255,0.55);
-    margin: 0 0 24px;
+    margin: 0 0 28px;
     letter-spacing: 0;
   }
 
-  .lgcy-legacy-perks {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .lgcy-legacy-perks li {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 11px;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.7);
-    padding-left: 16px;
-    position: relative;
-  }
-
-  .lgcy-legacy-perks li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: rgba(255,255,255,0.4);
-  }
-
-  .lgcy-newsletter-form {
-    width: 100%;
-  }
-
-  .lgcy-newsletter-row {
-    display: flex;
-    gap: 0;
-    width: 100%;
-    border: 1px solid rgba(255,255,255,0.3);
-    margin-bottom: 8px;
-  }
-
-  .lgcy-newsletter-row--phone {
-    margin-bottom: 0;
-  }
-
-  .lgcy-newsletter-sms-label {
-    display: flex;
+  .lgcy-legacy-cta {
+    display: inline-flex;
     align-items: center;
-    padding: 0 16px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    color: rgba(255,255,255,0.35);
-    flex-shrink: 0;
-    border-left: 1px solid rgba(255,255,255,0.15);
-  }
-
-  .lgcy-newsletter-input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    padding: 14px 16px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    color: #ffffff;
-    text-transform: uppercase;
-  }
-
-  .lgcy-newsletter-input::placeholder {
-    color: rgba(255,255,255,0.3);
-  }
-
-  .lgcy-newsletter-btn {
+    justify-content: center;
+    gap: 10px;
     background: #ffffff;
-    border: none;
-    padding: 14px 20px;
+    color: #000000;
+    text-decoration: none;
+    padding: 14px 24px;
     font-family: 'Inter', sans-serif;
     font-weight: 900;
     font-size: 11px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #000000;
-    cursor: pointer;
-    transition: background 0.2s ease;
-    flex-shrink: 0;
+    transition: background 0.2s ease, transform 0.2s ease;
+    align-self: flex-start;
   }
 
-  .lgcy-newsletter-btn:hover {
+  .lgcy-legacy-cta:hover {
     background: rgba(255,255,255,0.85);
+    transform: translateX(2px);
   }
 
-  .lgcy-newsletter-success {
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    color: rgba(255,255,255,0.7);
-    margin: 12px 0 0;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+  .lgcy-legacy-cta svg {
+    transition: transform 0.2s ease;
+  }
+
+  .lgcy-legacy-cta:hover svg {
+    transform: translateX(2px);
   }
 
   .lgcy-legacy-disclaimer {
@@ -918,7 +846,7 @@
     font-size: 10px;
     font-weight: 400;
     color: rgba(255,255,255,0.25);
-    margin: 12px 0 0;
+    margin: 16px 0 0;
     letter-spacing: 0.04em;
   }
 </style>
