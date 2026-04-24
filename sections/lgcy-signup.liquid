@@ -319,27 +319,32 @@
     if (!root) return;
 
     var tabs = root.querySelectorAll('[data-lgcy-tab]');
-    var forms = root.querySelectorAll('[data-lgcy-form]');
+    var formMap = {
+      email: root.querySelector('.lgcy-signup__form--email'),
+      sms: root.querySelector('.lgcy-signup__form--sms')
+    };
+
+    function activate(target) {
+      tabs.forEach(function (t) {
+        var active = t.getAttribute('data-lgcy-tab') === target;
+        t.classList.toggle('is-active', active);
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      Object.keys(formMap).forEach(function (key) {
+        if (!formMap[key]) return;
+        formMap[key].classList.toggle('is-active', key === target);
+      });
+    }
 
     tabs.forEach(function (tab) {
       tab.addEventListener('click', function () {
-        var target = tab.getAttribute('data-lgcy-tab');
-        tabs.forEach(function (t) {
-          var active = t.getAttribute('data-lgcy-tab') === target;
-          t.classList.toggle('is-active', active);
-          t.setAttribute('aria-selected', active ? 'true' : 'false');
-        });
-        forms.forEach(function (f) {
-          f.classList.toggle('is-active', f.getAttribute('data-lgcy-form') === target);
-        });
+        activate(tab.getAttribute('data-lgcy-tab'));
       });
     });
 
-    // If an SMS form was just submitted, keep SMS tab active on reload
-    var smsForm = root.querySelector('[data-lgcy-form="sms"]');
-    if (smsForm && smsForm.querySelector('.lgcy-signup__msg')) {
-      var smsTab = root.querySelector('[data-lgcy-tab="sms"]');
-      if (smsTab) smsTab.click();
+    // If the SMS form was just submitted, keep SMS tab active after reload
+    if (formMap.sms && formMap.sms.querySelector('.lgcy-signup__msg')) {
+      activate('sms');
     }
   })();
 </script>
