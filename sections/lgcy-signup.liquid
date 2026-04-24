@@ -95,92 +95,70 @@
     color: rgba(255,255,255,0.4);
   }
 
-  /* ── Tab toggle ── */
-  .lgcy-signup__tabs {
-    display: flex;
-    width: 100%;
-    margin-bottom: 14px;
-    border: 1px solid rgba(255,255,255,0.2);
-  }
-
-  .lgcy-signup__tab {
-    flex: 1;
-    background: transparent;
-    border: none;
-    padding: 14px 16px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .lgcy-signup__tab + .lgcy-signup__tab {
-    border-left: 1px solid rgba(255,255,255,0.2);
-  }
-
-  .lgcy-signup__tab:hover {
-    color: #ffffff;
-  }
-
-  .lgcy-signup__tab.is-active {
-    background: #ffffff;
-    color: #000000;
-  }
-
-  /* ── Forms ── */
+  /* ── Form ── */
   .lgcy-signup__form {
-    display: none;
     width: 100%;
   }
 
-  .lgcy-signup__form.is-active {
+  .lgcy-signup__field {
     display: block;
-  }
-
-  .lgcy-signup__row {
-    display: flex;
     width: 100%;
     border: 1px solid rgba(255,255,255,0.3);
     background: rgba(255,255,255,0.02);
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .lgcy-signup__label {
+    display: block;
+    font-weight: 900;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    padding: 12px 18px 0;
+  }
+
+  .lgcy-signup__label-optional {
+    color: rgba(255,255,255,0.3);
+    font-weight: 700;
+    margin-left: 6px;
   }
 
   .lgcy-signup__input {
-    flex: 1;
+    width: 100%;
     background: transparent;
     border: none;
     outline: none;
-    padding: 16px 18px;
+    padding: 6px 18px 14px;
     font-family: 'Inter', sans-serif;
     font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 0.08em;
+    font-size: 13px;
+    letter-spacing: 0.04em;
     color: #ffffff;
-    text-transform: uppercase;
-    min-width: 0;
   }
 
   .lgcy-signup__input::placeholder {
-    color: rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
   }
 
   .lgcy-signup__btn {
+    width: 100%;
     background: #ffffff;
     border: none;
-    padding: 0 28px;
+    padding: 16px 28px;
+    margin-top: 6px;
     font-family: 'Inter', sans-serif;
     font-weight: 900;
-    font-size: 11px;
-    letter-spacing: 0.12em;
+    font-size: 12px;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: #000000;
     cursor: pointer;
     transition: background 0.2s ease;
-    flex-shrink: 0;
   }
 
   .lgcy-signup__btn:hover {
@@ -191,6 +169,15 @@
   .lgcy-signup__input:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+  }
+
+  .lgcy-signup__hint {
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.35);
+    margin: 2px 0 14px;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
   }
 
   .lgcy-signup__msg {
