@@ -258,8 +258,8 @@
     {%- endif -%}
 
     <div class="lgcy-signup__tabs" role="tablist" aria-label="Sign up method">
-      <button type="button" class="lgcy-signup__tab is-active" role="tab" aria-selected="true" data-lgcy-tab="email">Email</button>
-      <button type="button" class="lgcy-signup__tab" role="tab" aria-selected="false" data-lgcy-tab="sms">SMS</button>
+      <button type="button" class="lgcy-signup__tab is-active" role="tab" aria-selected="true" aria-controls="lgcy-signup-email" data-lgcy-tab="email">Email</button>
+      <button type="button" class="lgcy-signup__tab" role="tab" aria-selected="false" aria-controls="lgcy-signup-sms" data-lgcy-tab="sms">SMS</button>
     </div>
 
     {%- comment %} ── Email form ── {% endcomment %}
