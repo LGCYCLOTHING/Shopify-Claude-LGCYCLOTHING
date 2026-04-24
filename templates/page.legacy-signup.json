@@ -1,0 +1,33 @@
+{
+  "sections": {
+    "lgcy-signup": {
+      "type": "lgcy-signup",
+      "blocks": {
+        "perk1": {
+          "type": "perk",
+          "settings": { "text": "Early access to every drop" }
+        },
+        "perk2": {
+          "type": "perk",
+          "settings": { "text": "Member-only discounts" }
+        },
+        "perk3": {
+          "type": "perk",
+          "settings": { "text": "Behind the scenes content" }
+        },
+        "perk4": {
+          "type": "perk",
+          "settings": { "text": "Free shipping on first order" }
+        }
+      },
+      "block_order": ["perk1", "perk2", "perk3", "perk4"],
+      "settings": {
+        "eyebrow": "The Inner Circle",
+        "heading": "Join The Legacy.",
+        "subtext": "Be first. Get exclusive drops, early access to new collections, and member-only discounts — straight to your inbox or phone.",
+        "disclaimer": "No spam. Unsubscribe anytime. By entering your phone number you agree to receive SMS marketing."
+      }
+    }
+  },
+  "order": ["lgcy-signup"]
+}
