@@ -250,14 +250,10 @@
       </ul>
     {%- endif -%}
 
-    <div class="lgcy-signup__tabs" role="tablist" aria-label="Sign up method">
-      <button type="button" class="lgcy-signup__tab is-active" role="tab" aria-selected="true" aria-controls="lgcy-signup-email" data-lgcy-tab="email">Email</button>
-      <button type="button" class="lgcy-signup__tab" role="tab" aria-selected="false" aria-controls="lgcy-signup-sms" data-lgcy-tab="sms">SMS</button>
-    </div>
-
-    {%- comment %} ── Email form (Omnisend) ── {% endcomment %}
-    <form class="lgcy-signup__form lgcy-signup__form--email is-active" data-lgcy-method="email" novalidate>
-      <div class="lgcy-signup__row">
+    {%- comment %} ── Signup form (Omnisend) ── {% endcomment %}
+    <form class="lgcy-signup__form" data-lgcy-form novalidate>
+      <label class="lgcy-signup__field">
+        <span class="lgcy-signup__label">Email</span>
         <input
           type="email"
           name="email"
@@ -266,24 +262,24 @@
           autocomplete="email"
           required
         >
-        <button type="submit" class="lgcy-signup__btn">Join</button>
-      </div>
-      <p class="lgcy-signup__msg" data-lgcy-msg hidden></p>
-    </form>
+      </label>
 
-    {%- comment %} ── SMS form (Omnisend) ── {% endcomment %}
-    <form class="lgcy-signup__form lgcy-signup__form--sms" data-lgcy-method="sms" novalidate>
-      <div class="lgcy-signup__row">
+      <label class="lgcy-signup__field">
+        <span class="lgcy-signup__label">
+          Phone
+          <span class="lgcy-signup__label-optional">— Optional, for SMS</span>
+        </span>
         <input
           type="tel"
           name="phone"
           class="lgcy-signup__input"
           placeholder="+1 (000) 000-0000"
           autocomplete="tel"
-          required
         >
-        <button type="submit" class="lgcy-signup__btn">Join</button>
-      </div>
+      </label>
+      <p class="lgcy-signup__hint">Add your number to also get SMS drops. Include your country code (e.g. +1).</p>
+
+      <button type="submit" class="lgcy-signup__btn">Join The Legacy</button>
       <p class="lgcy-signup__msg" data-lgcy-msg hidden></p>
     </form>
 
