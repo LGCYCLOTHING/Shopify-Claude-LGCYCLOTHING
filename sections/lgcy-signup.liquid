@@ -314,10 +314,10 @@
 
 <script>
   (function () {
-    var root = document.currentScript.previousElementSibling;
-    if (!root) root = document.querySelector('.lgcy-signup');
+    var root = document.querySelector('.lgcy-signup');
     if (!root) return;
 
+    var STORAGE_KEY = 'lgcy-signup-submitted';
     var tabs = root.querySelectorAll('[data-lgcy-tab]');
     var formMap = {
       email: root.querySelector('.lgcy-signup__form--email'),
@@ -342,9 +342,26 @@
       });
     });
 
-    // If the SMS form was just submitted, keep SMS tab active after reload
-    if (formMap.sms && formMap.sms.querySelector('.lgcy-signup__msg')) {
-      activate('sms');
+    // Remember which form was submitted so we only show success on the right one
+    Object.keys(formMap).forEach(function (key) {
+      var form = formMap[key];
+      if (!form) return;
+      form.addEventListener('submit', function () {
+        try { sessionStorage.setItem(STORAGE_KEY, key); } catch (e) {}
+      });
+    });
+
+    // After Shopify reloads the page, fix up state based on what was actually submitted
+    var submitted = null;
+    try { submitted = sessionStorage.getItem(STORAGE_KEY); } catch (e) {}
+    if (submitted) {
+      try { sessionStorage.removeItem(STORAGE_KEY); } catch (e) {}
+      var other = submitted === 'email' ? 'sms' : 'email';
+      if (formMap[other]) {
+        var strayMsg = formMap[other].querySelector('.lgcy-signup__msg');
+        if (strayMsg) strayMsg.remove();
+      }
+      activate(submitted);
     }
   })();
 </script>
