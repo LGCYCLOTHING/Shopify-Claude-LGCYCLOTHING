@@ -257,7 +257,7 @@
     </div>
 
     {%- comment %} ── Email form ── {% endcomment %}
-    {%- form 'customer', id: 'lgcy-signup-email', class: 'lgcy-signup__form lgcy-signup__form--email is-active', data-lgcy-form: 'email' -%}
+    {%- form 'customer', id: 'lgcy-signup-email', class: 'lgcy-signup__form lgcy-signup__form--email is-active' -%}
       <input type="hidden" name="contact[tags]" value="newsletter,legacy">
       <div class="lgcy-signup__row">
         <input
@@ -270,7 +270,7 @@
         >
         <button type="submit" class="lgcy-signup__btn">Join</button>
       </div>
-      {%- if form.posted_successfully? and form.id == 'lgcy-signup-email' -%}
+      {%- if form.posted_successfully? -%}
         <p class="lgcy-signup__msg lgcy-signup__msg--success">You're in. Welcome to the Legacy.</p>
       {%- elsif form.errors -%}
         <p class="lgcy-signup__msg lgcy-signup__msg--error">
@@ -280,7 +280,7 @@
     {%- endform -%}
 
     {%- comment %} ── SMS form ── {% endcomment %}
-    {%- form 'customer', id: 'lgcy-signup-sms', class: 'lgcy-signup__form lgcy-signup__form--sms', data-lgcy-form: 'sms' -%}
+    {%- form 'customer', id: 'lgcy-signup-sms', class: 'lgcy-signup__form lgcy-signup__form--sms' -%}
       <input type="hidden" name="contact[tags]" value="newsletter,legacy,sms">
       <div class="lgcy-signup__row">
         <input
@@ -293,7 +293,7 @@
         >
         <button type="submit" class="lgcy-signup__btn">Join</button>
       </div>
-      {%- if form.posted_successfully? and form.id == 'lgcy-signup-sms' -%}
+      {%- if form.posted_successfully? -%}
         <p class="lgcy-signup__msg lgcy-signup__msg--success">You're in. Welcome to the Legacy.</p>
       {%- elsif form.errors -%}
         <p class="lgcy-signup__msg lgcy-signup__msg--error">
