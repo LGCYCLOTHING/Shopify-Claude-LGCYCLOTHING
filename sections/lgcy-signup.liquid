@@ -250,149 +250,29 @@
       </ul>
     {%- endif -%}
 
-    {%- comment %} ── Signup form (Omnisend) ── {% endcomment %}
-    <form class="lgcy-signup__form" data-lgcy-form novalidate>
-      <label class="lgcy-signup__field">
-        <span class="lgcy-signup__label">Email</span>
-        <input
-          type="email"
-          name="email"
-          class="lgcy-signup__input"
-          placeholder="YOUR@EMAIL.COM"
-          autocomplete="email"
-          required
-        >
-      </label>
+    {%- comment %} ── Omnisend form slot — add the "Omnisend Embedded Form" app block here ── {% endcomment %}
+    <div class="lgcy-signup__form-slot">
+      {%- assign app_block_count = 0 -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == '@app' -%}
+          {%- assign app_block_count = app_block_count | plus: 1 -%}
+          <div class="lgcy-signup__app-block" {{ block.shopify_attributes }}>
+            {% render block %}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
 
-      <label class="lgcy-signup__field">
-        <span class="lgcy-signup__label">
-          Phone
-          <span class="lgcy-signup__label-optional">— Optional, for SMS</span>
-        </span>
-        <input
-          type="tel"
-          name="phone"
-          class="lgcy-signup__input"
-          placeholder="+1 (000) 000-0000"
-          autocomplete="tel"
-        >
-      </label>
-      <p class="lgcy-signup__hint">Add your number to also get SMS drops. Include your country code (e.g. +1).</p>
-
-      <button type="submit" class="lgcy-signup__btn">Join The Legacy</button>
-      <p class="lgcy-signup__msg" data-lgcy-msg hidden></p>
-    </form>
+      {%- if app_block_count == 0 -%}
+        <div class="lgcy-signup__empty-slot">
+          <p><strong>Form not added yet.</strong></p>
+          <p>In the theme editor, add the <em>Omnisend Embedded Form</em> app block inside this section and paste your form ID.</p>
+        </div>
+      {%- endif -%}
+    </div>
 
     <p class="lgcy-signup__disclaimer">{{ section.settings.disclaimer }}</p>
   </div>
 </div>
-
-<script>
-  (function () {
-    var root = document.querySelector('.lgcy-signup');
-    if (!root) return;
-
-    var form = root.querySelector('[data-lgcy-form]');
-    if (!form) return;
-
-    var emailInput = form.querySelector('input[name="email"]');
-    var phoneInput = form.querySelector('input[name="phone"]');
-    var btn = form.querySelector('.lgcy-signup__btn');
-    var msgEl = form.querySelector('[data-lgcy-msg]');
-    var inputs = form.querySelectorAll('.lgcy-signup__input');
-
-    function showMsg(text, type) {
-      if (!msgEl) return;
-      msgEl.textContent = text;
-      msgEl.classList.remove('lgcy-signup__msg--success', 'lgcy-signup__msg--error');
-      msgEl.classList.add('lgcy-signup__msg--' + type);
-      msgEl.hidden = false;
-    }
-
-    function hideMsg() {
-      if (msgEl && !msgEl.classList.contains('lgcy-signup__msg--success')) {
-        msgEl.hidden = true;
-      }
-    }
-
-    function setBusy(busy) {
-      if (btn) btn.disabled = busy;
-      inputs.forEach(function (i) { i.disabled = busy; });
-    }
-
-    function omnisendPush(args) {
-      window.omnisend = window.omnisend || [];
-      window.omnisend.push(args);
-    }
-
-    function isEmail(v) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-    }
-
-    function normalizePhone(v) {
-      var digits = v.replace(/[^\d+]/g, '');
-      if (digits && digits.charAt(0) !== '+') digits = '+' + digits.replace(/^0+/, '');
-      return digits;
-    }
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      var email = (emailInput.value || '').trim();
-      var rawPhone = (phoneInput.value || '').trim();
-
-      if (!isEmail(email)) {
-        showMsg('Enter a valid email address.', 'error');
-        emailInput.focus();
-        return;
-      }
-
-      var phone = '';
-      if (rawPhone) {
-        phone = normalizePhone(rawPhone);
-        if (phone.replace(/\D/g, '').length < 8) {
-          showMsg('Enter a valid phone number with country code, or leave it blank.', 'error');
-          phoneInput.focus();
-          return;
-        }
-      }
-
-      setBusy(true);
-
-      var contact = {
-        email: email,
-        emailStatus: 'subscribed',
-        tags: ['newsletter', 'legacy']
-      };
-      if (phone) {
-        contact.phone = phone;
-        contact.smsStatus = 'subscribed';
-        contact.tags.push('sms');
-      }
-
-      try {
-        omnisendPush(['identifyContact', contact]);
-        omnisendPush(['track', '$subscribed']);
-        showMsg(
-          phone
-            ? "You're in. Welcome to the Legacy — check your inbox and phone."
-            : "You're in. Welcome to the Legacy.",
-          'success'
-        );
-        emailInput.value = '';
-        phoneInput.value = '';
-      } catch (err) {
-        showMsg('Something went wrong. Try again.', 'error');
-      } finally {
-        setBusy(false);
-      }
-    });
-
-    inputs.forEach(function (i) {
-      i.addEventListener('input', hideMsg);
-    });
-  })();
-</script>
 
 {% schema %}
 {
