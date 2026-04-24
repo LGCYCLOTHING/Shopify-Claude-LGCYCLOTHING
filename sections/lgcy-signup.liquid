@@ -1,0 +1,403 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+  .lgcy-signup {
+    min-height: 100vh;
+    background: #0a0a0a;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lgcy-signup__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+
+  .lgcy-signup__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(12px) brightness(0.6);
+  }
+
+  .lgcy-signup__wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .lgcy-signup__eyebrow {
+    font-weight: 900;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin: 0 0 16px;
+  }
+
+  .lgcy-signup__heading {
+    font-weight: 900;
+    font-size: clamp(44px, 8vw, 80px);
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #ffffff;
+    line-height: 0.95;
+    margin: 0 0 20px;
+  }
+
+  .lgcy-signup__sub {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.6);
+    margin: 0 0 32px;
+    max-width: 440px;
+  }
+
+  .lgcy-signup__perks {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .lgcy-signup__perks li {
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    padding-left: 18px;
+    position: relative;
+  }
+
+  .lgcy-signup__perks li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ── Tab toggle ── */
+  .lgcy-signup__tabs {
+    display: flex;
+    width: 100%;
+    margin-bottom: 14px;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .lgcy-signup__tab {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 14px 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .lgcy-signup__tab + .lgcy-signup__tab {
+    border-left: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .lgcy-signup__tab:hover {
+    color: #ffffff;
+  }
+
+  .lgcy-signup__tab.is-active {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  /* ── Forms ── */
+  .lgcy-signup__form {
+    display: none;
+    width: 100%;
+  }
+
+  .lgcy-signup__form.is-active {
+    display: block;
+  }
+
+  .lgcy-signup__row {
+    display: flex;
+    width: 100%;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.02);
+  }
+
+  .lgcy-signup__input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 16px 18px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: #ffffff;
+    text-transform: uppercase;
+    min-width: 0;
+  }
+
+  .lgcy-signup__input::placeholder {
+    color: rgba(255,255,255,0.3);
+  }
+
+  .lgcy-signup__btn {
+    background: #ffffff;
+    border: none;
+    padding: 0 28px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #000000;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .lgcy-signup__btn:hover {
+    background: rgba(255,255,255,0.85);
+  }
+
+  .lgcy-signup__msg {
+    font-size: 12px;
+    font-weight: 700;
+    margin: 14px 0 0;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .lgcy-signup__msg--success {
+    color: #8fffb0;
+  }
+
+  .lgcy-signup__msg--error {
+    color: #ff9a9a;
+  }
+
+  .lgcy-signup__disclaimer {
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.3);
+    margin: 20px 0 0;
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 640px) {
+    .lgcy-signup {
+      padding: 60px 20px;
+      align-items: flex-start;
+    }
+
+    .lgcy-signup__row {
+      flex-direction: column;
+    }
+
+    .lgcy-signup__btn {
+      padding: 14px 20px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+  }
+</style>
+
+<div class="lgcy-signup">
+  {%- if section.settings.background_image != blank -%}
+    <div class="lgcy-signup__bg">
+      <img src="{{ section.settings.background_image | image_url: width: 1600 }}" alt="" loading="lazy">
+    </div>
+  {%- endif -%}
+
+  <div class="lgcy-signup__wrap">
+    <p class="lgcy-signup__eyebrow">{{ section.settings.eyebrow }}</p>
+    <h1 class="lgcy-signup__heading">{{ section.settings.heading }}</h1>
+    <p class="lgcy-signup__sub">{{ section.settings.subtext }}</p>
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="lgcy-signup__perks">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'perk' -%}
+            <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    <div class="lgcy-signup__tabs" role="tablist" aria-label="Sign up method">
+      <button type="button" class="lgcy-signup__tab is-active" role="tab" aria-selected="true" data-lgcy-tab="email">Email</button>
+      <button type="button" class="lgcy-signup__tab" role="tab" aria-selected="false" data-lgcy-tab="sms">SMS</button>
+    </div>
+
+    {%- comment %} ── Email form ── {% endcomment %}
+    {%- form 'customer', id: 'lgcy-signup-email', class: 'lgcy-signup__form lgcy-signup__form--email is-active', data-lgcy-form: 'email' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter,legacy">
+      <div class="lgcy-signup__row">
+        <input
+          type="email"
+          name="contact[email]"
+          class="lgcy-signup__input"
+          placeholder="YOUR@EMAIL.COM"
+          autocomplete="email"
+          required
+        >
+        <button type="submit" class="lgcy-signup__btn">Join</button>
+      </div>
+      {%- if form.posted_successfully? and form.id == 'lgcy-signup-email' -%}
+        <p class="lgcy-signup__msg lgcy-signup__msg--success">You're in. Welcome to the Legacy.</p>
+      {%- elsif form.errors -%}
+        <p class="lgcy-signup__msg lgcy-signup__msg--error">
+          {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+        </p>
+      {%- endif -%}
+    {%- endform -%}
+
+    {%- comment %} ── SMS form ── {% endcomment %}
+    {%- form 'customer', id: 'lgcy-signup-sms', class: 'lgcy-signup__form lgcy-signup__form--sms', data-lgcy-form: 'sms' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter,legacy,sms">
+      <div class="lgcy-signup__row">
+        <input
+          type="tel"
+          name="contact[phone]"
+          class="lgcy-signup__input"
+          placeholder="+1 (000) 000-0000"
+          autocomplete="tel"
+          required
+        >
+        <button type="submit" class="lgcy-signup__btn">Join</button>
+      </div>
+      {%- if form.posted_successfully? and form.id == 'lgcy-signup-sms' -%}
+        <p class="lgcy-signup__msg lgcy-signup__msg--success">You're in. Welcome to the Legacy.</p>
+      {%- elsif form.errors -%}
+        <p class="lgcy-signup__msg lgcy-signup__msg--error">
+          {{ form.errors.translated_fields.phone | capitalize }} {{ form.errors.messages.phone }}
+        </p>
+      {%- endif -%}
+    {%- endform -%}
+
+    <p class="lgcy-signup__disclaimer">{{ section.settings.disclaimer }}</p>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.currentScript.previousElementSibling;
+    if (!root) root = document.querySelector('.lgcy-signup');
+    if (!root) return;
+
+    var tabs = root.querySelectorAll('[data-lgcy-tab]');
+    var forms = root.querySelectorAll('[data-lgcy-form]');
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var target = tab.getAttribute('data-lgcy-tab');
+        tabs.forEach(function (t) {
+          var active = t.getAttribute('data-lgcy-tab') === target;
+          t.classList.toggle('is-active', active);
+          t.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        forms.forEach(function (f) {
+          f.classList.toggle('is-active', f.getAttribute('data-lgcy-form') === target);
+        });
+      });
+    });
+
+    // If an SMS form was just submitted, keep SMS tab active on reload
+    var smsForm = root.querySelector('[data-lgcy-form="sms"]');
+    if (smsForm && smsForm.querySelector('.lgcy-signup__msg')) {
+      var smsTab = root.querySelector('[data-lgcy-tab="sms"]');
+      if (smsTab) smsTab.click();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "LGCY Signup",
+  "tag": "section",
+  "class": "section-lgcy-signup",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The Inner Circle"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Join The Legacy."
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Be first. Get exclusive drops, early access to new collections, and member-only discounts — straight to your inbox or phone."
+    },
+    {
+      "type": "textarea",
+      "id": "disclaimer",
+      "label": "Disclaimer",
+      "default": "No spam. Unsubscribe anytime. By entering your phone number you agree to receive SMS marketing."
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "perk",
+      "name": "Perk",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Perk text",
+          "default": "Early access to every drop"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LGCY Signup",
+      "blocks": [
+        { "type": "perk", "settings": { "text": "Early access to every drop" } },
+        { "type": "perk", "settings": { "text": "Member-only discounts" } },
+        { "type": "perk", "settings": { "text": "Behind the scenes content" } },
+        { "type": "perk", "settings": { "text": "Free shipping on first order" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
