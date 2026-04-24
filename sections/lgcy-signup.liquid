@@ -232,7 +232,13 @@
 <div class="lgcy-signup">
   {%- if section.settings.background_image != blank -%}
     <div class="lgcy-signup__bg">
-      <img src="{{ section.settings.background_image | image_url: width: 1600 }}" alt="" loading="lazy">
+      <img
+        src="{{ section.settings.background_image | image_url: width: 1600 }}"
+        alt=""
+        loading="lazy"
+        width="{{ section.settings.background_image.width }}"
+        height="{{ section.settings.background_image.height }}"
+      >
     </div>
   {%- endif -%}
 
