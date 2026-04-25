@@ -481,6 +481,21 @@
       display: none !important;
     }
 
+    /* Kill the Shop/Legacy hover underline on mobile — hamburger replaces these
+       and the .lgcy-active class still gets applied on tap, which can leak the
+       underline pseudo-element through. Also clear the Dawn .link underline on
+       the hamburger summary. */
+    .lgcy-shop-btn::after,
+    .lgcy-legacy-btn::after {
+      content: none !important;
+      display: none !important;
+    }
+
+    .header__icon--menu,
+    .header__icon--menu * {
+      text-decoration: none !important;
+    }
+
     /* Show the mobile Legacy switcher */
     .lgcy-panel-link--legacy-switch {
       display: flex;
