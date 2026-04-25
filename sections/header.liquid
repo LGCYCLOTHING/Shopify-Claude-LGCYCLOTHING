@@ -150,6 +150,14 @@
   .section-header.overflow-hidden-mobile {
     mix-blend-mode: normal !important;
   }
+
+  /* Mobile: push page content below the fixed header so it doesn't overlap
+     (header = 14px top padding + 44px icons + 14px bottom padding ≈ 72px). */
+  @media screen and (max-width: 989px) {
+    #MainContent {
+      padding-top: 72px;
+    }
+  }
 </style>
 {%- endunless -%}
 
