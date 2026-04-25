@@ -6,30 +6,47 @@
  
 {% if template == 'password' %}
   <style>
-    #password-header-form {
-      position: absolute;
-      top: 50%; /* Vertically center */
-      left: 50%; /* Horizontally center */
-      transform: translate(-50%, -50%); /* Adjust to center the form */
-      z-index: 9999;
+    /* Page background: force black so the video can fill the viewport
+       without the body's scheme-1 white showing through any gap. */
+    html,
+    body.password,
+    body.password.gradient {
+      background: #000 !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
 
-    /* Mobile-specific styles */
-    @media (max-width: 768px) {
-      #password-header-form {
-        position: absolute; /* Fixed position for better mobile experience */
-        top: 50%; /* Vertically center */
-        left: 50%; /* Horizontally center */
-        transform: translate(-50%, -50%); /* Center the form */
-        width: 100%; /* Adjust the form width on mobile */
-        padding: 0 10px;
-        box-sizing: border-box;
-        font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif; /* Ensure Helvetica Neue is applied */
-        font-weight: bold; /* Ensure bold font style */
-      }
+    /* Kill the <hr> separators added by main-password-header/footer sections —
+       they render as white horizontal lines top and bottom of the video. */
+    body.password hr {
+      display: none !important;
+    }
+
+    /* Make sure the (visually-hidden) password header/footer section wrappers
+       don't reserve any height that exposes the body bg as a white border. */
+    body.password .shopify-section-main-password-header,
+    body.password .shopify-section-main-password-footer,
+    body.password #shopify-section-main-password-header,
+    body.password #shopify-section-main-password-footer {
+      display: none !important;
+    }
+
+    /* Stretch the video container edge-to-edge */
+    body.password .videoBackground,
+    body.password .videoBox,
+    body.password .fullscreen-video-wrap {
+      margin: 0 !important;
+    }
+
+    #password-header-form {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
     }
   </style>
-  
+
   <style>
 /* Desktop */
 #password-header-form {
@@ -48,11 +65,14 @@
   }
 }
 
-/* Mobile */
+/* Mobile: keep the form centered and a bit wider, but still scaled down
+   enough to fit the full omnisend embed within the viewport height. */
 @media (max-width: 749px) {
   #password-header-form {
-    transform: translate(-50%, -50%) scale(0.72);
-    transform-origin: center top;
+    transform: translate(-50%, -50%) scale(0.85);
+    transform-origin: center center;
+    width: calc(100vw - 20px);
+    padding: 24px 18px 20px;
   }
 }
 
