@@ -639,6 +639,8 @@
     {%- assign explore_section = shop_links | where: 'settings.section', 'explore' -%}
     {%- assign support_section = shop_links | where: 'settings.section', 'support' -%}
 
+    <span class="lgcy-panel-section-label lgcy-panel-section-label--collections">Collections</span>
+
     {%- if shop_section.size > 0 -%}
       {%- for block in shop_section -%}
         <a href="{{ block.settings.url }}" class="lgcy-panel-link" {{ block.shopify_attributes }}>
