@@ -674,19 +674,6 @@
       </a>
     {%- endif -%}
 
-    {%- comment %} ── Explore Collections card ── {% endcomment %}
-    <div class="lgcy-explore-card" id="lgcy-explore-card">
-      <span class="lgcy-explore-eyebrow">Explore Collections</span>
-      <a href="{{ routes.collections_url }}/the-legacy-collection" class="lgcy-explore-title" data-explore-link="0">'Iconic Visionary'</a>
-      <a href="{{ routes.collections_url }}/lgcy-glasses" class="lgcy-explore-subtitle" data-explore-link="1">LGCY.</a>
-      <a href="{{ routes.collections_url }}/the-legacy-collection" class="lgcy-explore-discover" id="lgcy-explore-discover">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>Discover</span>
-      </a>
-    </div>
-
     {%- if explore_section.size > 0 -%}
       <div class="lgcy-panel-divider"></div>
       {%- for block in explore_section -%}
