@@ -125,6 +125,11 @@
    tag Omnisend ends up rendering. */
 @media (max-width: 749px) {
   #password-header-form {
+    /* Pin to the viewport directly (not the section ancestor) so 50% is the
+       actual middle of what the user sees, not 50% of a possibly taller box. */
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
     transform: translate(-50%, -50%) scale(0.8);
     transform-origin: center center;
     width: calc(100vw - 20px);
