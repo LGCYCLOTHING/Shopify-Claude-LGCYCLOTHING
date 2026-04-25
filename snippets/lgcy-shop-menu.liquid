@@ -599,6 +599,93 @@
   }
 </style>
 
+{%- if request.page_type == 'product' -%}
+<style>
+  /* ─────────────────────────────────────────────────────────────────────
+     Product page overrides — page bg is white so default white text is
+     invisible. Side panel keeps its glass blur but text/dividers go dark.
+     SHOP / LEGACY header buttons get inverted (black text + black logo).
+     ───────────────────────────────────────────────────────────────────── */
+
+  /* Header SHOP / LEGACY triggers — inverted on white product pages */
+  .lgcy-shop-trigger-wrap .lgcy-shop-btn,
+  .lgcy-shop-trigger-wrap .lgcy-legacy-btn {
+    color: #000000 !important;
+  }
+  /* Logo image inside LEGACY button: inline style is brightness(0) invert(1)
+     (white on dark backgrounds) — drop the invert so the logo renders black. */
+  .lgcy-legacy-btn img {
+    filter: brightness(0) !important;
+  }
+
+  /* Side panel — keep glass blur, retint and switch text to dark grey */
+  .lgcy-panel-nav {
+    background: rgba(255, 255, 255, 0.55) !important;
+    border-right-color: rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .lgcy-panel-link,
+  .lgcy-panel-link--bottom,
+  .lgcy-panel-link--legacy-switch {
+    color: #3a3a3a !important;
+  }
+
+  .lgcy-panel-link__text::after {
+    background: #3a3a3a !important;
+  }
+
+  .lgcy-panel-section-label,
+  .lgcy-panel-bottom-label {
+    color: rgba(0, 0, 0, 0.45) !important;
+  }
+
+  .lgcy-panel-link--secondary {
+    color: rgba(0, 0, 0, 0.55) !important;
+  }
+  .lgcy-panel-link--secondary .lgcy-panel-link__text::after {
+    background: rgba(0, 0, 0, 0.55) !important;
+  }
+
+  .lgcy-panel-divider {
+    background: rgba(0, 0, 0, 0.12) !important;
+  }
+  .lgcy-panel-bottom .lgcy-panel-divider {
+    background: rgba(0, 0, 0, 0.4) !important;
+  }
+
+  /* Mobile-only legacy switcher logo: same invert flip */
+  .lgcy-panel-link--legacy-switch .lgcy-panel-link__text img {
+    filter: brightness(0) !important;
+  }
+
+  /* Legacy sign-up panel content: dark text + inverted CTA */
+  .lgcy-legacy-eyebrow {
+    color: rgba(0, 0, 0, 0.45) !important;
+  }
+  .lgcy-legacy-heading {
+    color: #111 !important;
+  }
+  .lgcy-legacy-sub {
+    color: rgba(0, 0, 0, 0.6) !important;
+  }
+  .lgcy-legacy-disclaimer {
+    color: rgba(0, 0, 0, 0.35) !important;
+  }
+  .lgcy-legacy-cta {
+    background: #000000 !important;
+    color: #ffffff !important;
+  }
+  .lgcy-legacy-cta:hover {
+    background: rgba(0, 0, 0, 0.85) !important;
+  }
+
+  /* Close button (when shown) */
+  .lgcy-panel-close {
+    color: #000000 !important;
+  }
+</style>
+{%- endif -%}
+
 {%- comment %} ── Triggers ── {% endcomment %}
 <div class="lgcy-shop-trigger-wrap" id="lgcy-shop-trigger-wrap">
   <button
