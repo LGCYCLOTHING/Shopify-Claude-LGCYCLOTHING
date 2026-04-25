@@ -476,24 +476,32 @@
   }
 
   @media (max-width: 989px) {
-    /* Hide the desktop Shop trigger button — hamburger replaces it */
-    .lgcy-shop-trigger-wrap {
+    /* Hide the desktop Shop trigger button — hamburger replaces it.
+       Also hide the buttons themselves (and their images/pseudo-element underlines)
+       in case the wrap gets reparented by JS and a stray <img> or ::after leaks through. */
+    .lgcy-shop-trigger-wrap,
+    .lgcy-shop-btn,
+    .lgcy-legacy-btn,
+    .lgcy-shop-btn img,
+    .lgcy-legacy-btn img {
       display: none !important;
     }
 
-    /* Kill the Shop/Legacy hover underline on mobile — hamburger replaces these
-       and the .lgcy-active class still gets applied on tap, which can leak the
-       underline pseudo-element through. Also clear the Dawn .link underline on
-       the hamburger summary. */
     .lgcy-shop-btn::after,
     .lgcy-legacy-btn::after {
       content: none !important;
       display: none !important;
     }
 
+    /* Clear the Dawn .link text-decoration underline on the hamburger summary. */
     .header__icon--menu,
     .header__icon--menu * {
       text-decoration: none !important;
+    }
+
+    /* Indent the hamburger to match the right-side .header__icons padding (0.8rem). */
+    header-drawer {
+      padding-left: 0.8rem;
     }
 
     /* Show the mobile Legacy switcher */
