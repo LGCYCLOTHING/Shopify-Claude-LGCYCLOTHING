@@ -119,6 +119,23 @@
   }
 }
 
+/* LGCYCLOTHING brand heading inside the omnisend embed — tighten the letter
+   spacing and force max font weight on every heading level / common omnisend
+   title class so the brand mark reads cleanly regardless of which tag the
+   embed uses. */
+#password-header-form [id^="omnisend-embedded-v2"] h1,
+#password-header-form [id^="omnisend-embedded-v2"] h2,
+#password-header-form [id^="omnisend-embedded-v2"] h3,
+#password-header-form [id^="omnisend-embedded-v2"] h4,
+#password-header-form [id^="omnisend-embedded-v2"] h5,
+#password-header-form [id^="omnisend-embedded-v2"] h6,
+#password-header-form [id^="omnisend-embedded-v2"] [class*="title" i],
+#password-header-form [id^="omnisend-embedded-v2"] [class*="heading" i],
+#password-header-form [id^="omnisend-embedded-v2"] [class*="brand" i] {
+  letter-spacing: -0.05em !important;
+  font-weight: 900 !important;
+}
+
 /* Mobile: keep the form centered, slightly wider, and shrink the omnisend
    heading directly so it doesn't wrap to one-word-per-line and dominate the
    form. Targeting all heading levels + the embed's body text catches whichever
