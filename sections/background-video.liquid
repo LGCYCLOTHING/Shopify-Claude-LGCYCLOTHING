@@ -67,6 +67,29 @@
         height: 100% !important;
         min-height: 100% !important;
       }
+
+      /* Force the video element + its wrap to a fixed full-viewport box.
+         Bypasses any flex/section container heights that might be shorter
+         than the visible area on mobile and lets the video sit edge-to-edge. */
+      body.password .videoBackground .fullscreen-video-wrap {
+        position: fixed !important;
+        inset: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        z-index: 0 !important;
+      }
+      body.password .videoBackground .video-js,
+      body.password .videoBackground video {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        object-fit: cover !important;
+        z-index: 0 !important;
+      }
     }
 
     #password-header-form {
