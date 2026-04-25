@@ -467,10 +467,44 @@
     padding: 20px;
   }
 
+  /* Mobile-only Legacy switcher inside the panel — hidden on desktop */
+  .lgcy-panel-link--legacy-switch {
+    display: none;
+  }
+  .lgcy-panel-divider--legacy-switch {
+    display: none;
+  }
+
   @media (max-width: 989px) {
     /* Hide the desktop Shop trigger button — hamburger replaces it */
     .lgcy-shop-trigger-wrap {
       display: none !important;
+    }
+
+    /* Show the mobile Legacy switcher */
+    .lgcy-panel-link--legacy-switch {
+      display: flex;
+      background: none;
+      border: none;
+      width: 100%;
+      cursor: pointer;
+      text-align: left;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lgcy-panel-link--legacy-switch .lgcy-panel-link__text {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .lgcy-panel-link--legacy-switch .lgcy-panel-link__text img {
+      height: 22px;
+      width: auto;
+      flex-shrink: 0;
+      filter: brightness(0) invert(1);
+      opacity: 1;
+    }
+    .lgcy-panel-divider--legacy-switch {
+      display: block;
     }
 
     /* Full-width single-column panel on mobile */
