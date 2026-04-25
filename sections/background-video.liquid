@@ -65,14 +65,30 @@
   }
 }
 
-/* Mobile: keep the form centered and a bit wider, but still scaled down
-   enough to fit the full omnisend embed within the viewport height. */
+/* Mobile: keep the form centered, slightly wider, and shrink the omnisend
+   heading directly so it doesn't wrap to one-word-per-line and dominate the
+   form. Targeting all heading levels + the embed's body text catches whichever
+   tag Omnisend ends up rendering. */
 @media (max-width: 749px) {
   #password-header-form {
-    transform: translate(-50%, -50%) scale(0.85);
+    transform: translate(-50%, -50%) scale(0.8);
     transform-origin: center center;
     width: calc(100vw - 20px);
-    padding: 24px 18px 20px;
+    padding: 22px 16px 18px;
+  }
+
+  #password-header-form [id^="omnisend-embedded-v2"] h1,
+  #password-header-form [id^="omnisend-embedded-v2"] h2,
+  #password-header-form [id^="omnisend-embedded-v2"] h3,
+  #password-header-form [id^="omnisend-embedded-v2"] [class*="title"],
+  #password-header-form [id^="omnisend-embedded-v2"] [class*="Title"] {
+    font-size: 22px !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.01em !important;
+    margin: 0 0 10px !important;
+    max-width: 100% !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
   }
 }
 
