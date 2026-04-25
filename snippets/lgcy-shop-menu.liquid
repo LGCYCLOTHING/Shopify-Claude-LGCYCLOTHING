@@ -587,6 +587,18 @@
   <div class="lgcy-panel-content lgcy-panel-content--shop lgcy-active">
   <nav class="lgcy-panel-nav" aria-label="Shop navigation">
 
+    {%- comment %} Mobile-only Legacy switcher (desktop has its own header trigger) {% endcomment %}
+    <button type="button" class="lgcy-panel-link lgcy-panel-link--legacy-switch" id="lgcy-mobile-legacy-switch">
+      <span class="lgcy-panel-link__text">
+        Legacy.
+        <img src="https://cdn.shopify.com/s/files/1/0688/4537/1578/files/Untitled_Project_-_Standard_6.svg" alt="" aria-hidden="true" width="40" height="22">
+      </span>
+      <svg class="lgcy-panel-link__arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="lgcy-panel-divider lgcy-panel-divider--legacy-switch"></div>
+
     {%- comment %} Separate blocks by section ── {% endcomment %}
     {%- assign shop_links    = section.blocks | where: 'type', 'shop_link' -%}
     {%- assign shop_section  = shop_links | where: 'settings.section', 'shop' -%}
