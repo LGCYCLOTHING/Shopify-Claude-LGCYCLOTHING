@@ -305,15 +305,21 @@
 
     <style>
       /* Hide Shopify's "No image" placeholder SVGs in production. Several Dawn
-         sections (image-with-text, featured-product, slideshow, collage, etc.)
-         render `placeholder_svg_tag` as a fallback when an image_picker is
-         empty. These are intended for theme-editor previews but leak into the
-         live storefront and cause a brief grey "No image" flash on every page
-         load. Theme editor / design mode keeps showing them so merchants can
-         still see what needs an image. */
+         sections render `placeholder_svg_tag` as a fallback when an image_picker
+         is empty — these leak into the live storefront and cause a brief grey
+         "No image" flash on every page load. Theme editor (design mode) keeps
+         them visible so merchants can still see what needs an image. */
       html:not(.shopify-design-mode) .placeholder-svg,
       html:not(.shopify-design-mode) svg.placeholder-svg,
-      html:not(.shopify-design-mode) .placeholder > svg {
+      html:not(.shopify-design-mode) .placeholder-image,
+      html:not(.shopify-design-mode) .placeholder,
+      html:not(.shopify-design-mode) [class*="placeholder"]:not(input):not(textarea) > svg {
+        display: none !important;
+      }
+      /* Also hide any wrapping container that's just the placeholder so it
+         doesn't reserve layout space during the flash. */
+      html:not(.shopify-design-mode) .image-banner__placeholder,
+      html:not(.shopify-design-mode) .collection-hero__image-container--placeholder {
         display: none !important;
       }
     </style>
