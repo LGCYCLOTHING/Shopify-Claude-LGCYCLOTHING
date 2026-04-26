@@ -302,6 +302,22 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+
+    <style>
+      /* Hide Shopify's "No image" placeholder SVGs in production. Several Dawn
+         sections (image-with-text, featured-product, slideshow, collage, etc.)
+         render `placeholder_svg_tag` as a fallback when an image_picker is
+         empty. These are intended for theme-editor previews but leak into the
+         live storefront and cause a brief grey "No image" flash on every page
+         load. Theme editor / design mode keeps showing them so merchants can
+         still see what needs an image. */
+      html:not(.shopify-design-mode) .placeholder-svg,
+      html:not(.shopify-design-mode) svg.placeholder-svg,
+      html:not(.shopify-design-mode) .placeholder > svg {
+        display: none !important;
+      }
+    </style>
+
   {% include 'pagefly-app-header' %}
 
 </head>
