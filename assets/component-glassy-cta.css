@@ -711,7 +711,6 @@ html body .lgcy-legacy-cta:active::after {
 
 html body .lgcy-wipe-line {
   --border-width: 1px;
-  z-index: 50;
   background: linear-gradient(
     -75deg,
     rgba(255, 255, 255, 0.55),
