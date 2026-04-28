@@ -1991,11 +1991,11 @@ html body .template-search .card-information {
 /* Targeted via [id^="lgcy-faq-"] since each instance has a unique id */
 /* ============================================================== */
 
-html body [id^="lgcy-faq-"] {
+html body :is([id^="lgcy-faq-"], #_lgcy_faq_force) {
   background: linear-gradient(160deg, #ececec 0%, #d8d8d8 50%, #b8b8b8 100%) !important;
 }
 
-html body [id^="lgcy-faq-"] .lgcy-faq-card {
+html body :is([id^="lgcy-faq-"], #_lgcy_faq_force) .lgcy-faq-card {
   background: linear-gradient(-75deg, rgba(255,255,255,0.6), rgba(255,255,255,0.85), rgba(255,255,255,0.6)) !important;
   -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
           backdrop-filter: blur(20px) saturate(160%) !important;
@@ -2011,7 +2011,7 @@ html body [id^="lgcy-faq-"] .lgcy-faq-card {
 }
 
 /* Conic-gradient outline like the other glass cards */
-html body [id^="lgcy-faq-"] .lgcy-faq-card::before {
+html body :is([id^="lgcy-faq-"], #_lgcy_faq_force) .lgcy-faq-card::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -2038,37 +2038,37 @@ html body [id^="lgcy-faq-"] .lgcy-faq-card::before {
 }
 
 @media (min-width: 860px) {
-  html body [id^="lgcy-faq-"] .lgcy-faq-intro {
+  html body :is([id^="lgcy-faq-"], #_lgcy_faq_force) .lgcy-faq-intro {
     border-right: 1px solid rgba(0,0,0,0.1) !important;
   }
 }
 
-html body [id^="lgcy-faq-"] .lgcy-faq-intro h2 {
+html body :is([id^="lgcy-faq-"], #_lgcy_faq_force) .lgcy-faq-intro h2 {
   color: #000 !important;
   font-family: 'Inter', sans-serif !important;
   font-weight: 900 !important;
   letter-spacing: -0.05em !important;
 }
 
-html body [id^="lgcy-faq-"] .lgcy-faq-intro p {
+html body :is([id^="lgcy-faq-"], #_lgcy_faq_force) .lgcy-faq-intro p {
   color: rgba(0,0,0,0.55) !important;
   font-family: 'Inter', sans-serif !important;
   letter-spacing: -0.02em !important;
 }
 
-html body [id^="lgcy-faq-"] .lgcy-accordion {
+html body :is([id^="lgcy-faq-"], #_lgcy_faq_force) .lgcy-accordion {
   border-bottom: 1px solid rgba(0,0,0,0.08) !important;
 }
 
-html body [id^="lgcy-faq-"] .lgcy-accordion:last-child {
+html body :is([id^="lgcy-faq-"], #_lgcy_faq_force) .lgcy-accordion:last-child {
   border-bottom: none !important;
 }
 
-html body [id^="lgcy-faq-"] .lgcy-accordion summary:hover {
+html body :is([id^="lgcy-faq-"], #_lgcy_faq_force) .lgcy-accordion summary:hover {
   background: rgba(0,0,0,0.04) !important;
 }
 
-html body [id^="lgcy-faq-"] .lgcy-accordion-question {
+html body :is([id^="lgcy-faq-"], #_lgcy_faq_force) .lgcy-accordion-question {
   color: #000 !important;
   font-family: 'Inter', sans-serif !important;
   font-weight: 900 !important;
@@ -2077,7 +2077,7 @@ html body [id^="lgcy-faq-"] .lgcy-accordion-question {
 }
 
 /* Chevron — glassy white circle with dark icon */
-html body [id^="lgcy-faq-"] .lgcy-chevron {
+html body :is([id^="lgcy-faq-"], #_lgcy_faq_force) .lgcy-chevron {
   background: linear-gradient(-75deg, rgba(255,255,255,0.7), rgba(255,255,255,0.95), rgba(255,255,255,0.7)) !important;
   border: 1px solid rgba(0,0,0,0.12) !important;
   color: #000 !important;
@@ -2087,23 +2087,23 @@ html body [id^="lgcy-faq-"] .lgcy-chevron {
     0 0.15em 0.3em rgba(0,0,0,0.18) !important;
 }
 
-html body [id^="lgcy-faq-"] .lgcy-accordion[open] .lgcy-chevron {
+html body :is([id^="lgcy-faq-"], #_lgcy_faq_force) .lgcy-accordion[open] .lgcy-chevron {
   background: linear-gradient(-75deg, rgba(0,0,0,0.85), rgba(40,40,40,0.95), rgba(0,0,0,0.85)) !important;
   color: #fff !important;
   border-color: transparent !important;
 }
 
-html body [id^="lgcy-faq-"] .lgcy-accordion-content {
+html body :is([id^="lgcy-faq-"], #_lgcy_faq_force) .lgcy-accordion-content {
   color: rgba(0,0,0,0.7) !important;
   font-family: 'Inter', sans-serif !important;
   letter-spacing: -0.01em !important;
 }
 
-html body [id^="lgcy-faq-"] .lgcy-accordion-content strong {
+html body :is([id^="lgcy-faq-"], #_lgcy_faq_force) .lgcy-accordion-content strong {
   color: #000 !important;
   font-weight: 700 !important;
 }
 
-html body [id^="lgcy-faq-"] .lgcy-accordion-content a {
+html body :is([id^="lgcy-faq-"], #_lgcy_faq_force) .lgcy-accordion-content a {
   color: #000 !important;
 }
