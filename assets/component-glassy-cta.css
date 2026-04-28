@@ -755,17 +755,16 @@ html body .lgcy-wipe-line::before {
   50% { background-position: 200% 0%; }
 }
 
-/* Light text/chevrons so they read against the translucent strip */
+/* Dark text/chevrons read against the whiter glass strip */
 html body .lgcy-wipe-line .lgcy-wipe-label {
   position: relative;
   z-index: 2;
-  color: #ffffff;
-  text-shadow: 0 0.1em 0.2em rgba(0, 0, 0, 0.5);
+  color: #000000;
+  text-shadow: 0 0.05em 0.05em rgba(255, 255, 255, 0.45);
 }
 
 html body .lgcy-wipe-line .lgcy-wipe-chevron {
   position: relative;
   z-index: 2;
-  color: #ffffff;
-  filter: drop-shadow(0 0.05em 0.15em rgba(0, 0, 0, 0.4));
+  color: #000000;
 }
