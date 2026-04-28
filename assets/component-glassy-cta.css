@@ -1281,8 +1281,8 @@ html body .header__icons {
   isolation: isolate;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
+  gap: 4px;
+  padding: 6px 10px;
   border-radius: 999vw;
   background: linear-gradient(
     -75deg,
