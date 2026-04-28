@@ -22,7 +22,10 @@
       "Bash(grep -oiE '.{50}explore[^\"\\\\\\\\]{0,80}' templates/index.json)",
       "Bash(grep -oiE 'rp-editorial-link[^\"]{0,500}' templates/product.json)",
       "Bash(grep -oiE 'lgcy-wipe[^\"\\\\\\\\]{0,500}' templates/collection.json)",
-      "Bash(grep -oiE '\\\\.lgcy-wipe-line[^\"]{0,400}' templates/collection.json)"
+      "Bash(grep -oiE '\\\\.lgcy-wipe-line[^\"]{0,400}' templates/collection.json)",
+      "Bash(grep -oiE '@media[^\"\\\\\\\\]{0,800}rp-wrap[^\"\\\\\\\\]{0,400}' templates/product.json)",
+      "Bash(grep -oiE '\\\\\\(max-width:[^\\)]+\\\\\\)[^\"\\\\\\\\]{0,200}rp-' templates/product.json)",
+      "Bash(grep -oiE '\\\\\\(max-width[^\"]{0,400}' templates/product.json)"
     ]
   }
 }
