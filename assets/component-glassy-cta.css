@@ -344,12 +344,13 @@ html body .rp-btn-cart > span {
   z-index: 3;
   display: block;
   padding: 0.875em 1.5em;
-  color: rgba(50, 50, 50, 1);
-  font-weight: 500;
+  font-family: 'Inter', Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  color: #ffffff;
+  font-weight: 900;
   font-size: 1em;
   letter-spacing: -0.05em;
   text-transform: none;
-  text-shadow: 0 0.25em 0.05em rgba(0, 0, 0, 0.1);
+  text-shadow: 0 0.15em 0.25em rgba(0, 0, 0, 0.35);
   -webkit-user-select: none;
   user-select: none;
   -webkit-font-smoothing: antialiased;
