@@ -1378,6 +1378,13 @@ html body .header__icons .header__icon > span {
   justify-content: center;
 }
 
+/* Always hide the secondary close icon next to the search icon — the
+   search modal has its own close button. */
+html body .header__icons .header__icon-close,
+html body details[open] .header__icons .header__icon-close {
+  display: none !important;
+}
+
 html body .header__icons .header__icon svg {
   width: 18px;
   height: 18px;
