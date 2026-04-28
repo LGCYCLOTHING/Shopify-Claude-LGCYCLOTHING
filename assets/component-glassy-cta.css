@@ -2436,3 +2436,84 @@ html body .lgcy-faq3-answer strong {
 html body .lgcy-faq3-answer a {
   color: #000 !important;
 }
+
+/* ============================================================== */
+/* "→ DISCOVER" scroll indicator — glassy pill on the homepage     */
+/* ============================================================== */
+
+html body #scroll-discover {
+  --border-width: 1px;
+  position: relative !important;
+  isolation: isolate;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px !important;
+  padding: 12px 22px !important;
+  border-radius: 999vw !important;
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0.08)
+  ) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+          backdrop-filter: blur(10px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 0.4em 0.9em -0.15em rgba(0, 0, 0, 0.45) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.05em !important;
+  font-size: 14px !important;
+  color: #ffffff !important;
+  text-shadow: 0 0.1em 0.2em rgba(0, 0, 0, 0.4);
+  transition: transform 240ms cubic-bezier(0.25, 1, 0.5, 1), box-shadow 240ms ease;
+}
+
+/* Conic-gradient outline ring */
+html body #scroll-discover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 999vw;
+  width: calc(100% + var(--border-width));
+  height: calc(100% + var(--border-width));
+  top: calc(0% - var(--border-width) / 2);
+  left: calc(0% - var(--border-width) / 2);
+  padding: var(--border-width);
+  box-sizing: border-box;
+  background: conic-gradient(
+    from -75deg at 50% 50%,
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0) 5% 40%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 60% 95%,
+    rgba(255, 255, 255, 0.5)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Override the existing underline animation pseudo so it doesn't compete */
+html body #scroll-discover::after {
+  display: none !important;
+}
+
+html body #scroll-discover:hover {
+  transform: scale(1.04);
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.14),
+    rgba(255, 255, 255, 0.32),
+    rgba(255, 255, 255, 0.14)
+  ) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 0.5em 1em -0.15em rgba(0, 0, 0, 0.5) !important;
+}

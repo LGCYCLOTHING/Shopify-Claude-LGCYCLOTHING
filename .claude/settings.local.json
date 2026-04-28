@@ -26,7 +26,8 @@
       "Bash(grep -oiE '@media[^\"\\\\\\\\]{0,800}rp-wrap[^\"\\\\\\\\]{0,400}' templates/product.json)",
       "Bash(grep -oiE '\\\\\\(max-width:[^\\)]+\\\\\\)[^\"\\\\\\\\]{0,200}rp-' templates/product.json)",
       "Bash(grep -oiE '\\\\\\(max-width[^\"]{0,400}' templates/product.json)",
-      "Bash(grep -oiE '\\\\.lgcy-faq3-card[^\"]{0,400}' templates/collection.json)"
+      "Bash(grep -oiE '\\\\.lgcy-faq3-card[^\"]{0,400}' templates/collection.json)",
+      "Bash(grep -oiE 'scroll-indicator[^\"]{0,500}' templates/index.json)"
     ]
   }
 }
