@@ -31,6 +31,32 @@ class CartDrawer extends HTMLElement {
         this.open(cartLink);
       }
     });
+
+    // Hover-to-open on devices that support hover (skip touch devices)
+    const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (supportsHover) {
+      let openTimer = null;
+      let closeTimer = null;
+
+      const scheduleOpen = () => {
+        clearTimeout(closeTimer);
+        if (this.classList.contains('active')) return;
+        openTimer = setTimeout(() => this.open(cartLink), 120);
+      };
+      const cancelOpen = () => clearTimeout(openTimer);
+      const scheduleClose = () => {
+        clearTimeout(openTimer);
+        closeTimer = setTimeout(() => {
+          if (this.classList.contains('active')) this.close();
+        }, 350);
+      };
+      const cancelClose = () => clearTimeout(closeTimer);
+
+      cartLink.addEventListener('mouseenter', scheduleOpen);
+      cartLink.addEventListener('mouseleave', scheduleClose);
+      this.addEventListener('mouseenter', cancelClose);
+      this.addEventListener('mouseleave', scheduleClose);
+    }
   }
 
   open(triggeredBy) {
