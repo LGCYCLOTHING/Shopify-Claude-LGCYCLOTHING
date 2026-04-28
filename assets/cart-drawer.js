@@ -35,24 +35,21 @@ class CartDrawer extends HTMLElement {
     // Hover-to-open on devices that support hover (skip touch devices)
     const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     if (supportsHover) {
-      let openTimer = null;
       let closeTimer = null;
 
-      const scheduleOpen = () => {
+      const openNow = () => {
         clearTimeout(closeTimer);
         if (this.classList.contains('active')) return;
-        openTimer = setTimeout(() => this.open(cartLink), 120);
+        this.open(cartLink);
       };
-      const cancelOpen = () => clearTimeout(openTimer);
       const scheduleClose = () => {
-        clearTimeout(openTimer);
         closeTimer = setTimeout(() => {
           if (this.classList.contains('active')) this.close();
         }, 350);
       };
       const cancelClose = () => clearTimeout(closeTimer);
 
-      cartLink.addEventListener('mouseenter', scheduleOpen);
+      cartLink.addEventListener('mouseenter', openNow);
       cartLink.addEventListener('mouseleave', scheduleClose);
       this.addEventListener('mouseenter', cancelClose);
       this.addEventListener('mouseleave', scheduleClose);
