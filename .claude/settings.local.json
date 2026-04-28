@@ -12,7 +12,8 @@
       "Bash(node -e \"const fs=require\\('fs'\\);const j=JSON.parse\\(fs.readFileSync\\('c:/Users/zaina/OneDrive/Desktop/LGCYCLOTHING- CODE/templates/collection.json','utf8'\\)\\);console.log\\(JSON.stringify\\(Object.keys\\(j.sections\\),null,2\\)\\)\")",
       "Bash(node update-faq.js)",
       "Bash(node -e \"const fs=require\\('fs'\\);const d=JSON.parse\\(fs.readFileSync\\('c:/Users/zaina/OneDrive/Desktop/LGCYCLOTHING- CODE/templates/collection.json','utf8'\\)\\);const s=d.sections['lgcy_faq_TMGqdE'];console.log\\('type:',s.type\\);console.log\\('first 100 chars of liquid:',s.settings.custom_liquid.substring\\(0,100\\)\\);\")",
-      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('templates/collection.json','utf8'\\)\\); console.log\\('valid'\\)\")"
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('templates/collection.json','utf8'\\)\\); console.log\\('valid'\\)\")",
+      "Bash(git fetch *)"
     ]
   }
 }
