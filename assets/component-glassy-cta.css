@@ -801,17 +801,16 @@ html body .lgcy-wipe-line .lgcy-wipe-chevron {
   color: #000000;
 }
 
-/* Hide the wipe bar and cart count bubble while the cart drawer is open */
-body:has(cart-drawer.active) .lgcy-wipe-line,
-body:has(.drawer.active) .lgcy-wipe-line {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-}
-
-body:has(cart-drawer.active) .cart-count-bubble,
-body:has(.drawer.active) .cart-count-bubble {
-  display: none !important;
+/* When the cart drawer is open, push the header behind the drawer so the
+   search/account/cart icons + count bubble all sit underneath. The wipe bar
+   stays visible since its z-index (50) is already below the drawer (9999). */
+body:has(cart-drawer.active) .section-header,
+body:has(.drawer.active) .section-header,
+body:has(cart-drawer.active) .header-wrapper,
+body:has(.drawer.active) .header-wrapper,
+body:has(cart-drawer.active) .shopify-section-header-sticky,
+body:has(.drawer.active) .shopify-section-header-sticky {
+  z-index: 1 !important;
 }
 
 /* ============================================================== */
