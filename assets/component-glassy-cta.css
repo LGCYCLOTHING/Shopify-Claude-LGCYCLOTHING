@@ -2955,7 +2955,6 @@ html body.password .password-enter-btn:hover {
 /* Match the password page form box to the EARLY ACCESS modal style */
 html body.password #password-header-form {
   --border-width: 1px;
-  position: relative !important;
   isolation: isolate;
   background: linear-gradient(
     -75deg,
