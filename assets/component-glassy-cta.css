@@ -827,6 +827,20 @@ body:has(.drawer.active) .cart-count-bubble {
   visibility: hidden !important;
 }
 
+/* Lock background scroll while the drawer is open */
+html:has(cart-drawer.active),
+html:has(.drawer.active) {
+  overflow: hidden !important;
+  height: 100% !important;
+}
+
+body:has(cart-drawer.active),
+body:has(.drawer.active) {
+  overflow: hidden !important;
+  height: 100vh !important;
+  touch-action: none;
+}
+
 /* ============================================================== */
 /* Glassy Secure Checkout button — dark smoked glass over white     */
 /* drawer footer. Matches the ATC button's depth + outline effect. */
