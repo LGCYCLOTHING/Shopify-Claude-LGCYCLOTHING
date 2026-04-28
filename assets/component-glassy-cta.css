@@ -2134,18 +2134,76 @@ html body .lgcy-faq3-title {
 }
 
 html body .lgcy-faq3-card {
+  --border-width: 1px;
   background: linear-gradient(-75deg, rgba(255,255,255,0.55), rgba(255,255,255,0.85), rgba(255,255,255,0.55)) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
-  backdrop-filter: blur(20px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(170%) !important;
+  backdrop-filter: blur(24px) saturate(170%) !important;
   border: none !important;
-  border-radius: 20px !important;
+  border-radius: 24px !important;
   box-shadow:
+    inset 0 0.125em 0.125em rgba(0,0,0,0.04),
+    inset 0 -0.125em 0.125em rgba(255,255,255,0.6),
     inset 0 1px 0 rgba(255,255,255,0.95),
-    inset 0 -1px 0 rgba(0,0,0,0.08),
-    0 1em 2em -0.4em rgba(0,0,0,0.3),
+    inset 0 -1px 0 rgba(0,0,0,0.1),
+    0 1.2em 2.5em -0.4em rgba(0,0,0,0.35),
     0 0 0 1px rgba(0,0,0,0.06) !important;
   position: relative;
   isolation: isolate;
+  overflow: visible !important;
+}
+
+/* Conic-gradient outline ring — same trick as the other glass elements */
+html body .lgcy-faq3-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  width: calc(100% + var(--border-width));
+  height: calc(100% + var(--border-width));
+  top: calc(0% - var(--border-width) / 2);
+  left: calc(0% - var(--border-width) / 2);
+  padding: var(--border-width);
+  box-sizing: border-box;
+  background: conic-gradient(
+    from -75deg at 50% 50%,
+    rgba(0,0,0,0.45),
+    rgba(0,0,0,0) 5% 40%,
+    rgba(0,0,0,0.45) 50%,
+    rgba(0,0,0,0) 60% 95%,
+    rgba(0,0,0,0.45)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Sliding sheen across the card surface */
+html body .lgcy-faq3-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: linear-gradient(
+    100deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.45) 45% 55%,
+    rgba(255,255,255,0) 100%
+  );
+  background-size: 250% 100%;
+  background-position: -100% 0%;
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: lgcyFaqSheen 8s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes lgcyFaqSheen {
+  0%, 100% { background-position: -100% 0%; }
+  50% { background-position: 200% 0%; }
 }
 
 html body .lgcy-faq3-item {
