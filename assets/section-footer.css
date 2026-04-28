@@ -591,8 +591,8 @@
 .lgcy-footer__nav-link {
   font-family: 'Inter', sans-serif;
   font-size: 13px;
-  font-weight: 400;
-  letter-spacing: 0.14em;
+  font-weight: 900;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   color: #111;
   text-decoration: none;
