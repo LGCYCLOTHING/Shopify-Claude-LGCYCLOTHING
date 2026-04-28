@@ -20,7 +20,9 @@
       "Bash(grep -oE '.{120}explore.{0,30}collection.{300}' templates/index.json -i)",
       "Bash(grep -oiE '.{150}explore.{0,20}collection.{150}' templates/index.json)",
       "Bash(grep -oiE '.{50}explore[^\"\\\\\\\\]{0,80}' templates/index.json)",
-      "Bash(grep -oiE 'rp-editorial-link[^\"]{0,500}' templates/product.json)"
+      "Bash(grep -oiE 'rp-editorial-link[^\"]{0,500}' templates/product.json)",
+      "Bash(grep -oiE 'lgcy-wipe[^\"\\\\\\\\]{0,500}' templates/collection.json)",
+      "Bash(grep -oiE '\\\\.lgcy-wipe-line[^\"]{0,400}' templates/collection.json)"
     ]
   }
 }
