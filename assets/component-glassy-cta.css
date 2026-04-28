@@ -827,6 +827,19 @@ body:has(.drawer.active) .cart-count-bubble {
   visibility: hidden !important;
 }
 
+/* Blur the logo + left nav so they match the dimmed/blurred background */
+body:has(cart-drawer.active) .header__heading-link,
+body:has(.drawer.active) .header__heading-link,
+body:has(cart-drawer.active) .header__heading-logo-wrapper,
+body:has(.drawer.active) .header__heading-logo-wrapper,
+body:has(cart-drawer.active) .lgcy-shop-trigger-wrap,
+body:has(.drawer.active) .lgcy-shop-trigger-wrap {
+  filter: blur(3px) !important;
+  opacity: 0.65 !important;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+}
+
 /* Lock background scroll while the drawer is open */
 html:has(cart-drawer.active),
 html:has(.drawer.active) {
