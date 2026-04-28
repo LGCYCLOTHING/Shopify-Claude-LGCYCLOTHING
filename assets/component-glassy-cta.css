@@ -2517,3 +2517,8 @@ html body #scroll-discover:hover {
     inset 0 -1px 0 rgba(0, 0, 0, 0.3),
     0 0.5em 1em -0.15em rgba(0, 0, 0, 0.5) !important;
 }
+
+/* Taller size selection boxes on the PDP */
+html body .rp-size {
+  height: 56px !important;
+}
