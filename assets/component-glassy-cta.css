@@ -710,24 +710,55 @@ html body .lgcy-legacy-cta:active::after {
 /* ============================================================== */
 
 html body .lgcy-wipe-line {
+  --border-width: 1px;
   background: linear-gradient(
     -75deg,
     rgba(255, 255, 255, 0.55),
-    rgba(255, 255, 255, 0.78),
+    rgba(255, 255, 255, 0.85),
     rgba(255, 255, 255, 0.55)
   );
   border-radius: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.7);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border: none;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.85),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.12),
-    0 0.5em 1em -0.25em rgba(0, 0, 0, 0.35),
+    inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+    inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+    0 0.5em 1.25em -0.25em rgba(0, 0, 0, 0.4),
     0 -0.25em 0.75em -0.25em rgba(0, 0, 0, 0.25);
   -webkit-backdrop-filter: blur(clamp(4px, 0.5em, 12px)) saturate(160%);
           backdrop-filter: blur(clamp(4px, 0.5em, 12px)) saturate(160%);
-  overflow: hidden;
+  overflow: visible;
   isolation: isolate;
+}
+
+/* Conic-gradient edge — same trick as the ATC button, sits inside the strip */
+html body .lgcy-wipe-line::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: calc(100% + var(--border-width));
+  height: calc(100% + var(--border-width));
+  top: calc(0% - var(--border-width) / 2);
+  left: calc(0% - var(--border-width) / 2);
+  padding: var(--border-width);
+  box-sizing: border-box;
+  background:
+    conic-gradient(
+      from -75deg at 50% 50%,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0) 5% 40%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0) 60% 95%,
+      rgba(0, 0, 0, 0.5)
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
 }
 
 /* Sliding sheen across the bar */
