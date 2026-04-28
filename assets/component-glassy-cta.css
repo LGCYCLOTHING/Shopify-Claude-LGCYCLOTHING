@@ -2107,3 +2107,95 @@ html body [id^="lgcy-faq-"]:not(.lgcy-faq3-section) .lgcy-accordion-content stro
 html body [id^="lgcy-faq-"]:not(.lgcy-faq3-section) .lgcy-accordion-content a {
   color: #000 !important;
 }
+
+/* ============================================================== */
+/* FAQ section variant 3 (.lgcy-faq3-*) — used in collection page   */
+/* Light/white glassy redesign + hide the SUPPORT eyebrow           */
+/* ============================================================== */
+
+html body .lgcy-faq3-eyebrow {
+  display: none !important;
+}
+
+html body .lgcy-faq3-section {
+  background: linear-gradient(160deg, #ececec 0%, #d8d8d8 50%, #b8b8b8 100%) !important;
+}
+
+html body .lgcy-faq3-bg,
+html body .lgcy-faq3-overlay {
+  display: none !important;
+}
+
+html body .lgcy-faq3-title {
+  color: #000 !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.05em !important;
+}
+
+html body .lgcy-faq3-card {
+  background: linear-gradient(-75deg, rgba(255,255,255,0.55), rgba(255,255,255,0.85), rgba(255,255,255,0.55)) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  backdrop-filter: blur(20px) saturate(160%) !important;
+  border: none !important;
+  border-radius: 20px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.95),
+    inset 0 -1px 0 rgba(0,0,0,0.08),
+    0 1em 2em -0.4em rgba(0,0,0,0.3),
+    0 0 0 1px rgba(0,0,0,0.06) !important;
+  position: relative;
+  isolation: isolate;
+}
+
+html body .lgcy-faq3-item {
+  border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+}
+
+html body .lgcy-faq3-item:last-child {
+  border-bottom: none !important;
+}
+
+html body .lgcy-faq3-item summary:hover {
+  background: rgba(0,0,0,0.04) !important;
+}
+
+html body .lgcy-faq3-q {
+  color: #000 !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.05em !important;
+  text-transform: none !important;
+}
+
+html body .lgcy-faq3-chevron {
+  background: linear-gradient(-75deg, rgba(255,255,255,0.7), rgba(255,255,255,0.95), rgba(255,255,255,0.7)) !important;
+  border: 1px solid rgba(0,0,0,0.12) !important;
+  color: #000 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.95),
+    inset 0 -1px 0 rgba(0,0,0,0.08),
+    0 0.15em 0.3em rgba(0,0,0,0.18) !important;
+}
+
+html body .lgcy-faq3-chevron.is-open,
+html body .lgcy-faq3-item[open] .lgcy-faq3-chevron {
+  background: linear-gradient(-75deg, rgba(0,0,0,0.85), rgba(40,40,40,0.95), rgba(0,0,0,0.85)) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+
+html body .lgcy-faq3-answer {
+  color: rgba(0,0,0,0.7) !important;
+  font-family: 'Inter', sans-serif !important;
+  letter-spacing: -0.01em !important;
+}
+
+html body .lgcy-faq3-answer strong {
+  color: #000 !important;
+  font-weight: 700 !important;
+}
+
+html body .lgcy-faq3-answer a {
+  color: #000 !important;
+}
