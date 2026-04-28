@@ -14,7 +14,9 @@
       "Bash(node -e \"const fs=require\\('fs'\\);const d=JSON.parse\\(fs.readFileSync\\('c:/Users/zaina/OneDrive/Desktop/LGCYCLOTHING- CODE/templates/collection.json','utf8'\\)\\);const s=d.sections['lgcy_faq_TMGqdE'];console.log\\('type:',s.type\\);console.log\\('first 100 chars of liquid:',s.settings.custom_liquid.substring\\(0,100\\)\\);\")",
       "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('templates/collection.json','utf8'\\)\\); console.log\\('valid'\\)\")",
       "Bash(git fetch *)",
-      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('templates/product.json','utf8'\\)\\); console.log\\('valid'\\)\")"
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('templates/product.json','utf8'\\)\\); console.log\\('valid'\\)\")",
+      "Bash(grep -oE '\\\\.rp-btn-cart[^\\\\\\\\]*?\\\\\\\\n  }' templates/product.json)",
+      "Bash(grep -oE 'rp-btn-cart[^\"]{0,800}' templates/product.json)"
     ]
   }
 }
