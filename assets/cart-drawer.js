@@ -31,42 +31,6 @@ class CartDrawer extends HTMLElement {
         this.open(cartLink);
       }
     });
-
-    // Hover-to-open on devices that support hover (skip touch devices)
-    const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    if (supportsHover) {
-      let closeTimer = null;
-
-      const openNow = () => {
-        clearTimeout(closeTimer);
-        if (this.classList.contains('active')) return;
-        this.open(cartLink);
-      };
-      const scheduleClose = () => {
-        closeTimer = setTimeout(() => {
-          if (this.classList.contains('active')) this.close();
-        }, 350);
-      };
-      const cancelClose = () => clearTimeout(closeTimer);
-
-      cartLink.addEventListener('mouseenter', openNow);
-      cartLink.addEventListener('mouseleave', scheduleClose);
-
-      // Bind to the visible panel (.drawer__inner), not the full-viewport
-      // container, so mouseenter fires when the cursor reaches the panel.
-      const inner = this.querySelector('.drawer__inner');
-      if (inner) {
-        inner.addEventListener('mouseenter', cancelClose);
-        inner.addEventListener('mouseleave', scheduleClose);
-      }
-
-      // Treat the overlay area as "leaving" — clicking/hovering outside the
-      // panel should close after the grace period.
-      const overlay = this.querySelector('#CartDrawer-Overlay');
-      if (overlay) {
-        overlay.addEventListener('mouseenter', scheduleClose);
-      }
-    }
   }
 
   open(triggeredBy) {
