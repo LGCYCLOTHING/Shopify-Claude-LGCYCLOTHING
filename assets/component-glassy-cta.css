@@ -2962,8 +2962,8 @@ html body.password #password-header-form {
     rgba(255, 255, 255, 0.18),
     rgba(255, 255, 255, 0.08)
   ) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
-          backdrop-filter: blur(20px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(8px) saturate(140%) !important;
+          backdrop-filter: blur(8px) saturate(140%) !important;
   border: none !important;
   border-radius: 24px !important;
   box-shadow:
