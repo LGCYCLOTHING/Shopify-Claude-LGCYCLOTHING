@@ -568,7 +568,19 @@ svg.icon.icon-cart {
       }
     }, { passive: true });
     btn.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      var startY = window.scrollY;
+      if (startY <= 0) return;
+      var duration = Math.min(1200, Math.max(500, startY * 0.6));
+      var startTime = null;
+      function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+      function step(ts) {
+        if (startTime === null) startTime = ts;
+        var elapsed = ts - startTime;
+        var t = Math.min(1, elapsed / duration);
+        window.scrollTo(0, startY * (1 - easeOutCubic(t)));
+        if (t < 1) window.requestAnimationFrame(step);
+      }
+      window.requestAnimationFrame(step);
     });
     update();
   })();
