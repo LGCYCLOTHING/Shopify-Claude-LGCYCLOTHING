@@ -1441,9 +1441,9 @@ html body details-modal.header__search > details[open] > .search-modal {
   padding: 0 !important;
   margin: 0 !important;
   border: none !important;
-  background-color: rgba(0, 0, 0, 0.45) !important;
-  -webkit-backdrop-filter: blur(10px) saturate(150%) !important;
-  backdrop-filter: blur(10px) saturate(150%) !important;
+  background-color: rgba(0, 0, 0, 0.55) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
+  backdrop-filter: blur(24px) saturate(160%) !important;
 }
 
 html body details-modal.header__search .modal-overlay {
