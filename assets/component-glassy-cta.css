@@ -1278,11 +1278,20 @@ html body .facet-filters__sort.select__select {
 html body .header__icons {
   --border-width: 1px;
   position: relative;
-  isolation: isolate;
   display: inline-flex;
   align-items: center;
   gap: 4px;
   padding: 6px 10px;
+  border-radius: 999vw;
+  background: transparent;
+}
+
+/* Glass body on a pseudo-element so the bar itself doesn't create a
+   containing block for position:fixed descendants (e.g. the search modal). */
+html body .header__icons::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   border-radius: 999vw;
   background: linear-gradient(
     -75deg,
@@ -1296,6 +1305,8 @@ html body .header__icons {
     inset 0 1px 0 rgba(255, 255, 255, 0.22),
     inset 0 -1px 0 rgba(0, 0, 0, 0.45),
     0 0.4em 0.9em -0.15em rgba(0, 0, 0, 0.4);
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* Conic outline ring matching the other glassy components */
