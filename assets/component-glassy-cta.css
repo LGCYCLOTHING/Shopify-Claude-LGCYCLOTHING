@@ -2714,3 +2714,163 @@ html body.password .password-field.field::after {
   display: none !important;
   content: none !important;
 }
+
+/* Lighter modal background — frosted instead of nearly-solid */
+html body.password .password-modal .modal__content {
+  background: rgba(0, 0, 0, 0.35) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(140%) !important;
+  backdrop-filter: blur(14px) saturate(140%) !important;
+}
+
+html body.password .password-modal .password-modal__content {
+  --border-width: 1px;
+  position: relative;
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.08)
+  ) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+          backdrop-filter: blur(20px) saturate(160%) !important;
+  border: none !important;
+  border-radius: 24px !important;
+  padding: 40px 36px !important;
+  max-width: 480px !important;
+  width: 90% !important;
+  color: #fff !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+    0 1.2em 2.5em -0.4em rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+  isolation: isolate;
+  text-align: center;
+}
+
+html body.password .password-modal .password-modal__content::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  width: calc(100% + 1px);
+  height: calc(100% + 1px);
+  top: -0.5px;
+  left: -0.5px;
+  padding: 1px;
+  background: conic-gradient(
+    from -75deg at 50% 50%,
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0) 5% 40%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 60% 95%,
+    rgba(255, 255, 255, 0.5)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+html body.password .password-modal .password-modal__content-heading {
+  color: #ffffff !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.05em !important;
+  font-size: 22px !important;
+  margin: 0 0 6px 0 !important;
+  text-transform: uppercase;
+}
+
+html body.password .password-modal .password-modal__content-sub {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.02em !important;
+  font-size: 12px !important;
+  color: rgba(255, 255, 255, 0.55) !important;
+  margin: 0 0 24px 0 !important;
+}
+
+/* Form layout — input + button on one row, button beside the input */
+html body.password .password-modal .password-form {
+  display: flex !important;
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
+}
+
+html body.password .password-modal .password-field.field {
+  flex: 1;
+  margin: 0;
+}
+
+html body.password .password-modal .field__input {
+  border-radius: 999vw !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #fff !important;
+  padding: 14px 20px !important;
+  height: auto !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.02em !important;
+  font-size: 14px !important;
+  outline: none !important;
+}
+
+html body.password .password-modal .field__input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+html body.password .password-modal .field__label {
+  display: none !important;
+}
+
+/* Glass Enter button — kills Dawn's outline + ::before/::after squares */
+html body.password .password-modal .password-button.button,
+html body.password .password-modal .password-button.button.button--outline {
+  --border-width: clamp(1px, 0.0625em, 4px);
+  position: relative !important;
+  isolation: isolate;
+  flex-shrink: 0;
+  border-radius: 999vw !important;
+  border: none !important;
+  outline: none !important;
+  padding: 0 28px !important;
+  height: auto !important;
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.85),
+    rgba(255, 255, 255, 1),
+    rgba(255, 255, 255, 0.85)
+  ) !important;
+  color: #000 !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.02em !important;
+  font-size: 14px !important;
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15),
+    0 0.3em 0.6em -0.15em rgba(0, 0, 0, 0.4) !important;
+  transition: transform 200ms cubic-bezier(0.25, 1, 0.5, 1);
+  overflow: visible;
+}
+
+html body.password .password-modal .password-button.button::before,
+html body.password .password-modal .password-button.button::after,
+html body.password .password-modal .password-button.button.button--outline::before,
+html body.password .password-modal .password-button.button.button--outline::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+html body.password .password-modal .password-button.button:hover {
+  transform: scale(0.97);
+}
