@@ -840,18 +840,29 @@ body:has(.drawer.active) .lgcy-shop-trigger-wrap {
   pointer-events: none;
 }
 
-/* Lock background scroll while the drawer is open */
+/* Lock background scroll while the drawer is open (without clipping content
+   or breaking the drawer's own internal scrolling) */
 html:has(cart-drawer.active),
 html:has(.drawer.active) {
   overflow: hidden !important;
-  height: 100% !important;
 }
 
 body:has(cart-drawer.active),
 body:has(.drawer.active) {
   overflow: hidden !important;
-  height: 100vh !important;
-  touch-action: none;
+}
+
+/* Allow the drawer panel to scroll its own contents */
+cart-drawer.active,
+.drawer.active {
+  overscroll-behavior: contain;
+}
+
+cart-drawer.active .drawer__inner,
+.drawer.active .drawer__inner {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ============================================================== */
