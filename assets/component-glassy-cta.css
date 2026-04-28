@@ -290,3 +290,177 @@
   transform: translate(-50%, -50%);
   z-index: 4;
 }
+
+/* ============================================================== */
+/* Glassy override for the custom-liquid PDP ATC button: .rp-btn-cart */
+/* High specificity (html body) so it beats the section's inline <style>. */
+/* ============================================================== */
+
+html body .rp-btn-cart {
+  --border-width: clamp(1px, 0.0625em, 4px);
+  position: relative;
+  isolation: isolate;
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 14px;
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  border-radius: 999vw;
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.05)
+  );
+  box-shadow:
+    inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+    inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+    0 0.25em 0.125em -0.125em rgba(0, 0, 0, 0.2),
+    0 0 0.1em 0.25em inset rgba(255, 255, 255, 0.2),
+    0 0 0 0 rgba(255, 255, 255, 1);
+  -webkit-backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+          backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+  font-size: 16px;
+  color: rgba(50, 50, 50, 1);
+  text-transform: none;
+  font-family: 'Inter', Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  transition: all var(--glassy-hover-time, 400ms) var(--glassy-hover-ease, cubic-bezier(0.25, 1, 0.5, 1));
+  overflow: visible;
+}
+
+/* Neutralize the existing ::before sweep / ::after cursor-glow on the button */
+html body .rp-btn-cart::before {
+  display: none;
+  content: none;
+}
+
+html body .rp-btn-cart > span {
+  position: relative;
+  z-index: 3;
+  display: block;
+  padding: 0.875em 1.5em;
+  color: rgba(50, 50, 50, 1);
+  font-weight: 500;
+  font-size: 1em;
+  letter-spacing: -0.05em;
+  text-transform: none;
+  text-shadow: 0 0.25em 0.05em rgba(0, 0, 0, 0.1);
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: all var(--glassy-hover-time, 400ms) var(--glassy-hover-ease, cubic-bezier(0.25, 1, 0.5, 1));
+}
+
+/* Sliding sheen across the label */
+html body .rp-btn-cart > span::after {
+  content: '';
+  display: block;
+  position: absolute;
+  z-index: 3;
+  width: calc(100% - var(--border-width));
+  height: calc(100% - var(--border-width));
+  top: calc(0% + var(--border-width) / 2);
+  left: calc(0% + var(--border-width) / 2);
+  box-sizing: border-box;
+  border-radius: 999vw;
+  overflow: clip;
+  background: linear-gradient(
+    var(--glassy-angle-2, -45deg),
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.5) 40% 50%,
+    rgba(255, 255, 255, 0) 55%
+  );
+  mix-blend-mode: screen;
+  pointer-events: none;
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  transition:
+    background-position calc(var(--glassy-hover-time, 400ms) * 1.25) var(--glassy-hover-ease, cubic-bezier(0.25, 1, 0.5, 1)),
+    --glassy-angle-2 calc(var(--glassy-hover-time, 400ms) * 1.25) var(--glassy-hover-ease, cubic-bezier(0.25, 1, 0.5, 1));
+}
+
+html body .rp-btn-cart:hover > span::after {
+  background-position: 25% 50%;
+}
+
+html body .rp-btn-cart:active > span::after {
+  background-position: 50% 15%;
+  --glassy-angle-2: -15deg;
+}
+
+/* Override the original ::after (cursor-follow glow) with the conic-gradient outline */
+html body .rp-btn-cart::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border-radius: 999vw;
+  width: calc(100% + var(--border-width));
+  height: calc(100% + var(--border-width));
+  top: calc(0% - var(--border-width) / 2);
+  left: calc(0% - var(--border-width) / 2);
+  padding: var(--border-width);
+  box-sizing: border-box;
+  background:
+    conic-gradient(
+      from var(--glassy-angle-1, -75deg) at 50% 50%,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0) 5% 40%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0) 60% 95%,
+      rgba(0, 0, 0, 0.5)
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  box-shadow: inset 0 0 0 calc(var(--border-width) / 2) rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  transition:
+    all var(--glassy-hover-time, 400ms) var(--glassy-hover-ease, cubic-bezier(0.25, 1, 0.5, 1)),
+    --glassy-angle-1 500ms ease;
+}
+
+html body .rp-btn-cart:hover {
+  transform: scale(0.985);
+  -webkit-backdrop-filter: blur(0.01em);
+          backdrop-filter: blur(0.01em);
+  box-shadow:
+    inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+    inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+    0 0.15em 0.05em -0.1em rgba(0, 0, 0, 0.25),
+    0 0 0.05em 0.1em inset rgba(255, 255, 255, 0.5),
+    0 0 0 0 rgba(255, 255, 255, 1);
+}
+
+html body .rp-btn-cart:hover > span {
+  text-shadow: 0.025em 0.025em 0.025em rgba(0, 0, 0, 0.12);
+}
+
+html body .rp-btn-cart:hover::after {
+  --glassy-angle-1: -125deg;
+}
+
+html body .rp-btn-cart:active::after {
+  --glassy-angle-1: -75deg;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  html body .rp-btn-cart::after,
+  html body .rp-btn-cart:hover::after,
+  html body .rp-btn-cart:active::after {
+    --glassy-angle-1: -75deg;
+  }
+  html body .rp-btn-cart > span::after,
+  html body .rp-btn-cart:active > span::after {
+    --glassy-angle-2: -45deg;
+  }
+}
