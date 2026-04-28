@@ -1,0 +1,292 @@
+/* Glassy CTA — applied to .product-form__submit inside .glassy-cta wrapper */
+
+@property --glassy-angle-1 {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: -75deg;
+}
+
+@property --glassy-angle-2 {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: -45deg;
+}
+
+.glassy-cta {
+  --glassy-hover-time: 400ms;
+  --glassy-hover-ease: cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: 999vw;
+  background: transparent;
+  pointer-events: none;
+  font-size: 1.6rem;
+  transition: all var(--glassy-hover-time) var(--glassy-hover-ease);
+}
+
+/* Soft drop shadow behind the button */
+.glassy-cta .button-shadow {
+  --shadow-cuttoff-fix: 2em;
+  position: absolute;
+  width: calc(100% + var(--shadow-cuttoff-fix));
+  height: calc(100% + var(--shadow-cuttoff-fix));
+  top: calc(0% - var(--shadow-cuttoff-fix) / 2);
+  left: calc(0% - var(--shadow-cuttoff-fix) / 2);
+  filter: blur(clamp(2px, 0.125em, 12px));
+  overflow: visible;
+  pointer-events: none;
+}
+
+.glassy-cta .button-shadow::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: 999vw;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+  width: calc(100% - var(--shadow-cuttoff-fix) - 0.25em);
+  height: calc(100% - var(--shadow-cuttoff-fix) - 0.25em);
+  top: calc(var(--shadow-cuttoff-fix) - 0.5em);
+  left: calc(var(--shadow-cuttoff-fix) - 0.875em);
+  padding: 0.125em;
+  box-sizing: border-box;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  transition: all var(--glassy-hover-time) var(--glassy-hover-ease);
+  opacity: 1;
+}
+
+/* The button itself — overrides Dawn's .button base styling */
+.glassy-cta .product-form__submit {
+  --border-width: clamp(1px, 0.0625em, 4px);
+  all: unset;
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  pointer-events: auto;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 3;
+  margin: 0;
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.05)
+  );
+  border-radius: 999vw;
+  box-shadow:
+    inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+    inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+    0 0.25em 0.125em -0.125em rgba(0, 0, 0, 0.2),
+    0 0 0.1em 0.25em inset rgba(255, 255, 255, 0.2),
+    0 0 0 0 rgba(255, 255, 255, 1);
+  -webkit-backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+          backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+  transition: all var(--glassy-hover-time) var(--glassy-hover-ease);
+}
+
+/* Kill Dawn's ::before drop shadow so our glass shadow shows cleanly */
+.glassy-cta .product-form__submit::before {
+  content: none;
+  display: none;
+}
+
+.glassy-cta .product-form__submit:hover {
+  transform: scale(0.975);
+  -webkit-backdrop-filter: blur(0.01em);
+          backdrop-filter: blur(0.01em);
+  box-shadow:
+    inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+    inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+    0 0.15em 0.05em -0.1em rgba(0, 0, 0, 0.25),
+    0 0 0.05em 0.1em inset rgba(255, 255, 255, 0.5),
+    0 0 0 0 rgba(255, 255, 255, 1);
+}
+
+/* Button label */
+.glassy-cta .product-form__submit > span {
+  position: relative;
+  display: block;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: inherit;
+  letter-spacing: -0.05em;
+  font-weight: 500;
+  font-size: 1em;
+  color: rgba(50, 50, 50, 1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 0 0.25em 0.05em rgba(0, 0, 0, 0.1);
+  text-align: center;
+  text-transform: none;
+  transition: all var(--glassy-hover-time) var(--glassy-hover-ease);
+  padding-inline: 1.5em;
+  padding-block: 0.875em;
+}
+
+.glassy-cta .product-form__submit:hover > span {
+  text-shadow: 0.025em 0.025em 0.025em rgba(0, 0, 0, 0.12);
+}
+
+/* Sliding sheen across the label */
+.glassy-cta .product-form__submit > span::after {
+  content: '';
+  display: block;
+  position: absolute;
+  z-index: 3;
+  width: calc(100% - var(--border-width));
+  height: calc(100% - var(--border-width));
+  top: calc(0% + var(--border-width) / 2);
+  left: calc(0% + var(--border-width) / 2);
+  box-sizing: border-box;
+  border-radius: 999vw;
+  overflow: clip;
+  background: linear-gradient(
+    var(--glassy-angle-2),
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.5) 40% 50%,
+    rgba(255, 255, 255, 0) 55%
+  );
+  mix-blend-mode: screen;
+  pointer-events: none;
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  transition:
+    background-position calc(var(--glassy-hover-time) * 1.25) var(--glassy-hover-ease),
+    --glassy-angle-2 calc(var(--glassy-hover-time) * 1.25) var(--glassy-hover-ease);
+}
+
+.glassy-cta .product-form__submit:hover > span::after {
+  background-position: 25% 50%;
+}
+
+.glassy-cta .product-form__submit:active > span::after {
+  background-position: 50% 15%;
+  --glassy-angle-2: -15deg;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .glassy-cta .product-form__submit > span::after,
+  .glassy-cta .product-form__submit:active > span::after {
+    --glassy-angle-2: -45deg;
+  }
+}
+
+/* Animated conic-gradient outline — replaces Dawn's ::after border */
+.glassy-cta .product-form__submit::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border-radius: 999vw;
+  width: calc(100% + var(--border-width));
+  height: calc(100% + var(--border-width));
+  top: calc(0% - var(--border-width) / 2);
+  left: calc(0% - var(--border-width) / 2);
+  padding: var(--border-width);
+  box-sizing: border-box;
+  background:
+    conic-gradient(
+      from var(--glassy-angle-1) at 50% 50%,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0) 5% 40%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0) 60% 95%,
+      rgba(0, 0, 0, 0.5)
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  box-shadow: inset 0 0 0 calc(var(--border-width) / 2) rgba(255, 255, 255, 0.5);
+  transition:
+    all var(--glassy-hover-time) var(--glassy-hover-ease),
+    --glassy-angle-1 500ms ease;
+}
+
+.glassy-cta .product-form__submit:hover::after {
+  --glassy-angle-1: -125deg;
+}
+
+.glassy-cta .product-form__submit:active::after {
+  --glassy-angle-1: -75deg;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .glassy-cta .product-form__submit::after,
+  .glassy-cta .product-form__submit:hover::after,
+  .glassy-cta .product-form__submit:active::after {
+    --glassy-angle-1: -75deg;
+  }
+}
+
+/* Shadow tightens on hover */
+.glassy-cta:has(.product-form__submit:hover) .button-shadow {
+  filter: blur(clamp(2px, 0.0625em, 6px));
+  transition: filter var(--glassy-hover-time) var(--glassy-hover-ease);
+}
+
+.glassy-cta:has(.product-form__submit:hover) .button-shadow::after {
+  top: calc(var(--shadow-cuttoff-fix) - 0.875em);
+  opacity: 1;
+}
+
+/* 3D press tilt */
+.glassy-cta:has(.product-form__submit:active) {
+  transform: rotate3d(1, 0, 0, 25deg);
+}
+
+.glassy-cta:has(.product-form__submit:active) .product-form__submit {
+  box-shadow:
+    inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+    inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+    0 0.125em 0.125em -0.125em rgba(0, 0, 0, 0.2),
+    0 0 0.1em 0.25em inset rgba(255, 255, 255, 0.2),
+    0 0.225em 0.05em 0 rgba(0, 0, 0, 0.05),
+    0 0.25em 0 0 rgba(255, 255, 255, 0.75),
+    inset 0 0.25em 0.05em 0 rgba(0, 0, 0, 0.15);
+}
+
+.glassy-cta:has(.product-form__submit:active) .button-shadow {
+  filter: blur(clamp(2px, 0.125em, 12px));
+}
+
+.glassy-cta:has(.product-form__submit:active) .button-shadow::after {
+  top: calc(var(--shadow-cuttoff-fix) - 0.5em);
+  opacity: 0.75;
+}
+
+.glassy-cta:has(.product-form__submit:active) > .product-form__submit > span {
+  text-shadow: 0.025em 0.25em 0.05em rgba(0, 0, 0, 0.12);
+}
+
+/* Disabled state — flatten the effects */
+.glassy-cta .product-form__submit[disabled],
+.glassy-cta .product-form__submit[aria-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+}
+
+.glassy-cta:has(.product-form__submit[disabled]) .button-shadow,
+.glassy-cta:has(.product-form__submit[aria-disabled='true']) .button-shadow {
+  display: none;
+}
+
+/* Loading spinner inside the button */
+.glassy-cta .product-form__submit .loading__spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+}
