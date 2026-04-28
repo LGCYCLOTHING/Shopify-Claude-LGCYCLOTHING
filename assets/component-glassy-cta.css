@@ -1559,6 +1559,16 @@ html body details-modal.header__search .search-modal__form .field {
   box-shadow: none !important;
 }
 
+/* Kill Dawn's rectangular field outlines */
+html body details-modal.header__search .search-modal__form .field::before,
+html body details-modal.header__search .search-modal__form .field::after,
+html body details-modal.header__search .search-modal__form .field:hover::after {
+  display: none !important;
+  content: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
 html body details-modal.header__search .search__input.field__input {
   width: 100%;
   height: 56px;
