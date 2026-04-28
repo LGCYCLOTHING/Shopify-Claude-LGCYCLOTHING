@@ -555,10 +555,15 @@ svg.icon.icon-cart {
     var btn = document.getElementById('lgcy-back-to-top');
     if (!btn) return;
     var threshold = 600;
+    var bottomGap = 120;
     var ticking = false;
     function update() {
       ticking = false;
-      if (window.scrollY > threshold) btn.classList.add('is-visible');
+      var y = window.scrollY;
+      var distFromBottom = document.documentElement.scrollHeight - (y + window.innerHeight);
+      var pastTop = y > threshold;
+      var nearBottom = distFromBottom < bottomGap;
+      if (pastTop && !nearBottom) btn.classList.add('is-visible');
       else btn.classList.remove('is-visible');
     }
     window.addEventListener('scroll', function () {
