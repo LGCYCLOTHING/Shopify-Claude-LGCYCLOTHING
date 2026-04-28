@@ -2522,3 +2522,195 @@ html body #scroll-discover:hover {
 html body .rp-size {
   height: 56px !important;
 }
+
+/* ============================================================== */
+/* PASSWORD PAGE — glass treatment on inputs, buttons, modal       */
+/* ============================================================== */
+
+/* Glassy text inputs on the password page */
+html body.password input[type='text'],
+html body.password input[type='email'],
+html body.password input[type='tel'],
+html body.password input[type='password'],
+html body.password .field__input {
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 999vw !important;
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.06)
+  ) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+          backdrop-filter: blur(10px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 0.2em 0.4em -0.1em rgba(0, 0, 0, 0.35) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  letter-spacing: -0.02em !important;
+  color: #ffffff !important;
+  padding: 14px 18px !important;
+  height: auto !important;
+  outline: none !important;
+}
+
+html body.password input[type='text']::placeholder,
+html body.password input[type='email']::placeholder,
+html body.password input[type='tel']::placeholder,
+html body.password input[type='password']::placeholder,
+html body.password .field__input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+html body.password input[type='text']:focus,
+html body.password input[type='email']:focus,
+html body.password input[type='tel']:focus,
+html body.password input[type='password']:focus,
+html body.password .field__input:focus {
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.28),
+    rgba(255, 255, 255, 0.1)
+  ) !important;
+}
+
+/* Glassy buttons on the password page (subscribe, submit, etc.) */
+html body.password button[type='submit'],
+html body.password input[type='submit'],
+html body.password .password-button,
+html body.password button.button {
+  border-radius: 999vw !important;
+  border: none !important;
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.85),
+    rgba(255, 255, 255, 1),
+    rgba(255, 255, 255, 0.85)
+  ) !important;
+  color: #000 !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.02em !important;
+  padding: 16px 28px !important;
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15),
+    0 0.3em 0.6em -0.15em rgba(0, 0, 0, 0.4) !important;
+  transition: transform 200ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+html body.password button[type='submit']:hover,
+html body.password input[type='submit']:hover,
+html body.password .password-button:hover,
+html body.password button.button:hover {
+  transform: scale(0.985);
+}
+
+/* "ENTER USING PASSWORD" link — glass pill */
+html body.password .password-link {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px !important;
+  border-radius: 999vw;
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.06)
+  );
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+          backdrop-filter: blur(10px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 0.3em 0.6em -0.15em rgba(0, 0, 0, 0.4);
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 12px !important;
+  letter-spacing: -0.02em !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  text-transform: uppercase;
+  border-bottom: none !important;
+  transition: transform 200ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+html body.password .password-link:hover {
+  transform: scale(1.04);
+}
+
+/* Password modal (the popup with the password input) */
+html body.password .password-modal .modal__content {
+  background: rgba(0, 0, 0, 0.45) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(150%) !important;
+          backdrop-filter: blur(18px) saturate(150%) !important;
+}
+
+html body.password .password-modal__content {
+  --border-width: 1px;
+  position: relative;
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0.08)
+  ) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+          backdrop-filter: blur(20px) saturate(160%) !important;
+  border: none !important;
+  border-radius: 24px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+    0 1.2em 2.5em -0.4em rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+  padding: 32px !important;
+  isolation: isolate;
+}
+
+html body.password .password-modal__content::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  width: calc(100% + 1px);
+  height: calc(100% + 1px);
+  top: -0.5px;
+  left: -0.5px;
+  padding: 1px;
+  background: conic-gradient(
+    from -75deg at 50% 50%,
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0) 5% 40%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 60% 95%,
+    rgba(255, 255, 255, 0.5)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+html body.password .password-modal__content-heading {
+  color: #ffffff !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.05em !important;
+}
+
+/* Kill Dawn's rectangular field outline within the password modal */
+html body.password .password-field.field::before,
+html body.password .password-field.field::after {
+  display: none !important;
+  content: none !important;
+}
