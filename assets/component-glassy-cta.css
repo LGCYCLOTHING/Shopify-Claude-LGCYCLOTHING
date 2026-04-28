@@ -571,3 +571,135 @@ html body .rp-editorial-link:active::after {
     --glassy-angle-1: -75deg;
   }
 }
+
+/* ============================================================== */
+/* Glassy override for the Legacy panel "Sign Up" CTA              */
+/* (.lgcy-legacy-cta) — needs !important to beat existing rules.   */
+/* ============================================================== */
+
+html body .lgcy-legacy-cta {
+  --border-width: clamp(1px, 0.0625em, 4px);
+  position: relative !important;
+  isolation: isolate;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin: 0;
+  padding: 0.875em 1.75em !important;
+  cursor: pointer;
+  border: none !important;
+  border-bottom: none !important;
+  border-radius: 999vw !important;
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.05)
+  ) !important;
+  box-shadow:
+    inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+    inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+    0 0.25em 0.125em -0.125em rgba(0, 0, 0, 0.2),
+    0 0 0.1em 0.25em inset rgba(255, 255, 255, 0.2) !important;
+  -webkit-backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+          backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+  font-family: 'Inter', Helvetica, 'Helvetica Neue', Arial, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.05em !important;
+  text-transform: none !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  text-shadow: 0 0.15em 0.25em rgba(0, 0, 0, 0.35);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  align-self: flex-start;
+  transform: none;
+  transition: all var(--glassy-hover-time, 400ms) var(--glassy-hover-ease, cubic-bezier(0.25, 1, 0.5, 1));
+  overflow: visible;
+}
+
+/* Keep the label text and SVG arrow above the conic outline pseudo-element */
+html body .lgcy-legacy-cta > span,
+html body .lgcy-legacy-cta > svg {
+  position: relative;
+  z-index: 3;
+}
+
+html body .lgcy-legacy-cta > svg {
+  color: #ffffff;
+  filter: drop-shadow(0 0.1em 0.15em rgba(0, 0, 0, 0.3));
+  transition: transform var(--glassy-hover-time, 400ms) var(--glassy-hover-ease, cubic-bezier(0.25, 1, 0.5, 1));
+}
+
+/* Conic-gradient outline */
+html body .lgcy-legacy-cta::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border-radius: 999vw;
+  width: calc(100% + var(--border-width));
+  height: calc(100% + var(--border-width));
+  top: calc(0% - var(--border-width) / 2);
+  left: calc(0% - var(--border-width) / 2);
+  padding: var(--border-width);
+  box-sizing: border-box;
+  background:
+    conic-gradient(
+      from var(--glassy-angle-1, -75deg) at 50% 50%,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0) 5% 40%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0) 60% 95%,
+      rgba(0, 0, 0, 0.5)
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  box-shadow: inset 0 0 0 calc(var(--border-width) / 2) rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  transition:
+    all var(--glassy-hover-time, 400ms) var(--glassy-hover-ease, cubic-bezier(0.25, 1, 0.5, 1)),
+    --glassy-angle-1 500ms ease;
+}
+
+html body .lgcy-legacy-cta:hover {
+  transform: scale(0.985) !important;
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.28),
+    rgba(255, 255, 255, 0.08)
+  ) !important;
+  text-shadow: 0 0.1em 0.2em rgba(0, 0, 0, 0.4);
+  box-shadow:
+    inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+    inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+    0 0.15em 0.05em -0.1em rgba(0, 0, 0, 0.25),
+    0 0 0.05em 0.1em inset rgba(255, 255, 255, 0.5) !important;
+}
+
+html body .lgcy-legacy-cta:hover > svg {
+  transform: translateX(3px);
+}
+
+html body .lgcy-legacy-cta:hover::after {
+  --glassy-angle-1: -125deg;
+}
+
+html body .lgcy-legacy-cta:active::after {
+  --glassy-angle-1: -75deg;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  html body .lgcy-legacy-cta::after,
+  html body .lgcy-legacy-cta:hover::after,
+  html body .lgcy-legacy-cta:active::after {
+    --glassy-angle-1: -75deg;
+  }
+}
