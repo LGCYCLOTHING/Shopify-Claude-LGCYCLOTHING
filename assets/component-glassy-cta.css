@@ -1349,6 +1349,7 @@ html body .header__icons .header__icon {
   align-items: center;
   justify-content: center;
   color: #ffffff;
+  overflow: hidden;
   transition: transform 200ms cubic-bezier(0.25, 1, 0.5, 1), background-color 200ms ease;
   -webkit-tap-highlight-color: transparent;
 }
@@ -1356,6 +1357,25 @@ html body .header__icons .header__icon {
 html body .header__icons .header__icon:hover {
   background-color: rgba(255, 255, 255, 0.12);
   transform: scale(1.05);
+}
+
+/* Override Dawn's rectangular focus outline to follow our circle shape */
+html body .header__icons .header__icon.focus-inset:focus-visible,
+html body .header__icons .header__icon.focused.focus-inset,
+html body .header__icons .header__icon:focus,
+html body .header__icons .header__icon:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.55) !important;
+}
+
+/* Constrain Dawn's 44×44 .svg-wrapper so it fits inside our 36×36 circle */
+html body .header__icons .header__icon .svg-wrapper,
+html body .header__icons .header__icon > span {
+  width: 36px !important;
+  height: 36px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 html body .header__icons .header__icon svg {
