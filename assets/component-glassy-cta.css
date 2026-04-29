@@ -3268,6 +3268,13 @@ html body .rp-acc-body-inner {
   padding-bottom: 16px !important;
 }
 
+/* Card body content — Inter with subtle negative letter-spacing */
+html body .rp-acc-body-inner,
+html body .rp-acc-body-inner * {
+  font-family: 'Inter', sans-serif !important;
+  letter-spacing: -0.02em !important;
+}
+
 /* Move .rp-usp (limited stock indicator) to the end of the column */
 html body .rp-inner {
   display: flex;
