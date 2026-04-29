@@ -3099,9 +3099,10 @@ html body .rp-counter {
 }
 
 .lgcy-sticky-atc__size.is-active {
-  background: linear-gradient(-75deg, rgba(0,0,0,0.85), rgba(40,40,40,0.95), rgba(0,0,0,0.85));
-  color: #fff;
-  border-color: transparent;
+  background: rgba(255, 255, 255, 0.6);
+  color: #000;
+  border: 2px solid #000;
+  font-weight: 900;
 }
 
 .lgcy-sticky-atc__size.is-soldout {
