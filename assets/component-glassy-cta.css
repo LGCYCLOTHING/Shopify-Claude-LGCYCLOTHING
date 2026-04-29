@@ -3037,6 +3037,24 @@ html body .rp-counter {
   color: #333 !important;
 }
 
+/* Mobile: push counter + expand icon to the bottom corners and color black */
+@media (max-width: 749px) {
+  html body .rp-counter {
+    left: 14px !important;
+    bottom: 12px !important;
+    color: #000 !important;
+  }
+  html body .rp-expand {
+    right: 14px !important;
+    bottom: 12px !important;
+    color: #000 !important;
+  }
+  html body .rp-expand svg {
+    stroke: #000 !important;
+    color: #000 !important;
+  }
+}
+
 /* ============================================================== */
 /* Sticky mobile Add-to-Cart pill (mobile only, slides up on scroll) */
 /* ============================================================== */
