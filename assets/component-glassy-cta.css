@@ -3054,20 +3054,18 @@ html body .rp-counter {
   right: 0;
   bottom: 0;
   z-index: 9990;
-  padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+  padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.85) 60%,
-    rgba(255, 255, 255, 0.95) 100%
+    rgba(255, 255, 255, 0.88) 50%,
+    rgba(255, 255, 255, 0.96) 100%
   );
-  -webkit-backdrop-filter: blur(8px);
-          backdrop-filter: blur(8px);
-  transform: translateY(120%);
-  opacity: 0;
-  pointer-events: none;
-  transition: transform 360ms cubic-bezier(0.32, 0.72, 0, 1), opacity 240ms ease;
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+          backdrop-filter: blur(10px) saturate(140%);
   display: none;
+  flex-direction: column;
+  gap: 8px;
 }
 
 @media (max-width: 860px) {
