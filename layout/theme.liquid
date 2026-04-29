@@ -551,6 +551,76 @@ svg.icon.icon-cart {
   </svg>
 </button>
 <script>
+  /* Sticky mobile Add-to-Cart bar — when the real ATC scrolls out of view on
+     small screens, slide a glass pill in from the bottom of the viewport. */
+  (function () {
+    function init() {
+      var atc = document.querySelector('.rp-btn-cart');
+      if (!atc) return;
+
+      // Mobile only; bail on desktop
+      if (!window.matchMedia('(max-width: 860px)').matches) return;
+
+      // Already injected?
+      if (document.querySelector('.lgcy-sticky-atc')) return;
+
+      // Build the sticky bar
+      var bar = document.createElement('div');
+      bar.className = 'lgcy-sticky-atc';
+      bar.innerHTML =
+        '<button type="button" class="lgcy-sticky-atc__btn">' +
+        '<span class="lgcy-sticky-atc__price"></span>' +
+        '<span class="lgcy-sticky-atc__label">ADD TO CART</span>' +
+        '<span class="lgcy-sticky-atc__arrow" aria-hidden="true">&rarr;</span>' +
+        '</button>';
+      document.body.appendChild(bar);
+
+      var stickyBtn = bar.querySelector('.lgcy-sticky-atc__btn');
+      var priceEl = bar.querySelector('.lgcy-sticky-atc__price');
+
+      // Try to mirror the visible price on the page
+      var srcPrice = document.querySelector('.rp-price, [data-rp-price]');
+      if (srcPrice && srcPrice.textContent.trim()) {
+        priceEl.textContent = srcPrice.textContent.trim();
+      }
+
+      // Click → click the real ATC, which submits its form with the current variant
+      stickyBtn.addEventListener('click', function () {
+        atc.click();
+      });
+
+      // Sync disabled / sold-out state from the real ATC
+      function syncState() {
+        if (atc.disabled || atc.classList.contains('disabled')) {
+          stickyBtn.disabled = true;
+          bar.classList.add('is-disabled');
+        } else {
+          stickyBtn.disabled = false;
+          bar.classList.remove('is-disabled');
+        }
+      }
+      syncState();
+      new MutationObserver(syncState).observe(atc, { attributes: true });
+
+      // Toggle visibility when the real ATC is out of view
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) bar.classList.remove('is-visible');
+          else bar.classList.add('is-visible');
+        });
+      }, { threshold: 0, rootMargin: '0px' });
+      io.observe(atc);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
+
+<script>
   /* Notify-me on PDP: products without sizes (sunglasses, etc.) don't render
      the existing .rp-size-nis button. Inject one and adapt the modal so the
      size dropdown is hidden when the product has no real sizes. */
