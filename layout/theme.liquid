@@ -604,10 +604,14 @@ svg.icon.icon-cart {
         }
       });
 
-      // Place the button just before the ATC form so it sits in the same
-      // visual region as the multi-size variant of this UI.
+      // Place the button just AFTER the ATC form, left-aligned with minimal
+      // padding so it sits as a small underlined link below the cart button.
       var atcForm = atc.closest('form') || atc;
-      atcForm.parentNode.insertBefore(btn, atcForm);
+      if (atcForm.nextSibling) {
+        atcForm.parentNode.insertBefore(btn, atcForm.nextSibling);
+      } else {
+        atcForm.parentNode.appendChild(btn);
+      }
     }
 
     if (document.readyState === 'loading') {
