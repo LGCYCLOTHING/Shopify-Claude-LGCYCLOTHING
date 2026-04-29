@@ -3283,6 +3283,36 @@ html body .lgcy-breadcrumbs__current {
   }
 }
 
+/* ============================================================== */
+/* Mobile-only fixes from user feedback                            */
+/* ============================================================== */
+
+@media (max-width: 749px) {
+  /* Hide back-to-top on mobile (sticky ATC owns the bottom-right area) */
+  .lgcy-back-to-top {
+    display: none !important;
+  }
+
+  /* Pin the header flush to the very top — kill any padding/gap above it */
+  html body .section-header,
+  html body .header-wrapper,
+  html body .header {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    top: 0 !important;
+  }
+  html body .header {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  /* Kill the white wipe bar entirely on mobile — it leaves a visible strip
+     between sections that the user doesn't want. */
+  html body .lgcy-wipe-line {
+    display: none !important;
+  }
+}
+
 /* On mobile, the sticky bar handles size + ATC — hide their inline duplicates
    on the page itself so the user sees them only once. */
 @media (max-width: 860px) {
