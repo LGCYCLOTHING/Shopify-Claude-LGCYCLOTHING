@@ -3295,7 +3295,8 @@ html body .lgcy-breadcrumbs__current {
     display: none !important;
   }
 
-  /* Pin the header flush to the very top — kill any padding/gap above it */
+  /* Pin the header flush to the very top — kill any padding/gap above it
+     and pull it up beyond the default safe area on phones. */
   html body .section-header,
   html body .header-wrapper,
   html body .header,
@@ -3304,8 +3305,10 @@ html body .lgcy-breadcrumbs__current {
     padding-bottom: 0 !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
-    top: 0 !important;
     min-height: 0 !important;
+  }
+  html body .section-header {
+    top: -12px !important;
   }
 
   html body .header {
