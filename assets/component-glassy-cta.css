@@ -3141,19 +3141,30 @@ html body .rp-acc-body-inner ul li::before {
 /* and panels slide up from there to fill the column above them.    */
 /* ============================================================== */
 
-/* Right column becomes the positioning context + clips overflow */
+/* Right column becomes positioning context + top-aligns content + clips overflow */
 html body .rp-info,
 html body .lgcy-info-drawer-host {
   position: relative !important;
+  align-items: stretch !important;
   overflow: hidden;
 }
 
-/* Trigger row sits in normal flow at the bottom (last child of .rp-info).
-   z-index keeps it above the sliding bodies. */
-html body .rp-acc-list {
+/* Inner content stretches to full column height so margin-top:auto works.
+   Top-aligned so the title/price/ATC stay at the top. */
+html body .rp-info .rp-inner,
+html body .lgcy-info-drawer-host .rp-inner {
   position: relative !important;
-  z-index: 10 !important;
-  margin-top: 24px !important;
+  min-height: calc(100vh - 80px);
+  justify-content: flex-start !important;
+  align-self: stretch !important;
+  padding-top: 40px;
+}
+
+/* Trigger row pushed to the bottom of the right column. position:static so
+   the body panels anchor to .rp-inner (their next positioned ancestor). */
+html body .rp-acc-list {
+  position: static !important;
+  margin-top: auto !important;
 }
 
 /* Each body becomes an absolute panel within .rp-info. Hidden below the
