@@ -1286,21 +1286,21 @@ html body .header__icons {
   background: transparent;
 }
 
-/* Light frosted-white glass body on every page — backdrop-filter on a
-   pseudo so the bar itself doesn't create a containing block. */
+/* Clear liquid-glass body on every page — translucent white pill that
+   shows the page through, with a subtle edge for visibility. */
 html body .header__icons::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: 999vw;
-  background: rgba(255, 255, 255, 0.85);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-          backdrop-filter: blur(18px) saturate(160%);
+  background: rgba(255, 255, 255, 0.35);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+          backdrop-filter: blur(14px) saturate(150%);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
     inset 0 -1px 0 rgba(0, 0, 0, 0.08),
-    0 0.3em 0.6em -0.15em rgba(0, 0, 0, 0.22),
-    0 0 0 1px rgba(0, 0, 0, 0.06);
+    0 0.25em 0.5em -0.15em rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(0, 0, 0, 0.08);
   z-index: -1;
   pointer-events: none;
 }
