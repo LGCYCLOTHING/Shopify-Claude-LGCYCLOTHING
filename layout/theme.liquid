@@ -551,6 +551,74 @@ svg.icon.icon-cart {
   </svg>
 </button>
 <script>
+  /* Notify-me on PDP: products without sizes (sunglasses, etc.) don't render
+     the existing .rp-size-nis button. Inject one and adapt the modal so the
+     size dropdown is hidden when the product has no real sizes. */
+  (function () {
+    function init() {
+      var atc = document.querySelector('.rp-btn-cart');
+      if (!atc) return;
+
+      var info = atc.closest('.rp-info') || atc.parentElement;
+      if (!info || info.dataset.lgcyNotify === '1') return;
+
+      // If the size-NIS button already exists on this product, we're done
+      if (info.querySelector('.rp-size-nis')) return;
+
+      var sizeSelect = document.getElementById('rp-nis-size');
+      // Real size options (skip the disabled placeholder)
+      var realOptions = sizeSelect
+        ? sizeSelect.querySelectorAll('option:not([disabled])')
+        : [];
+      var hasSizes = realOptions.length > 0;
+
+      // If somehow sizes exist but the button isn't shown, don't double up
+      if (hasSizes) return;
+
+      info.dataset.lgcyNotify = '1';
+
+      // Hide the size dropdown in the modal
+      if (sizeSelect) sizeSelect.style.display = 'none';
+
+      // Update the modal copy to drop the "size" reference
+      var sub = document.querySelector('.rp-nis-sub');
+      if (sub) {
+        sub.textContent =
+          "Enter your email and we'll let you know when this is back in stock.";
+      }
+      var title = document.querySelector('.rp-nis-title');
+      if (title) title.textContent = 'Notify Me When Available';
+
+      // Build the notify button (uses the same class as the multi-size version
+      // so it inherits the existing styling)
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'rp-size-nis lgcy-nis-injected';
+      btn.textContent = 'Notify When Available';
+      btn.addEventListener('click', function () {
+        if (typeof window.rpNisOpen === 'function') {
+          window.rpNisOpen();
+        } else {
+          var modal = document.getElementById('rp-nis-modal');
+          if (modal) modal.classList.add('open');
+        }
+      });
+
+      // Place the button just before the ATC form so it sits in the same
+      // visual region as the multi-size variant of this UI.
+      var atcForm = atc.closest('form') || atc;
+      atcForm.parentNode.insertBefore(btn, atcForm);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
+
+<script>
   (function () {
     var btn = document.getElementById('lgcy-back-to-top');
     if (!btn) return;

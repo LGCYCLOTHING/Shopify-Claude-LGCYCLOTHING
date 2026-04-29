@@ -31,7 +31,12 @@
       "Bash(grep -oiE '\\\\.rp-acc[a-z-]*[^\"]{0,300}' templates/product.json)",
       "Bash(grep -oiE '\\\\.rp-info[^\"]{0,400}' templates/product.json)",
       "Bash(grep -oiE 'rp-wrap[^\"]{0,300}|background:\\\\s*linear-gradient\\\\\\(90deg[^\"]{0,300}' templates/product.json)",
-      "Bash(grep -oiE '\\\\.rp-wrap[^\"]{0,200}' templates/product.json)"
+      "Bash(grep -oiE '\\\\.rp-wrap[^\"]{0,200}' templates/product.json)",
+      "Bash(grep -oiE '.{50}Size Not In Stock.{50}|rp-size-nis.{0,300}|rpNisOpen[^\"]{0,200}' templates/product.json)",
+      "Bash(grep -oiE '\\\\.rp-nis[a-z-]*[^\"]{0,200}' templates/product.json)",
+      "Bash(grep -oiE '<div class=\"rp-nis-modal\".{0,800}' templates/product.json)",
+      "Bash(grep -oiE 'rp-nis-modal[^\"]{0,1200}' templates/product.json)",
+      "Bash(grep -oiE 'rp-nis-modal\\\\\\\\\\\\\".{0,1500}' templates/product.json)"
     ]
   }
 }
