@@ -1384,14 +1384,8 @@ html body details[open] .header__icons .header__icon-close {
 html body .header__icons .header__icon svg {
   width: 18px;
   height: 18px;
-  stroke: currentColor;
-  color: inherit;
-  filter: drop-shadow(0 0.05em 0.15em rgba(0, 0, 0, 0.3));
-}
-
-html body.template-product .header__icons .header__icon svg {
   stroke: #000;
-  filter: none;
+  color: #000;
 }
 
 /* Cart count — small accent dot at top-right of the cart icon.
