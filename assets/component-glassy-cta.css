@@ -3000,3 +3000,171 @@ html body.password #password-header-form::before {
   pointer-events: none;
   z-index: 1;
 }
+
+/* ============================================================== */
+/* PDP accordions (.rp-acc-list) — glass pill redesign             */
+/* ============================================================== */
+
+html body .rp-acc-list {
+  border-top: none !important;
+  margin-top: 28px !important;
+  display: flex !important;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Each accordion section becomes its own glass pill */
+html body .rp-acc-list > .rp-acc-section,
+html body .rp-acc-list > div[id^='rp-acc-'],
+html body .rp-acc-list .rp-acc-trigger {
+  /* trigger styling lives on the button itself (next rule) */
+}
+
+/* The clickable header */
+html body .rp-acc-trigger {
+  width: 100% !important;
+  position: relative !important;
+  isolation: isolate;
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.45),
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.45)
+  ) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+          backdrop-filter: blur(10px) saturate(150%);
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 18px 22px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 12px !important;
+  letter-spacing: -0.02em !important;
+  text-transform: uppercase;
+  color: #000 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.08),
+    0 0.3em 0.6em -0.15em rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(0, 0, 0, 0.06) !important;
+  transition: background 220ms ease, transform 220ms cubic-bezier(0.25, 1, 0.5, 1), box-shadow 220ms ease, border-radius 240ms ease;
+}
+
+html body .rp-acc-trigger:hover {
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.85),
+    rgba(255, 255, 255, 0.6)
+  ) !important;
+  opacity: 1 !important;
+}
+
+/* When open, the pill connects to the body underneath: flat bottom corners */
+html body .rp-acc-trigger.open {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.65),
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.65)
+  ) !important;
+}
+
+/* Replace the "+" text with a chevron drawn from CSS borders */
+html body .rp-acc-trigger .rp-trigger-icon {
+  font-size: 0 !important;
+  width: 12px;
+  height: 12px;
+  position: relative;
+  margin-left: 12px;
+  transform: none !important;
+  transition: transform 320ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+html body .rp-acc-trigger .rp-trigger-icon::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 1px;
+  width: 8px;
+  height: 8px;
+  border-right: 1.75px solid currentColor;
+  border-bottom: 1.75px solid currentColor;
+  transform: rotate(45deg);
+  transform-origin: center;
+}
+
+html body .rp-acc-trigger.open .rp-trigger-icon {
+  transform: rotate(180deg) !important;
+}
+
+/* Body container */
+html body .rp-acc-body {
+  border-bottom: none !important;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.55),
+    rgba(255, 255, 255, 0.7)
+  );
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+          backdrop-filter: blur(10px) saturate(140%);
+  box-shadow:
+    inset 0 -1px 0 rgba(0, 0, 0, 0.08),
+    0 0.3em 0.6em -0.15em rgba(0, 0, 0, 0.15);
+}
+
+html body .rp-acc-body.open {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+html body .rp-acc-body-inner {
+  padding: 18px 22px 22px !important;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  color: #333 !important;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 320ms ease 80ms, transform 320ms ease 80ms;
+}
+
+html body .rp-acc-body.open .rp-acc-body-inner {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+html body .rp-acc-body-inner strong {
+  color: #000 !important;
+  font-weight: 800 !important;
+}
+
+html body .rp-acc-body-inner ul {
+  padding-left: 0 !important;
+  list-style: none !important;
+}
+
+html body .rp-acc-body-inner ul li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 6px;
+}
+
+html body .rp-acc-body-inner ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  border-radius: 999vw;
+  background: rgba(0, 0, 0, 0.6);
+}
