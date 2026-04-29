@@ -551,6 +551,25 @@ svg.icon.icon-cart {
   </svg>
 </button>
 <script>
+  /* PDP "tabs" — open the first section by default so the panel is never empty */
+  (function () {
+    function openFirstTab() {
+      var triggers = document.querySelectorAll('.rp-acc-trigger');
+      if (!triggers.length) return;
+      var anyOpen = Array.prototype.some.call(triggers, function (t) {
+        return t.classList.contains('open');
+      });
+      if (anyOpen) return;
+      try { triggers[0].click(); } catch (e) {}
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', openFirstTab);
+    } else {
+      openFirstTab();
+    }
+  })();
+</script>
+<script>
   (function () {
     var btn = document.getElementById('lgcy-back-to-top');
     if (!btn) return;
