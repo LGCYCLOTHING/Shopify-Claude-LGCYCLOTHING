@@ -3298,18 +3298,40 @@ html body .lgcy-breadcrumbs__current {
   /* Pin the header flush to the very top — kill any padding/gap above it */
   html body .section-header,
   html body .header-wrapper,
-  html body .header {
+  html body .header,
+  html body .shopify-section-header-sticky {
     padding-top: 0 !important;
+    padding-bottom: 0 !important;
     margin-top: 0 !important;
+    margin-bottom: 0 !important;
     top: 0 !important;
-  }
-  html body .header {
-    padding-top: 2px !important;
-    padding-bottom: 6px !important;
     min-height: 0 !important;
   }
-  html body .section-header {
-    padding-top: 0 !important;
+
+  html body .header {
+    padding: 0 1rem !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  /* Tighten the icons row so it doesn't drive the header tall */
+  html body .header__icons {
+    padding: 4px 8px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  html body .header__icons .header__icon {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  html body .header__icons .header__icon .svg-wrapper,
+  html body .header__icons .header__icon > span {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  html body .header__icons .header__icon svg {
+    width: 16px !important;
+    height: 16px !important;
   }
 
   /* Kill the white wipe bar entirely on mobile — it leaves a visible strip
