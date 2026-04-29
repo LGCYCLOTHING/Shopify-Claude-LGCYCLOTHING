@@ -3147,36 +3147,15 @@ html body .rp-counter {
 }
 
 .lgcy-sticky-atc__btn::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 999vw;
-  width: calc(100% + var(--border-width));
-  height: calc(100% + var(--border-width));
-  top: calc(0% - var(--border-width) / 2);
-  left: calc(0% - var(--border-width) / 2);
-  padding: var(--border-width);
-  box-sizing: border-box;
-  background: conic-gradient(
-    from -75deg at 50% 50%,
-    rgba(255, 255, 255, 0.5),
-    rgba(255, 255, 255, 0) 5% 40%,
-    rgba(255, 255, 255, 0.5) 50%,
-    rgba(255, 255, 255, 0) 60% 95%,
-    rgba(255, 255, 255, 0.5)
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  pointer-events: none;
+  display: none;
 }
 
 .lgcy-sticky-atc__price {
   flex: 0 0 auto;
   font-weight: 700;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(0, 0, 0, 0.85);
+  letter-spacing: -0.03em;
 }
 
 .lgcy-sticky-atc__price:empty {
