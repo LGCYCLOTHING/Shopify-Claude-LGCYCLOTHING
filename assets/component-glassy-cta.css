@@ -3025,6 +3025,56 @@ html body .rp-cards-section [class*="eyebrow" i] {
   letter-spacing: -0.05em !important;
 }
 
+/* PDP "You May Also Like" cards — glass image frame matching collection grid */
+html body .rp-product-card-img {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+    0 0.4em 0.9em -0.2em rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 300ms ease, transform 300ms ease;
+}
+
+html body .rp-product-card:hover .rp-product-card-img {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.55),
+    0 0.6em 1.2em -0.2em rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+html body .rp-product-card-name,
+html body .rp-product-card-sub,
+html body .rp-product-card-price {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.05em !important;
+  color: #000 !important;
+  text-transform: none !important;
+}
+
+html body .rp-product-card-sub {
+  color: rgba(0, 0, 0, 0.5) !important;
+  font-weight: 700 !important;
+}
+
+/* Collection-page card title/price — Inter 900 negative letter-spacing, black */
+html body .lgcy-card__title,
+html body .lgcy-card__price,
+html body .lgcy-card__color {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.05em !important;
+  color: #000 !important;
+  text-transform: none !important;
+}
+
+html body .lgcy-card__color {
+  color: rgba(0, 0, 0, 0.5) !important;
+  font-weight: 700 !important;
+}
+
 /* Injected "Notify When Available" link — left-aligned, tight under the ATC */
 html body .rp-size-nis.lgcy-nis-injected {
   display: inline-block !important;

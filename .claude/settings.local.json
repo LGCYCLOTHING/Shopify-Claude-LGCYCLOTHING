@@ -51,7 +51,9 @@
       "Bash(grep -oiE '\\\\.rp-lightbox[^\"]{0,200}|\\\\.rp-lb-close[^\"]{0,200}|\\\\.rp-lb-inner[^\"]{0,200}' templates/product.json)",
       "Bash(grep -oiE 'onclick=\\\\\\\\\"rpLb[^\\\\\\\\]{0,40}|rp-lightbox\\\\\\\\\\\\\".{0,100}' templates/product.json)",
       "Bash(grep -oiE '\\\\.rp-title[^\"]{0,150}|\\\\.rp-name[^\"]{0,150}|\\\\.rp-product-title[^\"]{0,150}' templates/product.json)",
-      "Bash(grep -oiE 'class=\\\\\\\\\"rp-\\(title|price|name|head\\)[a-z-]*\\\\\\\\\"' templates/product.json)"
+      "Bash(grep -oiE 'class=\\\\\\\\\"rp-\\(title|price|name|head\\)[a-z-]*\\\\\\\\\"' templates/product.json)",
+      "Bash(grep -oiE 'rp-card[a-z-]*|class=\\\\\\\\\"rp-card[a-z-]*\\\\\\\\\"' templates/product.json)",
+      "Bash(grep -oiE 'rp-card-grid\\\\\\\\\\\\\".{0,1500}' templates/product.json)"
     ]
   }
 }
