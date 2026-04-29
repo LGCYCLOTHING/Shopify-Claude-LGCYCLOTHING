@@ -3001,14 +3001,16 @@ html body.password #password-header-form::before {
   z-index: 1;
 }
 
-/* PDP page background — softer, symmetrical radial vignette instead of the
-   harsh left-to-right ramp into dark grey. */
+/* PDP page background — symmetrical horizontal gradient: bright center,
+   gently darker on both sides. Same on mobile + desktop, no left-right bias. */
 html body .rp-wrap {
-  background: radial-gradient(
-    ellipse 80% 70% at center,
-    #ffffff 0%,
-    #f1f1f1 45%,
-    #cdcdcd 100%
+  background: linear-gradient(
+    90deg,
+    #b8b8b8 0%,
+    #e8e8e8 22%,
+    #ffffff 50%,
+    #e8e8e8 78%,
+    #b8b8b8 100%
   ) !important;
 }
 
