@@ -20,7 +20,7 @@ jobs:
 
       - name: Deploy theme to Shopify
         env:
-          SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_FLAG_STORE }}
-          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+          SHOPIFY_FLAG_STORE: 0dc7p1-tw.myshopify.com
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_API_KEY }}
         run: |
-          shopify theme push --theme 142745305274 --allow-live
+          shopify theme push --store 0dc7p1-tw.myshopify.com --theme 142745305274 --allow-live
