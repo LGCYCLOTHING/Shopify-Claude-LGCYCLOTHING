@@ -3002,139 +3002,136 @@ html body.password #password-header-form::before {
 }
 
 /* ============================================================== */
-/* PDP accordions (.rp-acc-list) — glass pill redesign             */
+/* PDP "accordion" — re-skinned as a tab bar + single content pane */
 /* ============================================================== */
 
+/* Outer container becomes a 2-row grid: tabs (row 1), content (row 2) */
 html body .rp-acc-list {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto auto;
   border-top: none !important;
   margin-top: 28px !important;
-  display: flex !important;
-  flex-direction: column;
-  gap: 10px;
-}
-
-/* Each accordion section becomes its own glass pill */
-html body .rp-acc-list > .rp-acc-section,
-html body .rp-acc-list > div[id^='rp-acc-'],
-html body .rp-acc-list .rp-acc-trigger {
-  /* trigger styling lives on the button itself (next rule) */
-}
-
-/* The clickable header */
-html body .rp-acc-trigger {
-  width: 100% !important;
-  position: relative !important;
+  position: relative;
   isolation: isolate;
+  background: transparent;
+}
+
+/* Tab bar — visually wraps the 4 triggers into one glass pill row */
+html body .rp-acc-list::before {
+  content: '';
+  grid-row: 1;
+  grid-column: 1 / -1;
+  position: relative;
+  z-index: 0;
+  border-radius: 14px;
   background: linear-gradient(
     -75deg,
     rgba(255, 255, 255, 0.45),
     rgba(255, 255, 255, 0.7),
     rgba(255, 255, 255, 0.45)
-  ) !important;
+  );
   -webkit-backdrop-filter: blur(10px) saturate(150%);
           backdrop-filter: blur(10px) saturate(150%);
-  border: none !important;
-  border-radius: 14px !important;
-  padding: 18px 22px !important;
-  font-family: 'Inter', sans-serif !important;
-  font-weight: 900 !important;
-  font-size: 12px !important;
-  letter-spacing: -0.02em !important;
-  text-transform: uppercase;
-  color: #000 !important;
-  display: flex !important;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  cursor: pointer;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.95),
     inset 0 -1px 0 rgba(0, 0, 0, 0.08),
     0 0.3em 0.6em -0.15em rgba(0, 0, 0, 0.18),
-    0 0 0 1px rgba(0, 0, 0, 0.06) !important;
-  transition: background 220ms ease, transform 220ms cubic-bezier(0.25, 1, 0.5, 1), box-shadow 220ms ease, border-radius 240ms ease;
+    0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+
+/* Each trigger sits in row 1 as a tab, no per-tab pill — they share the bar */
+html body .rp-acc-trigger {
+  grid-row: 1 !important;
+  position: relative;
+  z-index: 1;
+  width: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 14px 8px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 11px !important;
+  letter-spacing: -0.02em !important;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.55) !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: none !important;
+  transition: color 220ms ease, transform 220ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 html body .rp-acc-trigger:hover {
-  background: linear-gradient(
-    -75deg,
-    rgba(255, 255, 255, 0.6),
-    rgba(255, 255, 255, 0.85),
-    rgba(255, 255, 255, 0.6)
-  ) !important;
+  color: rgba(0, 0, 0, 0.85) !important;
   opacity: 1 !important;
-}
-
-/* When open, the pill connects to the body underneath: flat bottom corners */
-html body .rp-acc-trigger.open {
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-  background: linear-gradient(
-    -75deg,
-    rgba(255, 255, 255, 0.65),
-    rgba(255, 255, 255, 0.9),
-    rgba(255, 255, 255, 0.65)
-  ) !important;
-}
-
-/* Replace the "+" text with a chevron drawn from CSS borders */
-html body .rp-acc-trigger .rp-trigger-icon {
-  font-size: 0 !important;
-  width: 12px;
-  height: 12px;
-  position: relative;
-  margin-left: 12px;
   transform: none !important;
-  transition: transform 320ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-html body .rp-acc-trigger .rp-trigger-icon::before {
+/* Hide the +/× icon — tabs don't need it */
+html body .rp-acc-trigger .rp-trigger-icon {
+  display: none !important;
+}
+
+/* Active tab — filled dark pill behind it (set with the existing .open class) */
+html body .rp-acc-trigger.open {
+  color: #fff !important;
+}
+
+html body .rp-acc-trigger.open::before {
   content: '';
   position: absolute;
-  top: 2px;
-  left: 1px;
-  width: 8px;
-  height: 8px;
-  border-right: 1.75px solid currentColor;
-  border-bottom: 1.75px solid currentColor;
-  transform: rotate(45deg);
-  transform-origin: center;
-}
-
-html body .rp-acc-trigger.open .rp-trigger-icon {
-  transform: rotate(180deg) !important;
-}
-
-/* Body container */
-html body .rp-acc-body {
-  border-bottom: none !important;
-  border-bottom-left-radius: 14px;
-  border-bottom-right-radius: 14px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.55),
-    rgba(255, 255, 255, 0.7)
-  );
-  -webkit-backdrop-filter: blur(10px) saturate(140%);
-          backdrop-filter: blur(10px) saturate(140%);
+  inset: 4px;
+  z-index: -1;
+  border-radius: 10px;
+  background: linear-gradient(-75deg, rgba(0,0,0,0.85), rgba(40,40,40,0.95), rgba(0,0,0,0.85));
   box-shadow:
-    inset 0 -1px 0 rgba(0, 0, 0, 0.08),
-    0 0.3em 0.6em -0.15em rgba(0, 0, 0, 0.15);
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.45),
+    0 0.2em 0.4em -0.1em rgba(0, 0, 0, 0.4);
+  animation: lgcyTabFill 220ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-html body .rp-acc-body.open {
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
+@keyframes lgcyTabFill {
+  from { transform: scale(0.96); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* All bodies share the SAME grid cell in row 2 — they stack on top of each other.
+   Only the .open one gets visible height; the rest stay collapsed. */
+html body .rp-acc-body {
+  grid-row: 2 !important;
+  grid-column: 1 / -1 !important;
+  margin-top: 12px;
+  border: none !important;
+  border-radius: 14px !important;
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.55),
+    rgba(255, 255, 255, 0.78),
+    rgba(255, 255, 255, 0.55)
+  );
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+          backdrop-filter: blur(12px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.08),
+    0 0.4em 0.9em -0.2em rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(0, 0, 0, 0.06);
 }
 
 html body .rp-acc-body-inner {
-  padding: 18px 22px 22px !important;
+  padding: 22px 26px !important;
   font-family: 'Inter', sans-serif;
   font-size: 13px;
   letter-spacing: -0.01em;
   color: #333 !important;
   opacity: 0;
   transform: translateY(-4px);
-  transition: opacity 320ms ease 80ms, transform 320ms ease 80ms;
+  transition: opacity 280ms ease 60ms, transform 280ms ease 60ms;
 }
 
 html body .rp-acc-body.open .rp-acc-body-inner {
@@ -3167,4 +3164,13 @@ html body .rp-acc-body-inner ul li::before {
   height: 6px;
   border-radius: 999vw;
   background: rgba(0, 0, 0, 0.6);
+}
+
+/* Mobile: tab labels can overflow on 4 columns — slightly tighter type */
+@media (max-width: 749px) {
+  html body .rp-acc-trigger {
+    font-size: 9px !important;
+    padding: 12px 4px !important;
+    letter-spacing: -0.04em !important;
+  }
 }
