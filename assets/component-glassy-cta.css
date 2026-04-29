@@ -1367,7 +1367,7 @@ html body .header__icons::after {
   pointer-events: none;
 }
 
-/* Each icon button inside the bar — dark icons on the light glass everywhere */
+/* Default icon color: WHITE (homepage + collection page over dark hero) */
 html body .header__icons .header__icon {
   position: relative;
   z-index: 1;
@@ -1378,15 +1378,24 @@ html body .header__icons .header__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #000;
+  color: #ffffff;
   overflow: hidden;
   transition: transform 200ms cubic-bezier(0.25, 1, 0.5, 1), background-color 200ms ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 html body .header__icons .header__icon:hover {
-  background-color: rgba(0, 0, 0, 0.08);
+  background-color: rgba(255, 255, 255, 0.12);
   transform: scale(1.05);
+}
+
+/* On product pages — switch icons to BLACK (white-page background) */
+html body.template-product .header__icons .header__icon {
+  color: #000;
+}
+
+html body.template-product .header__icons .header__icon:hover {
+  background-color: rgba(0, 0, 0, 0.08);
 }
 
 /* Override Dawn's rectangular focus outline to follow our circle shape */
