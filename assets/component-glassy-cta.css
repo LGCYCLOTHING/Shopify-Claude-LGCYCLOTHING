@@ -3004,14 +3004,7 @@ html body.password #password-header-form::before {
 /* PDP page background — symmetrical horizontal gradient: bright center,
    gently darker on both sides. Same on mobile + desktop, no left-right bias. */
 html body .rp-wrap {
-  background: linear-gradient(
-    90deg,
-    #b8b8b8 0%,
-    #e8e8e8 22%,
-    #ffffff 50%,
-    #e8e8e8 78%,
-    #b8b8b8 100%
-  ) !important;
+  background: #ffffff !important;
 }
 
 /* Injected "Notify When Available" link — left-aligned, tight under the ATC */
