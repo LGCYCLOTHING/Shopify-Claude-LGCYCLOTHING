@@ -1345,14 +1345,14 @@ html body .header__icons .header__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
+  color: #000;
   overflow: hidden;
   transition: transform 200ms cubic-bezier(0.25, 1, 0.5, 1), background-color 200ms ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 html body .header__icons .header__icon:hover {
-  background-color: rgba(255, 255, 255, 0.12);
+  background-color: rgba(0, 0, 0, 0.08);
   transform: scale(1.05);
 }
 
