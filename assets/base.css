@@ -3768,12 +3768,19 @@ body.template-product .header-wrapper .disclosure__button svg,
 body.template-product .header-wrapper .header__menu-item span,
 body.template-product .header-wrapper .link {
   color: #000000 !important;
-  fill: #000000 !important;
 }
 
 body.template-product .header-wrapper svg {
   color: #000000 !important;
-  fill: currentColor !important;
+}
+
+/* Keep outline icons (search, cart, account) as outlines, not solid fills */
+body.template-product .header-wrapper .header__icon--search svg,
+body.template-product .header-wrapper .header__icon--cart svg,
+body.template-product .header-wrapper .header__icon--account svg,
+body.template-product .header-wrapper .header__search svg {
+  fill: none !important;
+  stroke: currentColor !important;
 }
 
 body.template-product .header-wrapper .header__icon {
