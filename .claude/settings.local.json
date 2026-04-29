@@ -36,7 +36,14 @@
       "Bash(grep -oiE '\\\\.rp-nis[a-z-]*[^\"]{0,200}' templates/product.json)",
       "Bash(grep -oiE '<div class=\"rp-nis-modal\".{0,800}' templates/product.json)",
       "Bash(grep -oiE 'rp-nis-modal[^\"]{0,1200}' templates/product.json)",
-      "Bash(grep -oiE 'rp-nis-modal\\\\\\\\\\\\\".{0,1500}' templates/product.json)"
+      "Bash(grep -oiE 'rp-nis-modal\\\\\\\\\\\\\".{0,1500}' templates/product.json)",
+      "Bash(grep -oiE 'FREE SHIPPING|IN STOCK|rp-status[a-z-]*[^\"]{0,150}' templates/product.json)",
+      "Bash(grep -oiE '\\\\.rp-stock[a-z-]*[^\"]{0,200}|\\\\.rp-trust[a-z-]*[^\"]{0,200}|\\\\.rp-stock-box[^\"]{0,200}|\\\\.rp-shipping[a-z-]*[^\"]{0,200}' templates/product.json)",
+      "Bash(grep -oiE '\"rp-trust[^\"]{0,40}|\"rp-info-row[^\"]{0,40}|\"rp-feature[^\"]{0,40}|\"rp-status[^\"]{0,40}|\"rp-meta[^\"]{0,40}' templates/product.json)",
+      "Bash(grep -oiE 'class=\\\\\\\\\"[^\\\\\\\\]{0,30}\\\\\\\\\".{0,40}Free Shipping' templates/product.json)",
+      "Bash(grep -oiE '\\\\.rp-usp[a-z-]*[^\"]{0,300}' templates/product.json)",
+      "Bash(grep -oiE 'rp-usp[^>]{0,500}' templates/product.json)",
+      "Bash(grep -oiE 'rp-usp\\\\\\\\\\\\\".{0,800}' templates/product.json)"
     ]
   }
 }

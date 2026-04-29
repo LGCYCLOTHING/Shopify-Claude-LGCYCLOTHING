@@ -3014,12 +3014,24 @@ html body .rp-wrap {
   ) !important;
 }
 
-/* Injected "Notify When Available" link — left-aligned, sits below ATC, tight */
+/* Injected "Notify When Available" link — left-aligned, tight under the ATC */
 html body .rp-size-nis.lgcy-nis-injected {
   display: inline-block !important;
-  margin: 8px 0 0 !important;
+  margin: 4px 0 12px !important;
   padding: 0 !important;
   text-align: left !important;
   align-self: flex-start !important;
+}
+
+/* Strip the box around stock/shipping row + hide Free Shipping */
+html body .rp-usp {
+  background: transparent !important;
+  padding: 0 !important;
+  margin-top: 0 !important;
+  gap: 4px !important;
+}
+
+html body .rp-usp .rp-usp-row:first-child {
+  display: none !important;
 }
 
