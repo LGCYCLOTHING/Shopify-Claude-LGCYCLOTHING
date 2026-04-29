@@ -3208,13 +3208,13 @@ html body .rp-counter {
 html body .lgcy-breadcrumbs {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 0 0 18px 0;
+  gap: 6px;
+  margin: 4px 0 12px 0;
   font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  font-size: 11px;
-  letter-spacing: -0.01em;
-  text-transform: capitalize;
+  font-weight: 900;
+  font-size: 9px;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
   color: rgba(0, 0, 0, 0.55);
   flex-wrap: wrap;
 }
@@ -3222,6 +3222,8 @@ html body .lgcy-breadcrumbs {
 html body .lgcy-breadcrumbs a {
   color: rgba(0, 0, 0, 0.55);
   text-decoration: none;
+  font-weight: 900;
+  letter-spacing: -0.05em;
   transition: color 200ms ease;
 }
 
@@ -3234,8 +3236,9 @@ html body .lgcy-breadcrumbs__sep {
 }
 
 html body .lgcy-breadcrumbs__current {
-  color: rgba(0, 0, 0, 0.65);
-  font-weight: 500;
+  color: rgba(0, 0, 0, 0.55);
+  font-weight: 900;
+  letter-spacing: -0.05em;
 }
 
 /* ============================================================== */
