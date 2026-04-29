@@ -45,7 +45,9 @@
       "Bash(grep -oiE 'rp-usp[^>]{0,500}' templates/product.json)",
       "Bash(grep -oiE 'rp-usp\\\\\\\\\\\\\".{0,800}' templates/product.json)",
       "Bash(grep -oiE 'rp-gallery[^\"]{0,300}|rp-thumbs[^\"]{0,300}|rp-counter[^\"]{0,200}|rp-arrow[^\"]{0,200}' templates/product.json)",
-      "Bash(grep -oiE 'rp-counter\\\\\\\\\\\\\".{0,200}|id=\"rp-main\".{0,400}' templates/product.json)"
+      "Bash(grep -oiE 'rp-counter\\\\\\\\\\\\\".{0,200}|id=\"rp-main\".{0,400}' templates/product.json)",
+      "Bash(grep -oiE '\\\\.rp-editorial[a-z-]*\\\\s*\\\\{[^}]{0,200}|\\\\.rp-cards-section[^\"]{0,200}|background:\\\\s*linear-gradient[^\"]{0,200}' templates/product.json)",
+      "Bash(grep -oiE '\\\\.rp-cards-section[^\"]{0,300}|\\\\.rp-card-grid[^\"]{0,200}|YOU MAY ALSO LIKE' templates/product.json)"
     ]
   }
 }

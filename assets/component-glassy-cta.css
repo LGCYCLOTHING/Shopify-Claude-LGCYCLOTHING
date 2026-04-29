@@ -3003,7 +3003,9 @@ html body.password #password-header-form::before {
 
 /* PDP page background — symmetrical horizontal gradient: bright center,
    gently darker on both sides. Same on mobile + desktop, no left-right bias. */
-html body .rp-wrap {
+html body .rp-wrap,
+html body .rp-editorial,
+html body .rp-cards-section {
   background: #ffffff !important;
 }
 
