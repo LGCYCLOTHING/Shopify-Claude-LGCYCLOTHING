@@ -3444,10 +3444,13 @@ html body .rp-lb-close {
     display: none !important;
   }
 
-  /* Reserve space at the bottom of the page so the sticky bar doesn't cover
-     the accordion / footer. */
+  /* Reserve a smaller buffer at the bottom — the sticky bar's own padding
+     keeps content readable. */
   html body .rp-info {
-    padding-bottom: 140px !important;
+    padding-bottom: 100px !important;
+  }
+  html body .rp-inner .rp-usp {
+    margin-bottom: 0 !important;
   }
 }
 
