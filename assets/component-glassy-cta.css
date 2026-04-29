@@ -2491,6 +2491,13 @@ html body .lgcy-faq3-answer a {
 /* "→ DISCOVER" scroll indicator — glassy pill on the homepage     */
 /* ============================================================== */
 
+/* Homepage "EXPLORE COLLECTIONS" eyebrow — Inter 900 negative letter-spacing */
+html body #explore-label {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.05em !important;
+}
+
 html body #scroll-discover {
   --border-width: 1px;
   position: relative !important;
