@@ -3410,13 +3410,11 @@ html body .lgcy-breadcrumbs__current {
     height: auto !important;
   }
 
-  /* Tighten the icons row so it doesn't drive the header tall — but pad the
-     right side enough so the cart bubble doesn't poke past the pill. */
+  /* Tighten the icons row so it doesn't drive the header tall */
   html body .header__icons {
-    padding: 4px 18px 4px 14px !important;
-    gap: 8px !important;
+    padding: 5px 10px !important;
+    gap: 4px !important;
     margin-top: 0 !important;
-    margin-right: 4px !important;
     margin-bottom: 0 !important;
   }
   html body .header__icons .header__icon {
