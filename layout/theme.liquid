@@ -568,6 +568,7 @@ svg.icon.icon-cart {
       var bar = document.createElement('div');
       bar.className = 'lgcy-sticky-atc';
       bar.innerHTML =
+        '<div class="lgcy-sticky-atc__sizes" role="group"></div>' +
         '<button type="button" class="lgcy-sticky-atc__btn">' +
         '<span class="lgcy-sticky-atc__price"></span>' +
         '<span class="lgcy-sticky-atc__label">ADD TO CART</span>' +
@@ -577,6 +578,48 @@ svg.icon.icon-cart {
 
       var stickyBtn = bar.querySelector('.lgcy-sticky-atc__btn');
       var priceEl = bar.querySelector('.lgcy-sticky-atc__price');
+      var sizesEl = bar.querySelector('.lgcy-sticky-atc__sizes');
+
+      // Mirror the page's size buttons into the sticky bar
+      var origSizes = document.querySelectorAll('.rp-size');
+      if (origSizes.length === 0) {
+        sizesEl.style.display = 'none';
+      } else {
+        origSizes.forEach(function (orig) {
+          var pill = document.createElement('button');
+          pill.type = 'button';
+          pill.className = 'lgcy-sticky-atc__size';
+          pill.textContent = orig.textContent.trim();
+          if (orig.classList.contains('soldout') || orig.disabled) {
+            pill.classList.add('is-soldout');
+          }
+          if (orig.classList.contains('active')) {
+            pill.classList.add('is-active');
+          }
+          pill.addEventListener('click', function () {
+            try { orig.click(); } catch (e) {}
+          });
+          sizesEl.appendChild(pill);
+        });
+
+        // Keep sticky pills in sync when the user picks a size up on the page
+        new MutationObserver(function () {
+          var pills = sizesEl.querySelectorAll('.lgcy-sticky-atc__size');
+          origSizes.forEach(function (orig, i) {
+            var p = pills[i];
+            if (!p) return;
+            p.classList.toggle('is-active', orig.classList.contains('active'));
+            p.classList.toggle(
+              'is-soldout',
+              orig.classList.contains('soldout') || orig.disabled
+            );
+          });
+        }).observe(document.querySelector('.rp-sizes') || document.body, {
+          subtree: true,
+          attributes: true,
+          attributeFilter: ['class', 'disabled']
+        });
+      }
 
       // Try to mirror the visible price on the page
       var srcPrice = document.querySelector('.rp-price, [data-rp-price]');
