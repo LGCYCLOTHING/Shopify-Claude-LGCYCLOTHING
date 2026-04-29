@@ -3075,6 +3075,17 @@ html body .lgcy-card__color {
   font-weight: 700 !important;
 }
 
+/* Collection page description body — Inter 900 negative letter-spacing */
+html body .collection-hero__description,
+html body .collection-hero__description *,
+html body .collection-hero__title,
+html body .lgcy-col-hero__title,
+html body .lgcy-col-hero__sub {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.05em !important;
+}
+
 /* Injected "Notify When Available" link — left-aligned, tight under the ATC */
 html body .rp-size-nis.lgcy-nis-injected {
   display: inline-block !important;
