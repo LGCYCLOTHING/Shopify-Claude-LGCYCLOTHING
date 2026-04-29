@@ -1286,23 +1286,57 @@ html body .header__icons {
   background: transparent;
 }
 
-/* Clear liquid-glass body on every page — translucent white pill that
-   shows the page through, with a subtle edge for visibility. */
+/* Clear liquid-glass body matching the ATC button — translucent gradient
+   with inset highlights + subtle outer shadow for the floating-glass feel. */
 html body .header__icons::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: 999vw;
-  background: rgba(255, 255, 255, 0.35);
-  -webkit-backdrop-filter: blur(14px) saturate(150%);
-          backdrop-filter: blur(14px) saturate(150%);
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0.05)
+  );
+  -webkit-backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+          backdrop-filter: blur(clamp(1px, 0.125em, 4px));
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.85),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.08),
-    0 0.25em 0.5em -0.15em rgba(0, 0, 0, 0.18),
-    0 0 0 1px rgba(0, 0, 0, 0.08);
+    inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+    inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+    0 0.25em 0.125em -0.125em rgba(0, 0, 0, 0.2),
+    0 0 0.1em 0.25em inset rgba(255, 255, 255, 0.2),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
   z-index: -1;
   pointer-events: none;
+}
+
+/* Conic-gradient outline ring matching the ATC */
+html body .header__icons::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 999vw;
+  width: calc(100% + 1px);
+  height: calc(100% + 1px);
+  top: -0.5px;
+  left: -0.5px;
+  padding: 1px;
+  box-sizing: border-box;
+  background: conic-gradient(
+    from -75deg at 50% 50%,
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0) 5% 40%,
+    rgba(0, 0, 0, 0.5) 50%,
+    rgba(0, 0, 0, 0) 60% 95%,
+    rgba(0, 0, 0, 0.5)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Conic outline ring matching the other glassy components */
