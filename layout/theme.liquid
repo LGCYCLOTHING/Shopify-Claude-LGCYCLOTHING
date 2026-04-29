@@ -551,80 +551,50 @@ svg.icon.icon-cart {
   </svg>
 </button>
 <script>
-  /* PDP info → bottom sheet. Wraps the existing .rp-acc-list (tabs panel)
-     inside a slide-up sheet, replaces the inline accordion with a "More info"
-     trigger pill, and ensures the first tab is open when the sheet shows. */
+  /* PDP info drawer — buttons stay at the bottom of the right column;
+     clicking a section slides its content UP from below to fill the column.
+     Adds an X close button inside each body and tracks the column height so
+     the panel always sits flush above the trigger row. */
   (function () {
     function init() {
       var list = document.querySelector('.rp-acc-list');
-      if (!list || list.dataset.lgcySheet) return;
-      list.dataset.lgcySheet = '1';
+      if (!list || list.dataset.lgcyDrawer) return;
+      list.dataset.lgcyDrawer = '1';
 
-      // Sheet wrapper + scrollable inner
-      var sheet = document.createElement('div');
-      sheet.className = 'lgcy-info-sheet';
-      sheet.setAttribute('role', 'dialog');
-      sheet.setAttribute('aria-modal', 'true');
-      sheet.setAttribute('aria-hidden', 'true');
+      var info = list.closest('.rp-info') || list.parentElement;
+      if (info) info.classList.add('lgcy-info-drawer-host');
 
-      var handle = document.createElement('div');
-      handle.className = 'lgcy-info-sheet__handle';
-
-      var closeBtn = document.createElement('button');
-      closeBtn.className = 'lgcy-info-sheet__close';
-      closeBtn.type = 'button';
-      closeBtn.setAttribute('aria-label', 'Close');
-      closeBtn.innerHTML = '&times;';
-
-      var inner = document.createElement('div');
-      inner.className = 'lgcy-info-sheet__inner';
-
-      sheet.appendChild(handle);
-      sheet.appendChild(closeBtn);
-      sheet.appendChild(inner);
-
-      // Move the accordion list into the sheet
-      list.parentNode.insertBefore(sheet, list);
-      inner.appendChild(list);
-
-      // Backdrop overlay
-      var overlay = document.createElement('div');
-      overlay.className = 'lgcy-info-sheet__overlay';
-      document.body.appendChild(overlay);
-
-      // Trigger pill that takes the accordion's old position
-      var trigger = document.createElement('button');
-      trigger.className = 'lgcy-info-trigger';
-      trigger.type = 'button';
-      trigger.innerHTML =
-        '<span>More Info</span><span class="lgcy-info-trigger__arrow" aria-hidden="true">&uarr;</span>';
-      sheet.parentNode.insertBefore(trigger, sheet);
-
-      function openSheet() {
-        document.body.classList.add('lgcy-sheet-open');
-        sheet.setAttribute('aria-hidden', 'false');
-        // Make sure at least one tab is active
-        var triggers = list.querySelectorAll('.rp-acc-trigger');
-        var anyOpen = Array.prototype.some.call(triggers, function (t) {
-          return t.classList.contains('open');
+      // Inject close buttons inside each body
+      list.querySelectorAll('.rp-acc-body').forEach(function (body) {
+        if (body.querySelector('.lgcy-acc-close')) return;
+        var close = document.createElement('button');
+        close.type = 'button';
+        close.className = 'lgcy-acc-close';
+        close.setAttribute('aria-label', 'Close');
+        close.innerHTML = '&times;';
+        close.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          // Close any open trigger by clicking its associated trigger again
+          list.querySelectorAll('.rp-acc-trigger.open').forEach(function (t) {
+            try { t.click(); } catch (err) {}
+          });
         });
-        if (!anyOpen && triggers.length) {
-          try { triggers[0].click(); } catch (e) {}
-        }
-      }
-      function closeSheet() {
-        document.body.classList.remove('lgcy-sheet-open');
-        sheet.setAttribute('aria-hidden', 'true');
-      }
-
-      trigger.addEventListener('click', openSheet);
-      closeBtn.addEventListener('click', closeSheet);
-      overlay.addEventListener('click', closeSheet);
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && document.body.classList.contains('lgcy-sheet-open')) {
-          closeSheet();
-        }
+        body.insertBefore(close, body.firstChild);
       });
+
+      // Track the trigger row height so bodies always sit just above it
+      function syncTriggerHeight() {
+        if (!info) return;
+        var h = list.getBoundingClientRect().height;
+        info.style.setProperty('--lgcy-trigger-h', Math.round(h) + 'px');
+      }
+      syncTriggerHeight();
+      if (typeof ResizeObserver !== 'undefined') {
+        new ResizeObserver(syncTriggerHeight).observe(list);
+      } else {
+        window.addEventListener('resize', syncTriggerHeight);
+      }
     }
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
