@@ -3279,12 +3279,17 @@ html body .rp-usp .rp-usp-text {
 
 /* Tighter padding on the bottom area of the right column */
 html body .rp-acc-list {
-  margin-top: 16px !important;
+  margin-top: 8px !important;
 }
 
 html body .rp-acc-trigger {
-  padding-top: 12px !important;
-  padding-bottom: 12px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+html body .rp-acc-body-inner {
+  padding-top: 4px !important;
+  padding-bottom: 16px !important;
 }
 
 /* Move .rp-usp (limited stock indicator) to the end of the column */
