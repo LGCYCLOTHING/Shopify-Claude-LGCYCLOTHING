@@ -551,59 +551,6 @@ svg.icon.icon-cart {
   </svg>
 </button>
 <script>
-  /* PDP info drawer — buttons stay at the bottom of the right column;
-     clicking a section slides its content UP from below to fill the column.
-     Adds an X close button inside each body and tracks the column height so
-     the panel always sits flush above the trigger row. */
-  (function () {
-    function init() {
-      var list = document.querySelector('.rp-acc-list');
-      if (!list || list.dataset.lgcyDrawer) return;
-      list.dataset.lgcyDrawer = '1';
-
-      var info = list.closest('.rp-info') || list.parentElement;
-      if (info) info.classList.add('lgcy-info-drawer-host');
-
-      // Inject close buttons inside each body
-      list.querySelectorAll('.rp-acc-body').forEach(function (body) {
-        if (body.querySelector('.lgcy-acc-close')) return;
-        var close = document.createElement('button');
-        close.type = 'button';
-        close.className = 'lgcy-acc-close';
-        close.setAttribute('aria-label', 'Close');
-        close.innerHTML = '&times;';
-        close.addEventListener('click', function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          // Close any open trigger by clicking its associated trigger again
-          list.querySelectorAll('.rp-acc-trigger.open').forEach(function (t) {
-            try { t.click(); } catch (err) {}
-          });
-        });
-        body.insertBefore(close, body.firstChild);
-      });
-
-      // Track the trigger row height so bodies always sit just above it
-      function syncTriggerHeight() {
-        if (!info) return;
-        var h = list.getBoundingClientRect().height;
-        info.style.setProperty('--lgcy-trigger-h', Math.round(h) + 'px');
-      }
-      syncTriggerHeight();
-      if (typeof ResizeObserver !== 'undefined') {
-        new ResizeObserver(syncTriggerHeight).observe(list);
-      } else {
-        window.addEventListener('resize', syncTriggerHeight);
-      }
-    }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
-    } else {
-      init();
-    }
-  })();
-</script>
-<script>
   (function () {
     var btn = document.getElementById('lgcy-back-to-top');
     if (!btn) return;
