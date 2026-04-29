@@ -43,7 +43,9 @@
       "Bash(grep -oiE 'class=\\\\\\\\\"[^\\\\\\\\]{0,30}\\\\\\\\\".{0,40}Free Shipping' templates/product.json)",
       "Bash(grep -oiE '\\\\.rp-usp[a-z-]*[^\"]{0,300}' templates/product.json)",
       "Bash(grep -oiE 'rp-usp[^>]{0,500}' templates/product.json)",
-      "Bash(grep -oiE 'rp-usp\\\\\\\\\\\\\".{0,800}' templates/product.json)"
+      "Bash(grep -oiE 'rp-usp\\\\\\\\\\\\\".{0,800}' templates/product.json)",
+      "Bash(grep -oiE 'rp-gallery[^\"]{0,300}|rp-thumbs[^\"]{0,300}|rp-counter[^\"]{0,200}|rp-arrow[^\"]{0,200}' templates/product.json)",
+      "Bash(grep -oiE 'rp-counter\\\\\\\\\\\\\".{0,200}|id=\"rp-main\".{0,400}' templates/product.json)"
     ]
   }
 }

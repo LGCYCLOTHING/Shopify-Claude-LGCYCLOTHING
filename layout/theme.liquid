@@ -551,6 +551,84 @@ svg.icon.icon-cart {
   </svg>
 </button>
 <script>
+  /* PDP breadcrumbs + gallery dot pagination. Both inject into the existing
+     custom-liquid product layout without touching the template file. */
+  (function () {
+    function init() {
+      var info = document.querySelector('.rp-info');
+      var inner = document.querySelector('.rp-inner');
+      var gallery = document.querySelector('.rp-gallery');
+      if (!inner || !gallery) return;
+
+      // ── Breadcrumbs ─────────────────────────────────────────────────
+      if (!inner.querySelector('.lgcy-breadcrumbs')) {
+        var titleEl = inner.querySelector('.rp-title, h1') ||
+                      document.querySelector('.rp-title, h1');
+        var titleText = (titleEl && titleEl.textContent.trim()) ||
+                        document.title.split('|')[0].trim();
+
+        var crumbs = document.createElement('nav');
+        crumbs.className = 'lgcy-breadcrumbs';
+        crumbs.setAttribute('aria-label', 'Breadcrumb');
+        crumbs.innerHTML =
+          '<a href="/">Home</a>' +
+          '<span class="lgcy-breadcrumbs__sep" aria-hidden="true">/</span>' +
+          '<a href="/collections/all">All</a>' +
+          '<span class="lgcy-breadcrumbs__sep" aria-hidden="true">/</span>' +
+          '<span class="lgcy-breadcrumbs__current"></span>';
+        crumbs.querySelector('.lgcy-breadcrumbs__current').textContent = titleText;
+        inner.insertBefore(crumbs, inner.firstChild);
+      }
+
+      // ── Gallery dot pagination ──────────────────────────────────────
+      var counter = document.getElementById('rp-counter');
+      if (counter && !gallery.querySelector('.lgcy-gallery-dots')) {
+        var match = (counter.textContent || '').match(/(\d+)\s*\/\s*(\d+)/);
+        if (match) {
+          var total = parseInt(match[2], 10);
+          if (total > 1) {
+            var dots = document.createElement('div');
+            dots.className = 'lgcy-gallery-dots';
+            dots.setAttribute('role', 'tablist');
+            for (var i = 0; i < total; i++) {
+              var dot = document.createElement('button');
+              dot.type = 'button';
+              dot.className = 'lgcy-gallery-dot';
+              dot.setAttribute('aria-label', 'Image ' + (i + 1));
+              dot.setAttribute('data-idx', i);
+              if (i === 0) dot.classList.add('is-active');
+              dot.addEventListener('click', (function (idx) {
+                return function () {
+                  if (typeof window.rpSetImg === 'function') window.rpSetImg(idx);
+                };
+              })(i));
+              dots.appendChild(dot);
+            }
+            gallery.appendChild(dots);
+
+            // Sync active dot with the existing rp-counter
+            new MutationObserver(function () {
+              var m = (counter.textContent || '').match(/(\d+)\s*\/\s*(\d+)/);
+              if (!m) return;
+              var current = parseInt(m[1], 10) - 1;
+              dots.querySelectorAll('.lgcy-gallery-dot').forEach(function (d, i) {
+                d.classList.toggle('is-active', i === current);
+              });
+            }).observe(counter, { childList: true, characterData: true, subtree: true });
+          }
+        }
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
+
+<script>
   /* Sticky mobile Add-to-Cart bar — when the real ATC scrolls out of view on
      small screens, slide a glass pill in from the bottom of the viewport. */
   (function () {
