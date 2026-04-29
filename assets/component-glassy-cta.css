@@ -3312,8 +3312,25 @@ html body .lgcy-breadcrumbs__current {
   }
 
   html body .header {
-    padding: 0 1rem !important;
+    padding: 0 1.5rem !important;
     min-height: 0 !important;
+    height: auto !important;
+  }
+
+  /* Burger menu — pull inside so it doesn't hug the screen edge */
+  html body .header .menu-drawer-container,
+  html body .header .header__menu-toggle,
+  html body .header .header__icon--menu {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  /* Center logo — slightly smaller on mobile */
+  html body .header .header__heading-logo,
+  html body .header .header__heading img,
+  html body .header .header__heading-link img {
+    max-width: 60px !important;
+    width: auto !important;
     height: auto !important;
   }
 
