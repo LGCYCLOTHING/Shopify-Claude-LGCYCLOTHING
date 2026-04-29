@@ -774,10 +774,62 @@ svg.icon.icon-cart {
         priceEl.textContent = srcPrice.textContent.trim();
       }
 
-      // Click → click the real ATC, which submits its form with the current variant
-      stickyBtn.addEventListener('click', function () {
-        atc.click();
+      // AJAX add to cart and open the cart drawer instead of redirecting
+      function ajaxAdd() {
+        var variantInput = document.querySelector('#rp-vid, input[name="id"]');
+        var variantId = variantInput && variantInput.value;
+        if (!variantId || stickyBtn.disabled) return;
+
+        stickyBtn.disabled = true;
+        stickyBtn.classList.add('is-loading');
+
+        var cartDrawer = document.querySelector('cart-drawer');
+        var sections =
+          cartDrawer && typeof cartDrawer.getSectionsToRender === 'function'
+            ? cartDrawer.getSectionsToRender().map(function (s) { return s.id; })
+            : ['cart-drawer', 'cart-icon-bubble'];
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: JSON.stringify({
+            id: parseInt(variantId, 10),
+            quantity: 1,
+            sections: sections,
+            sections_url: window.location.pathname
+          })
+        })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (data && data.status && data.status !== 200) return;
+            if (cartDrawer && typeof cartDrawer.renderContents === 'function') {
+              cartDrawer.renderContents(data);
+            }
+          })
+          .finally(function () {
+            stickyBtn.disabled = false;
+            stickyBtn.classList.remove('is-loading');
+          });
+      }
+
+      stickyBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        ajaxAdd();
       });
+
+      // Also hijack the original ATC form submit so the inline button (and any
+      // future click on the real ATC) doesn't redirect to /cart either.
+      var atcForm = atc.closest('form');
+      if (atcForm && !atcForm.dataset.lgcyAjax) {
+        atcForm.dataset.lgcyAjax = '1';
+        atcForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          ajaxAdd();
+        });
+      }
 
       // Sync disabled / sold-out state from the real ATC
       function syncState() {
