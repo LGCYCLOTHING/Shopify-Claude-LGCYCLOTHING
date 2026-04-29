@@ -588,15 +588,45 @@ svg.icon.icon-cart {
         var titleText = (titleEl && titleEl.textContent.trim()) ||
                         document.title.split('|')[0].trim();
 
+        // Try to derive the collection from the current URL.
+        // /collections/[handle]/products/[handle] → use the collection in the path.
+        // Otherwise fall back to the document.referrer if it's a collection page.
+        var collectionHandle = null;
+        var pathMatch = window.location.pathname.match(/\/collections\/([^/]+)\/products\//);
+        if (pathMatch) {
+          collectionHandle = pathMatch[1];
+        } else if (document.referrer) {
+          try {
+            var refUrl = new URL(document.referrer);
+            if (refUrl.host === window.location.host) {
+              var refMatch = refUrl.pathname.match(/^\/collections\/([^/]+)\/?$/);
+              if (refMatch) collectionHandle = refMatch[1];
+            }
+          } catch (e) {}
+        }
+
+        var collectionLabel = 'All';
+        var collectionHref = '/collections/all';
+        if (collectionHandle) {
+          collectionHref = '/collections/' + collectionHandle;
+          collectionLabel = collectionHandle
+            .split('-')
+            .map(function (w) { return w.charAt(0).toUpperCase() + w.slice(1); })
+            .join(' ');
+        }
+
         var crumbs = document.createElement('nav');
         crumbs.className = 'lgcy-breadcrumbs';
         crumbs.setAttribute('aria-label', 'Breadcrumb');
         crumbs.innerHTML =
           '<a href="/">Home</a>' +
           '<span class="lgcy-breadcrumbs__sep" aria-hidden="true">/</span>' +
-          '<a href="/collections/all">All</a>' +
+          '<a class="lgcy-breadcrumbs__collection" href=""></a>' +
           '<span class="lgcy-breadcrumbs__sep" aria-hidden="true">/</span>' +
           '<span class="lgcy-breadcrumbs__current"></span>';
+        var collectionLink = crumbs.querySelector('.lgcy-breadcrumbs__collection');
+        collectionLink.href = collectionHref;
+        collectionLink.textContent = collectionLabel;
         crumbs.querySelector('.lgcy-breadcrumbs__current').textContent = titleText;
         inner.insertBefore(crumbs, inner.firstChild);
       }
