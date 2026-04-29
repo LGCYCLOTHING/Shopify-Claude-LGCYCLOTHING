@@ -3304,8 +3304,12 @@ html body .lgcy-breadcrumbs__current {
     top: 0 !important;
   }
   html body .header {
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
+    padding-top: 2px !important;
+    padding-bottom: 6px !important;
+    min-height: 0 !important;
+  }
+  html body .section-header {
+    padding-top: 0 !important;
   }
 
   /* Kill the white wipe bar entirely on mobile — it leaves a visible strip
