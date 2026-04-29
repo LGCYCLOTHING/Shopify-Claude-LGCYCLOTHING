@@ -3208,3 +3208,20 @@ html body .rp-counter {
   cursor: not-allowed;
 }
 
+/* On mobile, the sticky bar handles size + ATC — hide their inline duplicates
+   on the page itself so the user sees them only once. */
+@media (max-width: 860px) {
+  html body .rp-size-header,
+  html body .rp-sizes,
+  html body .rp-size-nis,
+  html body .rp-btn-cart {
+    display: none !important;
+  }
+
+  /* Reserve space at the bottom of the page so the sticky bar doesn't cover
+     the accordion / footer. */
+  html body .rp-info {
+    padding-bottom: 140px !important;
+  }
+}
+
