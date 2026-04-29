@@ -29,7 +29,8 @@
       "Bash(grep -oiE '\\\\.lgcy-faq3-card[^\"]{0,400}' templates/collection.json)",
       "Bash(grep -oiE 'scroll-indicator[^\"]{0,500}' templates/index.json)",
       "Bash(grep -oiE '\\\\.rp-acc[a-z-]*[^\"]{0,300}' templates/product.json)",
-      "Bash(grep -oiE '\\\\.rp-info[^\"]{0,400}' templates/product.json)"
+      "Bash(grep -oiE '\\\\.rp-info[^\"]{0,400}' templates/product.json)",
+      "Bash(grep -oiE 'rp-wrap[^\"]{0,300}|background:\\\\s*linear-gradient\\\\\\(90deg[^\"]{0,300}' templates/product.json)"
     ]
   }
 }

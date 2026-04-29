@@ -3001,3 +3001,14 @@ html body.password #password-header-form::before {
   z-index: 1;
 }
 
+/* PDP page background — softer, symmetrical radial glow instead of the
+   harsh left-to-right ramp into dark grey. */
+html body .rp-wrap {
+  background: radial-gradient(
+    ellipse at center,
+    #fafafa 0%,
+    #f1f1f1 55%,
+    #e2e2e2 100%
+  ) !important;
+}
+
