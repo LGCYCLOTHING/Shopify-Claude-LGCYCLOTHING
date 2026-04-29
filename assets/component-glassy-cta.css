@@ -3219,6 +3219,13 @@ html body .lgcy-breadcrumbs {
   flex-wrap: wrap;
 }
 
+/* Product title — Inter 900 with negative letter-spacing */
+html body .rp-title {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.05em !important;
+}
+
 html body .lgcy-breadcrumbs a {
   color: rgba(0, 0, 0, 0.55);
   text-decoration: none;
