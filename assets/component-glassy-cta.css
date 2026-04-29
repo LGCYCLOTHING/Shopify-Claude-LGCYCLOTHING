@@ -3014,3 +3014,12 @@ html body .rp-wrap {
   ) !important;
 }
 
+/* Injected "Notify When Available" link — left-aligned, sits below ATC, tight */
+html body .rp-size-nis.lgcy-nis-injected {
+  display: inline-block !important;
+  margin: 8px 0 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
+  align-self: flex-start !important;
+}
+
