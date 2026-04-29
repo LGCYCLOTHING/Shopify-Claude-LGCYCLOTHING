@@ -551,21 +551,85 @@ svg.icon.icon-cart {
   </svg>
 </button>
 <script>
-  /* PDP "tabs" — open the first section by default so the panel is never empty */
+  /* PDP info → bottom sheet. Wraps the existing .rp-acc-list (tabs panel)
+     inside a slide-up sheet, replaces the inline accordion with a "More info"
+     trigger pill, and ensures the first tab is open when the sheet shows. */
   (function () {
-    function openFirstTab() {
-      var triggers = document.querySelectorAll('.rp-acc-trigger');
-      if (!triggers.length) return;
-      var anyOpen = Array.prototype.some.call(triggers, function (t) {
-        return t.classList.contains('open');
+    function init() {
+      var list = document.querySelector('.rp-acc-list');
+      if (!list || list.dataset.lgcySheet) return;
+      list.dataset.lgcySheet = '1';
+
+      // Sheet wrapper + scrollable inner
+      var sheet = document.createElement('div');
+      sheet.className = 'lgcy-info-sheet';
+      sheet.setAttribute('role', 'dialog');
+      sheet.setAttribute('aria-modal', 'true');
+      sheet.setAttribute('aria-hidden', 'true');
+
+      var handle = document.createElement('div');
+      handle.className = 'lgcy-info-sheet__handle';
+
+      var closeBtn = document.createElement('button');
+      closeBtn.className = 'lgcy-info-sheet__close';
+      closeBtn.type = 'button';
+      closeBtn.setAttribute('aria-label', 'Close');
+      closeBtn.innerHTML = '&times;';
+
+      var inner = document.createElement('div');
+      inner.className = 'lgcy-info-sheet__inner';
+
+      sheet.appendChild(handle);
+      sheet.appendChild(closeBtn);
+      sheet.appendChild(inner);
+
+      // Move the accordion list into the sheet
+      list.parentNode.insertBefore(sheet, list);
+      inner.appendChild(list);
+
+      // Backdrop overlay
+      var overlay = document.createElement('div');
+      overlay.className = 'lgcy-info-sheet__overlay';
+      document.body.appendChild(overlay);
+
+      // Trigger pill that takes the accordion's old position
+      var trigger = document.createElement('button');
+      trigger.className = 'lgcy-info-trigger';
+      trigger.type = 'button';
+      trigger.innerHTML =
+        '<span>More Info</span><span class="lgcy-info-trigger__arrow" aria-hidden="true">&uarr;</span>';
+      sheet.parentNode.insertBefore(trigger, sheet);
+
+      function openSheet() {
+        document.body.classList.add('lgcy-sheet-open');
+        sheet.setAttribute('aria-hidden', 'false');
+        // Make sure at least one tab is active
+        var triggers = list.querySelectorAll('.rp-acc-trigger');
+        var anyOpen = Array.prototype.some.call(triggers, function (t) {
+          return t.classList.contains('open');
+        });
+        if (!anyOpen && triggers.length) {
+          try { triggers[0].click(); } catch (e) {}
+        }
+      }
+      function closeSheet() {
+        document.body.classList.remove('lgcy-sheet-open');
+        sheet.setAttribute('aria-hidden', 'true');
+      }
+
+      trigger.addEventListener('click', openSheet);
+      closeBtn.addEventListener('click', closeSheet);
+      overlay.addEventListener('click', closeSheet);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && document.body.classList.contains('lgcy-sheet-open')) {
+          closeSheet();
+        }
       });
-      if (anyOpen) return;
-      try { triggers[0].click(); } catch (e) {}
     }
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', openFirstTab);
+      document.addEventListener('DOMContentLoaded', init);
     } else {
-      openFirstTab();
+      init();
     }
   })();
 </script>
