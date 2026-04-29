@@ -3070,14 +3070,54 @@ html body .rp-counter {
 
 @media (max-width: 860px) {
   .lgcy-sticky-atc {
-    display: block;
+    display: flex;
   }
 }
 
-.lgcy-sticky-atc.is-visible {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
+/* Size row above the ATC pill */
+.lgcy-sticky-atc__sizes {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 2px 0;
+}
+
+.lgcy-sticky-atc__sizes::-webkit-scrollbar {
+  display: none;
+}
+
+.lgcy-sticky-atc__size {
+  flex: 1 0 auto;
+  min-width: 48px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 999vw;
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: -0.02em;
+  color: #000;
+  cursor: pointer;
+  transition: transform 200ms cubic-bezier(0.25, 1, 0.5, 1), background 200ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lgcy-sticky-atc__size.is-active {
+  background: linear-gradient(-75deg, rgba(0,0,0,0.85), rgba(40,40,40,0.95), rgba(0,0,0,0.85));
+  color: #fff;
+  border-color: transparent;
+}
+
+.lgcy-sticky-atc__size.is-soldout {
+  opacity: 0.4;
+  text-decoration: line-through;
+  cursor: not-allowed;
 }
 
 .lgcy-sticky-atc__btn {
