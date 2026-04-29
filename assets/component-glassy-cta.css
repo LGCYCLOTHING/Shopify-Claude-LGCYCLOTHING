@@ -1461,12 +1461,16 @@ html body .header__icons .header__icon--cart .cart-count-bubble {
   background-color: #ffffff;
   color: #000000;
   border-radius: 999vw;
-  border: 1.5px solid rgba(0, 0, 0, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 0.15em 0.25em rgba(0, 0, 0, 0.4);
   box-sizing: border-box;
+}
+
+html body.template-product .header__icons .header__icon--cart .cart-count-bubble {
+  border-color: rgba(0, 0, 0, 0.85);
 }
 
 @media (max-width: 749px) {
