@@ -628,7 +628,20 @@ svg.icon.icon-cart {
         collectionLink.href = collectionHref;
         collectionLink.textContent = collectionLabel;
         crumbs.querySelector('.lgcy-breadcrumbs__current').textContent = titleText;
-        inner.insertBefore(crumbs, inner.firstChild);
+
+        // Place breadcrumbs DIRECTLY AFTER the product title (or its row),
+        // not at the top of the inner column.
+        var titleHost = inner.querySelector('.rp-title-row, .rp-title, h1, h2');
+        if (titleHost && titleHost.parentNode) {
+          var nextSibling = titleHost.nextSibling;
+          if (nextSibling) {
+            titleHost.parentNode.insertBefore(crumbs, nextSibling);
+          } else {
+            titleHost.parentNode.appendChild(crumbs);
+          }
+        } else {
+          inner.insertBefore(crumbs, inner.firstChild);
+        }
       }
 
       // ── Gallery dot pagination ──────────────────────────────────────
