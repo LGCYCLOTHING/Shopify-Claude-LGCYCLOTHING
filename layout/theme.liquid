@@ -551,6 +551,27 @@ svg.icon.icon-cart {
   </svg>
 </button>
 <script>
+  /* PDP — open all accordion sections by default so all content is visible
+     without clicks. */
+  (function () {
+    function init() {
+      var triggers = document.querySelectorAll('.rp-acc-trigger');
+      if (!triggers.length) return;
+      triggers.forEach(function (t) {
+        if (!t.classList.contains('open')) {
+          try { t.click(); } catch (e) {}
+        }
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
+
+<script>
   /* PDP breadcrumbs + gallery dot pagination. Both inject into the existing
      custom-liquid product layout without touching the template file. */
   (function () {
