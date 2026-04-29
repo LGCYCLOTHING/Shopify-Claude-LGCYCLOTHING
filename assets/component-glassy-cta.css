@@ -3371,6 +3371,18 @@ html body .lgcy-breadcrumbs__current {
   }
 }
 
+/* ============================================================== */
+/* Lightbox cleanup — drop the black top bar + hide the close X    */
+/* ============================================================== */
+
+html body .rp-lightbox .rp-lb-inner {
+  padding-top: 0 !important;
+}
+
+html body .rp-lb-close {
+  display: none !important;
+}
+
 /* On mobile, the sticky bar handles size + ATC — hide their inline duplicates
    on the page itself so the user sees them only once. */
 @media (max-width: 860px) {
