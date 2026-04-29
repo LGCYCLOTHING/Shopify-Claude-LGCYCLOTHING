@@ -629,9 +629,14 @@ svg.icon.icon-cart {
         collectionLink.textContent = collectionLabel;
         crumbs.querySelector('.lgcy-breadcrumbs__current').textContent = titleText;
 
-        // Place breadcrumbs DIRECTLY AFTER the product title (or its row),
-        // not at the top of the inner column.
-        var titleHost = inner.querySelector('.rp-title-row, .rp-title, h1, h2');
+        // Place breadcrumbs DIRECTLY AFTER the entire title row (.rp-header
+        // wraps the title + price), so they sit on their own line below.
+        var titleHost = inner.querySelector('.rp-header') ||
+                        inner.querySelector('.rp-title');
+        // If only the title was found, walk up to its parent row
+        if (titleHost && titleHost.classList.contains('rp-title')) {
+          titleHost = titleHost.parentElement || titleHost;
+        }
         if (titleHost && titleHost.parentNode) {
           var nextSibling = titleHost.nextSibling;
           if (nextSibling) {
