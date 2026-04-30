@@ -547,13 +547,13 @@
 }
 
 .lgcy-footer__tagline {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-weight: 300;
-  font-size: 21px;
-  letter-spacing: normal;
+  font-family: 'Dancing Script', 'Cormorant Garamond', cursive, serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: -0.02em;
   color: #555;
-  margin-top: 6px;
+  margin-top: 2px;
   display: block;
 }
 
@@ -562,14 +562,14 @@
   height: 1px;
   background: #111;
   border: none;
-  margin: 12px 0;
+  margin: 4px 0;
 }
 
 .lgcy-footer__est {
-  font-family: 'Inter', sans-serif;
-  font-weight: 300;
-  font-size: 14px;
-  letter-spacing: 0.2em;
+  font-family: 'Dancing Script', 'Inter', cursive, sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.04em;
   color: #999;
   display: block;
 }
@@ -765,7 +765,7 @@
   }
 
   .lgcy-footer__brand-divider {
-    margin: 12px auto;
+    margin: 4px auto;
   }
 
   .lgcy-footer__col--newsletter {
