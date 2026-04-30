@@ -131,7 +131,7 @@
   }
 </style>
 
-{%- unless request.page_type == 'index' -%}
+{%- unless request.page_type == 'index' or request.page_type == 'collection' -%}
 <style>
   .section-header {
     position: fixed !important;
