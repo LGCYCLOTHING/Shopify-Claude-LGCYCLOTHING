@@ -547,10 +547,10 @@
 }
 
 .lgcy-footer__tagline {
-  font-family: 'Dancing Script', 'Cormorant Garamond', cursive, serif;
-  font-style: normal;
+  font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+  font-style: italic;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 22px;
   letter-spacing: -0.02em;
   color: #555;
   margin-top: 2px;
@@ -566,9 +566,10 @@
 }
 
 .lgcy-footer__est {
-  font-family: 'Dancing Script', 'Inter', cursive, sans-serif;
-  font-weight: 700;
-  font-size: 17px;
+  font-family: 'Playfair Display', 'Inter', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 15px;
   letter-spacing: -0.04em;
   color: #999;
   display: block;
