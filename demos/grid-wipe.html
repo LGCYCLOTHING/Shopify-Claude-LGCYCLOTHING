@@ -126,10 +126,11 @@
   .wipe.is-running .wipe__tile {
     animation: wipeIn var(--tile-dur, 320ms) cubic-bezier(0.65, 0, 0.35, 1) both;
   }
-  /* After cover is complete, the whole overlay fades away once. */
+  /* After cover is complete, the whole overlay vanishes fast — no
+     lingering reveal phase that reads as a flash. */
   .wipe.is-fading {
     opacity: 0;
-    transition: opacity 360ms ease-out;
+    transition: opacity 150ms cubic-bezier(0.4, 0, 1, 1);
   }
 </style>
 </head>
@@ -162,8 +163,8 @@
   const TILE_MOBILE  = 100;
   const STAGGER_MS   = 28;
   const TILE_DUR     = 320;   // per-tile cover animation
-  const HOLD_MS      = 80;    // briefly hold full cover before fade
-  const FADE_MS      = 360;   // overlay fade-out duration
+  const HOLD_MS      = 0;     // no hold — page swap and fade fire together
+  const FADE_MS      = 150;   // fast overlay vanish, no lingering flash
 
   let cols = 0, rows = 0, tiles = [];
   let busy = false;
@@ -225,17 +226,14 @@
 
     const coverDoneMs = maxDist() * STAGGER_MS + TILE_DUR;
 
-    // When cover is complete, swap the underlying page (still hidden)
+    // The moment cover is complete: swap the page AND start the fade in
+    // the same frame so the user never perceives a separate reveal stage.
     setTimeout(() => {
       pages.forEach(p => p.classList.remove('is-active'));
       const next = pages.find(p => p.dataset.page === String(targetPageNum));
       if (next) next.classList.add('is-active');
-    }, coverDoneMs);
-
-    // Brief hold, then fade the overlay away to reveal the new page
-    setTimeout(() => {
       wipe.classList.add('is-fading');
-    }, coverDoneMs + HOLD_MS);
+    }, coverDoneMs);
 
     // After fade completes, reset everything for next run
     setTimeout(() => {
