@@ -91,9 +91,10 @@
           'left:'   + (c * tileW) + 'px;' +
           'width:'  + tileW + 'px;' +
           'height:' + tileH + 'px;' +
-          'background:#ffffff;' +
+          'background:#ff2222;' +                       /* DEBUG: red so it's obvious */
           'transform:scale(0);' +
           'transform-origin:center;' +
+          'transition:transform ' + TILE_DUR + 'ms cubic-bezier(.65,0,.35,1);' +
           'will-change:transform;';
         wipe.appendChild(t);
         tiles.push(t);
@@ -174,29 +175,15 @@
 
     var totalMs = maxDist() * STAGGER_MS + TILE_DUR;
 
-    // Drive the cascade with setTimeout per tile — no CSS animation, no
-    // external stylesheet dependency.
+    // Tiles already have transition set during build — just stagger the
+    // transform changes per tile.
     tiles.forEach(function (t) {
       var d = distFor(+t.dataset.r, +t.dataset.c, origin);
       var delay = d * STAGGER_MS;
-      // Reset
-      t.style.transition = 'none';
-      t.style.transform = 'scale(0)';
-      // Trigger after delay
       setTimeout(function () {
-        t.style.transition = 'transform ' + TILE_DUR + 'ms cubic-bezier(.65,0,.35,1)';
-        // Reflow before changing transform so transition is honoured
-        void t.offsetWidth;
         t.style.transform = 'scale(1.02)';
       }, delay);
     });
-
-    // Safety net: if the tile cascade somehow doesn't render, the overlay
-    // itself fades to white so the cover always happens.
-    setTimeout(function () {
-      wipe.style.transition = 'background-color ' + (totalMs * 0.6) + 'ms ease-out';
-      wipe.style.background = '#ffffff';
-    }, 0);
 
     // After the cover is complete, store the incoming flag and navigate
     setTimeout(function () {
