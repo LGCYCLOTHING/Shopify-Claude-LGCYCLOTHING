@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grid Wipe Transition Demo</title>
+<style>
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Inter', system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    background: #000;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─────────── Page surfaces ─────────── */
+  .page {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.001s linear;
+  }
+  .page.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .page-1 {
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(60,80,140,0.55), transparent 60%),
+      radial-gradient(ellipse at 80% 90%, rgba(170,80,210,0.35), transparent 65%),
+      linear-gradient(160deg, #05070d 0%, #0a0a14 60%, #000 100%);
+  }
+  .page-2 {
+    background:
+      radial-gradient(ellipse at 70% 25%, rgba(200,170,120,0.35), transparent 60%),
+      radial-gradient(ellipse at 20% 90%, rgba(80,40,30,0.4), transparent 70%),
+      linear-gradient(200deg, #1a1208 0%, #0d0a05 60%, #000 100%);
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 18px;
+  }
+  .title {
+    font-size: clamp(36px, 9vw, 96px);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .subtitle {
+    font-size: clamp(13px, 2.4vw, 16px);
+    color: rgba(255,255,255,0.7);
+    max-width: 520px;
+    line-height: 1.6;
+    margin-bottom: 44px;
+  }
+
+  .btn {
+    appearance: none;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 16px 34px;
+    border-radius: 999px;
+    cursor: pointer;
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.22),
+      inset 0 -1px 0 rgba(0,0,0,0.4),
+      0 8px 28px rgba(0,0,0,0.4);
+    transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  }
+  .btn:hover, .btn:focus-visible {
+    background: rgba(255,255,255,0.12);
+    transform: translateY(-1px);
+  }
+  .btn[disabled] { opacity: 0.5; cursor: wait; }
+
+  .meta {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+  }
+
+  /* ─────────── Grid wipe overlay ─────────── */
+  .wipe {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    display: grid;
+    /* columns + rows are set by JS based on viewport */
+  }
+  .wipe__tile {
+    background: #000;
+    transform: scale(0);
+    transform-origin: center;
+    will-change: transform;
+    transition: transform 280ms cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .wipe.is-covering .wipe__tile { transform: scale(1.02); }
+  .wipe.is-revealing .wipe__tile { transform: scale(0); }
+</style>
+</head>
+<body>
+
+  <!-- Page 1 -->
+  <section class="page page-1 is-active" data-page="1">
+    <p class="eyebrow">LGCYCLOTHING · Demo</p>
+    <h1 class="title">Iconic<br>Visionary</h1>
+    <p class="subtitle">Click discover to see the grid-wipe transition. Tiles cascade in from the top right, the page swaps under cover, then the tiles recede in reverse to reveal the next surface.</p>
+    <button class="btn" data-target="2">Discover →</button>
+    <div class="meta">Page 1 / 2</div>
+  </section>
+
+  <!-- Page 2 -->
+  <section class="page page-2" data-page="2">
+    <p class="eyebrow">The Legacy Collection</p>
+    <h1 class="title">Driven<br>by Purpose</h1>
+    <p class="subtitle">Welcome to the second surface. The transition is fully reversible — go back and you'll see the tiles cascade from a different corner so the motion never feels stale.</p>
+    <button class="btn" data-target="1">← Back</button>
+    <div class="meta">Page 2 / 2</div>
+  </section>
+
+  <!-- Overlay (built once, reused) -->
+  <div class="wipe" id="wipe" aria-hidden="true"></div>
+
+<script>
+(function(){
+  const wipe = document.getElementById('wipe');
+  const pages = Array.from(document.querySelectorAll('.page'));
+  let cols = 0, rows = 0, tiles = [];
+  let busy = false;
+
+  // Build/rebuild grid sized to viewport
+  function buildGrid() {
+    const targetTilePx = window.innerWidth < 600 ? 56 : 84;
+    cols = Math.max(6, Math.ceil(window.innerWidth / targetTilePx));
+    rows = Math.max(6, Math.ceil(window.innerHeight / targetTilePx));
+    wipe.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    wipe.style.gridTemplateRows    = `repeat(${rows}, 1fr)`;
+    wipe.innerHTML = '';
+    tiles = [];
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const t = document.createElement('div');
+        t.className = 'wipe__tile';
+        t.dataset.r = r;
+        t.dataset.c = c;
+        wipe.appendChild(t);
+        tiles.push(t);
+      }
+    }
+  }
+  buildGrid();
+  let resizeT;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeT);
+    resizeT = setTimeout(buildGrid, 150);
+  });
+
+  // Stagger delay per tile based on diagonal distance from a corner
+  function applyStagger(originCorner) {
+    // originCorner: 'tr' (top-right), 'bl' (bottom-left), 'tl', 'br'
+    const stepMs = 22; // delay per diagonal step
+    tiles.forEach(t => {
+      const r = +t.dataset.r;
+      const c = +t.dataset.c;
+      let dist;
+      switch (originCorner) {
+        case 'tr': dist = r + (cols - 1 - c); break;
+        case 'tl': dist = r + c; break;
+        case 'br': dist = (rows - 1 - r) + (cols - 1 - c); break;
+        case 'bl': default: dist = (rows - 1 - r) + c;
+      }
+      t.style.transitionDelay = (dist * stepMs) + 'ms';
+    });
+  }
+
+  function maxStaggerMs(originCorner) {
+    const maxDist = (rows - 1) + (cols - 1);
+    return maxDist * 22 + 280; // last tile delay + tile transition duration
+  }
+
+  function transitionTo(targetPageNum, fromCorner, toCorner) {
+    if (busy) return;
+    busy = true;
+    document.querySelectorAll('.btn').forEach(b => b.disabled = true);
+
+    // Phase 1: cover
+    applyStagger(fromCorner);
+    requestAnimationFrame(() => {
+      wipe.classList.remove('is-revealing');
+      wipe.classList.add('is-covering');
+    });
+
+    setTimeout(() => {
+      // Phase 2: swap content (invisible — covered by tiles)
+      pages.forEach(p => p.classList.remove('is-active'));
+      const next = pages.find(p => p.dataset.page === String(targetPageNum));
+      if (next) next.classList.add('is-active');
+
+      // small hold so the swap doesn't feel rushed
+      setTimeout(() => {
+        // Phase 3: reveal
+        applyStagger(toCorner);
+        requestAnimationFrame(() => {
+          wipe.classList.remove('is-covering');
+          wipe.classList.add('is-revealing');
+        });
+
+        setTimeout(() => {
+          busy = false;
+          document.querySelectorAll('.btn').forEach(b => b.disabled = false);
+        }, maxStaggerMs(toCorner));
+      }, 120);
+    }, maxStaggerMs(fromCorner));
+  }
+
+  // Wire buttons
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.btn[data-target]');
+    if (!btn) return;
+    const target = +btn.dataset.target;
+    // Going forward: cascade from top-right, reveal from bottom-left
+    // Going back:    cascade from bottom-left, reveal from top-right
+    if (target === 2) transitionTo(2, 'tr', 'bl');
+    else              transitionTo(1, 'bl', 'tr');
+  });
+})();
+</script>
+</body>
+</html>
