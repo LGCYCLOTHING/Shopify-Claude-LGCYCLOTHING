@@ -49,13 +49,25 @@
   var cols = 0, rows = 0, tiles = [];
 
   // Inline-style the overlay so we don't depend on the external CSS file
-  // loading or winning against other theme CSS.
+  // loading or winning against other theme CSS. Only positional /
+  // structural styles — visibility (opacity/background/pointer-events) is
+  // managed separately so resize-triggered rebuilds don't wipe state mid-run.
   function applyOverlayBaseStyles() {
-    wipe.style.cssText = [
-      'position:fixed','top:0','right:0','bottom:0','left:0',
-      'z-index:2147483646','pointer-events:none','display:grid',
-      'opacity:0','background:transparent','margin:0','padding:0'
-    ].join(';');
+    wipe.style.position = 'fixed';
+    wipe.style.top = '0';
+    wipe.style.right = '0';
+    wipe.style.bottom = '0';
+    wipe.style.left = '0';
+    wipe.style.zIndex = '2147483646';
+    wipe.style.display = 'grid';
+    wipe.style.margin = '0';
+    wipe.style.padding = '0';
+  }
+  function setIdle() {
+    wipe.style.opacity = '0';
+    wipe.style.background = 'transparent';
+    wipe.style.pointerEvents = 'none';
+    wipe.style.transition = '';
   }
 
   function buildGrid() {
@@ -79,11 +91,18 @@
     }
   }
   buildGrid();
+  setIdle();
 
   var resizeT;
   window.addEventListener('resize', function () {
+    // Don't rebuild during a transition — would wipe state mid-cascade.
+    if (busy) return;
+    if (document.documentElement.classList.contains('lgcy-wipe-incoming')) return;
     clearTimeout(resizeT);
-    resizeT = setTimeout(buildGrid, 150);
+    resizeT = setTimeout(function () {
+      buildGrid();
+      setIdle();
+    }, 150);
   });
 
   function distFor(r, c, origin) {
