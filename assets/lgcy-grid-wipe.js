@@ -106,6 +106,14 @@
     }, totalMs);
   }
 
+  // Public API for inline scripts that do programmatic navigation
+  window.lgcyWipe = {
+    navigate: function (url, origin) {
+      navigateTo(url, origin || origins[(originIdx++) % origins.length]);
+    },
+    isBusy: function () { return busy; }
+  };
+
   function shouldIntercept(link, evt) {
     if (!link || !link.href) return false;
     if (evt.defaultPrevented) return false;
