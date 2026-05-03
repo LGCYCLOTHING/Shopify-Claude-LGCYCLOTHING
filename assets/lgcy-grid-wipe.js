@@ -19,7 +19,8 @@
   var TILE_MOBILE  = 50;
   var STAGGER_MS   = 12;
   var TILE_DUR     = 180;
-  var FADE_MS      = 220;   // gentle ease-out, no pop, but not lingering
+  var SETTLE_MS    = 200;   // hold cover so the new page can fully render before reveal
+  var FADE_MS      = 550;   // long, smooth ease-in-out reveal — never reads as a pop
 
   var cols = 0, rows = 0, tiles = [];
 
@@ -123,28 +124,41 @@
     wipe.style.setProperty('background', 'linear-gradient(135deg,#cfcfcf 0%,#9a9a9a 100%)', 'important');
     wipe.style.setProperty('background-color', '#b5b5b5', 'important');
     wipe.style.setProperty('opacity', '1', 'important');
+    wipe.style.setProperty('transform', 'scale(1)', 'important');
     wipe.style.setProperty('pointer-events', 'auto', 'important');
     // Tiles fully covered as a fallback (same grey, no visible seams)
     tiles.forEach(function (t) {
       t.style.setProperty('transition', 'none', 'important');
       t.style.setProperty('transform', 'scale(1.02)', 'important');
     });
-    // Wait one paint, then fade the overlay away gently (ease-out, no pop)
+    // Wait for the page to render + settle before starting the reveal
+    var startReveal = function () {
+      // Cross-fade with a tiny scale so the overlay reads as "lifting"
+      // away rather than flatly fading — kills the pop perception.
+      wipe.style.setProperty(
+        'transition',
+        'opacity ' + FADE_MS + 'ms cubic-bezier(.4,0,.2,1), transform ' + FADE_MS + 'ms cubic-bezier(.4,0,.2,1)',
+        'important'
+      );
+      wipe.style.setProperty('opacity', '0', 'important');
+      wipe.style.setProperty('transform', 'scale(1.03)', 'important');
+      document.documentElement.classList.remove('lgcy-wipe-incoming');
+      setTimeout(function () {
+        wipe.style.transition = '';
+        wipe.style.background = 'transparent';
+        wipe.style.backgroundColor = 'transparent';
+        wipe.style.transform = '';
+        wipe.style.pointerEvents = 'none';
+        tiles.forEach(function (t) {
+          t.style.setProperty('transition', 'none', 'important');
+          t.style.setProperty('transform', 'scale(0)', 'important');
+        });
+      }, FADE_MS + 40);
+    };
+    // Wait two paints then settle delay so the page is fully laid out
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
-        wipe.style.setProperty('transition', 'opacity ' + FADE_MS + 'ms cubic-bezier(.2,.6,.3,1)', 'important');
-        wipe.style.setProperty('opacity', '0', 'important');
-        document.documentElement.classList.remove('lgcy-wipe-incoming');
-        setTimeout(function () {
-          wipe.style.transition = '';
-          wipe.style.background = 'transparent';
-          wipe.style.backgroundColor = 'transparent';
-          wipe.style.pointerEvents = 'none';
-          tiles.forEach(function (t) {
-            t.style.setProperty('transition', 'none', 'important');
-            t.style.setProperty('transform', 'scale(0)', 'important');
-          });
-        }, FADE_MS + 40);
+        setTimeout(startReveal, SETTLE_MS);
       });
     });
   }
