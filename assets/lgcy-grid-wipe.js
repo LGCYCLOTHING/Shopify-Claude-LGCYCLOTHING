@@ -14,12 +14,12 @@
     return;
   }
 
-  // Tile config — a touch smaller than the demo
-  var TILE_DESKTOP = 110;
-  var TILE_MOBILE  = 80;
-  var STAGGER_MS   = 26;
-  var TILE_DUR     = 300;
-  var FADE_MS      = 150;
+  // Tile config — smaller tiles, faster cascade, gentler fade
+  var TILE_DESKTOP = 75;
+  var TILE_MOBILE  = 55;
+  var STAGGER_MS   = 16;
+  var TILE_DUR     = 220;
+  var FADE_MS      = 360;   // longer + ease-out so reveal feels gradual, no pop
 
   var cols = 0, rows = 0, tiles = [];
 
@@ -73,7 +73,8 @@
           'box-sizing:border-box !important;' +
           'display:block !important;' +
           'visibility:visible !important;' +
-          'background:#ffffff !important;' +
+          'background:linear-gradient(135deg,#cfcfcf 0%,#9a9a9a 100%) !important;' +
+          'background-color:#b5b5b5 !important;' +
           'transform:scale(0) !important;' +
           'transform-origin:center !important;' +
           'transition:transform ' + TILE_DUR + 'ms cubic-bezier(.65,0,.35,1) !important;' +
@@ -118,28 +119,30 @@
 
   // ───── INCOMING: page just loaded covered, fade overlay away ─────
   if (document.documentElement.classList.contains('lgcy-wipe-incoming')) {
-    // Cover the screen with solid white immediately
-    wipe.style.background = '#ffffff';
-    wipe.style.opacity = '1';
-    wipe.style.pointerEvents = 'auto';
-    // Make all tiles fully covered as a fallback if grid renders before fade
+    // Cover the screen with the same grey gradient as the cascade
+    wipe.style.setProperty('background', 'linear-gradient(135deg,#cfcfcf 0%,#9a9a9a 100%)', 'important');
+    wipe.style.setProperty('background-color', '#b5b5b5', 'important');
+    wipe.style.setProperty('opacity', '1', 'important');
+    wipe.style.setProperty('pointer-events', 'auto', 'important');
+    // Tiles fully covered as a fallback (same grey, no visible seams)
     tiles.forEach(function (t) {
-      t.style.transition = 'none';
-      t.style.transform = 'scale(1.02)';
+      t.style.setProperty('transition', 'none', 'important');
+      t.style.setProperty('transform', 'scale(1.02)', 'important');
     });
-    // Wait one paint, then fade the overlay away
+    // Wait one paint, then fade the overlay away gently (ease-out, no pop)
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
-        wipe.style.transition = 'opacity ' + FADE_MS + 'ms cubic-bezier(.4,0,1,1)';
-        wipe.style.opacity = '0';
+        wipe.style.setProperty('transition', 'opacity ' + FADE_MS + 'ms cubic-bezier(.2,.6,.3,1)', 'important');
+        wipe.style.setProperty('opacity', '0', 'important');
         document.documentElement.classList.remove('lgcy-wipe-incoming');
         setTimeout(function () {
           wipe.style.transition = '';
           wipe.style.background = 'transparent';
+          wipe.style.backgroundColor = 'transparent';
           wipe.style.pointerEvents = 'none';
           tiles.forEach(function (t) {
-            t.style.transition = 'none';
-            t.style.transform = 'scale(0)';
+            t.style.setProperty('transition', 'none', 'important');
+            t.style.setProperty('transform', 'scale(0)', 'important');
           });
         }, FADE_MS + 40);
       });
@@ -151,9 +154,23 @@
   var origins = ['tr', 'bl', 'br', 'tl'];
   var originIdx = 0;
 
+  function prefetch(url) {
+    try {
+      var l = document.createElement('link');
+      l.rel = 'prefetch';
+      l.href = url;
+      l.as = 'document';
+      document.head.appendChild(l);
+    } catch (_) {}
+  }
+
   function navigateTo(url, origin) {
     if (busy) return;
     busy = true;
+
+    // Kick off a prefetch immediately so the next page is in cache by the
+    // time the cascade ends — eliminates the "all-grey waiting" gap.
+    prefetch(url);
 
     // Make sure the overlay is visible and on top
     wipe.style.setProperty('opacity', '1', 'important');
@@ -163,8 +180,8 @@
 
     var totalMs = maxDist() * STAGGER_MS + TILE_DUR;
 
-    // Stagger tile transforms from the chosen corner. transition is set on
-    // the tiles at build time so this just triggers it.
+    // Stagger tile transforms from the chosen corner. Transitions are set
+    // on the tiles at build time so this just triggers them.
     tiles.forEach(function (t) {
       var d = distFor(+t.dataset.r, +t.dataset.c, origin);
       var delay = d * STAGGER_MS;
@@ -173,11 +190,13 @@
       }, delay);
     });
 
-    // After the cover is complete, store the incoming flag and navigate
+    // Navigate slightly before the very last tile lands so the perceived
+    // "all-grey" hold is minimal. The browser begins swapping while the
+    // trailing edge of the cascade is still arriving.
     setTimeout(function () {
       try { sessionStorage.setItem('lgcy-wipe-incoming', '1'); } catch (e) {}
       window.location.href = url;
-    }, totalMs);
+    }, Math.round(totalMs * 0.85));
   }
 
   // Public API for inline scripts that do programmatic navigation
