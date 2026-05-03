@@ -5,8 +5,32 @@
  *           → fade the overlay away → reveal the new page seamlessly.
  */
 (function () {
+  // ── DIAGNOSTIC BADGE (temporary, helps verify the script is running) ──
+  function badge(msg, color) {
+    var b = document.createElement('div');
+    b.textContent = msg;
+    b.style.cssText = [
+      'position:fixed','top:12px','right:12px','z-index:2147483647',
+      'background:' + (color || '#0a0a0a'),'color:#fff',
+      'font:700 11px/1.2 system-ui,sans-serif','letter-spacing:.08em',
+      'text-transform:uppercase','padding:8px 12px','border-radius:6px',
+      'box-shadow:0 4px 14px rgba(0,0,0,.4)','pointer-events:none',
+      'opacity:0','transition:opacity .2s ease'
+    ].join(';');
+    document.body.appendChild(b);
+    requestAnimationFrame(function(){ b.style.opacity = '1'; });
+    setTimeout(function(){ b.style.opacity = '0'; setTimeout(function(){ b.remove(); }, 220); }, 3500);
+  }
+
   var wipe = document.getElementById('lgcy-wipe');
-  if (!wipe) { console.warn('[lgcy-wipe] overlay element not found'); return; }
+  if (!wipe) {
+    if (document.body) badge('wipe: NO #lgcy-wipe element', '#a83232');
+    else document.addEventListener('DOMContentLoaded', function(){ badge('wipe: NO #lgcy-wipe element', '#a83232'); });
+    console.warn('[lgcy-wipe] overlay element not found');
+    return;
+  }
+  if (document.body) badge('wipe ready ✓', '#1f6e3a');
+  else document.addEventListener('DOMContentLoaded', function(){ badge('wipe ready ✓', '#1f6e3a'); });
   console.log('[lgcy-wipe] initialised');
 
   // Honour reduced motion
@@ -156,11 +180,17 @@
 
   document.addEventListener('click', function (e) {
     var link = e.target.closest('a[href]');
-    if (!shouldIntercept(link, e)) return;
+    if (!link) return;
+    if (!shouldIntercept(link, e)) {
+      // Diagnostic: tell us why a clicked link was skipped
+      try { badge('skip: ' + (link.getAttribute('href') || '').slice(0, 40), '#9c6f1c'); } catch(_) {}
+      return;
+    }
 
     e.preventDefault();
     e.stopPropagation();
     var url = new URL(link.href, window.location.href);
+    badge('wipe → ' + url.pathname.slice(0, 30), '#1f6e3a');
     navigateTo(url.href, origins[originIdx % origins.length]);
     originIdx++;
   }, true);  // capture: true — beat other delegated handlers
