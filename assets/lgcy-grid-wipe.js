@@ -14,18 +14,31 @@
     return;
   }
 
-  // Blob config — organic random shapes, all sharing one master gradient
-  var BLOB_COUNT   = 32;
-  var BLOB_SIZE_VMAX = 75;       // each blob at scale 1 is huge so coverage overlaps generously
-  var STAGGER_MS   = 10;          // ms per percent of distance from origin corner
-  var BLOB_DUR     = 240;         // each blob's grow-in transition
-  var SETTLE_MS    = 200;         // hold cover so the new page can fully render before reveal
-  var FADE_MS      = 550;         // long ease-in-out reveal so it never reads as a pop
+  // Hex config — pointy-flat tessellation, faster cascade
+  var HEX_DESKTOP = 130;
+  var HEX_MOBILE  = 80;
+  var STAGGER_MS  = 8;
+  var HEX_DUR     = 200;
+  var SETTLE_MS   = 200;
+  var FADE_MS     = 550;
 
-  var MASTER_GRADIENT = 'linear-gradient(135deg, #0d0d0d 0%, #2d2d2d 45%, #1a1a1a 100%)';
-  var MASTER_GRADIENT_FALLBACK = '#1a1a1a';
+  // Master image (gradient + grain) — same across all hexes via
+  // background-attachment:fixed so the whole overlay reads as one image.
+  var GRAIN_SVG = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")";
+  var MASTER_BG =
+    GRAIN_SVG + ',' +
+    'radial-gradient(ellipse 70% 55% at 60% 28%, #6e6e6e 0%, rgba(60,60,60,0) 60%),' +
+    'radial-gradient(ellipse 60% 50% at 25% 75%, #303030 0%, rgba(20,20,20,0) 55%),' +
+    'linear-gradient(135deg, #050505 0%, #161616 50%, #050505 100%)';
+  var MASTER_BG_SIZE = '240px 240px, 100vw 100vh, 100vw 100vh, 100vw 100vh';
+  var MASTER_BG_ATTACHMENT = 'fixed, fixed, fixed, fixed';
+  var MASTER_BG_BLEND = 'overlay, normal, normal, normal';
+  var MASTER_FALLBACK = '#0a0a0a';
 
-  var blobs = [];
+  // Hexagon clip-path (flat-top)
+  var HEX_CLIP = 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)';
+
+  var hexes = [];
 
   function applyOverlayBaseStyles() {
     wipe.style.position = 'fixed';
@@ -46,63 +59,68 @@
     wipe.style.transition = '';
   }
 
-  function rand(min, max) { return min + Math.random() * (max - min); }
-
-  function buildBlobs() {
+  function buildHexes() {
     applyOverlayBaseStyles();
     wipe.innerHTML = '';
-    blobs = [];
-    for (var i = 0; i < BLOB_COUNT; i++) {
-      var b = document.createElement('div');
-      // Random position scattered across the viewport (in %, slight overflow at edges)
-      var x = rand(-5, 105);
-      var y = rand(-5, 105);
-      // Random asymmetric border-radius — produces an irregular blob shape
-      var r = [];
-      for (var k = 0; k < 8; k++) r.push(Math.round(rand(30, 70)));
-      // Random size variation — different scales make it feel organic
-      var sz = BLOB_SIZE_VMAX * rand(0.55, 1.15);
-      var rot = Math.round(rand(0, 360));
+    hexes = [];
 
-      b.dataset.x = x;
-      b.dataset.y = y;
-      b.dataset.rot = rot;
+    var hexSize = window.innerWidth < 600 ? HEX_MOBILE : HEX_DESKTOP;  // hex width (W = 2s)
+    var s = hexSize / 2;
+    var hexHeight = s * Math.sqrt(3);
+    var horizSpacing = 1.5 * s;
+    var vertSpacing  = hexHeight;
 
-      b.style.cssText =
-        'position:absolute !important;' +
-        'left:' + x + '% !important;' +
-        'top:'  + y + '% !important;' +
-        'width:'  + sz + 'vmax !important;' +
-        'height:' + sz + 'vmax !important;' +
-        'min-width:'  + sz + 'vmax !important;' +
-        'min-height:' + sz + 'vmax !important;' +
-        'max-width:none !important;' +
-        'max-height:none !important;' +
-        'box-sizing:border-box !important;' +
-        'display:block !important;' +
-        'visibility:visible !important;' +
-        'border-radius:' + r[0] + '% ' + r[1] + '% ' + r[2] + '% ' + r[3] + '% / ' +
-                           r[4] + '% ' + r[5] + '% ' + r[6] + '% ' + r[7] + '% !important;' +
-        'background:' + MASTER_GRADIENT + ' !important;' +
-        'background-color:' + MASTER_GRADIENT_FALLBACK + ' !important;' +
-        'background-attachment:fixed !important;' +     /* every blob shows the same master gradient */
-        'background-size:100vw 100vh !important;' +
-        'transform:translate(-50%,-50%) rotate(' + rot + 'deg) scale(0) !important;' +
-        'transform-origin:center !important;' +
-        'transition:transform ' + BLOB_DUR + 'ms cubic-bezier(.45,.05,.25,1) !important;' +
-        'opacity:1 !important;' +
-        'margin:0 !important;' +
-        'padding:0 !important;' +
-        'border:none !important;' +
-        'float:none !important;' +
-        'clip:auto !important;' +
-        'clip-path:none !important;' +
-        'will-change:transform !important;';
-      wipe.appendChild(b);
-      blobs.push(b);
+    var cols = Math.ceil(window.innerWidth  / horizSpacing) + 2;
+    var rows = Math.ceil(window.innerHeight / vertSpacing)  + 2;
+
+    for (var c = -1; c < cols; c++) {
+      for (var r = -1; r < rows; r++) {
+        var x = c * horizSpacing;
+        var y = r * vertSpacing + ((c & 1) ? vertSpacing / 2 : 0);
+
+        var h = document.createElement('div');
+        // Position relative to the viewport so the same fixed gradient lines up
+        var xPct = (x + hexSize / 2) / window.innerWidth  * 100;
+        var yPct = (y + hexHeight / 2) / window.innerHeight * 100;
+        h.dataset.x = xPct;
+        h.dataset.y = yPct;
+
+        h.style.cssText =
+          'position:absolute !important;' +
+          'left:'   + x + 'px !important;' +
+          'top:'    + y + 'px !important;' +
+          'width:'  + hexSize  + 'px !important;' +
+          'height:' + hexHeight + 'px !important;' +
+          'min-width:'  + hexSize  + 'px !important;' +
+          'min-height:' + hexHeight + 'px !important;' +
+          'max-width:none !important;' +
+          'max-height:none !important;' +
+          'box-sizing:border-box !important;' +
+          'display:block !important;' +
+          'visibility:visible !important;' +
+          'background:' + MASTER_BG + ' !important;' +
+          'background-color:' + MASTER_FALLBACK + ' !important;' +
+          'background-attachment:' + MASTER_BG_ATTACHMENT + ' !important;' +
+          'background-size:' + MASTER_BG_SIZE + ' !important;' +
+          'background-blend-mode:' + MASTER_BG_BLEND + ' !important;' +
+          '-webkit-clip-path:' + HEX_CLIP + ' !important;' +
+          'clip-path:' + HEX_CLIP + ' !important;' +
+          'transform:scale(0) !important;' +
+          'transform-origin:center !important;' +
+          'transition:transform ' + HEX_DUR + 'ms cubic-bezier(.45,.05,.25,1) !important;' +
+          'opacity:1 !important;' +
+          'margin:0 !important;' +
+          'padding:0 !important;' +
+          'border:none !important;' +
+          'float:none !important;' +
+          'clip:auto !important;' +
+          'will-change:transform !important;';
+        wipe.appendChild(h);
+        hexes.push(h);
+      }
     }
   }
-  buildBlobs();
+  buildHexes();
   setIdle();
 
   var resizeT;
@@ -111,7 +129,7 @@
     if (document.documentElement.classList.contains('lgcy-wipe-incoming')) return;
     clearTimeout(resizeT);
     resizeT = setTimeout(function () {
-      buildBlobs();
+      buildHexes();
       setIdle();
     }, 150);
   });
@@ -130,17 +148,18 @@
 
   // ───── INCOMING: page just loaded covered, fade overlay away ─────
   if (document.documentElement.classList.contains('lgcy-wipe-incoming')) {
-    // Solid master gradient covers the viewport via the wipe element
-    wipe.style.setProperty('background', MASTER_GRADIENT, 'important');
-    wipe.style.setProperty('background-color', MASTER_GRADIENT_FALLBACK, 'important');
+    // Wipe element shows the master image directly so cover is solid
+    wipe.style.setProperty('background', MASTER_BG, 'important');
+    wipe.style.setProperty('background-color', MASTER_FALLBACK, 'important');
+    wipe.style.setProperty('background-attachment', MASTER_BG_ATTACHMENT, 'important');
+    wipe.style.setProperty('background-size', MASTER_BG_SIZE, 'important');
+    wipe.style.setProperty('background-blend-mode', MASTER_BG_BLEND, 'important');
     wipe.style.setProperty('opacity', '1', 'important');
     wipe.style.setProperty('transform', 'scale(1)', 'important');
     wipe.style.setProperty('pointer-events', 'auto', 'important');
-    // All blobs fully expanded as a backup (no seams)
-    blobs.forEach(function (b) {
-      var rot = b.dataset.rot;
-      b.style.setProperty('transition', 'none', 'important');
-      b.style.setProperty('transform', 'translate(-50%,-50%) rotate(' + rot + 'deg) scale(1)', 'important');
+    hexes.forEach(function (h) {
+      h.style.setProperty('transition', 'none', 'important');
+      h.style.setProperty('transform', 'scale(1.04)', 'important');
     });
     var startReveal = function () {
       wipe.style.setProperty(
@@ -157,10 +176,9 @@
         wipe.style.backgroundColor = 'transparent';
         wipe.style.transform = '';
         wipe.style.pointerEvents = 'none';
-        blobs.forEach(function (b) {
-          var rot = b.dataset.rot;
-          b.style.setProperty('transition', 'none', 'important');
-          b.style.setProperty('transform', 'translate(-50%,-50%) rotate(' + rot + 'deg) scale(0)', 'important');
+        hexes.forEach(function (h) {
+          h.style.setProperty('transition', 'none', 'important');
+          h.style.setProperty('transform', 'scale(0)', 'important');
         });
       }, FADE_MS + 40);
     };
@@ -207,15 +225,14 @@
     wipe.style.setProperty('display', 'block', 'important');
     wipe.style.setProperty('pointer-events', 'auto', 'important');
 
-    var totalMs = maxDist() * STAGGER_MS + BLOB_DUR;
+    var totalMs = maxDist() * STAGGER_MS + HEX_DUR;
 
-    // Stagger blob expansions from the chosen corner.
-    blobs.forEach(function (b) {
-      var d = distFor(+b.dataset.x, +b.dataset.y, origin);
+    // Stagger hex pop-ins from the chosen corner.
+    hexes.forEach(function (h) {
+      var d = distFor(+h.dataset.x, +h.dataset.y, origin);
       var delay = d * STAGGER_MS;
-      var rot = b.dataset.rot;
       setTimeout(function () {
-        b.style.setProperty('transform', 'translate(-50%,-50%) rotate(' + rot + 'deg) scale(1)', 'important');
+        h.style.setProperty('transform', 'scale(1.04)', 'important');
       }, delay);
     });
 
