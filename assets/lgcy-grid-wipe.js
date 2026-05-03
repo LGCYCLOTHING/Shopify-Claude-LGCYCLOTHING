@@ -168,28 +168,31 @@
 
     badge('cascade ' + tiles.length + ' tiles', '#1f6e3a');
 
-    // Make sure the overlay is visible and on top
-    wipe.style.opacity = '1';
-    wipe.style.zIndex = '2147483646';
-    wipe.style.pointerEvents = 'auto';
+    // DIAGNOSTIC: ignore stagger/transition — snap all tiles to full scale
+    // and force opacity. If we see solid red, tiles render. If not, tiles
+    // are getting clipped/hidden by something else.
+    wipe.style.setProperty('opacity', '1', 'important');
+    wipe.style.setProperty('z-index', '2147483646', 'important');
+    wipe.style.setProperty('display', 'block', 'important');
+    wipe.style.setProperty('pointer-events', 'auto', 'important');
 
-    var totalMs = maxDist() * STAGGER_MS + TILE_DUR;
-
-    // Tiles already have transition set during build — just stagger the
-    // transform changes per tile.
     tiles.forEach(function (t) {
-      var d = distFor(+t.dataset.r, +t.dataset.c, origin);
-      var delay = d * STAGGER_MS;
-      setTimeout(function () {
-        t.style.transform = 'scale(1.02)';
-      }, delay);
+      t.style.setProperty('transform', 'scale(1)', 'important');
+      t.style.setProperty('opacity', '1', 'important');
     });
 
-    // After the cover is complete, store the incoming flag and navigate
+    // Diagnostic: show actual rendered state of first tile after a tick
+    setTimeout(function () {
+      var t0 = tiles[0];
+      var cs = window.getComputedStyle(t0);
+      badge('t0: ' + cs.width + ' ' + cs.height + ' o=' + cs.opacity, '#444');
+    }, 100);
+
+    // Hold ~600ms then navigate
     setTimeout(function () {
       try { sessionStorage.setItem('lgcy-wipe-incoming', '1'); } catch (e) {}
       window.location.href = url;
-    }, totalMs);
+    }, 800);
   }
 
   // Public API for inline scripts that do programmatic navigation
