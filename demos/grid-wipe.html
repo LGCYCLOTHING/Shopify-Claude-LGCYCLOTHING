@@ -15,7 +15,6 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ─────────── Page surfaces ─────────── */
   .page {
     position: absolute;
     inset: 0;
@@ -27,12 +26,8 @@
     padding: 32px;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.001s linear;
   }
-  .page.is-active {
-    opacity: 1;
-    pointer-events: auto;
-  }
+  .page.is-active { opacity: 1; pointer-events: auto; }
 
   .page-1 {
     background:
@@ -90,7 +85,7 @@
       inset 0 1px 0 rgba(255,255,255,0.22),
       inset 0 -1px 0 rgba(0,0,0,0.4),
       0 8px 28px rgba(0,0,0,0.4);
-    transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    transition: transform 0.25s ease, background 0.25s ease;
   }
   .btn:hover, .btn:focus-visible {
     background: rgba(255,255,255,0.12);
@@ -109,63 +104,77 @@
     text-transform: uppercase;
   }
 
-  /* ─────────── Grid wipe overlay ─────────── */
+  /* ─────────── Single-pass diagonal wipe ─────────── */
   .wipe {
     position: fixed;
     inset: 0;
     z-index: 9999;
     pointer-events: none;
     display: grid;
-    /* columns + rows are set by JS based on viewport */
   }
   .wipe__tile {
     background: #000;
     transform: scale(0);
     transform-origin: center;
     will-change: transform;
-    transition: transform 280ms cubic-bezier(0.65, 0, 0.35, 1);
   }
-  .wipe.is-covering .wipe__tile { transform: scale(1.02); }
-  .wipe.is-revealing .wipe__tile { transform: scale(0); }
+  /* Single keyframe: each tile briefly grows to cover then shrinks away.
+     The hold (40%–60%) creates overlap with neighbours so the screen is
+     never visibly gapped during the sweep. */
+  @keyframes wipeTile {
+    0%   { transform: scale(0); }
+    40%  { transform: scale(1.02); }
+    60%  { transform: scale(1.02); }
+    100% { transform: scale(0); }
+  }
+  .wipe.is-running .wipe__tile {
+    animation: wipeTile var(--tile-dur, 720ms) cubic-bezier(0.65, 0, 0.35, 1) both;
+  }
 </style>
 </head>
 <body>
 
-  <!-- Page 1 -->
   <section class="page page-1 is-active" data-page="1">
     <p class="eyebrow">LGCYCLOTHING · Demo</p>
     <h1 class="title">Iconic<br>Visionary</h1>
-    <p class="subtitle">Click discover to see the grid-wipe transition. Tiles cascade in from the top right, the page swaps under cover, then the tiles recede in reverse to reveal the next surface.</p>
+    <p class="subtitle">Tap discover. A single diagonal sweep of black tiles crosses the screen, page swaps under cover, sweep continues out the opposite corner.</p>
     <button class="btn" data-target="2">Discover →</button>
     <div class="meta">Page 1 / 2</div>
   </section>
 
-  <!-- Page 2 -->
   <section class="page page-2" data-page="2">
     <p class="eyebrow">The Legacy Collection</p>
     <h1 class="title">Driven<br>by Purpose</h1>
-    <p class="subtitle">Welcome to the second surface. The transition is fully reversible — go back and you'll see the tiles cascade from a different corner so the motion never feels stale.</p>
+    <p class="subtitle">Page two. Tap back — the wave reverses direction so the motion never feels stale.</p>
     <button class="btn" data-target="1">← Back</button>
     <div class="meta">Page 2 / 2</div>
   </section>
 
-  <!-- Overlay (built once, reused) -->
   <div class="wipe" id="wipe" aria-hidden="true"></div>
 
 <script>
 (function(){
   const wipe = document.getElementById('wipe');
   const pages = Array.from(document.querySelectorAll('.page'));
+
+  // Tile size config — bigger tiles, fewer of them
+  const TILE_DESKTOP = 140;
+  const TILE_MOBILE  = 100;
+
+  // Animation timing
+  const STAGGER_MS  = 28;   // delay per diagonal step
+  const TILE_DUR    = 720;  // each tile's full cover→uncover cycle
+
   let cols = 0, rows = 0, tiles = [];
   let busy = false;
 
-  // Build/rebuild grid sized to viewport
   function buildGrid() {
-    const targetTilePx = window.innerWidth < 600 ? 56 : 84;
-    cols = Math.max(6, Math.ceil(window.innerWidth / targetTilePx));
-    rows = Math.max(6, Math.ceil(window.innerHeight / targetTilePx));
+    const tilePx = window.innerWidth < 600 ? TILE_MOBILE : TILE_DESKTOP;
+    cols = Math.max(4, Math.ceil(window.innerWidth  / tilePx));
+    rows = Math.max(4, Math.ceil(window.innerHeight / tilePx));
     wipe.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
     wipe.style.gridTemplateRows    = `repeat(${rows}, 1fr)`;
+    wipe.style.setProperty('--tile-dur', TILE_DUR + 'ms');
     wipe.innerHTML = '';
     tiles = [];
     for (let r = 0; r < rows; r++) {
@@ -186,73 +195,55 @@
     resizeT = setTimeout(buildGrid, 150);
   });
 
-  // Stagger delay per tile based on diagonal distance from a corner
-  function applyStagger(originCorner) {
-    // originCorner: 'tr' (top-right), 'bl' (bottom-left), 'tl', 'br'
-    const stepMs = 22; // delay per diagonal step
-    tiles.forEach(t => {
-      const r = +t.dataset.r;
-      const c = +t.dataset.c;
-      let dist;
-      switch (originCorner) {
-        case 'tr': dist = r + (cols - 1 - c); break;
-        case 'tl': dist = r + c; break;
-        case 'br': dist = (rows - 1 - r) + (cols - 1 - c); break;
-        case 'bl': default: dist = (rows - 1 - r) + c;
-      }
-      t.style.transitionDelay = (dist * stepMs) + 'ms';
-    });
+  function distFor(r, c, origin) {
+    switch (origin) {
+      case 'tr': return r + (cols - 1 - c);
+      case 'tl': return r + c;
+      case 'br': return (rows - 1 - r) + (cols - 1 - c);
+      case 'bl': default: return (rows - 1 - r) + c;
+    }
   }
 
-  function maxStaggerMs(originCorner) {
-    const maxDist = (rows - 1) + (cols - 1);
-    return maxDist * 22 + 280; // last tile delay + tile transition duration
-  }
+  function maxDist() { return (rows - 1) + (cols - 1); }
 
-  function transitionTo(targetPageNum, fromCorner, toCorner) {
+  function transitionTo(targetPageNum, origin) {
     if (busy) return;
     busy = true;
     document.querySelectorAll('.btn').forEach(b => b.disabled = true);
 
-    // Phase 1: cover
-    applyStagger(fromCorner);
-    requestAnimationFrame(() => {
-      wipe.classList.remove('is-revealing');
-      wipe.classList.add('is-covering');
+    // Set per-tile delay along the diagonal, then trigger animation
+    tiles.forEach(t => {
+      const d = distFor(+t.dataset.r, +t.dataset.c, origin);
+      t.style.animationDelay = (d * STAGGER_MS) + 'ms';
     });
 
+    // Force reflow before adding the running class so animations start fresh
+    wipe.classList.remove('is-running');
+    void wipe.offsetWidth;
+    wipe.classList.add('is-running');
+
+    const totalMs = maxDist() * STAGGER_MS + TILE_DUR;
+    // Swap content under the densest part of the wave (~50% of cycle)
+    const swapAt = totalMs * 0.5;
+
     setTimeout(() => {
-      // Phase 2: swap content (invisible — covered by tiles)
       pages.forEach(p => p.classList.remove('is-active'));
       const next = pages.find(p => p.dataset.page === String(targetPageNum));
       if (next) next.classList.add('is-active');
+    }, swapAt);
 
-      // small hold so the swap doesn't feel rushed
-      setTimeout(() => {
-        // Phase 3: reveal
-        applyStagger(toCorner);
-        requestAnimationFrame(() => {
-          wipe.classList.remove('is-covering');
-          wipe.classList.add('is-revealing');
-        });
-
-        setTimeout(() => {
-          busy = false;
-          document.querySelectorAll('.btn').forEach(b => b.disabled = false);
-        }, maxStaggerMs(toCorner));
-      }, 120);
-    }, maxStaggerMs(fromCorner));
+    setTimeout(() => {
+      wipe.classList.remove('is-running');
+      busy = false;
+      document.querySelectorAll('.btn').forEach(b => b.disabled = false);
+    }, totalMs + 40);
   }
 
-  // Wire buttons
   document.addEventListener('click', e => {
     const btn = e.target.closest('.btn[data-target]');
     if (!btn) return;
     const target = +btn.dataset.target;
-    // Going forward: cascade from top-right, reveal from bottom-left
-    // Going back:    cascade from bottom-left, reveal from top-right
-    if (target === 2) transitionTo(2, 'tr', 'bl');
-    else              transitionTo(1, 'bl', 'tr');
+    transitionTo(target, target === 2 ? 'tr' : 'bl');
   });
 })();
 </script>
