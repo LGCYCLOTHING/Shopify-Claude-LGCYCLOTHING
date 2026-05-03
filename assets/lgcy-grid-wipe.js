@@ -14,20 +14,19 @@
     return;
   }
 
-  // Tile config — smaller tiles, faster cascade, gentler fade
-  var TILE_DESKTOP = 70;
-  var TILE_MOBILE  = 50;
-  var STAGGER_MS   = 12;
-  var TILE_DUR     = 180;
-  var SETTLE_MS    = 200;   // hold cover so the new page can fully render before reveal
-  var FADE_MS      = 550;   // long, smooth ease-in-out reveal — never reads as a pop
+  // Blob config — organic random shapes, all sharing one master gradient
+  var BLOB_COUNT   = 32;
+  var BLOB_SIZE_VMAX = 75;       // each blob at scale 1 is huge so coverage overlaps generously
+  var STAGGER_MS   = 10;          // ms per percent of distance from origin corner
+  var BLOB_DUR     = 240;         // each blob's grow-in transition
+  var SETTLE_MS    = 200;         // hold cover so the new page can fully render before reveal
+  var FADE_MS      = 550;         // long ease-in-out reveal so it never reads as a pop
 
-  var cols = 0, rows = 0, tiles = [];
+  var MASTER_GRADIENT = 'linear-gradient(135deg, #0d0d0d 0%, #2d2d2d 45%, #1a1a1a 100%)';
+  var MASTER_GRADIENT_FALLBACK = '#1a1a1a';
 
-  // Inline-style the overlay so we don't depend on the external CSS file
-  // loading or winning against other theme CSS. Only positional /
-  // structural styles — visibility (opacity/background/pointer-events) is
-  // managed separately so resize-triggered rebuilds don't wipe state mid-run.
+  var blobs = [];
+
   function applyOverlayBaseStyles() {
     wipe.style.position = 'fixed';
     wipe.style.top = '0';
@@ -35,7 +34,7 @@
     wipe.style.bottom = '0';
     wipe.style.left = '0';
     wipe.style.zIndex = '2147483646';
-    wipe.style.display = 'block';   // not grid — tiles are absolute-positioned
+    wipe.style.display = 'block';
     wipe.style.margin = '0';
     wipe.style.padding = '0';
     wipe.style.overflow = 'hidden';
@@ -47,94 +46,103 @@
     wipe.style.transition = '';
   }
 
-  function buildGrid() {
+  function rand(min, max) { return min + Math.random() * (max - min); }
+
+  function buildBlobs() {
     applyOverlayBaseStyles();
-    var px = window.innerWidth < 600 ? TILE_MOBILE : TILE_DESKTOP;
-    cols = Math.max(4, Math.ceil(window.innerWidth  / px));
-    rows = Math.max(4, Math.ceil(window.innerHeight / px));
-    var tileW = window.innerWidth  / cols;
-    var tileH = window.innerHeight / rows;
     wipe.innerHTML = '';
-    tiles = [];
-    for (var r = 0; r < rows; r++) {
-      for (var c = 0; c < cols; c++) {
-        var t = document.createElement('div');
-        t.dataset.r = r;
-        t.dataset.c = c;
-        t.style.cssText =
-          'position:absolute !important;' +
-          'top:'         + (r * tileH) + 'px !important;' +
-          'left:'        + (c * tileW) + 'px !important;' +
-          'width:'       + tileW + 'px !important;' +
-          'height:'      + tileH + 'px !important;' +
-          'min-width:'   + tileW + 'px !important;' +
-          'min-height:'  + tileH + 'px !important;' +
-          'max-width:none !important;' +
-          'max-height:none !important;' +
-          'box-sizing:border-box !important;' +
-          'display:block !important;' +
-          'visibility:visible !important;' +
-          'background:linear-gradient(135deg,#cfcfcf 0%,#9a9a9a 100%) !important;' +
-          'background-color:#b5b5b5 !important;' +
-          'transform:scale(0) !important;' +
-          'transform-origin:center !important;' +
-          'transition:transform ' + TILE_DUR + 'ms cubic-bezier(.65,0,.35,1) !important;' +
-          'opacity:1 !important;' +
-          'margin:0 !important;' +
-          'padding:0 !important;' +
-          'border:none !important;' +
-          'float:none !important;' +
-          'clip:auto !important;' +
-          'clip-path:none !important;' +
-          'will-change:transform !important;';
-        wipe.appendChild(t);
-        tiles.push(t);
-      }
+    blobs = [];
+    for (var i = 0; i < BLOB_COUNT; i++) {
+      var b = document.createElement('div');
+      // Random position scattered across the viewport (in %, slight overflow at edges)
+      var x = rand(-5, 105);
+      var y = rand(-5, 105);
+      // Random asymmetric border-radius — produces an irregular blob shape
+      var r = [];
+      for (var k = 0; k < 8; k++) r.push(Math.round(rand(30, 70)));
+      // Random size variation — different scales make it feel organic
+      var sz = BLOB_SIZE_VMAX * rand(0.55, 1.15);
+      var rot = Math.round(rand(0, 360));
+
+      b.dataset.x = x;
+      b.dataset.y = y;
+      b.dataset.rot = rot;
+
+      b.style.cssText =
+        'position:absolute !important;' +
+        'left:' + x + '% !important;' +
+        'top:'  + y + '% !important;' +
+        'width:'  + sz + 'vmax !important;' +
+        'height:' + sz + 'vmax !important;' +
+        'min-width:'  + sz + 'vmax !important;' +
+        'min-height:' + sz + 'vmax !important;' +
+        'max-width:none !important;' +
+        'max-height:none !important;' +
+        'box-sizing:border-box !important;' +
+        'display:block !important;' +
+        'visibility:visible !important;' +
+        'border-radius:' + r[0] + '% ' + r[1] + '% ' + r[2] + '% ' + r[3] + '% / ' +
+                           r[4] + '% ' + r[5] + '% ' + r[6] + '% ' + r[7] + '% !important;' +
+        'background:' + MASTER_GRADIENT + ' !important;' +
+        'background-color:' + MASTER_GRADIENT_FALLBACK + ' !important;' +
+        'background-attachment:fixed !important;' +     /* every blob shows the same master gradient */
+        'background-size:100vw 100vh !important;' +
+        'transform:translate(-50%,-50%) rotate(' + rot + 'deg) scale(0) !important;' +
+        'transform-origin:center !important;' +
+        'transition:transform ' + BLOB_DUR + 'ms cubic-bezier(.45,.05,.25,1) !important;' +
+        'opacity:1 !important;' +
+        'margin:0 !important;' +
+        'padding:0 !important;' +
+        'border:none !important;' +
+        'float:none !important;' +
+        'clip:auto !important;' +
+        'clip-path:none !important;' +
+        'will-change:transform !important;';
+      wipe.appendChild(b);
+      blobs.push(b);
     }
   }
-  buildGrid();
+  buildBlobs();
   setIdle();
 
   var resizeT;
   window.addEventListener('resize', function () {
-    // Don't rebuild during a transition — would wipe state mid-cascade.
     if (busy) return;
     if (document.documentElement.classList.contains('lgcy-wipe-incoming')) return;
     clearTimeout(resizeT);
     resizeT = setTimeout(function () {
-      buildGrid();
+      buildBlobs();
       setIdle();
     }, 150);
   });
 
-  function distFor(r, c, origin) {
+  // x and y are viewport %; origin selects which corner the wave starts from
+  function distFor(x, y, origin) {
     switch (origin) {
-      case 'tr': return r + (cols - 1 - c);
-      case 'tl': return r + c;
-      case 'br': return (rows - 1 - r) + (cols - 1 - c);
+      case 'tr': return y + (100 - x);
+      case 'tl': return y + x;
+      case 'br': return (100 - y) + (100 - x);
       case 'bl':
-      default:   return (rows - 1 - r) + c;
+      default:   return (100 - y) + x;
     }
   }
-  function maxDist() { return (rows - 1) + (cols - 1); }
+  function maxDist() { return 200; }   // 100 + 100 across viewport
 
   // ───── INCOMING: page just loaded covered, fade overlay away ─────
   if (document.documentElement.classList.contains('lgcy-wipe-incoming')) {
-    // Cover the screen with the same grey gradient as the cascade
-    wipe.style.setProperty('background', 'linear-gradient(135deg,#cfcfcf 0%,#9a9a9a 100%)', 'important');
-    wipe.style.setProperty('background-color', '#b5b5b5', 'important');
+    // Solid master gradient covers the viewport via the wipe element
+    wipe.style.setProperty('background', MASTER_GRADIENT, 'important');
+    wipe.style.setProperty('background-color', MASTER_GRADIENT_FALLBACK, 'important');
     wipe.style.setProperty('opacity', '1', 'important');
     wipe.style.setProperty('transform', 'scale(1)', 'important');
     wipe.style.setProperty('pointer-events', 'auto', 'important');
-    // Tiles fully covered as a fallback (same grey, no visible seams)
-    tiles.forEach(function (t) {
-      t.style.setProperty('transition', 'none', 'important');
-      t.style.setProperty('transform', 'scale(1.02)', 'important');
+    // All blobs fully expanded as a backup (no seams)
+    blobs.forEach(function (b) {
+      var rot = b.dataset.rot;
+      b.style.setProperty('transition', 'none', 'important');
+      b.style.setProperty('transform', 'translate(-50%,-50%) rotate(' + rot + 'deg) scale(1)', 'important');
     });
-    // Wait for the page to render + settle before starting the reveal
     var startReveal = function () {
-      // Cross-fade with a tiny scale so the overlay reads as "lifting"
-      // away rather than flatly fading — kills the pop perception.
       wipe.style.setProperty(
         'transition',
         'opacity ' + FADE_MS + 'ms cubic-bezier(.4,0,.2,1), transform ' + FADE_MS + 'ms cubic-bezier(.4,0,.2,1)',
@@ -149,13 +157,13 @@
         wipe.style.backgroundColor = 'transparent';
         wipe.style.transform = '';
         wipe.style.pointerEvents = 'none';
-        tiles.forEach(function (t) {
-          t.style.setProperty('transition', 'none', 'important');
-          t.style.setProperty('transform', 'scale(0)', 'important');
+        blobs.forEach(function (b) {
+          var rot = b.dataset.rot;
+          b.style.setProperty('transition', 'none', 'important');
+          b.style.setProperty('transform', 'translate(-50%,-50%) rotate(' + rot + 'deg) scale(0)', 'important');
         });
       }, FADE_MS + 40);
     };
-    // Wait two paints then settle delay so the page is fully laid out
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
         setTimeout(startReveal, SETTLE_MS);
@@ -199,15 +207,15 @@
     wipe.style.setProperty('display', 'block', 'important');
     wipe.style.setProperty('pointer-events', 'auto', 'important');
 
-    var totalMs = maxDist() * STAGGER_MS + TILE_DUR;
+    var totalMs = maxDist() * STAGGER_MS + BLOB_DUR;
 
-    // Stagger tile transforms from the chosen corner. Transitions are set
-    // on the tiles at build time so this just triggers them.
-    tiles.forEach(function (t) {
-      var d = distFor(+t.dataset.r, +t.dataset.c, origin);
+    // Stagger blob expansions from the chosen corner.
+    blobs.forEach(function (b) {
+      var d = distFor(+b.dataset.x, +b.dataset.y, origin);
       var delay = d * STAGGER_MS;
+      var rot = b.dataset.rot;
       setTimeout(function () {
-        t.style.setProperty('transform', 'scale(1.02)', 'important');
+        b.style.setProperty('transform', 'translate(-50%,-50%) rotate(' + rot + 'deg) scale(1)', 'important');
       }, delay);
     });
 
