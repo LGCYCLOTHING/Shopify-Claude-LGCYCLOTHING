@@ -48,21 +48,31 @@
 
   var cols = 0, rows = 0, tiles = [];
 
+  // Inline-style the overlay so we don't depend on the external CSS file
+  // loading or winning against other theme CSS.
+  function applyOverlayBaseStyles() {
+    wipe.style.cssText = [
+      'position:fixed','top:0','right:0','bottom:0','left:0',
+      'z-index:2147483646','pointer-events:none','display:grid',
+      'opacity:0','background:transparent','margin:0','padding:0'
+    ].join(';');
+  }
+
   function buildGrid() {
+    applyOverlayBaseStyles();
     var px = window.innerWidth < 600 ? TILE_MOBILE : TILE_DESKTOP;
     cols = Math.max(4, Math.ceil(window.innerWidth  / px));
     rows = Math.max(4, Math.ceil(window.innerHeight / px));
     wipe.style.gridTemplateColumns = 'repeat(' + cols + ',1fr)';
     wipe.style.gridTemplateRows    = 'repeat(' + rows + ',1fr)';
-    wipe.style.setProperty('--lgcy-tile-dur', TILE_DUR + 'ms');
     wipe.innerHTML = '';
     tiles = [];
     for (var r = 0; r < rows; r++) {
       for (var c = 0; c < cols; c++) {
         var t = document.createElement('div');
-        t.className = 'lgcy-wipe__tile';
         t.dataset.r = r;
         t.dataset.c = c;
+        t.style.cssText = 'background:#ffffff;transform:scale(0);transform-origin:center;will-change:transform;';
         wipe.appendChild(t);
         tiles.push(t);
       }
@@ -89,15 +99,29 @@
 
   // ───── INCOMING: page just loaded covered, fade overlay away ─────
   if (document.documentElement.classList.contains('lgcy-wipe-incoming')) {
-    // Wait one paint so the new page has a chance to render under the overlay
+    // Cover the screen with solid white immediately
+    wipe.style.background = '#ffffff';
+    wipe.style.opacity = '1';
+    wipe.style.pointerEvents = 'auto';
+    // Make all tiles fully covered as a fallback if grid renders before fade
+    tiles.forEach(function (t) {
+      t.style.transition = 'none';
+      t.style.transform = 'scale(1.02)';
+    });
+    // Wait one paint, then fade the overlay away
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
-        wipe.classList.add('is-fading');
+        wipe.style.transition = 'opacity ' + FADE_MS + 'ms cubic-bezier(.4,0,1,1)';
+        wipe.style.opacity = '0';
         document.documentElement.classList.remove('lgcy-wipe-incoming');
         setTimeout(function () {
-          wipe.classList.remove('is-fading');
-          wipe.style.opacity = '';
-          wipe.style.background = '';
+          wipe.style.transition = '';
+          wipe.style.background = 'transparent';
+          wipe.style.pointerEvents = 'none';
+          tiles.forEach(function (t) {
+            t.style.transition = 'none';
+            t.style.transform = 'scale(0)';
+          });
         }, FADE_MS + 40);
       });
     });
@@ -112,19 +136,29 @@
     if (busy) return;
     busy = true;
 
-    // Stagger from the chosen corner
+    // Make sure the overlay is visible and on top
+    wipe.style.opacity = '1';
+    wipe.style.zIndex = '2147483646';
+    wipe.style.pointerEvents = 'auto';
+
+    var totalMs = maxDist() * STAGGER_MS + TILE_DUR;
+
+    // Drive the cascade with setTimeout per tile — no CSS animation, no
+    // external stylesheet dependency.
     tiles.forEach(function (t) {
       var d = distFor(+t.dataset.r, +t.dataset.c, origin);
-      t.style.animationDelay = (d * STAGGER_MS) + 'ms';
+      var delay = d * STAGGER_MS;
+      // Reset
+      t.style.transition = 'none';
+      t.style.transform = 'scale(0)';
+      // Trigger after delay
+      setTimeout(function () {
+        t.style.transition = 'transform ' + TILE_DUR + 'ms cubic-bezier(.65,0,.35,1)';
+        t.style.transform = 'scale(1.02)';
+      }, delay);
     });
 
-    // Force reflow so the animation always starts cleanly
-    wipe.classList.remove('is-running', 'is-fading');
-    void wipe.offsetWidth;
-    wipe.classList.add('is-running');
-
     // After the cover is complete, store the incoming flag and navigate
-    var totalMs = maxDist() * STAGGER_MS + TILE_DUR;
     setTimeout(function () {
       try { sessionStorage.setItem('lgcy-wipe-incoming', '1'); } catch (e) {}
       window.location.href = url;
