@@ -5,33 +5,8 @@
  *           → fade the overlay away → reveal the new page seamlessly.
  */
 (function () {
-  // ── DIAGNOSTIC BADGE (temporary, helps verify the script is running) ──
-  function badge(msg, color) {
-    var b = document.createElement('div');
-    b.textContent = msg;
-    b.style.cssText = [
-      'position:fixed','top:12px','right:12px','z-index:2147483647',
-      'background:' + (color || '#0a0a0a'),'color:#fff',
-      'font:700 11px/1.2 system-ui,sans-serif','letter-spacing:.08em',
-      'text-transform:uppercase','padding:8px 12px','border-radius:6px',
-      'box-shadow:0 4px 14px rgba(0,0,0,.4)','pointer-events:none',
-      'opacity:0','transition:opacity .2s ease'
-    ].join(';');
-    document.body.appendChild(b);
-    requestAnimationFrame(function(){ b.style.opacity = '1'; });
-    setTimeout(function(){ b.style.opacity = '0'; setTimeout(function(){ b.remove(); }, 220); }, 3500);
-  }
-
   var wipe = document.getElementById('lgcy-wipe');
-  if (!wipe) {
-    if (document.body) badge('wipe: NO #lgcy-wipe element', '#a83232');
-    else document.addEventListener('DOMContentLoaded', function(){ badge('wipe: NO #lgcy-wipe element', '#a83232'); });
-    console.warn('[lgcy-wipe] overlay element not found');
-    return;
-  }
-  if (document.body) badge('wipe ready ✓', '#1f6e3a');
-  else document.addEventListener('DOMContentLoaded', function(){ badge('wipe ready ✓', '#1f6e3a'); });
-  console.log('[lgcy-wipe] initialised');
+  if (!wipe) return;
 
   // Honour reduced motion
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -98,15 +73,18 @@
           'box-sizing:border-box !important;' +
           'display:block !important;' +
           'visibility:visible !important;' +
-          'background:#ff2222 !important;' +
-          'transform:none !important;' +
+          'background:#ffffff !important;' +
+          'transform:scale(0) !important;' +
+          'transform-origin:center !important;' +
+          'transition:transform ' + TILE_DUR + 'ms cubic-bezier(.65,0,.35,1) !important;' +
           'opacity:1 !important;' +
           'margin:0 !important;' +
           'padding:0 !important;' +
           'border:none !important;' +
           'float:none !important;' +
           'clip:auto !important;' +
-          'clip-path:none !important;';
+          'clip-path:none !important;' +
+          'will-change:transform !important;';
         wipe.appendChild(t);
         tiles.push(t);
       }
@@ -177,40 +155,29 @@
     if (busy) return;
     busy = true;
 
-    badge('cascade ' + tiles.length + ' tiles', '#1f6e3a');
-
-    // DIAGNOSTIC: ignore stagger/transition — snap all tiles to full scale
-    // and force opacity. If we see solid red, tiles render. If not, tiles
-    // are getting clipped/hidden by something else.
+    // Make sure the overlay is visible and on top
     wipe.style.setProperty('opacity', '1', 'important');
     wipe.style.setProperty('z-index', '2147483646', 'important');
     wipe.style.setProperty('display', 'block', 'important');
     wipe.style.setProperty('pointer-events', 'auto', 'important');
 
+    var totalMs = maxDist() * STAGGER_MS + TILE_DUR;
+
+    // Stagger tile transforms from the chosen corner. transition is set on
+    // the tiles at build time so this just triggers it.
     tiles.forEach(function (t) {
-      // Wipe transforms entirely — leave tile at native box size
-      t.style.setProperty('transform', 'none', 'important');
-      t.style.setProperty('opacity', '1', 'important');
+      var d = distFor(+t.dataset.r, +t.dataset.c, origin);
+      var delay = d * STAGGER_MS;
+      setTimeout(function () {
+        t.style.setProperty('transform', 'scale(1.02)', 'important');
+      }, delay);
     });
 
-    // Diagnostic: show actual rendered state of wipe + first tile
-    setTimeout(function () {
-      var w = window.getComputedStyle(wipe);
-      var wr = wipe.getBoundingClientRect();
-      badge('W: o=' + w.opacity + ' d=' + w.display + ' z=' + w.zIndex + ' r=' + Math.round(wr.width) + 'x' + Math.round(wr.height), '#444');
-      setTimeout(function() {
-        var t0 = tiles[0];
-        var tr = t0.getBoundingClientRect();   // capture LIVE
-        var ts = window.getComputedStyle(t0);
-        badge('T0: rect=' + Math.round(tr.left) + ',' + Math.round(tr.top) + ' ' + Math.round(tr.width) + 'x' + Math.round(tr.height) + ' tx=' + ts.transform.slice(0, 20), '#444');
-      }, 600);
-    }, 100);
-
-    // Hold longer for diagnostics — give us time to read both badges
+    // After the cover is complete, store the incoming flag and navigate
     setTimeout(function () {
       try { sessionStorage.setItem('lgcy-wipe-incoming', '1'); } catch (e) {}
       window.location.href = url;
-    }, 2200);
+    }, totalMs);
   }
 
   // Public API for inline scripts that do programmatic navigation
@@ -262,17 +229,10 @@
 
   document.addEventListener('click', function (e) {
     var link = e.target.closest('a[href]');
-    if (!link) return;
-    if (!shouldIntercept(link, e)) {
-      // Diagnostic: tell us why a clicked link was skipped
-      try { badge('skip: ' + (link.getAttribute('href') || '').slice(0, 40), '#9c6f1c'); } catch(_) {}
-      return;
-    }
-
+    if (!shouldIntercept(link, e)) return;
     e.preventDefault();
     e.stopPropagation();
     var url = new URL(link.href, window.location.href);
-    badge('wipe → ' + url.pathname.slice(0, 30), '#1f6e3a');
     navigateTo(url.href, origins[originIdx % origins.length]);
     originIdx++;
   }, true);  // capture: true — beat other delegated handlers
