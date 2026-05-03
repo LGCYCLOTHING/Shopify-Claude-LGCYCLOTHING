@@ -1,6 +1,17 @@
 <!doctype html>
 <html class="js" lang="{{ request.locale.iso_code }}">
   <head>
+ <script>
+   /* LGCY Grid Wipe boot — set the incoming flag before paint so the
+      overlay can render covered the instant the new page loads. */
+   try {
+     if (sessionStorage.getItem('lgcy-wipe-incoming') === '1') {
+       document.documentElement.classList.add('lgcy-wipe-incoming');
+       sessionStorage.removeItem('lgcy-wipe-incoming');
+     }
+   } catch (e) {}
+ </script>
+ {{ 'lgcy-grid-wipe.css' | asset_url | stylesheet_tag }}
  {%- render 'ecom_header' -%}
  
  
@@ -969,5 +980,7 @@ svg.icon.icon-cart {
   })();
 </script>
 
+<div class="lgcy-wipe" id="lgcy-wipe" aria-hidden="true"></div>
+<script src="{{ 'lgcy-grid-wipe.js' | asset_url }}" defer></script>
 </body>
 </html>
