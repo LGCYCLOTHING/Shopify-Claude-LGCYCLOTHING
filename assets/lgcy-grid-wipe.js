@@ -177,7 +177,8 @@
     wipe.style.setProperty('pointer-events', 'auto', 'important');
 
     tiles.forEach(function (t) {
-      t.style.setProperty('transform', 'scale(1)', 'important');
+      // Wipe transforms entirely — leave tile at native box size
+      t.style.setProperty('transform', 'none', 'important');
       t.style.setProperty('opacity', '1', 'important');
     });
 
@@ -186,11 +187,11 @@
       var w = window.getComputedStyle(wipe);
       var wr = wipe.getBoundingClientRect();
       badge('W: o=' + w.opacity + ' d=' + w.display + ' z=' + w.zIndex + ' r=' + Math.round(wr.width) + 'x' + Math.round(wr.height), '#444');
-      var t0 = tiles[0];
-      var tr = t0.getBoundingClientRect();
-      var ts = window.getComputedStyle(t0);
       setTimeout(function() {
-        badge('T0: rect=' + Math.round(tr.left) + ',' + Math.round(tr.top) + ' ' + Math.round(tr.width) + 'x' + Math.round(tr.height) + ' bg=' + ts.backgroundColor.replace(/\s/g,'').slice(0,18), '#444');
+        var t0 = tiles[0];
+        var tr = t0.getBoundingClientRect();   // capture LIVE
+        var ts = window.getComputedStyle(t0);
+        badge('T0: rect=' + Math.round(tr.left) + ',' + Math.round(tr.top) + ' ' + Math.round(tr.width) + 'x' + Math.round(tr.height) + ' tx=' + ts.transform.slice(0, 20), '#444');
       }, 600);
     }, 100);
 
