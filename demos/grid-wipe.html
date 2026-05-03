@@ -104,31 +104,32 @@
     text-transform: uppercase;
   }
 
-  /* ─────────── Single-pass diagonal wipe ─────────── */
+  /* ─────────── One-way grid wipe (cascade in, fade overlay out) ─────────── */
   .wipe {
     position: fixed;
     inset: 0;
     z-index: 9999;
     pointer-events: none;
     display: grid;
+    opacity: 1;
   }
   .wipe__tile {
-    background: #000;
+    background: #ffffff;
     transform: scale(0);
     transform-origin: center;
     will-change: transform;
   }
-  /* Single keyframe: each tile briefly grows to cover then shrinks away.
-     The hold (40%–60%) creates overlap with neighbours so the screen is
-     never visibly gapped during the sweep. */
-  @keyframes wipeTile {
-    0%   { transform: scale(0); }
-    40%  { transform: scale(1.02); }
-    60%  { transform: scale(1.02); }
-    100% { transform: scale(0); }
+  /* Each tile cascades from scale 0 to fully covering, then stays. */
+  @keyframes wipeIn {
+    to { transform: scale(1.02); }
   }
   .wipe.is-running .wipe__tile {
-    animation: wipeTile var(--tile-dur, 720ms) cubic-bezier(0.65, 0, 0.35, 1) both;
+    animation: wipeIn var(--tile-dur, 320ms) cubic-bezier(0.65, 0, 0.35, 1) both;
+  }
+  /* After cover is complete, the whole overlay fades away once. */
+  .wipe.is-fading {
+    opacity: 0;
+    transition: opacity 360ms ease-out;
   }
 </style>
 </head>
@@ -137,7 +138,7 @@
   <section class="page page-1 is-active" data-page="1">
     <p class="eyebrow">LGCYCLOTHING · Demo</p>
     <h1 class="title">Iconic<br>Visionary</h1>
-    <p class="subtitle">Tap discover. A single diagonal sweep of black tiles crosses the screen, page swaps under cover, sweep continues out the opposite corner.</p>
+    <p class="subtitle">Tap discover. White tiles cascade in from the top-right, the overlay covers the screen, the new page appears as the cover fades away.</p>
     <button class="btn" data-target="2">Discover →</button>
     <div class="meta">Page 1 / 2</div>
   </section>
@@ -145,7 +146,7 @@
   <section class="page page-2" data-page="2">
     <p class="eyebrow">The Legacy Collection</p>
     <h1 class="title">Driven<br>by Purpose</h1>
-    <p class="subtitle">Page two. Tap back — the wave reverses direction so the motion never feels stale.</p>
+    <p class="subtitle">Page two. Tap back — tiles cascade from the opposite corner so the motion stays fresh.</p>
     <button class="btn" data-target="1">← Back</button>
     <div class="meta">Page 2 / 2</div>
   </section>
@@ -157,13 +158,12 @@
   const wipe = document.getElementById('wipe');
   const pages = Array.from(document.querySelectorAll('.page'));
 
-  // Tile size config — bigger tiles, fewer of them
   const TILE_DESKTOP = 140;
   const TILE_MOBILE  = 100;
-
-  // Animation timing
-  const STAGGER_MS  = 28;   // delay per diagonal step
-  const TILE_DUR    = 720;  // each tile's full cover→uncover cycle
+  const STAGGER_MS   = 28;
+  const TILE_DUR     = 320;   // per-tile cover animation
+  const HOLD_MS      = 80;    // briefly hold full cover before fade
+  const FADE_MS      = 360;   // overlay fade-out duration
 
   let cols = 0, rows = 0, tiles = [];
   let busy = false;
@@ -203,7 +203,6 @@
       case 'bl': default: return (rows - 1 - r) + c;
     }
   }
-
   function maxDist() { return (rows - 1) + (cols - 1); }
 
   function transitionTo(targetPageNum, origin) {
@@ -211,32 +210,40 @@
     busy = true;
     document.querySelectorAll('.btn').forEach(b => b.disabled = true);
 
-    // Set per-tile delay along the diagonal, then trigger animation
+    // Reset overlay
+    wipe.classList.remove('is-running', 'is-fading');
+    wipe.style.opacity = '';
+    void wipe.offsetWidth; // reflow
+
+    // Stagger delays from origin corner
     tiles.forEach(t => {
       const d = distFor(+t.dataset.r, +t.dataset.c, origin);
       t.style.animationDelay = (d * STAGGER_MS) + 'ms';
     });
 
-    // Force reflow before adding the running class so animations start fresh
-    wipe.classList.remove('is-running');
-    void wipe.offsetWidth;
     wipe.classList.add('is-running');
 
-    const totalMs = maxDist() * STAGGER_MS + TILE_DUR;
-    // Swap content under the densest part of the wave (~50% of cycle)
-    const swapAt = totalMs * 0.5;
+    const coverDoneMs = maxDist() * STAGGER_MS + TILE_DUR;
 
+    // When cover is complete, swap the underlying page (still hidden)
     setTimeout(() => {
       pages.forEach(p => p.classList.remove('is-active'));
       const next = pages.find(p => p.dataset.page === String(targetPageNum));
       if (next) next.classList.add('is-active');
-    }, swapAt);
+    }, coverDoneMs);
 
+    // Brief hold, then fade the overlay away to reveal the new page
     setTimeout(() => {
-      wipe.classList.remove('is-running');
+      wipe.classList.add('is-fading');
+    }, coverDoneMs + HOLD_MS);
+
+    // After fade completes, reset everything for next run
+    setTimeout(() => {
+      wipe.classList.remove('is-running', 'is-fading');
+      tiles.forEach(t => { t.style.animationDelay = ''; });
       busy = false;
       document.querySelectorAll('.btn').forEach(b => b.disabled = false);
-    }, totalMs + 40);
+    }, coverDoneMs + HOLD_MS + FADE_MS + 40);
   }
 
   document.addEventListener('click', e => {
