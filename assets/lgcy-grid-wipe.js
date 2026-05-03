@@ -6,7 +6,8 @@
  */
 (function () {
   var wipe = document.getElementById('lgcy-wipe');
-  if (!wipe) return;
+  if (!wipe) { console.warn('[lgcy-wipe] overlay element not found'); return; }
+  console.log('[lgcy-wipe] initialised');
 
   // Honour reduced motion
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -129,7 +130,13 @@
     try { url = new URL(link.href, window.location.href); }
     catch (e) { return false; }
 
-    if (url.origin !== window.location.origin) return false;
+    // Treat the store's own myshopify.com domain as same-origin so links
+    // hardcoded to *.myshopify.com still get the wipe when viewing the
+    // custom storefront domain.
+    var sameOrigin = url.origin === window.location.origin;
+    var sameStore  = /(^|\.)myshopify\.com$/i.test(url.hostname) ||
+                     /(^|\.)myshopify\.com$/i.test(window.location.hostname);
+    if (!sameOrigin && !sameStore) return false;
 
     // Skip same-page anchors
     if (url.pathname === window.location.pathname &&
@@ -152,10 +159,11 @@
     if (!shouldIntercept(link, e)) return;
 
     e.preventDefault();
+    e.stopPropagation();
     var url = new URL(link.href, window.location.href);
     navigateTo(url.href, origins[originIdx % origins.length]);
     originIdx++;
-  });
+  }, true);  // capture: true — beat other delegated handlers
 
   // If the user uses back/forward, the page is a fresh load — no incoming
   // flag, no overlay. Browser's native nav takes over.
