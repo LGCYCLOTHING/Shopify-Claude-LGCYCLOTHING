@@ -15,11 +15,11 @@
   }
 
   // Tile config — smaller tiles, faster cascade, gentler fade
-  var TILE_DESKTOP = 75;
-  var TILE_MOBILE  = 55;
-  var STAGGER_MS   = 16;
-  var TILE_DUR     = 220;
-  var FADE_MS      = 360;   // longer + ease-out so reveal feels gradual, no pop
+  var TILE_DESKTOP = 70;
+  var TILE_MOBILE  = 50;
+  var STAGGER_MS   = 12;
+  var TILE_DUR     = 180;
+  var FADE_MS      = 220;   // gentle ease-out, no pop, but not lingering
 
   var cols = 0, rows = 0, tiles = [];
 
@@ -155,7 +155,14 @@
   var originIdx = 0;
 
   function prefetch(url) {
+    // <link rel=prefetch> isn't well supported on Safari mobile — use a
+    // fetch() to warm the browser cache so the upcoming navigation can
+    // pull from cache instead of waiting on the network.
     try {
+      if (typeof fetch === 'function') {
+        fetch(url, { credentials: 'same-origin', cache: 'force-cache', mode: 'no-cors' })
+          .catch(function () {});
+      }
       var l = document.createElement('link');
       l.rel = 'prefetch';
       l.href = url;
@@ -190,13 +197,13 @@
       }, delay);
     });
 
-    // Navigate slightly before the very last tile lands so the perceived
-    // "all-grey" hold is minimal. The browser begins swapping while the
-    // trailing edge of the cascade is still arriving.
+    // Navigate at 70% of cascade so the trailing edge of tiles arrives
+    // while the browser is already fetching the next page — this minimises
+    // the perceived "all-grey waiting" gap.
     setTimeout(function () {
       try { sessionStorage.setItem('lgcy-wipe-incoming', '1'); } catch (e) {}
       window.location.href = url;
-    }, Math.round(totalMs * 0.85));
+    }, Math.round(totalMs * 0.7));
   }
 
   // Public API for inline scripts that do programmatic navigation
