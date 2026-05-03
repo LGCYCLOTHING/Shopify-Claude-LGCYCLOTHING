@@ -59,9 +59,10 @@
     wipe.style.bottom = '0';
     wipe.style.left = '0';
     wipe.style.zIndex = '2147483646';
-    wipe.style.display = 'grid';
+    wipe.style.display = 'block';   // not grid — tiles are absolute-positioned
     wipe.style.margin = '0';
     wipe.style.padding = '0';
+    wipe.style.overflow = 'hidden';
   }
   function setIdle() {
     wipe.style.opacity = '0';
@@ -75,8 +76,8 @@
     var px = window.innerWidth < 600 ? TILE_MOBILE : TILE_DESKTOP;
     cols = Math.max(4, Math.ceil(window.innerWidth  / px));
     rows = Math.max(4, Math.ceil(window.innerHeight / px));
-    wipe.style.gridTemplateColumns = 'repeat(' + cols + ',1fr)';
-    wipe.style.gridTemplateRows    = 'repeat(' + rows + ',1fr)';
+    var tileW = window.innerWidth  / cols;
+    var tileH = window.innerHeight / rows;
     wipe.innerHTML = '';
     tiles = [];
     for (var r = 0; r < rows; r++) {
@@ -84,7 +85,16 @@
         var t = document.createElement('div');
         t.dataset.r = r;
         t.dataset.c = c;
-        t.style.cssText = 'background:#ffffff;transform:scale(0);transform-origin:center;will-change:transform;';
+        t.style.cssText =
+          'position:absolute;' +
+          'top:'    + (r * tileH) + 'px;' +
+          'left:'   + (c * tileW) + 'px;' +
+          'width:'  + tileW + 'px;' +
+          'height:' + tileH + 'px;' +
+          'background:#ffffff;' +
+          'transform:scale(0);' +
+          'transform-origin:center;' +
+          'will-change:transform;';
         wipe.appendChild(t);
         tiles.push(t);
       }
@@ -155,6 +165,8 @@
     if (busy) return;
     busy = true;
 
+    badge('cascade ' + tiles.length + ' tiles', '#1f6e3a');
+
     // Make sure the overlay is visible and on top
     wipe.style.opacity = '1';
     wipe.style.zIndex = '2147483646';
@@ -173,9 +185,18 @@
       // Trigger after delay
       setTimeout(function () {
         t.style.transition = 'transform ' + TILE_DUR + 'ms cubic-bezier(.65,0,.35,1)';
+        // Reflow before changing transform so transition is honoured
+        void t.offsetWidth;
         t.style.transform = 'scale(1.02)';
       }, delay);
     });
+
+    // Safety net: if the tile cascade somehow doesn't render, the overlay
+    // itself fades to white so the cover always happens.
+    setTimeout(function () {
+      wipe.style.transition = 'background-color ' + (totalMs * 0.6) + 'ms ease-out';
+      wipe.style.background = '#ffffff';
+    }, 0);
 
     // After the cover is complete, store the incoming flag and navigate
     setTimeout(function () {
