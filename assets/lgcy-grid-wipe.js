@@ -181,18 +181,24 @@
       t.style.setProperty('opacity', '1', 'important');
     });
 
-    // Diagnostic: show actual rendered state of first tile after a tick
+    // Diagnostic: show actual rendered state of wipe + first tile
     setTimeout(function () {
+      var w = window.getComputedStyle(wipe);
+      var wr = wipe.getBoundingClientRect();
+      badge('W: o=' + w.opacity + ' d=' + w.display + ' z=' + w.zIndex + ' r=' + Math.round(wr.width) + 'x' + Math.round(wr.height), '#444');
       var t0 = tiles[0];
-      var cs = window.getComputedStyle(t0);
-      badge('t0: ' + cs.width + ' ' + cs.height + ' o=' + cs.opacity, '#444');
+      var tr = t0.getBoundingClientRect();
+      var ts = window.getComputedStyle(t0);
+      setTimeout(function() {
+        badge('T0: rect=' + Math.round(tr.left) + ',' + Math.round(tr.top) + ' ' + Math.round(tr.width) + 'x' + Math.round(tr.height) + ' bg=' + ts.backgroundColor.replace(/\s/g,'').slice(0,18), '#444');
+      }, 600);
     }, 100);
 
-    // Hold ~600ms then navigate
+    // Hold longer for diagnostics — give us time to read both badges
     setTimeout(function () {
       try { sessionStorage.setItem('lgcy-wipe-incoming', '1'); } catch (e) {}
       window.location.href = url;
-    }, 800);
+    }, 2200);
   }
 
   // Public API for inline scripts that do programmatic navigation
