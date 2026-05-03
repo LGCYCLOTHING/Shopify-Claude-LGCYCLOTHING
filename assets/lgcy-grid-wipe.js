@@ -86,16 +86,27 @@
         t.dataset.r = r;
         t.dataset.c = c;
         t.style.cssText =
-          'position:absolute;' +
-          'top:'    + (r * tileH) + 'px;' +
-          'left:'   + (c * tileW) + 'px;' +
-          'width:'  + tileW + 'px;' +
-          'height:' + tileH + 'px;' +
-          'background:#ff2222;' +                       /* DEBUG: red so it's obvious */
-          'transform:scale(0);' +
-          'transform-origin:center;' +
-          'transition:transform ' + TILE_DUR + 'ms cubic-bezier(.65,0,.35,1);' +
-          'will-change:transform;';
+          'position:absolute !important;' +
+          'top:'         + (r * tileH) + 'px !important;' +
+          'left:'        + (c * tileW) + 'px !important;' +
+          'width:'       + tileW + 'px !important;' +
+          'height:'      + tileH + 'px !important;' +
+          'min-width:'   + tileW + 'px !important;' +
+          'min-height:'  + tileH + 'px !important;' +
+          'max-width:none !important;' +
+          'max-height:none !important;' +
+          'box-sizing:border-box !important;' +
+          'display:block !important;' +
+          'visibility:visible !important;' +
+          'background:#ff2222 !important;' +
+          'transform:none !important;' +
+          'opacity:1 !important;' +
+          'margin:0 !important;' +
+          'padding:0 !important;' +
+          'border:none !important;' +
+          'float:none !important;' +
+          'clip:auto !important;' +
+          'clip-path:none !important;';
         wipe.appendChild(t);
         tiles.push(t);
       }
