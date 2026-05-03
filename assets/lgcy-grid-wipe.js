@@ -197,13 +197,14 @@
       }, delay);
     });
 
-    // Navigate at 70% of cascade so the trailing edge of tiles arrives
-    // while the browser is already fetching the next page — this minimises
-    // the perceived "all-grey waiting" gap.
+    // Fire navigation EARLY (30% of cascade) so the browser starts
+    // fetching the next page while the cascade is still arriving on the
+    // currently-displayed page. By the time the cascade completes the
+    // new page should be ready to swap in immediately.
     setTimeout(function () {
       try { sessionStorage.setItem('lgcy-wipe-incoming', '1'); } catch (e) {}
       window.location.href = url;
-    }, Math.round(totalMs * 0.7));
+    }, Math.round(totalMs * 0.3));
   }
 
   // Public API for inline scripts that do programmatic navigation
