@@ -3,11 +3,12 @@
   <head>
  <script>
    /* LGCY Grid Wipe boot — set the incoming flag before paint so the
-      overlay can render covered the instant the new page loads. */
+      overlay can render covered the instant the new page loads.
+      We do NOT clear the flag here; JS clears it only after the fade
+      completes, so any redirect chain keeps the cover throughout. */
    try {
      if (sessionStorage.getItem('lgcy-wipe-incoming') === '1') {
        document.documentElement.classList.add('lgcy-wipe-incoming');
-       sessionStorage.removeItem('lgcy-wipe-incoming');
      }
    } catch (e) {}
  </script>

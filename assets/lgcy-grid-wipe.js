@@ -167,6 +167,9 @@
       wipe.style.setProperty('opacity', '0', 'important');
       wipe.style.setProperty('transform', 'scale(1.03)', 'important');
       document.documentElement.classList.remove('lgcy-wipe-incoming');
+      // Now safe to clear the storage flag — fade has started, no more
+      // redirects expected after this point.
+      try { sessionStorage.removeItem('lgcy-wipe-incoming'); } catch (e) {}
       setTimeout(function () {
         wipe.style.transition = '';
         wipe.style.background = 'transparent';
