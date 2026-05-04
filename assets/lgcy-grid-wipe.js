@@ -29,6 +29,12 @@
   }
   setTimeout(function(){ badge('wipe ready ' + window.innerWidth + 'w', '#1f6e3a'); }, 100);
 
+  // Surface any crash with a visible error badge so we don't have to guess
+  window.addEventListener('error', function (ev) {
+    if (ev && ev.message && ev.message.indexOf('lgcy') >= 0) return;
+    badge('JS ERR: ' + ((ev && ev.message) || 'unknown').slice(0, 50), '#a83232');
+  });
+
   // Honour reduced motion
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.documentElement.classList.remove('lgcy-wipe-incoming');
@@ -43,17 +49,16 @@
   var SETTLE_MS   = 200;
   var FADE_MS     = 550;
 
-  // Master image (gradient + grain) — same across all hexes via
-  // background-attachment:fixed so the whole overlay reads as one image.
-  var GRAIN_SVG = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")";
+  // Master image — same across all hexes via background-attachment:fixed
+  // so the whole overlay reads as one image. Grain temporarily removed
+  // until we confirm clicks work without complex multi-layer bg.
   var MASTER_BG =
-    GRAIN_SVG + ',' +
     'radial-gradient(ellipse 70% 55% at 60% 28%, #6e6e6e 0%, rgba(60,60,60,0) 60%),' +
     'radial-gradient(ellipse 60% 50% at 25% 75%, #303030 0%, rgba(20,20,20,0) 55%),' +
     'linear-gradient(135deg, #050505 0%, #161616 50%, #050505 100%)';
-  var MASTER_BG_SIZE = '240px 240px, 100vw 100vh, 100vw 100vh, 100vw 100vh';
-  var MASTER_BG_ATTACHMENT = 'fixed, fixed, fixed, fixed';
-  var MASTER_BG_BLEND = 'overlay, normal, normal, normal';
+  var MASTER_BG_SIZE = '100vw 100vh, 100vw 100vh, 100vw 100vh';
+  var MASTER_BG_ATTACHMENT = 'fixed, fixed, fixed';
+  var MASTER_BG_BLEND = 'normal, normal, normal';
   var MASTER_FALLBACK = '#0a0a0a';
 
   // Hexagon clip-path (flat-top)
@@ -141,8 +146,13 @@
       }
     }
   }
-  buildHexes();
-  setIdle();
+  try {
+    buildHexes();
+    setIdle();
+    setTimeout(function(){ badge('built ' + hexes.length + ' hexes', '#1f6e3a'); }, 200);
+  } catch (err) {
+    setTimeout(function(){ badge('BUILD ERR: ' + (err.message||'').slice(0,50), '#a83232'); }, 200);
+  }
 
   var resizeT;
   window.addEventListener('resize', function () {
