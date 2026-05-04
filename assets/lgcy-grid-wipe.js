@@ -5,41 +5,11 @@
  *           → fade the overlay away → reveal the new page seamlessly.
  */
 (function () {
-  function badge(msg, color) {
-    if (!document.body) return;
-    var b = document.createElement('div');
-    b.textContent = msg;
-    b.style.cssText = [
-      'position:fixed','top:12px','right:12px','z-index:2147483647',
-      'background:' + (color || '#0a0a0a'),'color:#fff',
-      'font:700 11px/1.2 system-ui,sans-serif','letter-spacing:.08em',
-      'text-transform:uppercase','padding:8px 12px','border-radius:6px',
-      'box-shadow:0 4px 14px rgba(0,0,0,.4)','pointer-events:none',
-      'opacity:0','transition:opacity .2s ease'
-    ].join(';');
-    document.body.appendChild(b);
-    requestAnimationFrame(function(){ b.style.opacity = '1'; });
-    setTimeout(function(){ b.style.opacity = '0'; setTimeout(function(){ b.remove(); }, 220); }, 3500);
-  }
-
   var wipe = document.getElementById('lgcy-wipe');
-  if (!wipe) {
-    setTimeout(function(){ badge('wipe: NO #lgcy-wipe', '#a83232'); }, 100);
-    return;
-  }
-  setTimeout(function(){ badge('1: ready ' + window.innerWidth + 'w', '#1f6e3a'); }, 100);
+  if (!wipe) return;
 
-  // Surface any crash with a visible error badge so we don't have to guess
-  window.addEventListener('error', function (ev) {
-    badge('JS ERR: ' + ((ev && ev.message) || 'unknown').slice(0, 60), '#a83232');
-  });
-  setTimeout(function(){ badge('2: err handler', '#3a4a8a'); }, 250);
-
-  // Honour reduced motion
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.documentElement.classList.remove('lgcy-wipe-incoming');
-    return;
-  }
+  // (Reduce-motion bail removed — user explicitly wants the animation
+  // regardless of OS accessibility setting.)
 
   // Hex config — pointy-flat tessellation, faster cascade
   var HEX_DESKTOP = 130;
@@ -49,16 +19,17 @@
   var SETTLE_MS   = 200;
   var FADE_MS     = 550;
 
-  // Master image — same across all hexes via background-attachment:fixed
-  // so the whole overlay reads as one image. Grain temporarily removed
-  // until we confirm clicks work without complex multi-layer bg.
+  // Master image (gradient + film grain) — same across all hexes via
+  // background-attachment:fixed so the whole overlay reads as one image.
+  var GRAIN_SVG = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")";
   var MASTER_BG =
+    GRAIN_SVG + ',' +
     'radial-gradient(ellipse 70% 55% at 60% 28%, #6e6e6e 0%, rgba(60,60,60,0) 60%),' +
     'radial-gradient(ellipse 60% 50% at 25% 75%, #303030 0%, rgba(20,20,20,0) 55%),' +
     'linear-gradient(135deg, #050505 0%, #161616 50%, #050505 100%)';
-  var MASTER_BG_SIZE = '100vw 100vh, 100vw 100vh, 100vw 100vh';
-  var MASTER_BG_ATTACHMENT = 'fixed, fixed, fixed';
-  var MASTER_BG_BLEND = 'normal, normal, normal';
+  var MASTER_BG_SIZE = '240px 240px, 100vw 100vh, 100vw 100vh, 100vw 100vh';
+  var MASTER_BG_ATTACHMENT = 'fixed, fixed, fixed, fixed';
+  var MASTER_BG_BLEND = 'overlay, normal, normal, normal';
   var MASTER_FALLBACK = '#0a0a0a';
 
   // Hexagon clip-path (flat-top)
@@ -146,15 +117,8 @@
       }
     }
   }
-  setTimeout(function(){ badge('3: pre-build', '#3a4a8a'); }, 400);
-  try {
-    buildHexes();
-    setIdle();
-    setTimeout(function(){ badge('4: built ' + hexes.length, '#1f6e3a'); }, 550);
-  } catch (err) {
-    setTimeout(function(){ badge('BUILD ERR: ' + ((err && err.message)||'').slice(0,60), '#a83232'); }, 550);
-  }
-  setTimeout(function(){ badge('5: post-build', '#3a4a8a'); }, 700);
+  buildHexes();
+  setIdle();
 
   var resizeT;
   window.addEventListener('resize', function () {
@@ -324,32 +288,16 @@
     return true;
   }
 
-  // Diagnostic: log every click anywhere so we can see if our handler
-  // is being suppressed by something earlier in the capture chain.
-  window.addEventListener('click', function (e) {
-    var t = e.target;
-    var tag = (t.tagName || '?').toLowerCase();
-    var link = t.closest && t.closest('a[href]');
-    var href = link ? (link.getAttribute('href') || '').slice(0, 30) : '(no a)';
-    badge('CLICK ' + tag + ' a=' + href, '#3a4a8a');
-  }, true);
-
   window.addEventListener('click', function (e) {
     var link = e.target.closest && e.target.closest('a[href]');
     if (!link) return;
-    if (!shouldIntercept(link, e)) {
-      badge('skip: ' + (link.getAttribute('href') || '').slice(0, 36), '#9c6f1c');
-      return;
-    }
+    if (!shouldIntercept(link, e)) return;
     e.preventDefault();
     e.stopPropagation();
     var url = new URL(link.href, window.location.href);
-    badge('wipe(' + hexes.length + ') -> ' + url.pathname.slice(0, 28), '#1f6e3a');
     navigateTo(url.href, origins[originIdx % origins.length]);
     originIdx++;
-  }, true);  // capture: true on window — beats document-level listeners
-
-  setTimeout(function(){ badge('6: handlers installed', '#1f6e3a'); }, 850);
+  }, true);
 
   // If the user uses back/forward, the page is a fresh load — no incoming
   // flag, no overlay. Browser's native nav takes over.

@@ -50,11 +50,4 @@ html.lgcy-wipe-incoming .lgcy-wipe {
   transition: opacity 150ms cubic-bezier(0.4, 0, 1, 1);
 }
 
-/* Respect prefers-reduced-motion */
-@media (prefers-reduced-motion: reduce) {
-  .lgcy-wipe,
-  .lgcy-wipe.is-running,
-  html.lgcy-wipe-incoming .lgcy-wipe {
-    display: none !important;
-  }
-}
+/* (prefers-reduced-motion bail removed — wipe runs regardless) */
