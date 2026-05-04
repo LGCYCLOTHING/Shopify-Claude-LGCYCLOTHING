@@ -312,11 +312,21 @@
     return true;
   }
 
-  document.addEventListener('click', function (e) {
-    var link = e.target.closest('a[href]');
+  // Diagnostic: log every click anywhere so we can see if our handler
+  // is being suppressed by something earlier in the capture chain.
+  window.addEventListener('click', function (e) {
+    var t = e.target;
+    var tag = (t.tagName || '?').toLowerCase();
+    var link = t.closest && t.closest('a[href]');
+    var href = link ? (link.getAttribute('href') || '').slice(0, 30) : '(no a)';
+    badge('CLICK ' + tag + ' a=' + href, '#3a4a8a');
+  }, true);
+
+  window.addEventListener('click', function (e) {
+    var link = e.target.closest && e.target.closest('a[href]');
     if (!link) return;
     if (!shouldIntercept(link, e)) {
-      badge('skip: ' + (link.getAttribute('href') || '').slice(0, 40), '#9c6f1c');
+      badge('skip: ' + (link.getAttribute('href') || '').slice(0, 36), '#9c6f1c');
       return;
     }
     e.preventDefault();
@@ -325,7 +335,7 @@
     badge('wipe(' + hexes.length + ') -> ' + url.pathname.slice(0, 28), '#1f6e3a');
     navigateTo(url.href, origins[originIdx % origins.length]);
     originIdx++;
-  }, true);  // capture: true — beat other delegated handlers
+  }, true);  // capture: true on window — beats document-level listeners
 
   // If the user uses back/forward, the page is a fresh load — no incoming
   // flag, no overlay. Browser's native nav takes over.
