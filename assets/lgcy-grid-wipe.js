@@ -11,26 +11,26 @@
   // (Reduce-motion bail removed — user explicitly wants the animation
   // regardless of OS accessibility setting.)
 
-  // Hex config — pointy-flat tessellation, faster cascade
+  // Hex config — pointy-flat tessellation, snappy cascade
   var HEX_DESKTOP = 130;
   var HEX_MOBILE  = 80;
-  var STAGGER_MS  = 8;
-  var HEX_DUR     = 200;
-  var SETTLE_MS   = 200;
-  var FADE_MS     = 550;
+  var STAGGER_MS  = 3;
+  var HEX_DUR     = 130;
+  var SETTLE_MS   = 100;
+  var FADE_MS     = 400;
 
   // Master image (gradient + film grain) — same across all hexes via
   // background-attachment:fixed so the whole overlay reads as one image.
-  var GRAIN_SVG = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")";
+  var GRAIN_SVG = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")";
   var MASTER_BG =
     GRAIN_SVG + ',' +
-    'radial-gradient(ellipse 70% 55% at 60% 28%, #6e6e6e 0%, rgba(60,60,60,0) 60%),' +
-    'radial-gradient(ellipse 60% 50% at 25% 75%, #303030 0%, rgba(20,20,20,0) 55%),' +
-    'linear-gradient(135deg, #050505 0%, #161616 50%, #050505 100%)';
+    'radial-gradient(ellipse 80% 60% at 55% 28%, #ffffff 0%, rgba(220,220,220,0) 55%),' +
+    'radial-gradient(ellipse 50% 45% at 20% 80%, #4a4a4a 0%, rgba(30,30,30,0) 55%),' +
+    'linear-gradient(135deg, #6a6a6a 0%, #b0b0b0 50%, #6a6a6a 100%)';
   var MASTER_BG_SIZE = '240px 240px, 100vw 100vh, 100vw 100vh, 100vw 100vh';
   var MASTER_BG_ATTACHMENT = 'fixed, fixed, fixed, fixed';
   var MASTER_BG_BLEND = 'overlay, normal, normal, normal';
-  var MASTER_FALLBACK = '#0a0a0a';
+  var MASTER_FALLBACK = '#999999';
 
   // Hexagon clip-path (flat-top)
   var HEX_CLIP = 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)';
