@@ -27,13 +27,13 @@
     setTimeout(function(){ badge('wipe: NO #lgcy-wipe', '#a83232'); }, 100);
     return;
   }
-  setTimeout(function(){ badge('wipe ready ' + window.innerWidth + 'w', '#1f6e3a'); }, 100);
+  setTimeout(function(){ badge('1: ready ' + window.innerWidth + 'w', '#1f6e3a'); }, 100);
 
   // Surface any crash with a visible error badge so we don't have to guess
   window.addEventListener('error', function (ev) {
-    if (ev && ev.message && ev.message.indexOf('lgcy') >= 0) return;
-    badge('JS ERR: ' + ((ev && ev.message) || 'unknown').slice(0, 50), '#a83232');
+    badge('JS ERR: ' + ((ev && ev.message) || 'unknown').slice(0, 60), '#a83232');
   });
+  setTimeout(function(){ badge('2: err handler', '#3a4a8a'); }, 250);
 
   // Honour reduced motion
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -146,13 +146,15 @@
       }
     }
   }
+  setTimeout(function(){ badge('3: pre-build', '#3a4a8a'); }, 400);
   try {
     buildHexes();
     setIdle();
-    setTimeout(function(){ badge('built ' + hexes.length + ' hexes', '#1f6e3a'); }, 200);
+    setTimeout(function(){ badge('4: built ' + hexes.length, '#1f6e3a'); }, 550);
   } catch (err) {
-    setTimeout(function(){ badge('BUILD ERR: ' + (err.message||'').slice(0,50), '#a83232'); }, 200);
+    setTimeout(function(){ badge('BUILD ERR: ' + ((err && err.message)||'').slice(0,60), '#a83232'); }, 550);
   }
+  setTimeout(function(){ badge('5: post-build', '#3a4a8a'); }, 700);
 
   var resizeT;
   window.addEventListener('resize', function () {
@@ -346,6 +348,8 @@
     navigateTo(url.href, origins[originIdx % origins.length]);
     originIdx++;
   }, true);  // capture: true on window — beats document-level listeners
+
+  setTimeout(function(){ badge('6: handlers installed', '#1f6e3a'); }, 850);
 
   // If the user uses back/forward, the page is a fresh load — no incoming
   // flag, no overlay. Browser's native nav takes over.
