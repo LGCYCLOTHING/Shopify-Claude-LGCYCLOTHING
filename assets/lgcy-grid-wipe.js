@@ -5,8 +5,29 @@
  *           → fade the overlay away → reveal the new page seamlessly.
  */
 (function () {
+  function badge(msg, color) {
+    if (!document.body) return;
+    var b = document.createElement('div');
+    b.textContent = msg;
+    b.style.cssText = [
+      'position:fixed','top:12px','right:12px','z-index:2147483647',
+      'background:' + (color || '#0a0a0a'),'color:#fff',
+      'font:700 11px/1.2 system-ui,sans-serif','letter-spacing:.08em',
+      'text-transform:uppercase','padding:8px 12px','border-radius:6px',
+      'box-shadow:0 4px 14px rgba(0,0,0,.4)','pointer-events:none',
+      'opacity:0','transition:opacity .2s ease'
+    ].join(';');
+    document.body.appendChild(b);
+    requestAnimationFrame(function(){ b.style.opacity = '1'; });
+    setTimeout(function(){ b.style.opacity = '0'; setTimeout(function(){ b.remove(); }, 220); }, 3500);
+  }
+
   var wipe = document.getElementById('lgcy-wipe');
-  if (!wipe) return;
+  if (!wipe) {
+    setTimeout(function(){ badge('wipe: NO #lgcy-wipe', '#a83232'); }, 100);
+    return;
+  }
+  setTimeout(function(){ badge('wipe ready ' + window.innerWidth + 'w', '#1f6e3a'); }, 100);
 
   // Honour reduced motion
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -293,10 +314,15 @@
 
   document.addEventListener('click', function (e) {
     var link = e.target.closest('a[href]');
-    if (!shouldIntercept(link, e)) return;
+    if (!link) return;
+    if (!shouldIntercept(link, e)) {
+      badge('skip: ' + (link.getAttribute('href') || '').slice(0, 40), '#9c6f1c');
+      return;
+    }
     e.preventDefault();
     e.stopPropagation();
     var url = new URL(link.href, window.location.href);
+    badge('wipe(' + hexes.length + ') -> ' + url.pathname.slice(0, 28), '#1f6e3a');
     navigateTo(url.href, origins[originIdx % origins.length]);
     originIdx++;
   }, true);  // capture: true — beat other delegated handlers
