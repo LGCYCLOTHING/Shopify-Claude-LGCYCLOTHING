@@ -1,0 +1,25 @@
+{%- comment -%}
+  Outputs apple-touch-icon, web app manifest link, and related meta tags so
+  the site's logo (settings.logo) is used as the icon when users add the site
+  to their mobile home screen. Falls back to settings.favicon when no logo is set.
+{%- endcomment -%}
+
+{%- assign icon_source = settings.logo | default: settings.favicon -%}
+
+{%- if icon_source != blank -%}
+  {%- assign icon_180 = icon_source | image_url: width: 180, height: 180, crop: 'center', format: 'png' -%}
+  {%- assign icon_192 = icon_source | image_url: width: 192, height: 192, crop: 'center', format: 'png' -%}
+  {%- assign icon_512 = icon_source | image_url: width: 512, height: 512, crop: 'center', format: 'png' -%}
+
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ icon_180 }}">
+  <link rel="apple-touch-icon" sizes="192x192" href="{{ icon_192 }}">
+  <link rel="apple-touch-icon" sizes="512x512" href="{{ icon_512 }}">
+  <link rel="apple-touch-icon-precomposed" href="{{ icon_180 }}">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="{{ shop.name | escape }}">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="{{ shop.name | escape }}">
+
+  <link rel="manifest" href="{{ 'manifest.json' | asset_url }}">
+{%- endif -%}
