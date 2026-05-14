@@ -55,7 +55,8 @@
       "Bash(grep -oiE 'rp-card[a-z-]*|class=\\\\\\\\\"rp-card[a-z-]*\\\\\\\\\"' templates/product.json)",
       "Bash(grep -oiE 'rp-card-grid\\\\\\\\\\\\\".{0,1500}' templates/product.json)",
       "Bash(grep -oiE '#explore-label[^\"]{0,300}' templates/index.json)",
-      "Bash(grep -E \"\\\\.liquid$|manifest|json\")"
+      "Bash(grep -E \"\\\\.liquid$|manifest|json\")",
+      "Bash(git mv *)"
     ]
   }
 }
