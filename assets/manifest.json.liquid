@@ -1,6 +1,4 @@
-{%- assign icon_source = settings.logo | default: settings.favicon -%}
-{%- assign icon_192 = icon_source | image_url: width: 192, height: 192, crop: 'center', format: 'png' -%}
-{%- assign icon_512 = icon_source | image_url: width: 512, height: 512, crop: 'center', format: 'png' -%}
+{%- assign app_icon = 'app-icon.png' | asset_url -%}
 {
   "name": {{ shop.name | json }},
   "short_name": {{ shop.name | json }},
@@ -9,17 +7,17 @@
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#ffffff",
+  "background_color": "#000000",
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "https:{{ icon_192 }}",
+      "src": "{{ app_icon }}",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "https:{{ icon_512 }}",
+      "src": "{{ app_icon }}",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
