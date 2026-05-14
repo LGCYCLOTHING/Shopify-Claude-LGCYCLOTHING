@@ -13,6 +13,8 @@
     <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
   {%- endif -%}
 
+  {%- render 'app-icons' -%}
+
   {%- capture seo_title -%}
     {%- if template == 'search' and search.performed == true -%}
       {{ 'general.search.heading' | t: count: search.results_count }}: {{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
