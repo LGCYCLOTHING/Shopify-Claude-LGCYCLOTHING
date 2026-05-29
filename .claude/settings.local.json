@@ -56,7 +56,17 @@
       "Bash(grep -oiE 'rp-card-grid\\\\\\\\\\\\\".{0,1500}' templates/product.json)",
       "Bash(grep -oiE '#explore-label[^\"]{0,300}' templates/index.json)",
       "Bash(grep -E \"\\\\.liquid$|manifest|json\")",
-      "Bash(git mv *)"
+      "Bash(git mv *)",
+      "Bash(git stash *)",
+      "Bash(node -e \"const j = require\\('./templates/product.json'\\); function find\\(o, k\\){ for\\(const x in o\\){ if\\(x.includes\\('apps'\\)||x.includes\\('insta'\\)\\) console.log\\('KEY', x\\); if\\(typeof o[x]==='string' && \\(o[x].includes\\('insta'\\)||o[x].includes\\('apps'\\)||o[x].includes\\('FOLLOW'\\)\\)\\) console.log\\('VAL', x, o[x].slice\\(0,200\\)\\); if\\(o[x]&&typeof o[x]==='object'\\) find\\(o[x], x\\); } } find\\(j, ''\\)\")",
+      "Bash(node -e \"const j = require\\('./templates/product.json'\\); for\\(const s in j.sections\\){ if\\(j.sections[s].type==='apps'\\){ console.log\\(s, JSON.stringify\\(j.sections[s], null, 2\\)\\); } }\")",
+      "Bash(node -e \"const j = require\\('./sections/footer-group.json'\\); for\\(const s in j.sections\\){ if\\(j.sections[s].type==='apps'\\) console.log\\(s, JSON.stringify\\(j.sections[s],null,2\\)\\); else console.log\\(s, j.sections[s].type\\); }\")",
+      "Bash(node -e \"const j = require\\('./sections/footer-group.json'\\); console.log\\(JSON.stringify\\(j.sections['1772334056da650a83'], null, 2\\)\\);\")",
+      "Bash(node -e \"const j = require\\('./config/settings_data.json'\\); function find\\(o, p\\){ for\\(const k in o\\){ const v=o[k]; if\\(typeof v==='string' && /insta|instafeed|FOLLOW THE VISION|lgcyclothing_/i.test\\(v\\)\\){ console.log\\(p+'.'+k, '=>', v.slice\\(0, 300\\)\\); } if\\(v && typeof v==='object'\\) find\\(v, p+'.'+k\\); } } find\\(j, ''\\)\")",
+      "Bash(node -e \"const j = require\\('./config/settings_data.json'\\); console.log\\('keys', Object.keys\\(j\\)\\); if\\(j.current && j.current.blocks\\){ console.log\\('blocks keys', Object.keys\\(j.current.blocks\\)\\); for\\(const b in j.current.blocks\\){ console.log\\(b, JSON.stringify\\(j.current.blocks[b]\\).slice\\(0, 500\\)\\); } }\")",
+      "Bash(node -e \"const j = require\\('./templates/collection.gp-template-bk-default.json'\\); for\\(const s in j.sections\\){ console.log\\(s, j.sections[s].type\\); }\")",
+      "Bash(node -e \"const j = require\\('./templates/collection.gem-1738643421-template.json'\\); for\\(const s in j.sections\\){ console.log\\(s, j.sections[s].type\\); }\")",
+      "Bash(node -e \"const fs=require\\('fs'\\); const s=fs.statSync\\('assets/base.css'\\); console.log\\('base.css size:', s.size\\); const s2=fs.statSync\\('layout/theme.liquid'\\); console.log\\('theme.liquid size:', s2.size\\);\")"
     ]
   }
 }
