@@ -1,8 +1,6 @@
-/* LGCY — Mintt Instafeed title treatment */
-.minta-instafeed-title,
-.minta-instafeed h2,
-[class*="minta-instafeed-title"],
-[class*="minta-instafeed-heading"] h2 {
+/* LGCY — Instafeed title treatment */
+#insta-feed h2,
+.instafeed-shopify h2 {
   font-family: 'Inter', Helvetica, Arial, sans-serif !important;
   font-weight: 900 !important;
   letter-spacing: -0.05em !important;
