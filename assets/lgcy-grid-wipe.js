@@ -1,41 +1,31 @@
-/* LGCY Grid Wipe — page transition controller
+/* LGCY Grid Wipe — page transition controller (desktop only).
  *
- * Outgoing: intercept clicks on internal links → cascade tiles in → navigate.
+ * Outgoing: intercept clicks on internal links → cascade white rectangle
+ *           tiles in from a corner → navigate.
  * Incoming: page loaded with overlay solid-white via the boot inline script
  *           → fade the overlay away → reveal the new page seamlessly.
+ *
+ * Mobile (≤749px) bails entirely on outgoing — links navigate normally,
+ * no cascade, no overlay. Incoming reveal still runs on all viewports as
+ * a safety net (e.g. user resized between desktop nav start and load).
  */
 (function () {
   var wipe = document.getElementById('lgcy-wipe');
   if (!wipe) return;
 
-  // (Reduce-motion bail removed — user explicitly wants the animation
-  // regardless of OS accessibility setting.)
+  var MOBILE_MAX = 749;
+  function isMobile() { return window.innerWidth <= MOBILE_MAX; }
 
-  // Hex config — pointy-flat tessellation, snappy cascade
-  var HEX_DESKTOP = 130;
-  var HEX_MOBILE  = 80;
+  // Tile config — large white rectangles, snappy cascade
+  var TILE_SIZE   = 220;
   var STAGGER_MS  = 3;
-  var HEX_DUR     = 130;
+  var TILE_DUR    = 130;
   var SETTLE_MS   = 100;
   var FADE_MS     = 400;
 
-  // Master image (gradient + film grain) — same across all hexes via
-  // background-attachment:fixed so the whole overlay reads as one image.
-  var GRAIN_SVG = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")";
-  var MASTER_BG =
-    GRAIN_SVG + ',' +
-    'radial-gradient(ellipse 80% 60% at 55% 28%, #ffffff 0%, rgba(220,220,220,0) 55%),' +
-    'radial-gradient(ellipse 50% 45% at 20% 80%, #4a4a4a 0%, rgba(30,30,30,0) 55%),' +
-    'linear-gradient(135deg, #6a6a6a 0%, #b0b0b0 50%, #6a6a6a 100%)';
-  var MASTER_BG_SIZE = '240px 240px, 100vw 100vh, 100vw 100vh, 100vw 100vh';
-  var MASTER_BG_ATTACHMENT = 'fixed, fixed, fixed, fixed';
-  var MASTER_BG_BLEND = 'overlay, normal, normal, normal';
-  var MASTER_FALLBACK = '#999999';
+  var MASTER_BG = '#ffffff';
 
-  // Hexagon clip-path (flat-top)
-  var HEX_CLIP = 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)';
-
-  var hexes = [];
+  var tiles = [];
 
   function applyOverlayBaseStyles() {
     wipe.style.position = 'fixed';
@@ -56,55 +46,48 @@
     wipe.style.transition = '';
   }
 
-  function buildHexes() {
+  function buildTiles() {
+    if (isMobile()) {
+      wipe.innerHTML = '';
+      tiles = [];
+      return;
+    }
     applyOverlayBaseStyles();
     wipe.innerHTML = '';
-    hexes = [];
+    tiles = [];
 
-    var hexSize = window.innerWidth < 600 ? HEX_MOBILE : HEX_DESKTOP;  // hex width (W = 2s)
-    var s = hexSize / 2;
-    var hexHeight = s * Math.sqrt(3);
-    var horizSpacing = 1.5 * s;
-    var vertSpacing  = hexHeight;
+    var cols = Math.ceil(window.innerWidth  / TILE_SIZE) + 1;
+    var rows = Math.ceil(window.innerHeight / TILE_SIZE) + 1;
 
-    var cols = Math.ceil(window.innerWidth  / horizSpacing) + 2;
-    var rows = Math.ceil(window.innerHeight / vertSpacing)  + 2;
+    for (var c = 0; c < cols; c++) {
+      for (var r = 0; r < rows; r++) {
+        var x = c * TILE_SIZE;
+        var y = r * TILE_SIZE;
 
-    for (var c = -1; c < cols; c++) {
-      for (var r = -1; r < rows; r++) {
-        var x = c * horizSpacing;
-        var y = r * vertSpacing + ((c & 1) ? vertSpacing / 2 : 0);
+        var t = document.createElement('div');
+        var xPct = (x + TILE_SIZE / 2) / window.innerWidth  * 100;
+        var yPct = (y + TILE_SIZE / 2) / window.innerHeight * 100;
+        t.dataset.x = xPct;
+        t.dataset.y = yPct;
 
-        var h = document.createElement('div');
-        // Position relative to the viewport so the same fixed gradient lines up
-        var xPct = (x + hexSize / 2) / window.innerWidth  * 100;
-        var yPct = (y + hexHeight / 2) / window.innerHeight * 100;
-        h.dataset.x = xPct;
-        h.dataset.y = yPct;
-
-        h.style.cssText =
+        t.style.cssText =
           'position:absolute !important;' +
           'left:'   + x + 'px !important;' +
           'top:'    + y + 'px !important;' +
-          'width:'  + hexSize  + 'px !important;' +
-          'height:' + hexHeight + 'px !important;' +
-          'min-width:'  + hexSize  + 'px !important;' +
-          'min-height:' + hexHeight + 'px !important;' +
+          'width:'  + TILE_SIZE + 'px !important;' +
+          'height:' + TILE_SIZE + 'px !important;' +
+          'min-width:'  + TILE_SIZE + 'px !important;' +
+          'min-height:' + TILE_SIZE + 'px !important;' +
           'max-width:none !important;' +
           'max-height:none !important;' +
           'box-sizing:border-box !important;' +
           'display:block !important;' +
           'visibility:visible !important;' +
           'background:' + MASTER_BG + ' !important;' +
-          'background-color:' + MASTER_FALLBACK + ' !important;' +
-          'background-attachment:' + MASTER_BG_ATTACHMENT + ' !important;' +
-          'background-size:' + MASTER_BG_SIZE + ' !important;' +
-          'background-blend-mode:' + MASTER_BG_BLEND + ' !important;' +
-          '-webkit-clip-path:' + HEX_CLIP + ' !important;' +
-          'clip-path:' + HEX_CLIP + ' !important;' +
+          'background-color:' + MASTER_BG + ' !important;' +
           'transform:scale(0) !important;' +
           'transform-origin:center !important;' +
-          'transition:transform ' + HEX_DUR + 'ms cubic-bezier(.45,.05,.25,1) !important;' +
+          'transition:transform ' + TILE_DUR + 'ms cubic-bezier(.45,.05,.25,1) !important;' +
           'opacity:1 !important;' +
           'margin:0 !important;' +
           'padding:0 !important;' +
@@ -112,12 +95,12 @@
           'float:none !important;' +
           'clip:auto !important;' +
           'will-change:transform !important;';
-        wipe.appendChild(h);
-        hexes.push(h);
+        wipe.appendChild(t);
+        tiles.push(t);
       }
     }
   }
-  buildHexes();
+  buildTiles();
   setIdle();
 
   var resizeT;
@@ -126,12 +109,11 @@
     if (document.documentElement.classList.contains('lgcy-wipe-incoming')) return;
     clearTimeout(resizeT);
     resizeT = setTimeout(function () {
-      buildHexes();
+      buildTiles();
       setIdle();
     }, 150);
   });
 
-  // x and y are viewport %; origin selects which corner the wave starts from
   function distFor(x, y, origin) {
     switch (origin) {
       case 'tr': return y + (100 - x);
@@ -141,22 +123,19 @@
       default:   return (100 - y) + x;
     }
   }
-  function maxDist() { return 200; }   // 100 + 100 across viewport
+  function maxDist() { return 200; }
 
-  // ───── INCOMING: page just loaded covered, fade overlay away ─────
+  // ───── INCOMING — runs on all viewports ─────
   if (document.documentElement.classList.contains('lgcy-wipe-incoming')) {
-    // Wipe element shows the master image directly so cover is solid
+    applyOverlayBaseStyles();
     wipe.style.setProperty('background', MASTER_BG, 'important');
-    wipe.style.setProperty('background-color', MASTER_FALLBACK, 'important');
-    wipe.style.setProperty('background-attachment', MASTER_BG_ATTACHMENT, 'important');
-    wipe.style.setProperty('background-size', MASTER_BG_SIZE, 'important');
-    wipe.style.setProperty('background-blend-mode', MASTER_BG_BLEND, 'important');
+    wipe.style.setProperty('background-color', MASTER_BG, 'important');
     wipe.style.setProperty('opacity', '1', 'important');
     wipe.style.setProperty('transform', 'scale(1)', 'important');
     wipe.style.setProperty('pointer-events', 'auto', 'important');
-    hexes.forEach(function (h) {
-      h.style.setProperty('transition', 'none', 'important');
-      h.style.setProperty('transform', 'scale(1.04)', 'important');
+    tiles.forEach(function (t) {
+      t.style.setProperty('transition', 'none', 'important');
+      t.style.setProperty('transform', 'scale(1.04)', 'important');
     });
     var startReveal = function () {
       wipe.style.setProperty(
@@ -167,8 +146,6 @@
       wipe.style.setProperty('opacity', '0', 'important');
       wipe.style.setProperty('transform', 'scale(1.03)', 'important');
       document.documentElement.classList.remove('lgcy-wipe-incoming');
-      // Now safe to clear the storage flag — fade has started, no more
-      // redirects expected after this point.
       try { sessionStorage.removeItem('lgcy-wipe-incoming'); } catch (e) {}
       setTimeout(function () {
         wipe.style.transition = '';
@@ -176,9 +153,9 @@
         wipe.style.backgroundColor = 'transparent';
         wipe.style.transform = '';
         wipe.style.pointerEvents = 'none';
-        hexes.forEach(function (h) {
-          h.style.setProperty('transition', 'none', 'important');
-          h.style.setProperty('transform', 'scale(0)', 'important');
+        tiles.forEach(function (t) {
+          t.style.setProperty('transition', 'none', 'important');
+          t.style.setProperty('transform', 'scale(0)', 'important');
         });
       }, FADE_MS + 40);
     };
@@ -189,15 +166,12 @@
     });
   }
 
-  // ───── OUTGOING: intercept link clicks ─────
+  // ───── OUTGOING — desktop only ─────
   var busy = false;
   var origins = ['tr', 'bl', 'br', 'tl'];
   var originIdx = 0;
 
   function prefetch(url) {
-    // <link rel=prefetch> isn't well supported on Safari mobile — use a
-    // fetch() to warm the browser cache so the upcoming navigation can
-    // pull from cache instead of waiting on the network.
     try {
       if (typeof fetch === 'function') {
         fetch(url, { credentials: 'same-origin', cache: 'force-cache', mode: 'no-cors' })
@@ -213,38 +187,36 @@
 
   function navigateTo(url, origin) {
     if (busy) return;
+    // Mobile safety net — even if someone calls navigateTo programmatically
+    // on mobile (e.g. from window.lgcyWipe.navigate), just go.
+    if (isMobile()) {
+      window.location.href = url;
+      return;
+    }
     busy = true;
-
-    // Kick off a prefetch immediately so the next page is in cache by the
-    // time the cascade ends — eliminates the "all-grey waiting" gap.
     prefetch(url);
 
-    // Make sure the overlay is visible and on top
     wipe.style.setProperty('opacity', '1', 'important');
     wipe.style.setProperty('z-index', '2147483646', 'important');
     wipe.style.setProperty('display', 'block', 'important');
     wipe.style.setProperty('pointer-events', 'auto', 'important');
 
-    var totalMs = maxDist() * STAGGER_MS + HEX_DUR;
+    var totalMs = maxDist() * STAGGER_MS + TILE_DUR;
 
-    // Stagger hex pop-ins from the chosen corner.
-    hexes.forEach(function (h) {
-      var d = distFor(+h.dataset.x, +h.dataset.y, origin);
+    tiles.forEach(function (t) {
+      var d = distFor(+t.dataset.x, +t.dataset.y, origin);
       var delay = d * STAGGER_MS;
       setTimeout(function () {
-        h.style.setProperty('transform', 'scale(1.04)', 'important');
+        t.style.setProperty('transform', 'scale(1.04)', 'important');
       }, delay);
     });
 
-    // Navigate just before the very last tile lands — cascade reaches
-    // (near) full cover and the page swap happens at that moment.
     setTimeout(function () {
       try { sessionStorage.setItem('lgcy-wipe-incoming', '1'); } catch (e) {}
       window.location.href = url;
     }, Math.round(totalMs * 0.95));
   }
 
-  // Public API for inline scripts that do programmatic navigation
   window.lgcyWipe = {
     navigate: function (url, origin) {
       navigateTo(url, origin || origins[(originIdx++) % origins.length]);
@@ -267,21 +239,15 @@
     try { url = new URL(link.href, window.location.href); }
     catch (e) { return false; }
 
-    // Treat the store's own myshopify.com domain as same-origin so links
-    // hardcoded to *.myshopify.com still get the wipe when viewing the
-    // custom storefront domain.
     var sameOrigin = url.origin === window.location.origin;
     var sameStore  = /(^|\.)myshopify\.com$/i.test(url.hostname) ||
                      /(^|\.)myshopify\.com$/i.test(window.location.hostname);
     if (!sameOrigin && !sameStore) return false;
 
-    // Skip same-page anchors
     if (url.pathname === window.location.pathname &&
         url.search === window.location.search &&
         url.hash) return false;
 
-    // Skip checkout / cart-permalink / file routes — they shouldn't be
-    // intercepted; they trigger their own navigations or downloads.
     var p = url.pathname;
     if (p.indexOf('/checkout') === 0) return false;
     if (p.indexOf('/cart/') === 0)    return false;
@@ -292,6 +258,7 @@
   }
 
   window.addEventListener('click', function (e) {
+    if (isMobile()) return;                       // mobile bail — let browser navigate
     var link = e.target.closest && e.target.closest('a[href]');
     if (!link) return;
     if (!shouldIntercept(link, e)) return;
@@ -301,7 +268,4 @@
     navigateTo(url.href, origins[originIdx % origins.length]);
     originIdx++;
   }, true);
-
-  // If the user uses back/forward, the page is a fresh load — no incoming
-  // flag, no overlay. Browser's native nav takes over.
 })();
