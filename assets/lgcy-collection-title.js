@@ -6,7 +6,8 @@
 (function () {
   var TITLES = {
     'lgcy-glasses': 'LGCY EYEWEAR',
-    'the-legacy-collection': 'THE LEGACY COLLECTION.'
+    'the-legacy-collection': 'THE LEGACY COLLECTION.',
+    'all': 'LGCYCLOTHING'
   };
 
   var match = window.location.pathname.match(/\/collections\/([^\/?#]+)/);
