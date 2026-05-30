@@ -5,7 +5,7 @@
    to TITLES below as new collections are created. */
 (function () {
   var TITLES = {
-    'lgcy-glasses': 'LGCY EYEWARE',
+    'lgcy-glasses': 'LGCY EYEWEAR',
     'the-legacy-collection': 'THE LEGACY COLLECTION.'
   };
 
