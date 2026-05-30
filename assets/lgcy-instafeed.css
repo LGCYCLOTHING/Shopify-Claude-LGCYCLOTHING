@@ -8,29 +8,48 @@
   letter-spacing: -0.05em !important;
 }
 
-/* Tiles — bigger, locked to 3:4 portrait */
-.instafeed-new-layout-item {
-  width: 340px !important;
+/* Free the container/wrapper height so taller tiles can grow */
+.instafeed-new-layout-container {
   height: auto !important;
-  aspect-ratio: 3 / 4 !important;
-  max-width: 340px !important;
-  min-width: 340px !important;
+  min-height: 453px !important;
+}
+.instafeed-new-layout-wrapper {
+  height: auto !important;
+  align-items: stretch !important;
 }
 
-/* Image fills the 3:4 tile, crops if source isn't already 3:4 */
+/* Tiles — locked to 340 × 453 (3:4 portrait), black bg for letterbox */
+.instafeed-new-layout-item {
+  width: 340px !important;
+  height: 453px !important;
+  min-width: 340px !important;
+  max-width: 340px !important;
+  min-height: 453px !important;
+  flex: 0 0 340px !important;
+  background: #000 !important;
+}
+
+/* Image contained inside — no crop; black bars fill the difference */
 .instafeed-new-layout-item img,
 .instafeed-new-layout-item .instafeed-lazy-image {
   width: 100% !important;
   height: 100% !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   object-position: center !important;
   display: block !important;
+  background: #000 !important;
 }
 
 @media (max-width: 749px) {
+  .instafeed-new-layout-container {
+    min-height: 147px !important;
+  }
   .instafeed-new-layout-item {
     width: 110px !important;
-    max-width: 110px !important;
+    height: 147px !important;
     min-width: 110px !important;
+    max-width: 110px !important;
+    min-height: 147px !important;
+    flex: 0 0 110px !important;
   }
 }
