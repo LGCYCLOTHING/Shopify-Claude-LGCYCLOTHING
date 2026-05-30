@@ -8,6 +8,43 @@
     }
   }
 
+  .lgcy-breadcrumb {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: #6b6b6b;
+    margin: 0 0 18px 0;
+    padding: 0;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .lgcy-breadcrumb a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 0;
+    transition: color 0.2s ease;
+  }
+  .lgcy-breadcrumb a:hover {
+    color: #000;
+  }
+  .lgcy-breadcrumb__sep {
+    color: #b8b8b8;
+    user-select: none;
+  }
+  .lgcy-breadcrumb__current {
+    color: #000;
+  }
+  @media (max-width: 749px) {
+    .lgcy-breadcrumb {
+      font-size: 12px;
+      margin-bottom: 14px;
+    }
+  }
+
   .collection-hero__title {
     font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
     font-weight: 900 !important;
