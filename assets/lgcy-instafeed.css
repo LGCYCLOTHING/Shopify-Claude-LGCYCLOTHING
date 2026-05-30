@@ -41,12 +41,12 @@
   max-width: none !important;
 }
 
-/* Images fill their tile */
+/* Images — keep natural aspect ratio, just scale to tile width */
 .instafeed-new-layout-wrapper img,
 .instafeed-new-layout-container img {
   width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
+  height: auto !important;
+  object-fit: initial !important;
   display: block !important;
 }
 
