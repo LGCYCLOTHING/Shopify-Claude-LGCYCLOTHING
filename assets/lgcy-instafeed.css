@@ -1,0 +1,22 @@
+/* LGCY — Instafeed overrides */
+
+/* Title — Inter 900, negative tracking */
+#insta-feed h2,
+.instafeed-shopify h2 {
+  font-family: 'Inter', Helvetica, Arial, sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.05em !important;
+}
+
+/* Tiles — bigger, keep app's native ~3:4 aspect ratio */
+.instafeed-new-layout-item {
+  width: 340px !important;
+  height: 453px !important;
+}
+
+@media (max-width: 749px) {
+  .instafeed-new-layout-item {
+    width: 110px !important;
+    height: 147px !important;
+  }
+}
