@@ -170,7 +170,7 @@
 
   // ───── OUTGOING — desktop only ─────
   var busy = false;
-  var origins = ['tr', 'bl', 'br', 'tl'];
+  var origins = ['left'];
   var originIdx = 0;
 
   function prefetch(url) {
