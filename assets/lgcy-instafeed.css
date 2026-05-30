@@ -1,3 +1,14 @@
+/* LGCY — Collection page banner (description block) — warm cream bg */
+#shopify-section-banner {
+  background: #f6f1e8 !important;
+}
+#shopify-section-banner .collection-hero,
+#shopify-section-banner .color-scheme-1,
+#shopify-section-banner .gradient {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
 /* LGCY — Instafeed overrides */
 
 /* Title — Inter 900, negative tracking, sits close to the grid */
