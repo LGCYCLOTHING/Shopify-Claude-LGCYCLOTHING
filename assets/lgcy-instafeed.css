@@ -1,7 +1,63 @@
-/* LGCY — Instafeed title treatment */
+/* LGCY — Instafeed visual overrides */
+
+/* Title — Inter 900, negative tracking */
 #insta-feed h2,
 .instafeed-shopify h2 {
   font-family: 'Inter', Helvetica, Arial, sans-serif !important;
   font-weight: 900 !important;
   letter-spacing: -0.05em !important;
+}
+
+/* Outer container — widen past the theme's --page-width cap */
+.shopify-section:has(#insta-feed),
+.shopify-section:has(.instafeed-shopify) {
+  max-width: 100% !important;
+}
+.shopify-section:has(#insta-feed) .page-width,
+.shopify-section:has(.instafeed-shopify) .page-width {
+  max-width: 1700px !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+}
+
+#insta-feed,
+.instafeed-shopify {
+  max-width: 1700px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+/* Flex wrapper — bigger gap between tiles */
+.instafeed-new-layout-wrapper {
+  gap: 14px !important;
+  width: 100% !important;
+}
+
+/* Each tile (direct children of the flex wrapper) — grow them */
+.instafeed-new-layout-wrapper > * {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+}
+
+/* Images fill their tile */
+.instafeed-new-layout-wrapper img,
+.instafeed-new-layout-container img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+/* Mobile — keep proportions sane */
+@media (max-width: 749px) {
+  .shopify-section:has(#insta-feed) .page-width,
+  .shopify-section:has(.instafeed-shopify) .page-width {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  .instafeed-new-layout-wrapper {
+    gap: 6px !important;
+  }
 }
