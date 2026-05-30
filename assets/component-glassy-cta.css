@@ -501,9 +501,9 @@ html body .rp-editorial-link {
   font-weight: 900;
   letter-spacing: -0.05em;
   text-transform: none;
-  color: #ffffff;
+  color: #000000;
   text-decoration: none;
-  text-shadow: 0 0.15em 0.25em rgba(0, 0, 0, 0.35);
+  text-shadow: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
