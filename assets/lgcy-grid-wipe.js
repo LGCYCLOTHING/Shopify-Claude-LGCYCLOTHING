@@ -119,11 +119,13 @@
       case 'tr': return y + (100 - x);
       case 'tl': return y + x;
       case 'br': return (100 - y) + (100 - x);
-      case 'bl':
-      default:   return (100 - y) + x;
+      case 'bl': return (100 - y) + x;
+      case 'right': return 100 - x;
+      case 'left':
+      default:   return x;
     }
   }
-  function maxDist() { return 200; }
+  function maxDist() { return 100; }
 
   // ───── INCOMING — runs on all viewports ─────
   if (document.documentElement.classList.contains('lgcy-wipe-incoming')) {
