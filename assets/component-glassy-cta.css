@@ -132,7 +132,7 @@
 }
 
 .glassy-cta .product-form__submit:hover > span {
-  text-shadow: 0.025em 0.025em 0.025em rgba(0, 0, 0, 0.12);
+  text-shadow: none;
 }
 
 /* Sliding sheen across the label */
