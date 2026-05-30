@@ -9,7 +9,7 @@
   margin-bottom: 12px !important;
 }
 
-/* Linked title — liquid-glass pill appears behind text on hover */
+/* Linked title — liquid-glass pill always visible, darkens on hover */
 #insta-feed h2 a,
 .instafeed-shopify h2 a {
   color: inherit !important;
@@ -17,7 +17,7 @@
   border-bottom: 0 !important;
   position: relative;
   display: inline-block;
-  padding: 0.1em 0.4em;
+  padding: 0.18em 0.7em;
   border-radius: 999vw;
   isolation: isolate;
   -webkit-tap-highlight-color: transparent;
@@ -72,15 +72,33 @@
   pointer-events: none;
 }
 
-#insta-feed h2 a:hover,
-.instafeed-shopify h2 a:hover {
-  text-decoration: none !important;
-  transform: scale(0.985);
+/* Only show hover effect on devices that actually have hover (skip touch) */
+@media (hover: hover) {
+  #insta-feed h2 a:hover,
+  .instafeed-shopify h2 a:hover {
+    text-decoration: none !important;
+    transform: scale(0.985);
+  }
+
+  #insta-feed h2 a:hover::before,
+  .instafeed-shopify h2 a:hover::before {
+    background: linear-gradient(
+      -75deg,
+      rgba(0, 0, 0, 0.35),
+      rgba(0, 0, 0, 0.55),
+      rgba(0, 0, 0, 0.35)
+    );
+    box-shadow:
+      inset 0 0.125em 0.125em rgba(255, 255, 255, 0.08),
+      inset 0 -0.125em 0.125em rgba(0, 0, 0, 0.4),
+      0 0.15em 0.05em -0.1em rgba(0, 0, 0, 0.35),
+      0 0 0.05em 0.1em inset rgba(255, 255, 255, 0.1);
+  }
 }
 
-/* Hover — pill darkens to signal clickability */
-#insta-feed h2 a:hover::before,
-.instafeed-shopify h2 a:hover::before {
+/* Touch — tap (active) gives the same darken so it feels responsive */
+#insta-feed h2 a:active::before,
+.instafeed-shopify h2 a:active::before {
   background: linear-gradient(
     -75deg,
     rgba(0, 0, 0, 0.35),
@@ -126,16 +144,31 @@
   background: #000 !important;
 }
 
+/* === MOBILE === */
 @media (max-width: 749px) {
+  /* Smaller title + smaller pill padding so it fits comfortably */
+  #insta-feed h2,
+  .instafeed-shopify h2 {
+    font-size: 18px !important;
+    margin-bottom: 10px !important;
+  }
+  #insta-feed h2 a,
+  .instafeed-shopify h2 a {
+    padding: 0.2em 0.55em;
+  }
+
+  /* Tiles sized to actually fit a 5-up row on phone screens.
+     min() keeps them from blowing up on tablet widths just under 750px. */
   .instafeed-new-layout-container {
-    min-height: 147px !important;
+    min-height: auto !important;
   }
   .instafeed-new-layout-item {
-    width: 110px !important;
-    height: 147px !important;
-    min-width: 110px !important;
-    max-width: 110px !important;
-    min-height: 147px !important;
-    flex: 0 0 110px !important;
+    width: min(18vw, 130px) !important;
+    height: auto !important;
+    aspect-ratio: 3 / 4 !important;
+    min-width: min(18vw, 130px) !important;
+    max-width: min(18vw, 130px) !important;
+    min-height: 0 !important;
+    flex: 0 0 min(18vw, 130px) !important;
   }
 }
