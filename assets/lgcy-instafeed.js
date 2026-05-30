@@ -1,7 +1,7 @@
 /* LGCY — Wrap the Instafeed title in a link to Instagram.
    Polls briefly because the title is injected by the Mintt app after load. */
 (function () {
-  var IG_URL = 'https://www.instagram.com/lgcyclothing.store/';
+  var IG_URL = 'https://www.instagram.com/_lgcyclothing_/';
 
   function linkTitles() {
     var titles = document.querySelectorAll('#insta-feed h2, .instafeed-shopify h2');
