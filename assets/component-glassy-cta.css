@@ -443,7 +443,7 @@ html body .rp-btn-cart:hover {
 }
 
 html body .rp-btn-cart:hover > span {
-  text-shadow: 0 0.1em 0.2em rgba(0, 0, 0, 0.4);
+  text-shadow: none;
 }
 
 html body .rp-btn-cart:hover::after {
