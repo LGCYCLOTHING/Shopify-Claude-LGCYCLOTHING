@@ -96,15 +96,18 @@
   .rp-wrap {
     min-height: 0 !important;
     align-items: stretch !important;
-    /* Make the gallery column slightly wider than the info column so the
-       image gets more presence and the bottom of the section (with 1 / N)
-       lands inside the viewport from the very top. */
-    grid-template-columns: 1.1fr 0.9fr !important;
+    /* 50/50 split — image and info each take half the viewport width */
+    grid-template-columns: 1fr 1fr !important;
   }
   .rp-info {
     min-height: 0 !important;
     align-items: flex-start !important;
     padding-bottom: 60px !important;
+  }
+  /* Let the info text stretch wider — the inner wrapper was capped at 420px */
+  .rp-inner {
+    max-width: 560px !important;
+    width: 100% !important;
   }
   .rp-gallery {
     height: auto !important;
