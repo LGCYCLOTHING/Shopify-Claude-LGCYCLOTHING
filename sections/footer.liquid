@@ -14,6 +14,14 @@
         <span class="lgcy-footer__tagline">&#8216;Iconic Visionary.&#8217;</span>
         <hr class="lgcy-footer__brand-divider">
         <span class="lgcy-footer__est">Est. 2026</span>
+
+        <a href="https://www.instagram.com/_lgcyclothing_/" target="_blank" rel="noopener" class="lgcy-footer__ugc">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+            <circle cx="12" cy="13" r="3.5"/>
+          </svg>
+          <span>Wear it — tag <strong>@_lgcyclothing_</strong></span>
+        </a>
       </div>
 
       <div class="lgcy-footer__col lgcy-footer__col--nav">
@@ -24,12 +32,18 @@
           <a href="/policies/refund-policy" class="lgcy-footer__nav-link">Returns</a>
           <a href="/pages/contact" class="lgcy-footer__nav-link">Contact</a>
         </nav>
+
+        <div class="lgcy-footer__support">
+          <a href="mailto:support@lgcyclothing.com" class="lgcy-footer__support-email">support@lgcyclothing.com</a>
+          <span class="lgcy-footer__support-meta">Replies within 24h</span>
+        </div>
       </div>
 
       <div class="lgcy-footer__col lgcy-footer__col--newsletter">
         {%- form 'customer', id: 'ContactFooter', class: 'lgcy-footer__newsletter-form' -%}
           <input type="hidden" name="contact[tags]" value="newsletter">
           <p class="lgcy-footer__newsletter-label">Join the Vision.</p>
+          <p class="lgcy-footer__newsletter-incentive">10% off your first drop &middot; early access</p>
           <div class="lgcy-footer__newsletter-field">
             <input
               id="NewsletterForm--{{ section.id }}"
