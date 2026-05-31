@@ -266,9 +266,12 @@
       'button[name="add"]'
     ];
 
-    /* Product image / gallery container — what the popup waits for the user
-       to scroll past before it appears */
+    /* Trigger element — popup waits for the user to scroll fully past this
+       block before it appears. We watch the whole product-detail section
+       (gallery + info column together) so the popup only shows once the
+       editorial / related-products area starts. */
     var GALLERY_SELECTORS = [
+      '.rp-wrap',
       '.rp-gallery',
       '.product__media-wrapper',
       '.product__media-list',
