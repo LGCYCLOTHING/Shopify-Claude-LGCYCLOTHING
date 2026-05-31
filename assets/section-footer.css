@@ -626,18 +626,19 @@
 .lgcy-footer__newsletter-form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 4px;
   width: 100%;
   max-width: 260px;
 }
 
 .lgcy-footer__newsletter-label {
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
   color: #111;
   margin: 0;
+  line-height: 1.1;
 }
 
 .lgcy-footer__newsletter-field {
