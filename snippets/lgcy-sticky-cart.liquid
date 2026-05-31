@@ -272,13 +272,21 @@
 
     function attachObserver(mainBtn) {
       if (!('IntersectionObserver' in window)) {
-        /* Fallback: just show after any scroll past 400px */
+        /* Fallback: show after scrolling ~1 viewport */
         var onScroll = function () {
-          if (window.scrollY > 400) showPopup(); else hidePopup();
+          if (window.scrollY > window.innerHeight * 0.9) showPopup(); else hidePopup();
         };
         window.addEventListener('scroll', onScroll, { passive: true });
         return;
       }
+
+      /* Prefer the product image / gallery as the trigger element — popup
+         shows once the user has scrolled past the main product image area.
+         Falls back to the ATC button with a generous top rootMargin so the
+         popup still doesn't appear too early. */
+      var trigger = findFirst(GALLERY_SELECTORS) || mainBtn;
+      var isGallery = trigger !== mainBtn;
+
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
@@ -289,9 +297,12 @@
         });
       }, {
         threshold: 0,
-        rootMargin: '-80px 0px -10px 0px'
+        /* When watching gallery: trigger fires when its bottom leaves viewport.
+           When watching ATC: pad the top by ~80% of viewport so the popup
+           only shows after a real scroll past the image area. */
+        rootMargin: isGallery ? '0px 0px 0px 0px' : '80% 0px 0px 0px'
       });
-      io.observe(mainBtn);
+      io.observe(trigger);
     }
 
     function init() {
