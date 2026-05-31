@@ -371,7 +371,13 @@
       var title = findFirst(TITLE_SELECTORS);
       if (!title || !newTpl) return false;
       var badge = newTpl.content.firstElementChild.cloneNode(true);
-      title.appendChild(badge);
+      /* Insert AFTER the title element (not inside it) so dynamic
+         breadcrumbs reading h1.textContent don't pick up "NEW". */
+      if (title.parentNode) {
+        title.parentNode.insertBefore(badge, title.nextSibling);
+      } else {
+        title.appendChild(badge);
+      }
       return true;
     }
 
