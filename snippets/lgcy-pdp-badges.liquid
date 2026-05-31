@@ -8,6 +8,67 @@
 {%- if template.name == 'product' and product -%}
 <meta name="lgcy-product-tags" content="{{ product.tags | join: ',' | downcase | escape }}">
 
+<style>
+  /* === PDP info-panel — bumped text sizes for readability (all products) === */
+  .rp-title {
+    font-size: 22px !important;
+    line-height: 1.2 !important;
+  }
+  .rp-price {
+    font-size: 19px !important;
+  }
+  .rp-color-label,
+  .rp-color-val {
+    font-size: 13px !important;
+  }
+  .rp-size-label,
+  .rp-size-guide,
+  .rp-size-nis {
+    font-size: 13px !important;
+  }
+  .rp-usp-text {
+    font-size: 12px !important;
+  }
+  .rp-section-label {
+    font-size: 13px !important;
+  }
+  .rp-acc-trigger {
+    font-size: 14px !important;
+    padding: 18px 0 !important;
+  }
+  .rp-acc-body-inner {
+    font-size: 15px !important;
+    line-height: 1.7 !important;
+  }
+  .rp-trigger-icon {
+    font-size: 24px !important;
+  }
+  /* Notify When Available + breadcrumb inside info column */
+  .rp-info a[href*="notify"],
+  .rp-info .rp-notify,
+  .rp-info .rp-bread,
+  .rp-info .lgcy-breadcrumb,
+  .rp-info nav {
+    font-size: 13px !important;
+  }
+
+  @media (max-width: 749px) {
+    .rp-title {
+      font-size: 20px !important;
+    }
+    .rp-price {
+      font-size: 17px !important;
+    }
+    .rp-acc-trigger {
+      font-size: 13px !important;
+      padding: 16px 0 !important;
+    }
+    .rp-acc-body-inner {
+      font-size: 14px !important;
+    }
+  }
+</style>
+
 {%- comment -%} Detect eyewear products — by collection handle, product type, or tag {%- endcomment -%}
 {%- assign is_eyewear = false -%}
 {%- for col in product.collections -%}
