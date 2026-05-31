@@ -8,13 +8,25 @@
     }
   }
 
+  /* Push the hero text block down so the breadcrumb sits centered
+     between the video banner above and the title below. */
+  .collection-hero__inner {
+    padding-top: 60px !important;
+  }
+  @media (max-width: 749px) {
+    .collection-hero__inner {
+      padding-top: 32px !important;
+    }
+  }
+
   .lgcy-breadcrumb {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
     color: #6b6b6b;
-    margin: 0 0 18px 0;
+    margin: 0 0 22px 0;
     padding: 0;
     line-height: 1;
     display: flex;
@@ -34,14 +46,15 @@
   .lgcy-breadcrumb__sep {
     color: #b8b8b8;
     user-select: none;
+    font-weight: 400;
   }
   .lgcy-breadcrumb__current {
     color: #000;
   }
   @media (max-width: 749px) {
     .lgcy-breadcrumb {
-      font-size: 12px;
-      margin-bottom: 14px;
+      font-size: 11px;
+      margin-bottom: 16px;
     }
   }
 
