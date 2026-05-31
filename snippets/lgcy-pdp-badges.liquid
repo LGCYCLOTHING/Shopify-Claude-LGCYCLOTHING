@@ -93,32 +93,65 @@
     padding-top: 0 !important;
     padding-bottom: 0 !important;
   }
+  /* === PDP layout — fixed-height row; info column scrolls internally ===
+     Opening an accordion no longer stretches the gallery — instead a
+     scrollbar appears in the right column. Scroll inside the info column
+     stays contained; scrolling anywhere else (over the gallery, header,
+     etc.) moves the page normally. */
   .rp-wrap {
     min-height: 0 !important;
+    height: calc(100vh - var(--header-height, 80px)) !important;
+    max-height: calc(100vh - var(--header-height, 80px)) !important;
     align-items: stretch !important;
-    /* 50/50 split — image and info each take half the viewport width */
     grid-template-columns: 1fr 1fr !important;
   }
-  .rp-info {
+  .rp-gallery {
+    height: 100% !important;
     min-height: 0 !important;
-    align-items: flex-start !important;
-    padding-bottom: 60px !important;
+    max-height: 100% !important;
   }
-  /* Let the info text stretch wider — the inner wrapper was capped at 420px */
+  .rp-info {
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: 100% !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    align-items: flex-start !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+    /* Subtle scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,0,0,0.25) transparent;
+  }
+  .rp-info::-webkit-scrollbar {
+    width: 6px;
+  }
+  .rp-info::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .rp-info::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.22);
+    border-radius: 999vw;
+  }
+  .rp-info::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,0.4);
+  }
+  /* Inner content stretches wider (was capped at 420px) */
   .rp-inner {
     max-width: 560px !important;
     width: 100% !important;
   }
-  .rp-gallery {
-    height: auto !important;
-    /* Subtract enough for the sticky header + bottom-of-gallery elements
-       (counter, BLUE LIGHT badge, divider line) so the entire bottom edge
-       is visible without scrolling. */
-    min-height: calc(100vh - 200px) !important;
-  }
   @media (max-width: 749px) {
     .rp-wrap {
       grid-template-columns: 1fr !important;
+      height: auto !important;
+      max-height: none !important;
+    }
+    .rp-gallery,
+    .rp-info {
+      height: auto !important;
+      max-height: none !important;
+      overflow-y: visible !important;
     }
   }
 
