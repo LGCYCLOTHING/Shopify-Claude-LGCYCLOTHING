@@ -661,6 +661,12 @@
         list.appendChild(body);
       });
 
+      /* Move Shipping & Returns to the very bottom (after the new accordions) */
+      var shippingBtn = list.querySelector('button[onclick*="shipping"]');
+      var shippingBody = list.querySelector('#rp-acc-shipping');
+      if (shippingBtn) list.appendChild(shippingBtn);
+      if (shippingBody) list.appendChild(shippingBody);
+
       /* Auto-open the new accordions (matches the existing "open all" behavior) */
       setTimeout(function () {
         list.querySelectorAll('.rp-acc-trigger').forEach(function (t) {
