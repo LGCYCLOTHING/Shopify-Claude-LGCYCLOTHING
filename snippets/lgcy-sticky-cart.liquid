@@ -293,14 +293,24 @@
       return null;
     }
 
-    function showPopup() {
-      popup.classList.add('is-visible');
-      popup.setAttribute('aria-hidden', 'false');
+    /* Two independent conditions drive visibility:
+       - past the product image (set by gallery observer)
+       - footer not yet visible (set by footer observer)
+       Popup shows only when BOTH are true. */
+    var scrolledPastImage = false;
+    var footerVisible = false;
+
+    function syncVisibility() {
+      if (scrolledPastImage && !footerVisible) {
+        popup.classList.add('is-visible');
+        popup.setAttribute('aria-hidden', 'false');
+      } else {
+        popup.classList.remove('is-visible');
+        popup.setAttribute('aria-hidden', 'true');
+      }
     }
-    function hidePopup() {
-      popup.classList.remove('is-visible');
-      popup.setAttribute('aria-hidden', 'true');
-    }
+    function showPopup() { scrolledPastImage = true;  syncVisibility(); }
+    function hidePopup() { scrolledPastImage = false; syncVisibility(); }
 
     function attachPriceMirror() {
       var stickyPriceEl = popup.querySelector('[data-lgcy-sticky-price]');
