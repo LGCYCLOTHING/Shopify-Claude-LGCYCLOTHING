@@ -73,6 +73,16 @@
     font-weight: 500 !important;
     color: #6b6b6b !important;
   }
+  /* Cap the description at ~50% width so it reads as a column instead of
+     stretching the full page width. */
+  .collection-hero__description {
+    max-width: 50%;
+  }
+  @media (max-width: 749px) {
+    .collection-hero__description {
+      max-width: 100%;
+    }
+  }
 {%- endstyle -%}
 
 <div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
