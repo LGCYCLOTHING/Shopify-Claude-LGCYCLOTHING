@@ -1,0 +1,172 @@
+{% comment %}
+  LGCY — Blue Light Filter badge for the product page.
+
+  Renders a meta tag listing the product's tags so JS can detect whether
+  the current PDP belongs to a blue-light-filter frame. If yes, injects
+  a glass pill badge into the product gallery area.
+
+  How to flag a product as blue-light:
+    Shopify admin → Products → [product] → Tags → add `blue-light`.
+{% endcomment %}
+
+{%- if template.name == 'product' and product -%}
+<meta name="lgcy-product-tags" content="{{ product.tags | join: ',' | downcase | escape }}">
+
+<template id="lgcy-bluelight-template">
+  <span class="lgcy-bluelight-badge" role="note" aria-label="Blue light filter lens">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="3.5"/>
+      <path d="M12 2v2"/>
+      <path d="M12 20v2"/>
+      <path d="m4.93 4.93 1.41 1.41"/>
+      <path d="m17.66 17.66 1.41 1.41"/>
+      <path d="M2 12h2"/>
+      <path d="M20 12h2"/>
+      <path d="m4.93 19.07 1.41-1.41"/>
+      <path d="m17.66 6.34 1.41-1.41"/>
+    </svg>
+    <span>Blue Light Filter</span>
+  </span>
+</template>
+
+<style>
+  .lgcy-bluelight-badge {
+    --border-width: 1px;
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 14;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    isolation: isolate;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 900;
+    font-size: 11px;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #0a3a6b;
+    background: linear-gradient(
+      -75deg,
+      rgba(200, 222, 245, 0.55),
+      rgba(225, 238, 252, 0.85),
+      rgba(200, 222, 245, 0.55)
+    );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 0 rgba(20, 60, 110, 0.15),
+      0 0.25em 0.6em -0.125em rgba(20, 60, 110, 0.22),
+      0 0 0 1px rgba(20, 60, 110, 0.08);
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
+            backdrop-filter: blur(10px) saturate(150%);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 360ms cubic-bezier(0.4, 0, 0.2, 1),
+                transform 360ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .lgcy-bluelight-badge.is-shown {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Conic outline matching the rest of the glass family */
+  .lgcy-bluelight-badge::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 10px;
+    width: calc(100% + var(--border-width));
+    height: calc(100% + var(--border-width));
+    top: calc(0% - var(--border-width) / 2);
+    left: calc(0% - var(--border-width) / 2);
+    padding: var(--border-width);
+    box-sizing: border-box;
+    background: conic-gradient(
+      from -75deg at 50% 50%,
+      rgba(20, 60, 110, 0.45),
+      rgba(20, 60, 110, 0) 5% 40%,
+      rgba(20, 60, 110, 0.45) 50%,
+      rgba(20, 60, 110, 0) 60% 95%,
+      rgba(20, 60, 110, 0.45)
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .lgcy-bluelight-badge svg {
+    color: #0a3a6b;
+    flex-shrink: 0;
+  }
+  @media (max-width: 749px) {
+    .lgcy-bluelight-badge {
+      top: 12px;
+      left: 12px;
+      padding: 7px 11px;
+      font-size: 10px;
+      border-radius: 8px;
+    }
+    .lgcy-bluelight-badge::after {
+      border-radius: 8px;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    var tagsMeta = document.querySelector('meta[name="lgcy-product-tags"]');
+    if (!tagsMeta) return;
+
+    var tags = (tagsMeta.getAttribute('content') || '').split(',').map(function (t) {
+      return t.trim().toLowerCase();
+    });
+    var isBlueLight = tags.indexOf('blue-light') !== -1 ||
+                      tags.indexOf('bluelight') !== -1 ||
+                      tags.indexOf('blue light') !== -1;
+    if (!isBlueLight) return;
+
+    var template = document.getElementById('lgcy-bluelight-template');
+    if (!template) return;
+
+    /* Gallery containers — same priority list as the sticky cart uses,
+       so the badge lands inside whatever PDP layout the theme renders. */
+    var HOSTS = [
+      '.rp-gallery',
+      '.product__media-wrapper',
+      '.product__media-list',
+      'media-gallery',
+      '.product-media-container'
+    ];
+
+    function inject() {
+      if (document.querySelector('.lgcy-bluelight-badge')) return true;
+      for (var i = 0; i < HOSTS.length; i++) {
+        var host = document.querySelector(HOSTS[i]);
+        if (host) {
+          /* Need positioning context for the absolute badge */
+          if (getComputedStyle(host).position === 'static') {
+            host.style.position = 'relative';
+          }
+          var badge = template.content.firstElementChild.cloneNode(true);
+          host.appendChild(badge);
+          requestAnimationFrame(function () { badge.classList.add('is-shown'); });
+          return true;
+        }
+      }
+      return false;
+    }
+
+    if (inject()) return;
+    /* PDP gallery may render after first paint — retry briefly */
+    var tries = 0;
+    var t = setInterval(function () {
+      tries++;
+      if (inject() || tries >= 30) clearInterval(t);
+    }, 250);
+  })();
+</script>
+{%- endif -%}
