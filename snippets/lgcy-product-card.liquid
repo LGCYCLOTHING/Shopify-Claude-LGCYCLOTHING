@@ -358,6 +358,10 @@
 >
   <div class="lgcy-card__image-wrap" data-quick-add-wrap>
 
+    {%- if product.tags contains 'new' or product.tags contains 'New' or product.tags contains 'NEW' -%}
+      <span class="lgcy-card__new-badge" aria-label="New product">NEW</span>
+    {%- endif -%}
+
     {%- if featured_img -%}
       <img
         src="{{ featured_img | image_url: width: 800 }}"
