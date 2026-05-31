@@ -368,10 +368,12 @@
         });
       }, {
         threshold: 0,
-        /* When watching gallery: trigger fires when its bottom leaves viewport.
-           When watching ATC: pad the top by ~80% of viewport so the popup
-           only shows after a real scroll past the image area. */
-        rootMargin: isGallery ? '0px 0px 0px 0px' : '80% 0px 0px 0px'
+        /* When watching gallery/wrap: shrink the root from the bottom by 50%
+           so the popup fires as soon as the bottom half of the section has
+           scrolled past — roughly when the user is halfway through the PDP.
+           When watching ATC fallback: still pad top so it doesn't fire on
+           the small first scroll. */
+        rootMargin: isGallery ? '0px 0px -50% 0px' : '80% 0px 0px 0px'
       });
       io.observe(trigger);
     }
