@@ -490,4 +490,159 @@
     }, 250);
   })();
 </script>
+
+{%- comment -%} === GLASSES PDP — swap Size Chart + Care for Dimensions / Frame / Care & Storage === {%- endcomment -%}
+<style>
+  /* Hide existing Size Chart + Care Instructions on eyewear pages */
+  html[data-lgcy-eyewear] button[onclick*="'sizechart'"],
+  html[data-lgcy-eyewear] #rp-acc-sizechart,
+  html[data-lgcy-eyewear] button[onclick*="'care'"]:not([onclick*="'carestorage'"]),
+  html[data-lgcy-eyewear] #rp-acc-care:not(#rp-acc-carestorage) {
+    display: none !important;
+  }
+
+  /* Dimensions / Frame Details tables */
+  .lgcy-spec-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .lgcy-spec-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    font-size: 14px;
+  }
+  .lgcy-spec-list li:last-child {
+    border-bottom: 0;
+  }
+  .lgcy-spec-list li .lgcy-spec-key {
+    color: #666;
+    letter-spacing: -0.01em;
+  }
+  .lgcy-spec-list li .lgcy-spec-val {
+    font-weight: 800;
+    color: #111;
+    letter-spacing: -0.02em;
+  }
+</style>
+
+<script>
+  (function () {
+    var eyewearMeta = document.querySelector('meta[name="lgcy-product-is-eyewear"]');
+    if (!eyewearMeta) return;
+    document.documentElement.setAttribute('data-lgcy-eyewear', '1');
+
+    var handleMeta = document.querySelector('meta[name="lgcy-product-handle"]');
+    var handle = handleMeta ? handleMeta.getAttribute('content') : '';
+
+    /* Per-product specs. Add more handles here as new frames launch. */
+    var GLASSES_DATA = {
+      'lgcy-01-aeris-black-clear': {
+        dimensions: [
+          ['Temple Length', '145mm'],
+          ['Frame Width', '133.2mm'],
+          ['Lens Width', '47mm'],
+          ['Lens Height', '39.8mm']
+        ],
+        frame: [
+          ['Silhouette', 'Round'],
+          ['Material', 'Premium acetate'],
+          ['Bridge', '20mm'],
+          ['Lens', 'Optical-grade clear · blue-light filter']
+        ]
+      },
+      'lgcy-01-aeris-black-purple': {
+        dimensions: [
+          ['Temple Length', '145mm'],
+          ['Frame Width', '133.2mm'],
+          ['Lens Width', '47mm'],
+          ['Lens Height', '39.8mm']
+        ],
+        frame: [
+          ['Silhouette', 'Round'],
+          ['Material', 'Premium acetate'],
+          ['Bridge', '20mm'],
+          ['Lens', 'Tinted purple']
+        ]
+      }
+    };
+
+    /* Care copy — slightly different wording from any common reference. */
+    var CARE_HTML =
+      '<p>Each pair ships in a hard case with a microfiber cloth. ' +
+      'Keep your frames inside the case whenever they\'re not on your face.</p>' +
+      '<p>Wipe lenses gently with the cloth — never use paper, alcohol, ' +
+      'or household cleaners. They will scratch coatings and break down the acetate.</p>' +
+      '<p>Avoid leaving your glasses in direct sun for long stretches ' +
+      '(parked cars, dashboards) — sustained heat warps the frame.</p>';
+
+    function buildList(rows) {
+      var html = '<ul class="lgcy-spec-list">';
+      rows.forEach(function (r) {
+        html += '<li><span class="lgcy-spec-key">' + r[0] +
+                '</span><span class="lgcy-spec-val">' + r[1] + '</span></li>';
+      });
+      html += '</ul>';
+      return html;
+    }
+
+    function init() {
+      var list = document.querySelector('.rp-acc-list');
+      if (!list) return false;
+      if (document.getElementById('rp-acc-dimensions')) return true;
+
+      var data = GLASSES_DATA[handle] || null;
+      var dimHtml, frameHtml;
+      if (data) {
+        dimHtml = buildList(data.dimensions);
+        frameHtml = buildList(data.frame);
+      } else {
+        dimHtml = '<p style="color:#666;">Dimensions for this frame are coming soon.</p>';
+        frameHtml = '<p style="color:#666;">Frame details for this style are coming soon.</p>';
+      }
+
+      var accordions = [
+        { id: 'dimensions',  title: 'Dimensions',     body: dimHtml },
+        { id: 'framedetails', title: 'Frame Details',  body: frameHtml },
+        { id: 'carestorage', title: 'Care &amp; Storage', body: CARE_HTML }
+      ];
+
+      accordions.forEach(function (acc) {
+        var btn = document.createElement('button');
+        btn.className = 'rp-acc-trigger';
+        btn.type = 'button';
+        btn.setAttribute('onclick', "rpAccToggle('" + acc.id + "', this)");
+        btn.innerHTML = acc.title + '<span class="rp-trigger-icon">+</span>';
+
+        var body = document.createElement('div');
+        body.className = 'rp-acc-body';
+        body.id = 'rp-acc-' + acc.id;
+        body.innerHTML = '<div class="rp-acc-body-inner">' + acc.body + '</div>';
+
+        list.appendChild(btn);
+        list.appendChild(body);
+      });
+
+      /* Auto-open the new accordions (matches the existing "open all" behavior) */
+      setTimeout(function () {
+        list.querySelectorAll('.rp-acc-trigger').forEach(function (t) {
+          if (!t.classList.contains('open') && t.style.display !== 'none') {
+            try { t.click(); } catch (e) {}
+          }
+        });
+      }, 50);
+
+      return true;
+    }
+
+    if (init()) return;
+    var tries = 0;
+    var t = setInterval(function () {
+      tries++;
+      if (init() || tries >= 40) clearInterval(t);
+    }, 250);
+  })();
+</script>
 {%- endif -%}
