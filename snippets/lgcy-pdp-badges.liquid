@@ -7,6 +7,23 @@
 
 {%- if template.name == 'product' and product -%}
 <meta name="lgcy-product-tags" content="{{ product.tags | join: ',' | downcase | escape }}">
+<meta name="lgcy-product-handle" content="{{ product.handle | escape }}">
+
+{%- comment -%} Detect eyewear by collection / type / tag {%- endcomment -%}
+{%- assign is_eyewear = false -%}
+{%- for col in product.collections -%}
+  {%- assign ch = col.handle | downcase -%}
+  {%- if ch contains 'glass' or ch contains 'eyewear' or ch contains 'sunglass' -%}{%- assign is_eyewear = true -%}{%- endif -%}
+{%- endfor -%}
+{%- assign pt = product.type | downcase -%}
+{%- if pt contains 'glass' or pt contains 'eyewear' or pt contains 'sunglass' -%}{%- assign is_eyewear = true -%}{%- endif -%}
+{%- for t in product.tags -%}
+  {%- assign tl = t | downcase -%}
+  {%- if tl == 'eyewear' or tl == 'glasses' or tl == 'sunglasses' -%}{%- assign is_eyewear = true -%}{%- endif -%}
+{%- endfor -%}
+{%- if is_eyewear -%}
+  <meta name="lgcy-product-is-eyewear" content="1">
+{%- endif -%}
 
 <style>
   /* === PDP info-panel — bumped text sizes for readability (all products) === */
