@@ -1,7 +1,8 @@
-/* LGCY — Product page image counter — hide on desktop only */
+/* LGCY — Product page gallery — hide counter + expand/zoom button on desktop */
 @media (min-width: 750px) {
   #rp-counter,
-  .rp-counter {
+  .rp-counter,
+  .rp-expand {
     display: none !important;
   }
 }

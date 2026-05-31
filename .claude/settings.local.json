@@ -70,7 +70,8 @@
       "Bash(node -e \"const j=require\\('./templates/product.json'\\); const v=j.sections.custom_liquid_NQgBBj.settings.custom_liquid; var i=v.indexOf\\('rp-main-img'\\); console.log\\(v.slice\\(i, i+1500\\)\\);\")",
       "Bash(node -e \"const fs=require\\('fs'\\); const c=fs.readFileSync\\('sections/main-collection-product-grid.liquid','utf8'\\); console.log\\('size:', c.length\\); console.log\\('first 200:', c.slice\\(0,200\\)\\); console.log\\('last 500:', c.slice\\(-500\\)\\);\")",
       "mcp__claude_ai_Shopify__search_products",
-      "mcp__claude_ai_Shopify__graphql_mutation"
+      "mcp__claude_ai_Shopify__graphql_mutation",
+      "Bash(node -e \"const j=require\\('./templates/product.json'\\); const v=j.sections.custom_liquid_NQgBBj.settings.custom_liquid; var re=/\\(top|chevron|polyline|18 15|0 24 24\\)/ig; var seen=new Set\\(\\); var m; while\\(\\(m=re.exec\\(v\\)\\)!==null\\){ var s=v.slice\\(Math.max\\(0,m.index-50\\),m.index+10\\); if\\(seen.has\\(s\\)\\) continue; seen.add\\(s\\); console.log\\(m.index, '->', JSON.stringify\\(v.slice\\(Math.max\\(0,m.index-30\\), m.index+120\\)\\)\\); }\")"
     ]
   }
 }
