@@ -67,6 +67,28 @@
       font-size: 14px !important;
     }
   }
+
+  /* === Kill the empty gap below the product image area ===
+     The grid row was being forced to 100vh by the sticky gallery's fixed
+     height. We let the gallery use min-height instead so the grid row
+     follows the actual content of the info column when it's shorter,
+     and the next section sits flush. */
+  .rp-wrap {
+    min-height: 0 !important;
+    align-items: stretch !important;
+  }
+  .rp-info {
+    min-height: 0 !important;
+    align-items: flex-start !important;
+    padding-bottom: 60px !important;
+  }
+  .rp-gallery {
+    height: auto !important;
+    min-height: 100vh !important;
+  }
+  .rp-editorial {
+    margin-top: 0 !important;
+  }
 </style>
 
 {%- comment -%} Detect eyewear products — by collection handle, product type, or tag {%- endcomment -%}
