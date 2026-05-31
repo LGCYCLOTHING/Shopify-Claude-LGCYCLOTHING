@@ -103,6 +103,67 @@
     outline-color: #000;
   }
 
+  /* "NEW" badge — liquid glass pill, top-left of image */
+  .lgcy-card__new-badge {
+    --border-width: 1px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 12;
+    display: inline-flex;
+    align-items: center;
+    isolation: isolate;
+    padding: 6px 12px;
+    border-radius: 999vw;
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-weight: 900;
+    font-size: 10px;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #000;
+    background: linear-gradient(
+      -75deg,
+      rgba(255, 255, 255, 0.55),
+      rgba(255, 255, 255, 0.85),
+      rgba(255, 255, 255, 0.55)
+    );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+      0 0.25em 0.5em -0.125em rgba(0, 0, 0, 0.18),
+      0 0 0 1px rgba(0, 0, 0, 0.06);
+    -webkit-backdrop-filter: blur(8px) saturate(140%);
+            backdrop-filter: blur(8px) saturate(140%);
+    pointer-events: none;
+  }
+  /* Conic-gradient outline ring — same recipe as the other glass elements */
+  .lgcy-card__new-badge::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 999vw;
+    width: calc(100% + var(--border-width));
+    height: calc(100% + var(--border-width));
+    top: calc(0% - var(--border-width) / 2);
+    left: calc(0% - var(--border-width) / 2);
+    padding: var(--border-width);
+    box-sizing: border-box;
+    background: conic-gradient(
+      from -75deg at 50% 50%,
+      rgba(0, 0, 0, 0.4),
+      rgba(0, 0, 0, 0) 5% 40%,
+      rgba(0, 0, 0, 0.4) 50%,
+      rgba(0, 0, 0, 0) 60% 95%,
+      rgba(0, 0, 0, 0.4)
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+
   /* Plus button — transparent bg, black icon */
   .lgcy-card__plus-btn {
     position: absolute;
