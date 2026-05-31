@@ -910,4 +910,14 @@
   .lgcy-footer__copyright {
     justify-content: center;
   }
+
+  .lgcy-footer__ugc,
+  .lgcy-footer__support {
+    align-items: center;
+  }
+
+  .lgcy-footer__payment {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }
