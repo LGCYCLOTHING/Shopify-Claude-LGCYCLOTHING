@@ -94,28 +94,8 @@
   }
 </style>
 
-{%- comment -%} Detect eyewear products — by collection handle, product type, or tag {%- endcomment -%}
-{%- assign is_eyewear = false -%}
-{%- for col in product.collections -%}
-  {%- assign col_handle = col.handle | downcase -%}
-  {%- if col_handle contains 'glass' or col_handle contains 'eyewear' or col_handle contains 'sunglass' -%}
-    {%- assign is_eyewear = true -%}
-  {%- endif -%}
-{%- endfor -%}
-{%- assign p_type = product.type | downcase -%}
-{%- if p_type contains 'glass' or p_type contains 'eyewear' or p_type contains 'sunglass' -%}
-  {%- assign is_eyewear = true -%}
-{%- endif -%}
-{%- for t in product.tags -%}
-  {%- assign tl = t | downcase -%}
-  {%- if tl == 'eyewear' or tl == 'glasses' or tl == 'sunglasses' -%}
-    {%- assign is_eyewear = true -%}
-  {%- endif -%}
-{%- endfor -%}
-
-{%- if is_eyewear -%}
 <style>
-  /* === Eyewear PDP — turn the first ("Product Details") accordion into a
+  /* === All PDPs — turn the first ("Product Details") accordion into a
         permanently-open, shaded info box. Other accordions untouched. === */
 
   /* Hide the trigger header for Product Details (first trigger) */
