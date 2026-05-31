@@ -1,0 +1,171 @@
+{% comment %}
+  LGCY — Trust row (3 columns) rendered below the product grid on
+  collection pages. Cream background to match the hero description block,
+  Inter 900 headings with negative tracking, clean stroke icons.
+{% endcomment %}
+
+<section class="lgcy-trust" aria-label="Brand promises">
+  <div class="lgcy-trust__inner">
+
+    <div class="lgcy-trust__item">
+      <span class="lgcy-trust__icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/>
+          <path d="M15 18H9"/>
+          <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/>
+          <circle cx="17" cy="18" r="2"/>
+          <circle cx="7" cy="18" r="2"/>
+        </svg>
+      </span>
+      <div class="lgcy-trust__text">
+        <h3 class="lgcy-trust__title">Worldwide Delivery</h3>
+        <p class="lgcy-trust__body">Tracked shipping straight to your door, anywhere in the world.</p>
+      </div>
+    </div>
+
+    <div class="lgcy-trust__item">
+      <span class="lgcy-trust__icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+      </span>
+      <div class="lgcy-trust__text">
+        <h3 class="lgcy-trust__title">Built to Last</h3>
+        <p class="lgcy-trust__body">Premium materials, finished with intention. Designed to outlast trends.</p>
+      </div>
+    </div>
+
+    <div class="lgcy-trust__item">
+      <span class="lgcy-trust__icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+      </span>
+      <div class="lgcy-trust__text">
+        <h3 class="lgcy-trust__title">14 Day Returns</h3>
+        <p class="lgcy-trust__body">Not the right fit? Return it within 14 days, hassle-free.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .lgcy-trust {
+    background: #f6f1e8;
+    width: 100%;
+    padding: 56px 24px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    box-sizing: border-box;
+  }
+  .lgcy-trust__inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+  }
+  .lgcy-trust__item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 8px 28px;
+    position: relative;
+  }
+  .lgcy-trust__item + .lgcy-trust__item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 12%;
+    bottom: 12%;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.1);
+  }
+  .lgcy-trust__icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 999vw;
+    background: linear-gradient(
+      -75deg,
+      rgba(255, 255, 255, 0.55),
+      rgba(255, 255, 255, 0.85),
+      rgba(255, 255, 255, 0.55)
+    );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+      0 0.25em 0.6em -0.15em rgba(0, 0, 0, 0.15);
+    color: #000;
+    -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+  }
+  .lgcy-trust__text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .lgcy-trust__title {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    font-size: 14px;
+    line-height: 1.1;
+    color: #000;
+    margin: 0;
+  }
+  .lgcy-trust__body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.45;
+    letter-spacing: -0.005em;
+    color: #6b6b6b;
+    margin: 0;
+  }
+
+  @media (max-width: 990px) {
+    .lgcy-trust__inner {
+      grid-template-columns: 1fr;
+      max-width: 480px;
+    }
+    .lgcy-trust__item {
+      padding: 18px 0;
+    }
+    .lgcy-trust__item + .lgcy-trust__item::before {
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: auto;
+      width: auto;
+      height: 1px;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .lgcy-trust {
+      padding: 40px 18px;
+    }
+    .lgcy-trust__icon {
+      width: 44px;
+      height: 44px;
+    }
+    .lgcy-trust__icon svg {
+      width: 22px;
+      height: 22px;
+    }
+    .lgcy-trust__title {
+      font-size: 12px;
+    }
+    .lgcy-trust__body {
+      font-size: 11.5px;
+    }
+  }
+</style>
