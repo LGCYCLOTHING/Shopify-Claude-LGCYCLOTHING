@@ -94,64 +94,73 @@
     padding-bottom: 0 !important;
   }
   /* === PDP layout — fixed-height row; info column scrolls internally ===
-     Opening an accordion no longer stretches the gallery — instead a
-     scrollbar appears in the right column. Scroll inside the info column
-     stays contained; scrolling anywhere else (over the gallery, header,
-     etc.) moves the page normally. */
+     - rp-wrap is locked to one viewport (minus header) so accordions can't
+       stretch the gallery.
+     - Right column is a flex COLUMN (top-aligned, scrollable) so wheel
+       events inside it actually move the content.
+     - Scrollbar sits at the right edge of the column itself, not the page.
+     - overscroll-behavior: contain keeps the scroll inside the column when
+       the cursor is over it. */
   .rp-wrap {
     min-height: 0 !important;
     height: calc(100vh - var(--header-height, 80px)) !important;
     max-height: calc(100vh - var(--header-height, 80px)) !important;
     align-items: stretch !important;
     grid-template-columns: 1fr 1fr !important;
+    overflow: hidden !important;
   }
   .rp-gallery {
     height: 100% !important;
     min-height: 0 !important;
     max-height: 100% !important;
+    overflow: hidden !important;
   }
   .rp-info {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
     height: 100% !important;
     min-height: 0 !important;
     max-height: 100% !important;
-    overflow-y: auto !important;
+    overflow-y: scroll !important;
     overscroll-behavior: contain !important;
-    align-items: flex-start !important;
+    -webkit-overflow-scrolling: touch;
     padding-top: 40px !important;
-    padding-bottom: 40px !important;
-    /* Subtle scrollbar */
+    padding-bottom: 60px !important;
     scrollbar-width: thin;
-    scrollbar-color: rgba(0,0,0,0.25) transparent;
+    scrollbar-color: rgba(0,0,0,0.28) transparent;
   }
   .rp-info::-webkit-scrollbar {
-    width: 6px;
+    width: 7px;
   }
   .rp-info::-webkit-scrollbar-track {
     background: transparent;
   }
   .rp-info::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.22);
+    background: rgba(0,0,0,0.25);
     border-radius: 999vw;
   }
   .rp-info::-webkit-scrollbar-thumb:hover {
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.45);
   }
-  /* Inner content stretches wider (was capped at 420px) */
   .rp-inner {
     max-width: 560px !important;
     width: 100% !important;
+    flex-shrink: 0 !important;
   }
   @media (max-width: 749px) {
     .rp-wrap {
       grid-template-columns: 1fr !important;
       height: auto !important;
       max-height: none !important;
+      overflow: visible !important;
     }
     .rp-gallery,
     .rp-info {
       height: auto !important;
       max-height: none !important;
-      overflow-y: visible !important;
+      overflow: visible !important;
     }
   }
 
