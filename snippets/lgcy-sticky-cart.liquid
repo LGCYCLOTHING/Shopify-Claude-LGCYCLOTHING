@@ -1,0 +1,310 @@
+{% comment %}
+  LGCY — Sticky add-to-cart popup (product page only).
+
+  Shows in bottom-right (desktop) / full-width bar at bottom (mobile)
+  when the main ATC button scrolls out of viewport. Fades in/out.
+
+  The popup's "Add to Cart" button triggers the main ATC button via
+  a programmatic click — so all variant logic + cart drawer rendering
+  is handled by the user's existing add-to-cart code (no duplication).
+
+  Price stays in sync via MutationObserver mirroring the on-page price.
+{% endcomment %}
+
+{%- if template.name == 'product' and product -%}
+
+<div id="lgcy-sticky-cart" class="lgcy-sticky-cart" role="region" aria-label="Quick add to cart" aria-hidden="true">
+  <a href="{{ product.url }}" class="lgcy-sticky-cart__media" tabindex="-1" aria-hidden="true">
+    {%- if product.featured_image -%}
+      <img
+        src="{{ product.featured_image | image_url: width: 160 }}"
+        alt=""
+        width="56"
+        height="56"
+        loading="lazy"
+      >
+    {%- endif -%}
+  </a>
+
+  <div class="lgcy-sticky-cart__info">
+    <a href="{{ product.url }}" class="lgcy-sticky-cart__title">{{ product.title | escape }}</a>
+    <span class="lgcy-sticky-cart__price" data-lgcy-sticky-price>
+      {{ product.selected_or_first_available_variant.price | money }}
+    </span>
+  </div>
+
+  <button type="button" class="lgcy-sticky-cart__btn" data-lgcy-sticky-add aria-label="Add {{ product.title | escape }} to cart">
+    Add to Cart
+  </button>
+</div>
+
+<style>
+  .lgcy-sticky-cart {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 8px 8px 12px;
+    background: linear-gradient(
+      -75deg,
+      rgba(255, 255, 255, 0.82),
+      rgba(255, 255, 255, 0.94),
+      rgba(255, 255, 255, 0.82)
+    );
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+            backdrop-filter: blur(18px) saturate(160%);
+    border-radius: 999vw;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.08),
+      0 14px 36px -10px rgba(0, 0, 0, 0.28),
+      0 0 0 1px rgba(0, 0, 0, 0.06);
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition:
+      opacity 360ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 360ms cubic-bezier(0.4, 0, 0.2, 1);
+    max-width: calc(100vw - 32px);
+  }
+
+  .lgcy-sticky-cart.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .lgcy-sticky-cart__media {
+    flex-shrink: 0;
+    display: block;
+    width: 52px;
+    height: 52px;
+    border-radius: 999vw;
+    overflow: hidden;
+    background: #f3f3f3;
+    text-decoration: none;
+  }
+  .lgcy-sticky-cart__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .lgcy-sticky-cart__info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .lgcy-sticky-cart__title {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: #000;
+    text-decoration: none;
+    border-bottom: 0;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+    transition: opacity 0.2s ease;
+  }
+  .lgcy-sticky-cart__title:hover {
+    opacity: 0.7;
+  }
+
+  .lgcy-sticky-cart__price {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #555;
+    line-height: 1;
+  }
+
+  .lgcy-sticky-cart__btn {
+    flex-shrink: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #fff;
+    background: #000;
+    border: none;
+    border-radius: 999vw;
+    padding: 12px 22px;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.18s ease, background 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    white-space: nowrap;
+  }
+  .lgcy-sticky-cart__btn:hover {
+    background: #1a1a1a;
+  }
+  .lgcy-sticky-cart__btn:active {
+    transform: scale(0.97);
+  }
+  .lgcy-sticky-cart__btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* === Mobile === */
+  @media (max-width: 749px) {
+    .lgcy-sticky-cart {
+      bottom: 12px;
+      right: 12px;
+      left: 12px;
+      max-width: none;
+      padding: 6px 6px 6px 10px;
+      gap: 10px;
+    }
+    .lgcy-sticky-cart__media {
+      width: 44px;
+      height: 44px;
+    }
+    .lgcy-sticky-cart__title {
+      font-size: 12px;
+      max-width: none;
+    }
+    .lgcy-sticky-cart__price {
+      font-size: 11px;
+    }
+    .lgcy-sticky-cart__btn {
+      padding: 10px 16px;
+      font-size: 11px;
+    }
+  }
+
+  /* Respect reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .lgcy-sticky-cart {
+      transition: opacity 200ms linear;
+      transform: none !important;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    var popup = document.getElementById('lgcy-sticky-cart');
+    if (!popup) return;
+
+    /* Main ATC selectors — tries every variant present in the theme */
+    var MAIN_ATC_SELECTORS = [
+      '.rp-btn-cart',
+      '.product-form__submit',
+      'product-form button[name="add"]',
+      'form[action*="/cart/add"] button[type="submit"]',
+      'button[name="add"]'
+    ];
+
+    /* Main price selectors */
+    var MAIN_PRICE_SELECTORS = [
+      '.rp-price',
+      '.price__regular .price-item--regular',
+      '.product__price .price-item--regular',
+      '.product__price',
+      '[data-product-price]'
+    ];
+
+    function findFirst(selectors) {
+      for (var i = 0; i < selectors.length; i++) {
+        var el = document.querySelector(selectors[i]);
+        if (el) return el;
+      }
+      return null;
+    }
+
+    function showPopup() {
+      popup.classList.add('is-visible');
+      popup.setAttribute('aria-hidden', 'false');
+    }
+    function hidePopup() {
+      popup.classList.remove('is-visible');
+      popup.setAttribute('aria-hidden', 'true');
+    }
+
+    function attachPriceMirror() {
+      var stickyPriceEl = popup.querySelector('[data-lgcy-sticky-price]');
+      if (!stickyPriceEl) return;
+      var mainPriceEl = findFirst(MAIN_PRICE_SELECTORS);
+      if (!mainPriceEl) return;
+      var sync = function () {
+        var txt = (mainPriceEl.textContent || '').trim();
+        if (txt) stickyPriceEl.textContent = txt;
+      };
+      sync();
+      var mo = new MutationObserver(sync);
+      mo.observe(mainPriceEl, { childList: true, characterData: true, subtree: true });
+    }
+
+    function attachClick(mainBtn) {
+      var stickyBtn = popup.querySelector('[data-lgcy-sticky-add]');
+      if (!stickyBtn) return;
+      stickyBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        var btn = findFirst(MAIN_ATC_SELECTORS) || mainBtn;
+        if (btn && !btn.disabled) {
+          btn.click();
+        }
+      });
+    }
+
+    function attachObserver(mainBtn) {
+      if (!('IntersectionObserver' in window)) {
+        /* Fallback: just show after any scroll past 400px */
+        var onScroll = function () {
+          if (window.scrollY > 400) showPopup(); else hidePopup();
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            hidePopup();
+          } else {
+            showPopup();
+          }
+        });
+      }, {
+        threshold: 0,
+        rootMargin: '-80px 0px -10px 0px'
+      });
+      io.observe(mainBtn);
+    }
+
+    function init() {
+      var mainBtn = findFirst(MAIN_ATC_SELECTORS);
+      if (!mainBtn) {
+        /* The ATC may be injected later (custom liquid PDP). Retry briefly. */
+        if (init._tries === undefined) init._tries = 0;
+        if (init._tries++ < 30) {
+          setTimeout(init, 250);
+        }
+        return;
+      }
+      attachObserver(mainBtn);
+      attachClick(mainBtn);
+      attachPriceMirror();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
+
+{%- endif -%}
