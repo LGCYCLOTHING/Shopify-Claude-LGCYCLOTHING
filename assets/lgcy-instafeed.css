@@ -1,8 +1,10 @@
-/* LGCY — Product page gallery — hide counter + expand/zoom button on desktop */
+/* LGCY — Product page gallery — hide counter + expand + pagination dots on desktop */
 @media (min-width: 750px) {
   #rp-counter,
   .rp-counter,
-  .rp-expand {
+  .rp-expand,
+  .lgcy-gallery-dots,
+  .lgcy-gallery-dot {
     display: none !important;
   }
 }
