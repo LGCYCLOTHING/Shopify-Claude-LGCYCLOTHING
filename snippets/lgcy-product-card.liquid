@@ -425,6 +425,24 @@
 
     <span class="lgcy-card__new-badge" aria-label="New product">NEW</span>
 
+    {%- assign _lgcy_tags = product.tags | join: ',' | downcase -%}
+    {%- if _lgcy_tags contains 'blue-light' or _lgcy_tags contains 'bluelight' or _lgcy_tags contains 'blue light' -%}
+      <span class="lgcy-card__bluelight-badge" aria-label="Blue light filter lens">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3.5"/>
+          <path d="M12 2v2"/>
+          <path d="M12 20v2"/>
+          <path d="m4.93 4.93 1.41 1.41"/>
+          <path d="m17.66 17.66 1.41 1.41"/>
+          <path d="M2 12h2"/>
+          <path d="M20 12h2"/>
+          <path d="m4.93 19.07 1.41-1.41"/>
+          <path d="m17.66 6.34 1.41-1.41"/>
+        </svg>
+        <span>Blue Light</span>
+      </span>
+    {%- endif -%}
+
     {%- if featured_img -%}
       <img
         src="{{ featured_img | image_url: width: 800 }}"
