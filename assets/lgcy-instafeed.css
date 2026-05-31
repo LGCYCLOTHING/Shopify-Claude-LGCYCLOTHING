@@ -1,3 +1,11 @@
+/* LGCY — Product page image counter — hide on desktop only */
+@media (min-width: 750px) {
+  #rp-counter,
+  .rp-counter {
+    display: none !important;
+  }
+}
+
 /* LGCY — Collection page banner (description block) — warm cream bg */
 #shopify-section-banner {
   background: #f6f1e8 !important;

@@ -66,7 +66,8 @@
       "Bash(node -e \"const j = require\\('./config/settings_data.json'\\); console.log\\('keys', Object.keys\\(j\\)\\); if\\(j.current && j.current.blocks\\){ console.log\\('blocks keys', Object.keys\\(j.current.blocks\\)\\); for\\(const b in j.current.blocks\\){ console.log\\(b, JSON.stringify\\(j.current.blocks[b]\\).slice\\(0, 500\\)\\); } }\")",
       "Bash(node -e \"const j = require\\('./templates/collection.gp-template-bk-default.json'\\); for\\(const s in j.sections\\){ console.log\\(s, j.sections[s].type\\); }\")",
       "Bash(node -e \"const j = require\\('./templates/collection.gem-1738643421-template.json'\\); for\\(const s in j.sections\\){ console.log\\(s, j.sections[s].type\\); }\")",
-      "Bash(node -e \"const fs=require\\('fs'\\); const s=fs.statSync\\('assets/base.css'\\); console.log\\('base.css size:', s.size\\); const s2=fs.statSync\\('layout/theme.liquid'\\); console.log\\('theme.liquid size:', s2.size\\);\")"
+      "Bash(node -e \"const fs=require\\('fs'\\); const s=fs.statSync\\('assets/base.css'\\); console.log\\('base.css size:', s.size\\); const s2=fs.statSync\\('layout/theme.liquid'\\); console.log\\('theme.liquid size:', s2.size\\);\")",
+      "Bash(node -e \"const j=require\\('./templates/product.json'\\); const v=j.sections.custom_liquid_NQgBBj.settings.custom_liquid; var i=v.indexOf\\('rp-main-img'\\); console.log\\(v.slice\\(i, i+1500\\)\\);\")"
     ]
   }
 }
