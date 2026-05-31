@@ -8,6 +8,80 @@
 {%- if template.name == 'product' and product -%}
 <meta name="lgcy-product-tags" content="{{ product.tags | join: ',' | downcase | escape }}">
 
+{%- comment -%} Detect eyewear products — by collection handle, product type, or tag {%- endcomment -%}
+{%- assign is_eyewear = false -%}
+{%- for col in product.collections -%}
+  {%- assign col_handle = col.handle | downcase -%}
+  {%- if col_handle contains 'glass' or col_handle contains 'eyewear' or col_handle contains 'sunglass' -%}
+    {%- assign is_eyewear = true -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign p_type = product.type | downcase -%}
+{%- if p_type contains 'glass' or p_type contains 'eyewear' or p_type contains 'sunglass' -%}
+  {%- assign is_eyewear = true -%}
+{%- endif -%}
+{%- for t in product.tags -%}
+  {%- assign tl = t | downcase -%}
+  {%- if tl == 'eyewear' or tl == 'glasses' or tl == 'sunglasses' -%}
+    {%- assign is_eyewear = true -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if is_eyewear -%}
+<style>
+  /* === Eyewear PDP — turn the first ("Product Details") accordion into a
+        permanently-open, shaded info box. Other accordions untouched. === */
+
+  /* Hide the trigger header for Product Details (first trigger) */
+  .rp-acc-list > .rp-acc-trigger:first-of-type {
+    display: none !important;
+  }
+
+  /* Force the Product Details body permanently open */
+  #rp-acc-details {
+    max-height: none !important;
+    overflow: visible !important;
+    border-bottom: 0 !important;
+    margin-top: 24px;
+    border-radius: 10px;
+    background: #f5f3ee;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: none !important;
+  }
+  #rp-acc-details .rp-acc-body-inner {
+    padding: 22px 24px !important;
+    color: #444;
+  }
+  #rp-acc-details .rp-acc-body-inner p {
+    margin-bottom: 10px;
+  }
+  #rp-acc-details .rp-acc-body-inner p:last-child {
+    margin-bottom: 0;
+  }
+  /* Strip the redundant close × inside the open box */
+  #rp-acc-details .rp-acc-close {
+    display: none !important;
+  }
+
+  /* Restore the top border on the next accordion since we hid the first
+     trigger that owned it */
+  .rp-acc-list > .rp-acc-trigger:nth-of-type(1) + .rp-acc-body + .rp-acc-trigger {
+    border-top: 1px solid #e0e0e0;
+    margin-top: 24px;
+  }
+
+  @media (max-width: 749px) {
+    #rp-acc-details {
+      margin-top: 18px;
+      border-radius: 8px;
+    }
+    #rp-acc-details .rp-acc-body-inner {
+      padding: 18px 18px !important;
+    }
+  }
+</style>
+{%- endif -%}
+
 <template id="lgcy-pdp-new-template">
   <span class="lgcy-pdp-new-badge" role="note" aria-label="New product">NEW</span>
 </template>
