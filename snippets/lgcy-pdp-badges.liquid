@@ -91,9 +91,10 @@
   }
   .rp-gallery {
     height: auto !important;
-    /* Subtract enough room for the sticky header AND a little extra so
-       the "1 / N" counter sits comfortably above the viewport bottom. */
-    min-height: calc(100vh - var(--header-height, 140px)) !important;
+    /* Subtract enough for the sticky header + bottom-of-gallery elements
+       (counter, BLUE LIGHT badge, divider line) so the entire bottom edge
+       is visible without scrolling. */
+    min-height: calc(100vh - 200px) !important;
   }
   @media (max-width: 749px) {
     .rp-wrap {
