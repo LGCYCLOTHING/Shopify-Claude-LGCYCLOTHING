@@ -698,6 +698,74 @@
 
 /* ── Copyright bar ── */
 
+/* ── Newsletter incentive (under "Join the Vision.") ── */
+.lgcy-footer__newsletter-incentive {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #888;
+  margin: 6px 0 14px;
+  line-height: 1.4;
+}
+
+/* ── UGC prompt (in brand column) ── */
+.lgcy-footer__ugc {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #444;
+  text-decoration: none;
+  border-bottom: 0;
+  transition: color 0.2s ease;
+}
+.lgcy-footer__ugc strong {
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: #000;
+}
+.lgcy-footer__ugc:hover {
+  color: #000;
+}
+.lgcy-footer__ugc svg {
+  flex-shrink: 0;
+  color: #000;
+}
+
+/* ── Support email (under nav) ── */
+.lgcy-footer__support {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 18px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  line-height: 1.4;
+}
+.lgcy-footer__support-email {
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: #000;
+  text-decoration: none;
+  border-bottom: 0;
+  transition: opacity 0.2s ease;
+}
+.lgcy-footer__support-email:hover {
+  opacity: 0.6;
+}
+.lgcy-footer__support-meta {
+  font-weight: 400;
+  color: #888;
+  letter-spacing: 0.02em;
+}
+
 .lgcy-footer__bottom {
   border-top: 1px solid #e5e5e5;
   padding: 20px 0;
@@ -707,6 +775,61 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+/* ── Payment method icons ── */
+.lgcy-footer__payment {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.lgcy-footer__payment-item {
+  display: flex;
+  align-items: center;
+}
+.lgcy-footer__payment-icon {
+  display: block;
+  height: 22px;
+  width: auto;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+.lgcy-footer__payment-icon:hover {
+  opacity: 1;
+}
+
+/* ── Currency selector ── */
+.lgcy-footer__locale-form {
+  margin: 0;
+}
+.lgcy-footer__locale-select {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #444;
+  background: transparent;
+  border: 1px solid #e5e5e5;
+  border-radius: 999vw;
+  padding: 7px 28px 7px 14px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'><path d='M1 1l4 4 4-4' stroke='%23666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 9px 5px;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.lgcy-footer__locale-select:hover {
+  border-color: #000;
+  color: #000;
 }
 
 .lgcy-footer__copyright {
