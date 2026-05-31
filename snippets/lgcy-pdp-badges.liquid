@@ -79,6 +79,10 @@
   .rp-wrap {
     min-height: 0 !important;
     align-items: stretch !important;
+    /* Make the gallery column slightly wider than the info column so the
+       image gets more presence and the bottom of the section (with 1 / N)
+       lands inside the viewport from the very top. */
+    grid-template-columns: 1.1fr 0.9fr !important;
   }
   .rp-info {
     min-height: 0 !important;
@@ -87,9 +91,14 @@
   }
   .rp-gallery {
     height: auto !important;
-    /* Account for the sticky header so the bottom of the gallery
-       (where "1 / N" sits) is fully visible without scrolling. */
-    min-height: calc(100vh - var(--header-height, 80px)) !important;
+    /* Subtract enough room for the sticky header AND a little extra so
+       the "1 / N" counter sits comfortably above the viewport bottom. */
+    min-height: calc(100vh - var(--header-height, 140px)) !important;
+  }
+  @media (max-width: 749px) {
+    .rp-wrap {
+      grid-template-columns: 1fr !important;
+    }
   }
 
   /* === Limited / Out of stock — bigger, pill-styled, brand-consistent === */
