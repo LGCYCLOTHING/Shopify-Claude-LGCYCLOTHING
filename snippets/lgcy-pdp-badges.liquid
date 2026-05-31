@@ -664,7 +664,7 @@
 
       accordions.forEach(function (acc) {
         var btn = document.createElement('button');
-        btn.className = 'rp-acc-trigger';
+        btn.className = 'rp-acc-trigger open';
         btn.type = 'button';
         btn.setAttribute('onclick', "rpAccToggle('" + acc.id + "', this)");
         btn.innerHTML = acc.title + '<span class="rp-trigger-icon">+</span>';
@@ -672,6 +672,7 @@
         var body = document.createElement('div');
         body.className = 'rp-acc-body';
         body.id = 'rp-acc-' + acc.id;
+        body.style.maxHeight = '2000px';
         body.innerHTML = '<div class="rp-acc-body-inner">' + acc.body + '</div>';
 
         list.appendChild(btn);
