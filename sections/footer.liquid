@@ -97,6 +97,27 @@
           {%- endfor -%}
         {%- endif -%}
       </div>
+
+      {%- if shop.enabled_payment_types.size > 0 -%}
+        <ul class="lgcy-footer__payment" role="list" aria-label="Payment methods">
+          {%- for type in shop.enabled_payment_types -%}
+            <li class="lgcy-footer__payment-item">{{ type | payment_type_svg_tag: class: 'lgcy-footer__payment-icon' }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if shop.enabled_currencies.size > 1 -%}
+        {%- form 'localization', class: 'lgcy-footer__locale-form' -%}
+          <select name="currency_code" class="lgcy-footer__locale-select" onchange="this.form.submit()" aria-label="Currency">
+            {%- for currency in shop.enabled_currencies -%}
+              <option value="{{ currency.iso_code }}"{% if currency.iso_code == cart.currency.iso_code %} selected{% endif %}>
+                {{ currency.iso_code }} {{ currency.symbol }}
+              </option>
+            {%- endfor -%}
+          </select>
+        {%- endform -%}
+      {%- endif -%}
+
       <div class="lgcy-footer__social">
         {%- if settings.social_instagram_link != blank -%}
           <a href="{{ settings.social_instagram_link }}" class="lgcy-footer__social-link" target="_blank" rel="noopener" aria-label="Instagram">
