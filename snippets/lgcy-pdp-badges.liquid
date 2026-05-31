@@ -68,11 +68,14 @@
     }
   }
 
-  /* === Kill the empty gap below the product image area ===
-     The grid row was being forced to 100vh by the sticky gallery's fixed
-     height. We let the gallery use min-height instead so the grid row
-     follows the actual content of the info column when it's shorter,
-     and the next section sits flush. */
+  /* === Kill the empty gap below the product image area === */
+  /* The actual culprit was Shopify's section padding on the custom_liquid
+     wrapper (padding-bottom: 52px). Templates JSON is in the deploy ignore
+     list so we zero it from CSS instead. */
+  [class*="custom_liquid_NQgBBj-padding"] {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
   .rp-wrap {
     min-height: 0 !important;
     align-items: stretch !important;
