@@ -133,12 +133,9 @@
     display: block !important;
   }
 
-  /* Injected glasses accordions — open by default (matches existing behavior) */
-  #rp-acc-dimensions,
-  #rp-acc-framedetails,
-  #rp-acc-carestorage {
-    max-height: 2000px !important;
-  }
+  /* (Injected glasses accordions get max-height set inline on creation so
+     they start open — no !important rule here, otherwise rpAccToggle
+     couldn't collapse them when the user clicks.) */
 
   @media (max-width: 749px) {
     .rp-wrap {
