@@ -93,57 +93,38 @@
     padding-top: 0 !important;
     padding-bottom: 0 !important;
   }
-  /* === PDP layout — fixed-height row; info column scrolls internally === */
-  html, body {
-    overflow-x: hidden;
-  }
+  /* === PDP layout — sticky gallery + natural page scroll (HILLS pattern) ===
+     The gallery stays pinned at 100vh while the info column scrolls with
+     the page. Opening an accordion grows the page height naturally; the
+     gallery never stretches because it's locked at 100vh via sticky.
+     Mouse wheel works natively because the page is what scrolls. */
   .rp-wrap {
-    height: 100vh !important;
-    max-height: 100vh !important;
-    min-height: 100vh !important;
-    box-sizing: border-box !important;
-    overflow: hidden !important;
+    display: grid !important;
     grid-template-columns: 1fr 1fr !important;
-    align-items: stretch !important;
-    padding-right: 0 !important;
+    align-items: start !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
   .rp-gallery {
-    height: 100vh !important;
-    max-height: 100vh !important;
-    overflow: hidden !important;
-    position: relative !important;
-  }
-  .rp-info {
-    display: block !important;
+    position: sticky !important;
+    top: 0 !important;
     height: 100vh !important;
     max-height: 100vh !important;
     min-height: 0 !important;
-    box-sizing: border-box !important;
-    overflow-y: scroll !important;
-    overflow-x: hidden !important;
-    overscroll-behavior: contain !important;
-    -webkit-overflow-scrolling: touch;
-    /* Top padding matches "LGCY.01" breathing room from top;
-       bottom padding gives the last accordion room to scroll above the
-       column's bottom edge. */
-    padding: 60px 40px 160px 40px !important;
+    overflow: hidden !important;
+    align-self: start !important;
+  }
+  .rp-info {
+    display: block !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    padding: 60px 40px 100px 40px !important;
     align-items: unset !important;
     justify-content: unset !important;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(0,0,0,0.28) transparent;
-  }
-  .rp-info::-webkit-scrollbar {
-    width: 7px;
-  }
-  .rp-info::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  .rp-info::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.25);
-    border-radius: 999vw;
-  }
-  .rp-info::-webkit-scrollbar-thumb:hover {
-    background: rgba(0,0,0,0.45);
   }
   .rp-inner {
     max-width: 560px !important;
@@ -162,16 +143,13 @@
   @media (max-width: 749px) {
     .rp-wrap {
       grid-template-columns: 1fr !important;
-      height: auto !important;
-      max-height: none !important;
-      min-height: 0 !important;
-      overflow: visible !important;
     }
-    .rp-gallery,
-    .rp-info {
+    .rp-gallery {
+      position: relative !important;
       height: auto !important;
       max-height: none !important;
-      overflow: visible !important;
+    }
+    .rp-info {
       padding: 30px 20px !important;
     }
   }
