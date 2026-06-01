@@ -572,10 +572,10 @@
 </script>
 
 <style>
-  /* === You May Also Like — center the cards + add a "Shop the Collection" tile === */
+  /* === You May Also Like — center the cards === */
   .rp-card-grid {
     display: grid !important;
-    grid-template-columns: repeat(3, minmax(220px, 280px)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 280px)) !important;
     justify-content: center !important;
     gap: 24px !important;
     max-width: 1000px !important;
@@ -586,60 +586,6 @@
       grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
       max-width: none !important;
     }
-  }
-
-  /* Brand tile that fills the third slot */
-  .rp-shop-all-card .rp-product-card-img {
-    background: #0d0d0d !important;
-    color: #fff !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 14px !important;
-    padding: 24px !important;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-  }
-  .rp-shop-all-card:hover .rp-product-card-img {
-    transform: scale(1.01);
-  }
-  .rp-shop-all-mark {
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    font-size: 22px;
-    letter-spacing: -0.05em;
-    text-transform: uppercase;
-    color: #fff;
-    line-height: 1;
-    text-align: center;
-  }
-  .rp-shop-all-mark small {
-    display: block;
-    font-weight: 500;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    color: rgba(255, 255, 255, 0.55);
-    margin-top: 10px;
-  }
-  .rp-shop-all-cta {
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    font-weight: 900;
-    letter-spacing: 0.06em;
-    color: rgba(255, 255, 255, 0.92);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
-    padding-bottom: 4px;
-    margin-top: 18px;
-    transition: border-color 0.3s ease, color 0.3s ease;
-  }
-  .rp-shop-all-card:hover .rp-shop-all-cta {
-    color: #fff;
-    border-bottom-color: #fff;
-  }
-  .rp-shop-all-card .rp-product-card-name {
-    color: #000 !important;
   }
 </style>
 
