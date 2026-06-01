@@ -526,6 +526,34 @@
   })();
 </script>
 
+<script>
+  /* PDP — move the Instafeed section to sit ABOVE "You May Also Like".
+     The cards section lives inside the custom_liquid block while the
+     Instafeed lives as its own apps section below; this JS just
+     reparents it on load so the order reads:
+     editorial → instafeed → you may also like → ... */
+  (function () {
+    function move() {
+      var instaFeed = document.querySelector('#insta-feed, .instafeed-shopify');
+      if (!instaFeed) return false;
+      var instaSection = instaFeed.closest('.shopify-section');
+      if (!instaSection) return false;
+      var cardsSection = document.querySelector('.rp-cards-section');
+      if (!cardsSection) return false;
+      if (instaSection.nextElementSibling === cardsSection ||
+          cardsSection.previousElementSibling === instaSection) return true;
+      cardsSection.parentNode.insertBefore(instaSection, cardsSection);
+      return true;
+    }
+    if (move()) return;
+    var tries = 0;
+    var t = setInterval(function () {
+      tries++;
+      if (move() || tries >= 40) clearInterval(t);
+    }, 250);
+  })();
+</script>
+
 {%- comment -%} === GLASSES PDP — swap Size Chart + Care for Dimensions / Frame / Care & Storage === {%- endcomment -%}
 <style>
   /* Hide existing Size Chart + Care Instructions on eyewear pages */
