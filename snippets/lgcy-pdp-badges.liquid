@@ -528,11 +528,8 @@
 </script>
 
 <script>
-  /* PDP — move the Instafeed section to sit ABOVE "You May Also Like".
-     The cards section lives inside the custom_liquid block while the
-     Instafeed lives as its own apps section below; this JS just
-     reparents it on load so the order reads:
-     editorial → instafeed → you may also like → ... */
+  /* PDP — move Instafeed above "You May Also Like" + pass wheel events
+     through Instafeed so vertical scroll keeps moving the page. */
   (function () {
     function move() {
       var instaFeed = document.querySelector('#insta-feed, .instafeed-shopify');
@@ -542,15 +539,104 @@
       var cardsSection = document.querySelector('.rp-cards-section');
       if (!cardsSection) return false;
       if (instaSection.nextElementSibling === cardsSection ||
-          cardsSection.previousElementSibling === instaSection) return true;
+          cardsSection.previousElementSibling === instaSection) {
+        attachWheel(instaSection);
+        return true;
+      }
       cardsSection.parentNode.insertBefore(instaSection, cardsSection);
+      attachWheel(instaSection);
       return true;
     }
+
+    function attachWheel(instaSection) {
+      if (instaSection.dataset.lgcyWheelFixed === '1') return;
+      instaSection.dataset.lgcyWheelFixed = '1';
+      /* Mintt's wheel handler hijacks scroll to drive its horizontal slider.
+         We intercept earlier (capture phase) and translate vertical wheel
+         into a page scroll, then stop the event so Mintt can't grab it. */
+      instaSection.addEventListener('wheel', function (e) {
+        if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return; // let horizontal pass
+        window.scrollBy({ top: e.deltaY, left: 0, behavior: 'auto' });
+        e.stopPropagation();
+        if (e.cancelable) e.preventDefault();
+      }, { capture: true, passive: false });
+    }
+
     if (move()) return;
     var tries = 0;
     var t = setInterval(function () {
       tries++;
       if (move() || tries >= 40) clearInterval(t);
+    }, 250);
+  })();
+</script>
+
+<script>
+  /* PDP — fill out "You May Also Like" with extra products from Shopify's
+     recommendations API when the hardcoded list shows fewer than 2 cards. */
+  (function () {
+    function fill() {
+      var grid = document.querySelector('.rp-card-grid');
+      if (!grid) return false;
+      if (grid.children.length >= 2) return true;
+      if (grid.dataset.lgcyFilling === '1') return true;
+
+      var idMeta = document.querySelector('meta[name="lgcy-product-id"]');
+      if (!idMeta) return false;
+      var productId = idMeta.getAttribute('content');
+      if (!productId) return false;
+
+      grid.dataset.lgcyFilling = '1';
+
+      var existing = new Set();
+      grid.querySelectorAll('a').forEach(function (a) {
+        var m = a.getAttribute('href') || '';
+        var match = m.match(/\/products\/([^/?#]+)/);
+        if (match) existing.add(match[1]);
+      });
+
+      fetch('/recommendations/products.json?product_id=' + encodeURIComponent(productId) + '&limit=6&intent=related')
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (!data || !Array.isArray(data.products)) return;
+          var needed = 2 - grid.children.length;
+          for (var i = 0; i < data.products.length && needed > 0; i++) {
+            var p = data.products[i];
+            if (!p || !p.handle || existing.has(p.handle)) continue;
+            existing.add(p.handle);
+            grid.appendChild(buildCard(p));
+            needed--;
+          }
+        })
+        .catch(function () { grid.dataset.lgcyFilling = ''; });
+
+      return true;
+    }
+
+    function buildCard(p) {
+      var a = document.createElement('a');
+      a.href = p.url || ('/products/' + p.handle);
+      a.className = 'rp-product-card';
+
+      var imgUrl = p.featured_image || (p.images && p.images[0]) || '';
+      var priceCents = (p.price != null) ? p.price : (p.price_min || 0);
+      var priceFmt = '$' + (priceCents / 100).toFixed(2);
+      var sub = (p.product_type || p.type || '').toString();
+
+      a.innerHTML =
+        '<div class="rp-product-card-img"><img src="' + imgUrl + '" alt="' + (p.title || '') + '" loading="lazy"></div>' +
+        '<div class="rp-product-card-name">' + (p.title || '') + '</div>' +
+        (sub ? '<div class="rp-product-card-sub">' + sub + '</div>' : '') +
+        '<div class="rp-product-card-price">' + priceFmt + '</div>';
+
+      return a;
+    }
+
+    if (fill()) return;
+    var tries = 0;
+    var t = setInterval(function () {
+      tries++;
+      if (fill() || tries >= 40) clearInterval(t);
     }, 250);
   })();
 </script>
