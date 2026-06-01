@@ -303,7 +303,7 @@
 </template>
 
 <style>
-  /* === NEW badge — next to product title === */
+  /* === NEW badge — sits tight next to product title === */
   .lgcy-pdp-new-badge {
     --border-width: 1px;
     position: relative;
@@ -311,6 +311,9 @@
     align-items: center;
     isolation: isolate;
     margin-left: 10px;
+    /* Push the price to the far right — keeps badge glued to title in the
+       rp-header flex row (justify-content: space-between). */
+    margin-right: auto;
     padding: 5px 10px;
     border-radius: 6px;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
