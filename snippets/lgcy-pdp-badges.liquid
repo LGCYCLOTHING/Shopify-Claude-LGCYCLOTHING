@@ -125,7 +125,10 @@
     overflow-x: hidden !important;
     overscroll-behavior: contain !important;
     -webkit-overflow-scrolling: touch;
-    padding: 50px 40px 60px !important;
+    /* Top padding matches "LGCY.01" breathing room from top;
+       bottom padding gives the last accordion room to scroll above the
+       column's bottom edge. */
+    padding: 60px 24px 100px 32px !important;
     align-items: unset !important;
     justify-content: unset !important;
     scrollbar-width: thin;
