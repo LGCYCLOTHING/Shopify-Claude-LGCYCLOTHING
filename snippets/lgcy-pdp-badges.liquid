@@ -590,24 +590,21 @@
 </style>
 
 <script>
-  /* PDP — fill "You May Also Like" with recommendations, then append a
-     branded "Shop the Collection" tile so the row always has 3 items. */
+  /* PDP — fill "You May Also Like" with recommendations when the
+     hardcoded list shows fewer than 2 cards. */
   (function () {
     function fill() {
       var grid = document.querySelector('.rp-card-grid');
       if (!grid) return false;
-      if (grid.dataset.lgcyFillDone === '1') return true;
+      if (grid.children.length >= 2) return true;
+      if (grid.dataset.lgcyFilling === '1') return true;
 
       var idMeta = document.querySelector('meta[name="lgcy-product-id"]');
       if (!idMeta) return false;
       var productId = idMeta.getAttribute('content');
-      if (!productId) {
-        appendShopAll(grid);
-        grid.dataset.lgcyFillDone = '1';
-        return true;
-      }
+      if (!productId) return false;
 
-      grid.dataset.lgcyFillDone = '1';
+      grid.dataset.lgcyFilling = '1';
 
       var existing = new Set();
       grid.querySelectorAll('a').forEach(function (a) {
@@ -616,45 +613,22 @@
         if (match) existing.add(match[1]);
       });
 
-      if (grid.children.length >= 2) {
-        appendShopAll(grid);
-        return true;
-      }
-
       fetch('/recommendations/products.json?product_id=' + encodeURIComponent(productId) + '&limit=6&intent=related')
         .then(function (r) { return r.json(); })
         .then(function (data) {
-          if (data && Array.isArray(data.products)) {
-            var needed = 2 - grid.children.length;
-            for (var i = 0; i < data.products.length && needed > 0; i++) {
-              var p = data.products[i];
-              if (!p || !p.handle || existing.has(p.handle)) continue;
-              existing.add(p.handle);
-              grid.appendChild(buildCard(p));
-              needed--;
-            }
+          if (!data || !Array.isArray(data.products)) return;
+          var needed = 2 - grid.children.length;
+          for (var i = 0; i < data.products.length && needed > 0; i++) {
+            var p = data.products[i];
+            if (!p || !p.handle || existing.has(p.handle)) continue;
+            existing.add(p.handle);
+            grid.appendChild(buildCard(p));
+            needed--;
           }
         })
-        .catch(function () {})
-        .then(function () { appendShopAll(grid); });
+        .catch(function () { grid.dataset.lgcyFilling = ''; });
 
       return true;
-    }
-
-    function appendShopAll(grid) {
-      if (grid.querySelector('.rp-shop-all-card')) return;
-      var a = document.createElement('a');
-      a.href = '/collections/all';
-      a.className = 'rp-product-card rp-shop-all-card';
-      a.setAttribute('aria-label', 'Shop the entire collection');
-      a.innerHTML =
-        '<div class="rp-product-card-img">' +
-          '<div class="rp-shop-all-mark">LGCYCLOTHING<small>ICONIC VISIONARY</small></div>' +
-          '<div class="rp-shop-all-cta">SHOP ALL &rarr;</div>' +
-        '</div>' +
-        '<div class="rp-product-card-name">EXPLORE THE COLLECTION</div>' +
-        '<div class="rp-product-card-price">View All</div>';
-      grid.appendChild(a);
     }
 
     function buildCard(p) {
