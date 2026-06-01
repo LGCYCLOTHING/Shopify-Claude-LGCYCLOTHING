@@ -178,17 +178,8 @@
         {%- endif -%}
       {%- endfor -%}
 
-      {%- if app_block_count == 0 -%}
-        {%- comment %} Hardcoded Omnisend Embedded Form — covers all the common
-           selectors their JS scans for so whichever shape their loader expects,
-           it finds the slot and renders. {% endcomment -%}
-        <div
-          class="omnisend-form omnisend-embedded omnisend-form-69b47c72e1b57dccf6b8730a"
-          data-form-id="69b47c72e1b57dccf6b8730a"
-          data-omnisend-embed="69b47c72e1b57dccf6b8730a"
-          id="om-69b47c72e1b57dccf6b8730a"
-        ></div>
-      {%- endif -%}
+      {%- comment %} Empty slot waits for the Omnisend Embedded Form app block,
+         added inside this section via the theme editor. {% endcomment -%}
     </div>
 
   </div>
