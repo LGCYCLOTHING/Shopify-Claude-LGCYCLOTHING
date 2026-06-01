@@ -582,13 +582,15 @@ svg.icon.icon-cart {
 {% endif %}
 
 <script>
-  /* PDP — open all accordion sections by default so all content is visible
-     without clicks. */
+  /* PDP — open all accordion sections by default except Shipping & Returns,
+     which stays collapsed so it doesn't dominate the column. */
   (function () {
     function init() {
       var triggers = document.querySelectorAll('.rp-acc-trigger');
       if (!triggers.length) return;
       triggers.forEach(function (t) {
+        var onclick = t.getAttribute('onclick') || '';
+        if (onclick.indexOf('shipping') !== -1) return; // skip Shipping & Returns
         if (!t.classList.contains('open')) {
           try { t.click(); } catch (e) {}
         }
