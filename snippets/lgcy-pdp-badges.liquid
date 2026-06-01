@@ -8,6 +8,7 @@
 {%- if template.name == 'product' and product -%}
 <meta name="lgcy-product-tags" content="{{ product.tags | join: ',' | downcase | escape }}">
 <meta name="lgcy-product-handle" content="{{ product.handle | escape }}">
+<meta name="lgcy-product-id" content="{{ product.id }}">
 
 {%- comment -%} Detect eyewear by collection / type / tag {%- endcomment -%}
 {%- assign is_eyewear = false -%}
