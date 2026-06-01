@@ -179,10 +179,15 @@
       {%- endfor -%}
 
       {%- if app_block_count == 0 -%}
-        <div class="lgcy-signup__empty-slot">
-          <p><strong>Form not added yet.</strong></p>
-          <p>In the theme editor, add the <em>Omnisend Embedded Form</em> app block inside this section and paste your form ID.</p>
-        </div>
+        {%- comment %} Hardcoded Omnisend Embedded Form — covers all the common
+           selectors their JS scans for so whichever shape their loader expects,
+           it finds the slot and renders. {% endcomment -%}
+        <div
+          class="omnisend-form omnisend-embedded omnisend-form-69b47c72e1b57dccf6b8730a"
+          data-form-id="69b47c72e1b57dccf6b8730a"
+          data-omnisend-embed="69b47c72e1b57dccf6b8730a"
+          id="om-69b47c72e1b57dccf6b8730a"
+        ></div>
       {%- endif -%}
     </div>
 
