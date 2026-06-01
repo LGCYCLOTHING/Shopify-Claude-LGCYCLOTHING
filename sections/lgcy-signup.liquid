@@ -98,11 +98,37 @@
   /* ── Form slot (holds Omnisend embedded form app block) ── */
   .lgcy-signup__form-slot {
     width: 100%;
+    max-width: 720px;
     margin-bottom: 8px;
   }
 
   .lgcy-signup__app-block + .lgcy-signup__app-block {
     margin-top: 12px;
+  }
+
+  /* ── Force the Omnisend embedded form to stretch to the slot width
+        regardless of the inline max-width Omnisend ships with. ── */
+  .lgcy-signup__form-slot,
+  .lgcy-signup__app-block,
+  .lgcy-signup__app-block > *,
+  .lgcy-signup__form-slot .omnisend-form,
+  .lgcy-signup__form-slot [class*="omnisend"],
+  .lgcy-signup__form-slot [class*="om-form"],
+  .lgcy-signup__form-slot [data-form-id],
+  .lgcy-signup__form-slot iframe {
+    width: 100% !important;
+    max-width: 720px !important;
+    box-sizing: border-box;
+  }
+  .lgcy-signup__form-slot input[type="email"],
+  .lgcy-signup__form-slot input[type="text"],
+  .lgcy-signup__form-slot input[type="tel"],
+  .lgcy-signup__form-slot input[type="number"],
+  .lgcy-signup__form-slot select,
+  .lgcy-signup__form-slot button[type="submit"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
   }
 
   .lgcy-signup__empty-slot {
