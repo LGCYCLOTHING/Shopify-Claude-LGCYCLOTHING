@@ -351,13 +351,8 @@
         return;
       }
 
-      /* Prefer the product image / gallery as the trigger element — popup
-         shows once the user has scrolled past the main product image area.
-         Falls back to the ATC button with a generous top rootMargin so the
-         popup still doesn't appear too early. */
-      var trigger = findFirst(GALLERY_SELECTORS) || mainBtn;
-      var isGallery = trigger !== mainBtn;
-
+      /* Watch the main Add to Cart button directly — popup fades in the
+         moment the ATC scrolls off the top of the viewport. */
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
@@ -368,14 +363,9 @@
         });
       }, {
         threshold: 0,
-        /* When watching gallery/wrap: shrink the root from the bottom by 50%
-           so the popup fires as soon as the bottom half of the section has
-           scrolled past — roughly when the user is halfway through the PDP.
-           When watching ATC fallback: still pad top so it doesn't fire on
-           the small first scroll. */
-        rootMargin: isGallery ? '0px 0px -50% 0px' : '80% 0px 0px 0px'
+        rootMargin: '0px 0px 0px 0px'
       });
-      io.observe(trigger);
+      io.observe(mainBtn);
     }
 
     function attachFooterObserver() {
