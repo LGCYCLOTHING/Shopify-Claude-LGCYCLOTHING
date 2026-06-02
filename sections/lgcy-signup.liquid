@@ -95,20 +95,95 @@
     color: rgba(255,255,255,0.4);
   }
 
-  /* ── Form slot (holds Omnisend embedded form app block) ── */
+  /* ── Form slot — frosted glass card (same recipe as password page) ── */
   .lgcy-signup__form-slot {
     width: 100%;
     max-width: 880px;
     margin-bottom: 8px;
+    background: rgba(0, 0, 0, 0.48);
+    -webkit-backdrop-filter: blur(18px);
+            backdrop-filter: blur(18px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    padding: 40px 48px 32px;
+    box-sizing: border-box;
   }
 
   .lgcy-signup__app-block + .lgcy-signup__app-block {
     margin-top: 12px;
   }
 
-  /* (No Omnisend-form-internal overrides. We only widen the outer column
-      via .lgcy-signup__wrap and the slot; Omnisend's own CSS handles the
-      country-code + phone + email layout exactly as their app intends.) */
+  /* ── Inputs / select inside the form — translucent, white text, Inter ── */
+  .lgcy-signup__form-slot input[type="email"],
+  .lgcy-signup__form-slot input[type="text"],
+  .lgcy-signup__form-slot input[type="tel"],
+  .lgcy-signup__form-slot input[type="number"],
+  .lgcy-signup__form-slot input[type="search"],
+  .lgcy-signup__form-slot select {
+    background: rgba(255, 255, 255, 0.07) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    color: #fff !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 500 !important;
+    border-radius: 8px !important;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .lgcy-signup__form-slot input::placeholder {
+    color: rgba(255, 255, 255, 0.45) !important;
+    font-weight: 400 !important;
+  }
+  .lgcy-signup__form-slot input:focus,
+  .lgcy-signup__form-slot select:focus {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-color: rgba(255, 255, 255, 0.35) !important;
+    outline: none !important;
+  }
+
+  /* ── Submit button — white pill, Inter 900 ── */
+  .lgcy-signup__form-slot button[type="submit"],
+  .lgcy-signup__form-slot [type="submit"] {
+    background: #fff !important;
+    color: #000 !important;
+    border: none !important;
+    border-radius: 999vw !important;
+    padding: 14px 32px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 13px !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    cursor: pointer !important;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .lgcy-signup__form-slot button[type="submit"]:hover,
+  .lgcy-signup__form-slot [type="submit"]:hover {
+    background: rgba(255, 255, 255, 0.88) !important;
+    transform: scale(0.99);
+  }
+
+  /* ── Checkbox + small disclaimer text ── */
+  .lgcy-signup__form-slot label,
+  .lgcy-signup__form-slot small,
+  .lgcy-signup__form-slot p,
+  .lgcy-signup__form-slot a {
+    color: rgba(255, 255, 255, 0.75) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 400 !important;
+  }
+  .lgcy-signup__form-slot label {
+    font-weight: 500 !important;
+  }
+  .lgcy-signup__form-slot a {
+    text-decoration: underline;
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  @media (max-width: 749px) {
+    .lgcy-signup__form-slot {
+      padding: 28px 20px 24px;
+      border-radius: 12px;
+    }
+  }
 
   .lgcy-signup__empty-slot {
     border: 1px dashed rgba(255,255,255,0.25);
