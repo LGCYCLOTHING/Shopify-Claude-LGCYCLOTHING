@@ -286,7 +286,32 @@
     color: rgba(255, 255, 255, 0.9) !important;
   }
 
+  /* ── Tablet / smaller desktop — tighten gap ── */
+  @media (max-width: 1100px) {
+    .lgcy-signup__wrap {
+      gap: 48px;
+    }
+    .lgcy-signup__heading {
+      font-size: clamp(32px, 5vw, 56px);
+    }
+  }
+
+  /* ── Mobile — stack into one column, allow natural scroll ── */
   @media (max-width: 749px) {
+    .lgcy-signup {
+      height: auto;
+      min-height: 100vh;
+      padding: 64px 20px;
+      align-items: flex-start;
+    }
+    .lgcy-signup__wrap {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      max-width: 560px;
+    }
+    .lgcy-signup__heading {
+      font-size: clamp(38px, 9vw, 56px);
+    }
     .lgcy-signup__form-slot {
       padding: 28px 20px 24px;
       border-radius: 12px;
