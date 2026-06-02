@@ -345,36 +345,39 @@
   </div>
 
   <div class="lgcy-signup__wrap">
-    <p class="lgcy-signup__eyebrow">{{ section.settings.eyebrow }}</p>
-    <h1 class="lgcy-signup__heading">{{ section.settings.heading }}</h1>
-    <p class="lgcy-signup__sub">{{ section.settings.subtext }}</p>
+    <div class="lgcy-signup__col-text">
+      <p class="lgcy-signup__eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1 class="lgcy-signup__heading">{{ section.settings.heading }}</h1>
+      <p class="lgcy-signup__sub">{{ section.settings.subtext }}</p>
 
-    {%- if section.blocks.size > 0 -%}
-      <ul class="lgcy-signup__perks">
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'perk' -%}
-            <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
-          {%- endif -%}
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
-
-    {%- comment %} ── Omnisend form slot — add the "Omnisend Embedded Form" app block here ── {% endcomment %}
-    <div class="lgcy-signup__form-slot">
-      {%- assign app_block_count = 0 -%}
-      {%- for block in section.blocks -%}
-        {%- if block.type == '@app' -%}
-          {%- assign app_block_count = app_block_count | plus: 1 -%}
-          <div class="lgcy-signup__app-block" {{ block.shopify_attributes }}>
-            {% render block %}
-          </div>
-        {%- endif -%}
-      {%- endfor -%}
-
-      {%- comment %} Empty slot waits for the Omnisend Embedded Form app block,
-         added inside this section via the theme editor. {% endcomment -%}
+      {%- if section.blocks.size > 0 -%}
+        <ul class="lgcy-signup__perks">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'perk' -%}
+              <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
     </div>
 
+    <div class="lgcy-signup__col-form">
+      {%- comment %} ── Omnisend form slot — add the "Omnisend Embedded Form" app block here ── {% endcomment %}
+      <div class="lgcy-signup__form-slot">
+        {%- assign app_block_count = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == '@app' -%}
+            {%- assign app_block_count = app_block_count | plus: 1 -%}
+            <div class="lgcy-signup__app-block" {{ block.shopify_attributes }}>
+              {% render block %}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- comment %} Empty slot waits for the Omnisend Embedded Form app block,
+           added inside this section via the theme editor. {% endcomment -%}
+      </div>
+    </div>
   </div>
 </div>
 
