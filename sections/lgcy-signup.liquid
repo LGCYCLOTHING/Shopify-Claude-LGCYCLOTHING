@@ -58,7 +58,7 @@
     top: -15%;
     left: -15%;
     background: radial-gradient(circle, #4f4f4f 0%, #1f1f1f 45%, rgba(10,10,10,0) 75%);
-    animation: lgcyOrbA 16s ease-in-out infinite alternate;
+    animation: lgcyOrbA 18s linear infinite;
   }
   .lgcy-signup__orbs::after {
     width: 45vw;
@@ -66,7 +66,7 @@
     bottom: -20%;
     right: -10%;
     background: radial-gradient(circle, #3a3a3a 0%, #1a1a1a 45%, rgba(10,10,10,0) 75%);
-    animation: lgcyOrbB 19s ease-in-out infinite alternate;
+    animation: lgcyOrbB 22s linear infinite;
   }
   .lgcy-signup__orb--3 {
     width: 42vw;
@@ -74,7 +74,7 @@
     top: 20%;
     left: 35%;
     background: radial-gradient(circle, #5a5a5a 0%, #232323 40%, rgba(10,10,10,0) 70%);
-    animation: lgcyOrbC 21s ease-in-out infinite alternate;
+    animation: lgcyOrbC 20s linear infinite;
   }
   .lgcy-signup__orb--4 {
     width: 38vw;
@@ -82,24 +82,39 @@
     top: 50%;
     left: -10%;
     background: radial-gradient(circle, #444444 0%, #181818 45%, rgba(10,10,10,0) 75%);
-    animation: lgcyOrbD 14s ease-in-out infinite alternate;
+    animation: lgcyOrbD 16s linear infinite;
   }
 
+  /* Multi-waypoint loops that return to start position without "alternate" —
+     means the motion never pauses or reverses, it keeps drifting in a
+     continuous closed loop. */
   @keyframes lgcyOrbA {
-    0%   { transform: translate3d(0, 0, 0) scale(1); }
-    100% { transform: translate3d(20vw, 18vw, 0) scale(1.18); }
+    0%   { transform: translate3d(0, 0, 0)         scale(1); }
+    25%  { transform: translate3d(18vw, 10vw, 0)   scale(1.12); }
+    50%  { transform: translate3d(22vw, 24vw, 0)   scale(1.18); }
+    75%  { transform: translate3d(6vw, 18vw, 0)    scale(1.08); }
+    100% { transform: translate3d(0, 0, 0)         scale(1); }
   }
   @keyframes lgcyOrbB {
-    0%   { transform: translate3d(0, 0, 0) scale(1); }
-    100% { transform: translate3d(-22vw, -14vw, 0) scale(1.2); }
+    0%   { transform: translate3d(0, 0, 0)          scale(1); }
+    25%  { transform: translate3d(-14vw, -8vw, 0)   scale(1.1); }
+    50%  { transform: translate3d(-22vw, -18vw, 0)  scale(1.2); }
+    75%  { transform: translate3d(-8vw, -22vw, 0)   scale(1.05); }
+    100% { transform: translate3d(0, 0, 0)          scale(1); }
   }
   @keyframes lgcyOrbC {
-    0%   { transform: translate3d(0, 0, 0) scale(1); }
-    100% { transform: translate3d(-18vw, 22vw, 0) scale(0.85); }
+    0%   { transform: translate3d(0, 0, 0)         scale(1); }
+    25%  { transform: translate3d(-12vw, 12vw, 0)  scale(0.9); }
+    50%  { transform: translate3d(-22vw, 20vw, 0)  scale(0.85); }
+    75%  { transform: translate3d(-10vw, 6vw, 0)   scale(0.95); }
+    100% { transform: translate3d(0, 0, 0)         scale(1); }
   }
   @keyframes lgcyOrbD {
-    0%   { transform: translate3d(0, 0, 0) scale(1); }
-    100% { transform: translate3d(24vw, -16vw, 0) scale(1.15); }
+    0%   { transform: translate3d(0, 0, 0)         scale(1); }
+    25%  { transform: translate3d(14vw, -10vw, 0)  scale(1.1); }
+    50%  { transform: translate3d(24vw, -18vw, 0)  scale(1.15); }
+    75%  { transform: translate3d(12vw, -6vw, 0)   scale(1.05); }
+    100% { transform: translate3d(0, 0, 0)         scale(1); }
   }
 
   @media (prefers-reduced-motion: reduce) {
