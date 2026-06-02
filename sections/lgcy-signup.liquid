@@ -120,16 +120,9 @@
     max-width: 880px !important;
     box-sizing: border-box;
   }
-  .lgcy-signup__form-slot input[type="email"],
-  .lgcy-signup__form-slot input[type="text"],
-  .lgcy-signup__form-slot input[type="tel"],
-  .lgcy-signup__form-slot input[type="number"],
-  .lgcy-signup__form-slot select,
-  .lgcy-signup__form-slot button[type="submit"] {
-    width: 100% !important;
-    max-width: 100% !important;
-    box-sizing: border-box;
-  }
+  /* (Don't override individual input/select widths — Omnisend ships its
+      own flex layout for the country-code + phone pair, and forcing
+      width:100% on the select stretches the dropdown into a huge box.) */
 
   .lgcy-signup__empty-slot {
     border: 1px dashed rgba(255,255,255,0.25);
