@@ -127,14 +127,27 @@
     }
   }
 
+  /* ── Two-column layout — text left, form right ────────────────────────── */
   .lgcy-signup__wrap {
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 880px;
+    max-width: 1480px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .lgcy-signup__col-text {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+  }
+  .lgcy-signup__col-form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
   }
 
   .lgcy-signup__eyebrow {
@@ -143,26 +156,26 @@
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.45);
-    margin: 0 0 16px;
+    margin: 0 0 14px;
   }
 
   .lgcy-signup__heading {
     font-weight: 900;
-    font-size: clamp(44px, 8vw, 80px);
+    font-size: clamp(36px, 5.4vw, 68px);
     letter-spacing: -0.04em;
     text-transform: uppercase;
     color: #ffffff;
     line-height: 0.95;
-    margin: 0 0 20px;
+    margin: 0 0 18px;
   }
 
   .lgcy-signup__sub {
     font-weight: 400;
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 1.55;
     color: rgba(255,255,255,0.6);
-    margin: 0 0 32px;
-    max-width: 680px;
+    margin: 0 0 26px;
+    max-width: 520px;
   }
 
   .lgcy-signup__perks {
