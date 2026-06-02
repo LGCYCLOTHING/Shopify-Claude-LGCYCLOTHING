@@ -106,23 +106,9 @@
     margin-top: 12px;
   }
 
-  /* ── Force the Omnisend embedded form to stretch to the slot width
-        regardless of the inline max-width Omnisend ships with. ── */
-  .lgcy-signup__form-slot,
-  .lgcy-signup__app-block,
-  .lgcy-signup__app-block > *,
-  .lgcy-signup__form-slot .omnisend-form,
-  .lgcy-signup__form-slot [class*="omnisend"],
-  .lgcy-signup__form-slot [class*="om-form"],
-  .lgcy-signup__form-slot [data-form-id],
-  .lgcy-signup__form-slot iframe {
-    width: 100% !important;
-    max-width: 880px !important;
-    box-sizing: border-box;
-  }
-  /* (Don't override individual input/select widths — Omnisend ships its
-      own flex layout for the country-code + phone pair, and forcing
-      width:100% on the select stretches the dropdown into a huge box.) */
+  /* (No Omnisend-form-internal overrides. We only widen the outer column
+      via .lgcy-signup__wrap and the slot; Omnisend's own CSS handles the
+      country-code + phone + email layout exactly as their app intends.) */
 
   .lgcy-signup__empty-slot {
     border: 1px dashed rgba(255,255,255,0.25);
