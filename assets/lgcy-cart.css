@@ -1,0 +1,385 @@
+/* ============================================================================
+   LGCYCLOTHING — Cart page redesign: "Soft Cards + Sidebar"
+   Scoped to the cart page sections so it never leaks into the cart drawer.
+   - Items become rounded cards with a soft shadow + hover lift
+   - Order summary becomes a sticky white sidebar card
+   - Two-column layout on desktop, single column on mobile
+   All styling targets Dawn's existing classes, so quantity steppers, remove
+   buttons, live AJAX totals and checkout stay fully functional.
+   ========================================================================== */
+
+/* ── Page background ──────────────────────────────────────────────────── */
+body:has(cart-items) {
+  background: #f6f6f4;
+}
+
+/* ── Title row ────────────────────────────────────────────────────────── */
+#shopify-section-cart-items .title-wrapper-with-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  margin: 0 0 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+#shopify-section-cart-items .title--primary {
+  font-size: clamp(2.8rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 0;
+  line-height: 1;
+}
+
+#shopify-section-cart-items .title-wrapper-with-link .underlined-link {
+  font-size: 1.4rem;
+  white-space: nowrap;
+}
+
+/* ── Items: kill the table, render block cards ────────────────────────── */
+#shopify-section-cart-items .cart-items,
+#shopify-section-cart-items .cart-items tbody {
+  display: block;
+  width: 100%;
+  border: 0;
+}
+
+#shopify-section-cart-items .cart-items thead {
+  display: none; /* drop the PRODUCT / QUANTITY / TOTAL header row */
+}
+
+#shopify-section-cart-items .cart-item {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr) auto;
+  grid-template-areas:
+    'media details'
+    'media qty';
+  align-items: center;
+  column-gap: 16px;
+  row-gap: 12px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 16px;
+  padding: 16px;
+  margin: 0 0 14px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+#shopify-section-cart-items .cart-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px -14px rgba(0, 0, 0, 0.16);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* Reset Dawn's table cell paddings inside the card */
+#shopify-section-cart-items .cart-item > td {
+  padding: 0;
+  vertical-align: middle;
+}
+
+/* Media */
+#shopify-section-cart-items .cart-item__media {
+  grid-area: media;
+  width: 76px;
+}
+#shopify-section-cart-items .cart-item__image {
+  width: 76px;
+  height: auto;
+  max-width: 76px;
+  border-radius: 10px;
+  background: #f1f1ef;
+}
+#shopify-section-cart-items .cart-item__image-container {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Details */
+#shopify-section-cart-items .cart-item__details {
+  grid-area: details;
+  width: auto !important;
+  max-width: none;
+  align-self: center;
+}
+#shopify-section-cart-items .cart-item__details > * {
+  max-width: none;
+}
+#shopify-section-cart-items .cart-item__name {
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+#shopify-section-cart-items .cart-item__details .product-option,
+#shopify-section-cart-items .cart-item__details .product-option * {
+  font-size: 1.3rem;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+/* Quantity + remove (second row on mobile) */
+#shopify-section-cart-items .cart-item__quantity {
+  grid-area: qty;
+  padding-left: 0 !important;
+  display: flex;
+  align-items: center;
+}
+#shopify-section-cart-items .cart-item__quantity-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+#shopify-section-cart-items .quantity.cart-quantity {
+  height: 38px;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: 999px;
+  background: #fff;
+  overflow: hidden;
+  align-items: center;
+  min-width: 0;
+}
+#shopify-section-cart-items .quantity.cart-quantity::after {
+  display: none; /* remove Dawn's inset border pseudo */
+}
+#shopify-section-cart-items .cart-quantity .quantity__button {
+  width: 34px;
+  min-width: 34px;
+  height: 38px;
+  background: none;
+  border: none;
+  color: #111;
+}
+#shopify-section-cart-items .cart-quantity .quantity__input {
+  width: 38px;
+  background: none;
+  border: none;
+  font-weight: 600;
+  color: #111;
+  padding: 0;
+}
+
+#shopify-section-cart-items cart-remove-button {
+  margin-left: 6px;
+}
+#shopify-section-cart-items cart-remove-button .button {
+  min-width: 34px;
+  min-height: 34px;
+  color: rgba(0, 0, 0, 0.4);
+  transition: color 0.2s ease;
+}
+#shopify-section-cart-items cart-remove-button .button:hover {
+  color: #000;
+}
+
+/* Line total */
+#shopify-section-cart-items .cart-item__totals {
+  margin-left: auto;
+}
+#shopify-section-cart-items .cart-item__totals .price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111;
+}
+/* On mobile the line total sits to the right of the quantity row */
+#shopify-section-cart-items .cart-item__totals.small-hide {
+  display: none;
+}
+
+/* ── Order summary card (footer section) ──────────────────────────────── */
+#shopify-section-cart-footer #main-cart-footer,
+#shopify-section-cart-footer #main-cart-footer.gradient {
+  background: transparent !important;
+}
+#shopify-section-cart-footer #main-cart-footer.is-empty {
+  display: none;
+}
+
+#shopify-section-cart-footer .cart__footer {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 26px !important;
+  box-shadow: 0 14px 40px -16px rgba(0, 0, 0, 0.22);
+  margin: 0;
+}
+
+/* Force dark text inside the card (footer uses a dark color scheme) */
+#shopify-section-cart-footer .cart__footer,
+#shopify-section-cart-footer .cart__footer *:not(.cart__checkout-button) {
+  color: #1a1a1a;
+}
+
+.lgcy-summary-title {
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin: 0 0 18px;
+}
+
+.lgcy-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.lgcy-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 1.4rem;
+  color: rgba(0, 0, 0, 0.55);
+}
+.lgcy-summary-row > span:last-child {
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+#shopify-section-cart-footer .totals {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+#shopify-section-cart-footer .totals__total {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+#shopify-section-cart-footer .totals__total-value {
+  font-size: 1.9rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+#shopify-section-cart-footer .tax-note {
+  display: block;
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Cart note (if enabled) */
+#shopify-section-cart-footer .cart__note {
+  margin: 0 0 18px;
+}
+
+/* Checkout button — full-width dark pill */
+#shopify-section-cart-footer .cart__ctas {
+  margin-top: 20px;
+}
+#shopify-section-cart-footer .cart__checkout-button {
+  width: 100%;
+  background: #0a0a0a;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 16px 20px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  box-shadow: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+#shopify-section-cart-footer .cart__checkout-button::before,
+#shopify-section-cart-footer .cart__checkout-button::after {
+  display: none;
+}
+#shopify-section-cart-footer .cart__checkout-button:hover:not([disabled]) {
+  transform: translateY(-2px);
+  background: #000;
+  box-shadow: 0 14px 30px -10px rgba(0, 0, 0, 0.5);
+}
+#shopify-section-cart-footer .cart__checkout-button[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+#shopify-section-cart-footer .cart__dynamic-checkout-buttons {
+  margin-top: 12px;
+}
+
+/* ── Empty state ──────────────────────────────────────────────────────── */
+#shopify-section-cart-items .cart__warnings {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+/* ── Desktop: two-column grid + bigger cards ──────────────────────────── */
+@media screen and (min-width: 990px) {
+  /* Lay the two cart sections side by side, only when the cart has items */
+  #MainContent:has(cart-items:not(.is-empty)) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 380px;
+    column-gap: 48px;
+    align-items: start;
+    max-width: 1340px;
+    margin-inline: auto;
+    padding-inline: 48px;
+    box-sizing: border-box;
+  }
+  #MainContent:has(cart-items:not(.is-empty)) #shopify-section-cart-items {
+    grid-column: 1;
+    min-width: 0;
+  }
+  #MainContent:has(cart-items:not(.is-empty)) #shopify-section-cart-footer {
+    grid-column: 2;
+    position: sticky;
+    top: calc(var(--header-height, 90px) + 28px);
+  }
+
+  /* Let the inner page-width wrappers fill their grid cell */
+  #shopify-section-cart-items .page-width,
+  #shopify-section-cart-footer .page-width {
+    max-width: none;
+    width: 100%;
+    padding-inline: 0;
+    margin: 0;
+  }
+
+  /* Drop Dawn's table cell spacing so the card grid controls everything */
+  #shopify-section-cart-items .cart-items td {
+    padding-top: 0;
+  }
+  #shopify-section-cart-items .cart-item > td + td {
+    padding-left: 0;
+  }
+  #shopify-section-cart-items .cart-item .cart-item__quantity {
+    padding-left: 0;
+  }
+  #shopify-section-cart-items .cart-item__details {
+    width: auto !important;
+  }
+
+  /* Roomier inline card: image | details | qty | total */
+  #shopify-section-cart-items .cart-item {
+    grid-template-columns: 92px minmax(0, 1fr) auto auto;
+    grid-template-areas: 'media details qty total';
+    column-gap: 28px;
+    row-gap: 0;
+    padding: 18px 24px;
+    margin-bottom: 16px;
+  }
+  #shopify-section-cart-items .cart-item__media {
+    width: 92px;
+  }
+  #shopify-section-cart-items .cart-item__image {
+    width: 92px;
+    max-width: 92px;
+  }
+  #shopify-section-cart-items .cart-item__totals.small-hide {
+    grid-area: total;
+    display: block;
+    text-align: right;
+  }
+  #shopify-section-cart-items .cart-item__totals.medium-hide {
+    display: none; /* hide the mobile-only total cell on desktop */
+  }
+  #shopify-section-cart-items .cart-item__quantity {
+    grid-area: qty;
+  }
+}
