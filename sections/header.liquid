@@ -172,11 +172,14 @@
   }
 
   /* These pages have a light/white background, so the default white logo is
-     nearly invisible — invert it to dark (same treatment as product pages). */
+     nearly invisible — invert it to dark (same treatment as product pages).
+     Excluded on cart, which uses a dark glass background (logo stays white). */
+  {%- unless request.page_type == 'cart' -%}
   .header__heading-logo {
     filter: invert(1);
     mix-blend-mode: normal;
   }
+  {%- endunless -%}
 </style>
 {%- endunless -%}
 
