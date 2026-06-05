@@ -42,7 +42,7 @@
   .header-wrapper details>span,
   .header-wrapper .disclosure__button>span,
   .header-wrapper .disclosure__button svg {
-    color: {% if request.page_type == 'index' or request.page_type == 'collection' %}#ffffff{% else %}#000000{% endif %} !important;
+    color: {% if request.page_type == 'index' or request.page_type == 'collection' or request.page_type == 'cart' %}#ffffff{% else %}#000000{% endif %} !important;
   }
 
   {% if request.page_type == 'product' %}
