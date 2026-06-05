@@ -138,12 +138,14 @@
     top: 0 !important;
     z-index: 10010 !important;
   }
+  {%- unless request.page_type == 'cart' -%}
   .header__inline-menu .list-menu__item--link,
 .lgcy-shop-btn,
 .header__heading-link,
 .header__icon {
   mix-blend-mode: difference;
 }
+  {%- endunless -%}
 
   .section-header.overflow-hidden-desktop,
   .section-header.overflow-hidden-tablet,
