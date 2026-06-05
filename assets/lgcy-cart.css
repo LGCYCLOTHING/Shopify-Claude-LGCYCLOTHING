@@ -173,15 +173,18 @@ body:has(cart-items) {
 }
 
 /* Line total */
-#shopify-section-cart-items .cart-item__totals {
-  margin-left: auto;
-}
 #shopify-section-cart-items .cart-item__totals .price {
   font-size: 1.5rem;
   font-weight: 700;
   color: #111;
 }
-/* On mobile the line total sits to the right of the quantity row */
+/* Mobile: the visible line total sits top-right of the card */
+#shopify-section-cart-items .cart-item__totals.medium-hide {
+  grid-area: price;
+  text-align: right;
+  align-self: center;
+}
+/* Mobile: hide the desktop-only total cell */
 #shopify-section-cart-items .cart-item__totals.small-hide {
   display: none;
 }
