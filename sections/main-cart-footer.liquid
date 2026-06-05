@@ -60,6 +60,17 @@
                   {%- endif -%}
                 </div>
 
+                <div class="lgcy-summary">
+                  <div class="lgcy-summary-row">
+                    <span>Subtotal</span>
+                    <span>{{ cart.items_subtotal_price | money }}</span>
+                  </div>
+                  <div class="lgcy-summary-row">
+                    <span>Shipping</span>
+                    <span>Calculated at checkout</span>
+                  </div>
+                </div>
+
                 <div class="totals">
                   <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
                   <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
