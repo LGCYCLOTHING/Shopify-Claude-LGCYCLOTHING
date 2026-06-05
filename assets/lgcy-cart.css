@@ -475,8 +475,12 @@ body:has(cart-items) {
 #shopify-section-cart-items .cart-item__name {
   font-weight: 700;
 }
-#shopify-section-cart-items .cart-item__totals .price {
-  font-weight: 700;
+/* Prices — extra thick. Covers the line total ($ in the TOTAL column) and the
+   unit price shown directly under the product name. */
+#shopify-section-cart-items .cart-item__totals .price,
+#shopify-section-cart-items .cart-item__details > .product-option {
+  font-weight: 800 !important;
+  color: inherit;
 }
 #shopify-section-cart-items .title-wrapper-with-link .underlined-link {
   font-weight: 600;
