@@ -151,13 +151,29 @@
     mix-blend-mode: normal !important;
   }
 
-  /* Mobile: push page content below the fixed header so it doesn't overlap.
+  /* Push page content below the fixed header so it doesn't overlap.
      Header is ≈ 72px tall; adding extra so the gap looks balanced with the bottom
      of the page rather than crammed right under the icons. */
   @media screen and (max-width: 989px) {
     #MainContent {
       padding-top: 96px;
     }
+  }
+
+  /* Desktop: the header is also fixed here, so offset the page content by the
+     measured header height (set by the sticky-header JS) plus a little breathing
+     room, otherwise the page title sits behind the logo/icons. */
+  @media screen and (min-width: 990px) {
+    #MainContent {
+      padding-top: calc(var(--header-height, 90px) + 24px);
+    }
+  }
+
+  /* These pages have a light/white background, so the default white logo is
+     nearly invisible — invert it to dark (same treatment as product pages). */
+  .header__heading-logo {
+    filter: invert(1);
+    mix-blend-mode: normal;
   }
 </style>
 {%- endunless -%}

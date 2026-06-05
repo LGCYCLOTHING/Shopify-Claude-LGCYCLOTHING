@@ -84,7 +84,9 @@
       "Bash(node -e \"const j=require\\('./templates/product.json'\\); const v=j.sections.custom_liquid_NQgBBj.settings.custom_liquid; var i = v.indexOf\\('</div>\\\\\\\\n</section>',v.indexOf\\('rp-wrap'\\)\\); console.log\\('searching for end of rp-wrap:'\\); for\\(var i=v.indexOf\\('rp-wrap'\\);i<v.length;i++\\){ if\\(v.slice\\(i,i+9\\)==='</section'\\) { console.log\\('found section close at',i\\); console.log\\(v.slice\\(Math.max\\(0,i-200\\),i+200\\)\\); break; } if\\(i-v.indexOf\\('rp-wrap'\\)>30000\\){break;}}\")",
       "Bash(node -e \"const j=require\\('./templates/product.json'\\); const v=j.sections.custom_liquid_NQgBBj.settings.custom_liquid; var i=v.indexOf\\('LIMITED STOCK'\\); if\\(i<0\\)i=v.indexOf\\('Limited Stock'\\); if\\(i<0\\)i=v.indexOf\\('limited'\\); console.log\\('idx:',i\\); if\\(i>=0\\) console.log\\(v.slice\\(Math.max\\(0,i-300\\),i+200\\)\\);\")",
       "Bash(node -e \"const j=require\\('./templates/product.json'\\); const v=j.sections.custom_liquid_NQgBBj.settings.custom_liquid; var i=v.indexOf\\('.rp-inner'\\); console.log\\(v.slice\\(i, i+400\\)\\);\")",
-      "Bash(node -e \"console.log\\(require\\('fs'\\).statSync\\('assets/section-password.css'\\).size\\)\")"
+      "Bash(node -e \"console.log\\(require\\('fs'\\).statSync\\('assets/section-password.css'\\).size\\)\")",
+      "mcp__claude_ai_Shopify__get-shop-info",
+      "mcp__claude_ai_Shopify__graphql_query"
     ]
   }
 }
