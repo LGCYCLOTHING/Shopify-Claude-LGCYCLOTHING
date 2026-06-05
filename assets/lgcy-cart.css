@@ -448,3 +448,56 @@ body:has(cart-items) {
     margin-top: 16px;
   }
 }
+
+/* ── Typography ───────────────────────────────────────────────────────── */
+/* Display headings — brand mark style: Inter 900, tight negative tracking */
+#shopify-section-cart-items .title--primary,
+.lgcy-summary-title,
+#shopify-section-cart-footer .totals__total {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.035em;
+}
+
+/* Everything else — easy to read, bolded (prices, values, names, links) */
+#shopify-section-cart-items .cart-item__name,
+#shopify-section-cart-items .cart-item__totals .price,
+#shopify-section-cart-items .cart-item__details .product-option,
+#shopify-section-cart-items .cart-item__details .product-option *,
+#shopify-section-cart-items .title-wrapper-with-link .underlined-link,
+#shopify-section-cart-items .cart-quantity .quantity__input,
+#shopify-section-cart-footer .lgcy-summary-row,
+#shopify-section-cart-footer .totals__total-value,
+#shopify-section-cart-footer .cart__checkout-button {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.005em;
+}
+#shopify-section-cart-items .cart-item__name {
+  font-weight: 700;
+}
+#shopify-section-cart-items .cart-item__totals .price {
+  font-weight: 700;
+}
+#shopify-section-cart-items .title-wrapper-with-link .underlined-link {
+  font-weight: 600;
+}
+#shopify-section-cart-items .cart-quantity .quantity__input {
+  font-weight: 700;
+}
+#shopify-section-cart-items .cart-item__details .product-option,
+#shopify-section-cart-items .cart-item__details .product-option * {
+  font-weight: 500;
+}
+#shopify-section-cart-footer .lgcy-summary-row {
+  font-weight: 500;
+}
+#shopify-section-cart-footer .lgcy-summary-row > span:last-child {
+  font-weight: 700;
+}
+#shopify-section-cart-footer .totals__total-value {
+  font-weight: 800;
+}
+/* Checkout pill keeps its wide uppercase tracking for legibility */
+#shopify-section-cart-footer .cart__checkout-button {
+  letter-spacing: 0.04em;
+}
