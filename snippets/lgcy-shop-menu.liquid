@@ -606,12 +606,12 @@
   }
 </style>
 
-{%- unless request.page_type == 'index' or request.page_type == 'collection' -%}
+{%- unless request.page_type == 'index' or request.page_type == 'collection' or request.page_type == 'cart' -%}
 <style>
   /* ─────────────────────────────────────────────────────────────────────
-     Light-page overrides (everything except the dark-hero homepage and
-     collection pages) — page bg is white so default white text is invisible.
-     Side panel keeps its glass blur but text/dividers go dark.
+     Light-page overrides (everything except the dark-hero homepage, collection
+     pages, and the dark-glass cart) — page bg is white so default white text is
+     invisible. Side panel keeps its glass blur but text/dividers go dark.
      SHOP / LEGACY header buttons get inverted (black text + black logo).
      ───────────────────────────────────────────────────────────────────── */
 
