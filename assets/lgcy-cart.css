@@ -66,6 +66,12 @@ body:has(cart-items) {
 }
 
 /* ── Items: kill the table, render translucent glass cards ────────────── */
+/* The <cart-items> wrapper ships with a white color scheme — make it
+   transparent so the dark glass card behind shows through. */
+#shopify-section-cart-items cart-items,
+#shopify-section-cart-items cart-items.gradient {
+  background: transparent !important;
+}
 #shopify-section-cart-items .cart-items,
 #shopify-section-cart-items .cart-items tbody {
   display: block;
