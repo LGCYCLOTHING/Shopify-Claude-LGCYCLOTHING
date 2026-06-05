@@ -53,8 +53,8 @@ body:has(cart-items) {
   display: grid;
   grid-template-columns: 76px minmax(0, 1fr) auto;
   grid-template-areas:
-    'media details'
-    'media qty';
+    'media details price'
+    'media qty     qty';
   align-items: center;
   column-gap: 16px;
   row-gap: 12px;
