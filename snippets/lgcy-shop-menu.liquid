@@ -606,11 +606,12 @@
   }
 </style>
 
-{%- if request.page_type == 'product' -%}
+{%- unless request.page_type == 'index' or request.page_type == 'collection' -%}
 <style>
   /* ─────────────────────────────────────────────────────────────────────
-     Product page overrides — page bg is white so default white text is
-     invisible. Side panel keeps its glass blur but text/dividers go dark.
+     Light-page overrides (everything except the dark-hero homepage and
+     collection pages) — page bg is white so default white text is invisible.
+     Side panel keeps its glass blur but text/dividers go dark.
      SHOP / LEGACY header buttons get inverted (black text + black logo).
      ───────────────────────────────────────────────────────────────────── */
 
