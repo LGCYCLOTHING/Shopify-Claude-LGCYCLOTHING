@@ -180,6 +180,12 @@ cart-items .quantity.cart-quantity {
   align-items: center;
   min-width: 0;
 }
+/* Dawn paints a solid white layer behind the stepper via ::before — kill it
+   (and the ::after border ring) so the glass shows. */
+cart-items .quantity.cart-quantity::before {
+  background: transparent !important;
+  box-shadow: none !important;
+}
 cart-items .quantity.cart-quantity::after {
   display: none !important;
 }
