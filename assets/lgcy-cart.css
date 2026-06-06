@@ -1,13 +1,10 @@
 /* ============================================================================
    LGCYCLOTHING — Cart page: dark liquid-glass (matches the "DISCOVER" pill)
-   Scoped to the cart sections so it never leaks into the cart drawer.
-   - Whole cart sits inside one frosted DARK glass card (rounded corners)
-   - Deep tinted backdrop so the glass blur reads; light text over the glass
-   - Items = translucent glass cards w/ hover lift; summary = sticky glass panel
-   - Glass checkout pill w/ arrow; wider layout; fully responsive
-   Targets Dawn's existing classes so steppers, remove, live totals + checkout
-   stay fully functional. (Header is flipped to white for this page in
-   sections/header.liquid + snippets/lgcy-shop-menu.liquid.)
+   Scoped to the <cart-items> element and #main-cart-footer (NOT the Shopify
+   section wrapper id, which can be auto-generated like
+   #shopify-section-template--…__cart-items). This keeps it working regardless
+   of how the theme names the sections, and never leaks into the cart drawer
+   (which uses <cart-drawer-items>).
    ========================================================================== */
 
 /* ── Deep tinted backdrop (what the glass blurs) ──────────────────────── */
@@ -20,8 +17,8 @@ body:has(cart-items) {
 }
 
 /* ── Let the section page-width wrappers fill the glass card ───────────── */
-#MainContent:has(cart-items:not(.is-empty)) #shopify-section-cart-items .page-width,
-#MainContent:has(cart-items:not(.is-empty)) #shopify-section-cart-footer .page-width {
+#MainContent:has(cart-items:not(.is-empty)) cart-items .page-width,
+#MainContent:has(cart-items:not(.is-empty)) #main-cart-footer .page-width {
   max-width: none;
   width: 100%;
   padding-inline: 0;
@@ -42,7 +39,7 @@ body:has(cart-items) {
 }
 
 /* ── Title row ────────────────────────────────────────────────────────── */
-#shopify-section-cart-items .title-wrapper-with-link {
+cart-items .title-wrapper-with-link {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -51,7 +48,7 @@ body:has(cart-items) {
   padding-bottom: 18px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-#shopify-section-cart-items .title--primary {
+cart-items .title--primary {
   font-size: clamp(2.8rem, 5vw, 4rem);
   font-weight: 800;
   letter-spacing: -0.03em;
@@ -59,7 +56,7 @@ body:has(cart-items) {
   line-height: 1;
   color: #f4f5f7;
 }
-#shopify-section-cart-items .title-wrapper-with-link .underlined-link {
+cart-items .title-wrapper-with-link .underlined-link {
   font-size: 1.4rem;
   white-space: nowrap;
   color: rgba(255, 255, 255, 0.72);
@@ -68,21 +65,21 @@ body:has(cart-items) {
 /* ── Items: kill the table, render translucent glass cards ────────────── */
 /* The <cart-items> wrapper ships with a white color scheme — make it
    transparent so the dark glass card behind shows through. */
-#shopify-section-cart-items cart-items,
-#shopify-section-cart-items cart-items.gradient {
+cart-items,
+cart-items.gradient {
   background: transparent !important;
 }
-#shopify-section-cart-items .cart-items,
-#shopify-section-cart-items .cart-items tbody {
+cart-items .cart-items,
+cart-items .cart-items tbody {
   display: block;
   width: 100%;
   border: 0;
 }
-#shopify-section-cart-items .cart-items thead {
+cart-items .cart-items thead {
   display: none;
 }
 
-#shopify-section-cart-items .cart-item {
+cart-items .cart-item {
   display: grid;
   grid-template-columns: 76px minmax(0, 1fr) auto;
   grid-template-areas:
@@ -101,7 +98,7 @@ body:has(cart-items) {
     0 2px 8px rgba(0, 0, 0, 0.3);
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
 }
-#shopify-section-cart-items .cart-item:hover {
+cart-items .cart-item:hover {
   transform: translateY(-3px);
   background: rgba(255, 255, 255, 0.09);
   border-color: rgba(255, 255, 255, 0.2);
@@ -109,64 +106,64 @@ body:has(cart-items) {
     inset 0 1px 0 rgba(255, 255, 255, 0.18),
     0 18px 38px -16px rgba(0, 0, 0, 0.6);
 }
-#shopify-section-cart-items .cart-item > td {
+cart-items .cart-item > td {
   padding: 0;
   vertical-align: middle;
 }
 
 /* Media */
-#shopify-section-cart-items .cart-item__media {
+cart-items .cart-item__media {
   grid-area: media;
   width: 76px;
 }
-#shopify-section-cart-items .cart-item__image {
+cart-items .cart-item__image {
   width: 76px;
   height: auto;
   max-width: 76px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.06);
 }
-#shopify-section-cart-items .cart-item__image-container {
+cart-items .cart-item__image-container {
   border-radius: 10px;
   overflow: hidden;
 }
 
 /* Details */
-#shopify-section-cart-items .cart-item__details {
+cart-items .cart-item__details {
   grid-area: details;
   width: auto !important;
   max-width: none;
   align-self: center;
 }
-#shopify-section-cart-items .cart-item__details > * {
+cart-items .cart-item__details > * {
   max-width: none;
 }
-#shopify-section-cart-items .cart-item__name {
+cart-items .cart-item__name {
   font-size: 1.55rem;
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1.25;
   color: #f2f3f5;
 }
-#shopify-section-cart-items .cart-item__details .product-option,
-#shopify-section-cart-items .cart-item__details .product-option * {
+cart-items .cart-item__details .product-option,
+cart-items .cart-item__details .product-option * {
   font-size: 1.3rem;
   color: rgba(255, 255, 255, 0.5);
 }
 
 /* Quantity + remove */
-#shopify-section-cart-items .cart-item__quantity {
+cart-items .cart-item__quantity {
   grid-area: qty;
   padding-left: 0 !important;
   display: flex;
   align-items: center;
 }
-#shopify-section-cart-items .cart-item__quantity-wrapper {
+cart-items .cart-item__quantity-wrapper {
   display: flex;
   align-items: center;
   gap: 4px;
 }
-#shopify-section-cart-items .quantity.cart-quantity {
+cart-items .quantity.cart-quantity {
   height: 38px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 999px;
@@ -177,10 +174,10 @@ body:has(cart-items) {
   align-items: center;
   min-width: 0;
 }
-#shopify-section-cart-items .quantity.cart-quantity::after {
+cart-items .quantity.cart-quantity::after {
   display: none;
 }
-#shopify-section-cart-items .cart-quantity .quantity__button {
+cart-items .cart-quantity .quantity__button {
   width: 34px;
   min-width: 34px;
   height: 38px;
@@ -188,7 +185,7 @@ body:has(cart-items) {
   border: none;
   color: #f2f3f5;
 }
-#shopify-section-cart-items .cart-quantity .quantity__input {
+cart-items .cart-quantity .quantity__input {
   width: 38px;
   background: none;
   border: none;
@@ -196,43 +193,43 @@ body:has(cart-items) {
   color: #f2f3f5;
   padding: 0;
 }
-#shopify-section-cart-items cart-remove-button {
+cart-items cart-remove-button {
   margin-left: 6px;
 }
-#shopify-section-cart-items cart-remove-button .button {
+cart-items cart-remove-button .button {
   min-width: 34px;
   min-height: 34px;
   color: rgba(255, 255, 255, 0.45);
   transition: color 0.2s ease;
 }
-#shopify-section-cart-items cart-remove-button .button:hover {
+cart-items cart-remove-button .button:hover {
   color: #fff;
 }
 
 /* Line total */
-#shopify-section-cart-items .cart-item__totals .price {
+cart-items .cart-item__totals .price {
   font-size: 1.5rem;
   font-weight: 700;
   color: #f2f3f5;
 }
-#shopify-section-cart-items .cart-item__totals.medium-hide {
+cart-items .cart-item__totals.medium-hide {
   grid-area: price;
   text-align: right;
   align-self: center;
 }
-#shopify-section-cart-items .cart-item__totals.small-hide {
+cart-items .cart-item__totals.small-hide {
   display: none;
 }
 
 /* ── Order-summary dark glass panel (footer section) ──────────────────── */
-#shopify-section-cart-footer #main-cart-footer,
-#shopify-section-cart-footer #main-cart-footer.gradient {
+#main-cart-footer,
+#main-cart-footer.gradient {
   background: transparent !important;
 }
-#shopify-section-cart-footer #main-cart-footer.is-empty {
+#main-cart-footer.is-empty {
   display: none;
 }
-#shopify-section-cart-footer .cart__footer {
+#main-cart-footer .cart__footer {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.13);
   border-radius: 18px;
@@ -243,8 +240,8 @@ body:has(cart-items) {
   margin: 0;
 }
 /* Light text inside the panel */
-#shopify-section-cart-footer .cart__footer,
-#shopify-section-cart-footer .cart__footer *:not(.cart__checkout-button) {
+#main-cart-footer .cart__footer,
+#main-cart-footer .cart__footer *:not(.cart__checkout-button) {
   color: #eef0f3;
 }
 
@@ -273,7 +270,7 @@ body:has(cart-items) {
   font-weight: 600;
 }
 
-#shopify-section-cart-footer .totals {
+#main-cart-footer .totals {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -281,33 +278,33 @@ body:has(cart-items) {
   padding-top: 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.13);
 }
-#shopify-section-cart-footer .totals__total {
+#main-cart-footer .totals__total {
   font-size: 1.5rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: -0.01em;
   margin: 0;
 }
-#shopify-section-cart-footer .totals__total-value {
+#main-cart-footer .totals__total-value {
   font-size: 1.9rem;
   font-weight: 800;
   margin: 0;
 }
-#shopify-section-cart-footer .tax-note {
+#main-cart-footer .tax-note {
   display: block;
   margin-top: 10px;
   font-size: 1.2rem;
   color: rgba(255, 255, 255, 0.45);
 }
-#shopify-section-cart-footer .cart__note {
+#main-cart-footer .cart__note {
   margin: 0 0 18px;
 }
 
 /* Checkout button — dark glass pill with arrow (the "DISCOVER" look) */
-#shopify-section-cart-footer .cart__ctas {
+#main-cart-footer .cart__ctas {
   margin-top: 20px;
 }
-#shopify-section-cart-footer .cart__checkout-button {
+#main-cart-footer .cart__checkout-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -329,10 +326,10 @@ body:has(cart-items) {
     0 12px 28px -10px rgba(0, 0, 0, 0.6);
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
-#shopify-section-cart-footer .cart__checkout-button::before {
+#main-cart-footer .cart__checkout-button::before {
   display: none;
 }
-#shopify-section-cart-footer .cart__checkout-button::after {
+#main-cart-footer .cart__checkout-button::after {
   content: '→';
   position: static;
   inset: auto;
@@ -346,26 +343,26 @@ body:has(cart-items) {
   line-height: 1;
   transition: transform 0.2s ease;
 }
-#shopify-section-cart-footer .cart__checkout-button:hover:not([disabled]) {
+#main-cart-footer .cart__checkout-button:hover:not([disabled]) {
   transform: translateY(-2px);
   background: rgba(255, 255, 255, 0.18);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.4),
     0 18px 34px -10px rgba(0, 0, 0, 0.7);
 }
-#shopify-section-cart-footer .cart__checkout-button:hover:not([disabled])::after {
+#main-cart-footer .cart__checkout-button:hover:not([disabled])::after {
   transform: translateX(4px);
 }
-#shopify-section-cart-footer .cart__checkout-button[disabled] {
+#main-cart-footer .cart__checkout-button[disabled] {
   opacity: 0.4;
   cursor: not-allowed;
 }
-#shopify-section-cart-footer .cart__dynamic-checkout-buttons {
+#main-cart-footer .cart__dynamic-checkout-buttons {
   margin-top: 12px;
 }
 
 /* ── Empty state ──────────────────────────────────────────────────────── */
-#shopify-section-cart-items .cart__warnings {
+cart-items .cart__warnings {
   text-align: center;
   padding: 60px 20px;
   color: #eef0f3;
@@ -384,31 +381,32 @@ body:has(cart-items) {
     padding: 40px;
     padding-top: 40px; /* override the global fixed-header offset */
   }
-  #MainContent:has(cart-items:not(.is-empty)) #shopify-section-cart-items {
+  /* Position the section wrappers by what they contain (id-agnostic) */
+  #MainContent:has(cart-items:not(.is-empty)) > *:has(cart-items) {
     grid-column: 1;
     min-width: 0;
   }
-  #MainContent:has(cart-items:not(.is-empty)) #shopify-section-cart-footer {
+  #MainContent:has(cart-items:not(.is-empty)) > *:has(#main-cart-footer) {
     grid-column: 2;
     position: sticky;
     top: calc(var(--header-height, 90px) + 40px);
   }
 
-  #shopify-section-cart-items .cart-items td {
+  cart-items .cart-items td {
     padding-top: 0;
   }
-  #shopify-section-cart-items .cart-item > td + td {
+  cart-items .cart-item > td + td {
     padding-left: 0;
   }
-  #shopify-section-cart-items .cart-item .cart-item__quantity {
+  cart-items .cart-item .cart-item__quantity {
     padding-left: 0;
   }
-  #shopify-section-cart-items .cart-item__details {
+  cart-items .cart-item__details {
     width: auto !important;
   }
 
   /* Roomier inline card: image | details | qty | total */
-  #shopify-section-cart-items .cart-item {
+  cart-items .cart-item {
     grid-template-columns: 92px minmax(0, 1fr) auto auto;
     grid-template-areas: 'media details qty total';
     column-gap: 28px;
@@ -416,22 +414,22 @@ body:has(cart-items) {
     padding: 18px 22px;
     margin-bottom: 14px;
   }
-  #shopify-section-cart-items .cart-item__media {
+  cart-items .cart-item__media {
     width: 92px;
   }
-  #shopify-section-cart-items .cart-item__image {
+  cart-items .cart-item__image {
     width: 92px;
     max-width: 92px;
   }
-  #shopify-section-cart-items .cart-item__totals.small-hide {
+  cart-items .cart-item__totals.small-hide {
     grid-area: total;
     display: block;
     text-align: right;
   }
-  #shopify-section-cart-items .cart-item__totals.medium-hide {
+  cart-items .cart-item__totals.medium-hide {
     display: none;
   }
-  #shopify-section-cart-items .cart-item__quantity {
+  cart-items .cart-item__quantity {
     grid-area: qty;
   }
 }
@@ -444,73 +442,72 @@ body:has(cart-items) {
     padding-top: 18px; /* override the global 96px header offset */
     border-radius: 22px;
   }
-  #shopify-section-cart-footer {
+  #MainContent:has(cart-items:not(.is-empty)) > *:has(#main-cart-footer) {
     margin-top: 16px;
   }
 }
 
 /* ── Typography ───────────────────────────────────────────────────────── */
 /* Display headings — brand mark style: Inter 900, tight negative tracking */
-#shopify-section-cart-items .title--primary,
+cart-items .title--primary,
 .lgcy-summary-title,
-#shopify-section-cart-footer .totals__total {
+#main-cart-footer .totals__total {
   font-family: 'Inter', sans-serif;
   font-weight: 900;
   letter-spacing: -0.035em;
 }
 
 /* Everything else — easy to read, bolded (prices, values, names, links) */
-#shopify-section-cart-items .cart-item__name,
-#shopify-section-cart-items .cart-item__totals .price,
-#shopify-section-cart-items .cart-item__details .product-option,
-#shopify-section-cart-items .cart-item__details .product-option *,
-#shopify-section-cart-items .title-wrapper-with-link .underlined-link,
-#shopify-section-cart-items .cart-quantity .quantity__input,
-#shopify-section-cart-footer .lgcy-summary-row,
-#shopify-section-cart-footer .totals__total-value,
-#shopify-section-cart-footer .cart__checkout-button {
+cart-items .cart-item__name,
+cart-items .cart-item__totals .price,
+cart-items .cart-item__details .product-option,
+cart-items .cart-item__details .product-option *,
+cart-items .title-wrapper-with-link .underlined-link,
+cart-items .cart-quantity .quantity__input,
+#main-cart-footer .lgcy-summary-row,
+#main-cart-footer .totals__total-value,
+#main-cart-footer .cart__checkout-button {
   font-family: 'Inter', sans-serif;
   letter-spacing: -0.005em;
 }
-#shopify-section-cart-items .cart-item__name {
+cart-items .cart-item__name {
   font-weight: 700;
 }
-/* Prices — extra thick. Covers the line total ($ in the TOTAL column) and the
-   unit price shown directly under the product name. */
-#shopify-section-cart-items .cart-item__totals .price,
-#shopify-section-cart-items .cart-item__details > .product-option {
+/* Prices — extra thick (line total + unit price under the name) */
+cart-items .cart-item__totals .price,
+cart-items .cart-item__details > .product-option {
   font-weight: 800 !important;
 }
-#shopify-section-cart-items .title-wrapper-with-link .underlined-link {
+cart-items .title-wrapper-with-link .underlined-link {
   font-weight: 600;
 }
-#shopify-section-cart-items .cart-quantity .quantity__input {
+cart-items .cart-quantity .quantity__input {
   font-weight: 700;
 }
-#shopify-section-cart-items .cart-item__details .product-option,
-#shopify-section-cart-items .cart-item__details .product-option * {
+cart-items .cart-item__details .product-option,
+cart-items .cart-item__details .product-option * {
   font-weight: 500;
 }
-#shopify-section-cart-footer .lgcy-summary-row {
+#main-cart-footer .lgcy-summary-row {
   font-weight: 500;
 }
-#shopify-section-cart-footer .lgcy-summary-row > span:last-child {
+#main-cart-footer .lgcy-summary-row > span:last-child {
   font-weight: 700;
 }
-#shopify-section-cart-footer .totals__total-value {
+#main-cart-footer .totals__total-value {
   font-weight: 800;
 }
 /* Checkout pill keeps its wide uppercase tracking for legibility */
-#shopify-section-cart-footer .cart__checkout-button {
+#main-cart-footer .cart__checkout-button {
   letter-spacing: 0.04em;
 }
 
-/* Force the "Your cart" heading to Inter 900 — high specificity + !important so
-   it overrides the theme's heading font. */
-#shopify-section-cart-items h1.title.title--primary,
-#shopify-section-cart-items h1.title.title--primary * {
+/* Force the "Your cart" heading to Inter 900 — high specificity + !important.
+   color:red is a TEMPORARY deploy test; remove once confirmed. */
+cart-items h1.title.title--primary,
+cart-items h1.title.title--primary * {
   font-family: 'Inter', sans-serif !important;
   font-weight: 900 !important;
   letter-spacing: -0.04em !important;
-  color: red !important; /* TEST: confirm this deploys, then revert */
+  color: red !important; /* TEST — revert after confirming */
 }
