@@ -513,12 +513,12 @@ cart-items .cart-item__details .product-option * {
   letter-spacing: 0.04em;
 }
 
-/* Force the "Your cart" heading to Inter 900 — high specificity + !important.
-   color:red is a TEMPORARY deploy test; remove once confirmed. */
+/* Force the "Your cart" heading to Inter 900 — high specificity + !important
+   so it overrides the theme's heading font. */
 cart-items h1.title.title--primary,
 cart-items h1.title.title--primary * {
   font-family: 'Inter', sans-serif !important;
   font-weight: 900 !important;
   letter-spacing: -0.04em !important;
-  color: red !important; /* TEST — revert after confirming */
+  color: #f4f5f7 !important;
 }
