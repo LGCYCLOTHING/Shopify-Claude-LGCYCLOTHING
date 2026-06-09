@@ -410,8 +410,6 @@ cart-items .cart__warnings {
   }
   #MainContent:has(cart-items:not(.is-empty)) > *:has(#main-cart-footer) {
     grid-column: 2;
-    position: sticky;
-    top: calc(var(--header-height, 90px) + 40px);
   }
 
   cart-items .cart-items td {
