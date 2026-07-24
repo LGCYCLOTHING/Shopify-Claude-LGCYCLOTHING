@@ -715,6 +715,87 @@
 </product-info>
 
 
+<style>
+  .lgcy-tabs-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+    margin-top: 2.4rem;
+    margin-bottom: 0;
+  }
+  .lgcy-tab-btn {
+    font-family: var(--font-body-family);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: none;
+    border: none;
+    padding: 0 2.4rem 1.2rem 0;
+    cursor: pointer;
+    color: rgba(0,0,0,0.35);
+    position: relative;
+    white-space: nowrap;
+    line-height: 1;
+  }
+  .lgcy-tab-btn.is-active {
+    color: #000;
+  }
+  .lgcy-tab-btn.is-active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 2.4rem;
+    height: 2px;
+    background: #000;
+  }
+  .lgcy-tab-item__heading { display: none; }
+  .lgcy-tab-item__content { display: none; padding-top: 1.8rem; }
+  .lgcy-tab-item.is-active .lgcy-tab-item__content { display: block; }
+</style>
+
+<script>
+(function() {
+  function initProductTabs() {
+    document.querySelectorAll('product-info').forEach(function(productInfo) {
+      var items = productInfo.querySelectorAll('.lgcy-tab-item');
+      if (!items.length) return;
+
+      var nav = document.createElement('div');
+      nav.className = 'lgcy-tabs-nav';
+
+      items.forEach(function(item, i) {
+        var label = item.querySelector('.lgcy-tab-item__heading').textContent.trim();
+        var btn = document.createElement('button');
+        btn.className = 'lgcy-tab-btn';
+        btn.textContent = label;
+        btn.setAttribute('type', 'button');
+        btn.addEventListener('click', function() {
+          items.forEach(function(t) { t.classList.remove('is-active'); });
+          nav.querySelectorAll('.lgcy-tab-btn').forEach(function(b) { b.classList.remove('is-active'); });
+          item.classList.add('is-active');
+          btn.classList.add('is-active');
+        });
+        if (i === 0) {
+          item.classList.add('is-active');
+          btn.classList.add('is-active');
+        }
+        nav.appendChild(btn);
+      });
+
+      items[0].parentNode.insertBefore(nav, items[0]);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProductTabs);
+  } else {
+    initProductTabs();
+  }
+})();
+</script>
+
 {% schema %}
 {
   "name": "t:sections.main-product.name",
