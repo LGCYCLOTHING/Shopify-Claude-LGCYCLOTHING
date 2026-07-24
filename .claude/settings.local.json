@@ -86,7 +86,10 @@
       "Bash(node -e \"const j=require\\('./templates/product.json'\\); const v=j.sections.custom_liquid_NQgBBj.settings.custom_liquid; var i=v.indexOf\\('.rp-inner'\\); console.log\\(v.slice\\(i, i+400\\)\\);\")",
       "Bash(node -e \"console.log\\(require\\('fs'\\).statSync\\('assets/section-password.css'\\).size\\)\")",
       "mcp__claude_ai_Shopify__get-shop-info",
-      "mcp__claude_ai_Shopify__graphql_query"
+      "mcp__claude_ai_Shopify__graphql_query",
+      "Bash(xargs grep -l \"glasses\\\\|hero\\\\|second\")",
+      "Bash(python3 -c ' *)",
+      "Bash(shopify version *)"
     ]
   }
 }
