@@ -350,11 +350,18 @@
   .rp-nis-success { display: none; font-size: 12px; font-weight: 600; color: #22c55e; margin-top: 10px; text-align: center; }
 
   @media (max-width: 860px) {
-    .rp-wrap { grid-template-columns: 1fr; }
-    .rp-gallery { position: relative; height: 90vw; }
-    .rp-info { min-height: auto; padding: 36px 24px 40px; border-left: none; border-top: 1px solid #e6e6e6; align-items: flex-start; }
+    .rp-wrap { grid-template-columns: 1fr; min-height: unset; background: #fff; }
+    .rp-gallery { position: relative; height: 100vw; max-height: 560px; }
+    .rp-info { min-height: auto; padding: 32px 20px 48px; border-left: none; border-top: 1px solid #e6e6e6; align-items: flex-start; }
     .rp-inner { max-width: 100%; }
-    .rp-sizes { grid-template-columns: repeat(5, 1fr); }
+    .rp-sizes { grid-template-columns: repeat(auto-fill, minmax(56px, 1fr)); }
+    .rp-tab-btn { font-size: 9px; letter-spacing: -0.02em; padding: 0 0 12px 0; }
+    .rp-nis-box { width: calc(100% - 32px); max-width: 100%; margin: 16px; }
+  }
+  @media (max-width: 400px) {
+    .rp-tabs-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .rp-tabs-nav::-webkit-scrollbar { display: none; }
+    .rp-tab-btn { font-size: 8px; flex: 0 0 auto; padding: 0 12px 12px 0; }
   }
 </style>
 
