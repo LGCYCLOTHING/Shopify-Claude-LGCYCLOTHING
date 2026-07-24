@@ -702,6 +702,18 @@
   }
 
   (function() {
+    var gallery = document.querySelector('.rp-gallery');
+    if (gallery) {
+      var txStart = 0;
+      gallery.addEventListener('touchstart', function(e) { txStart = e.touches[0].clientX; }, { passive: true });
+      gallery.addEventListener('touchend', function(e) {
+        var diff = txStart - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) { if (diff > 0) rpNext(); else rpPrev(); }
+      }, { passive: true });
+    }
+  })();
+
+  (function() {
     document.querySelectorAll('.rp-btn-cart, .rp-nis-submit').forEach(function(btn) {
       btn.addEventListener('mousemove', function(e) {
         var rect = btn.getBoundingClientRect();
