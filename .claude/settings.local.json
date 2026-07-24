@@ -89,7 +89,10 @@
       "mcp__claude_ai_Shopify__graphql_query",
       "Bash(xargs grep -l \"glasses\\\\|hero\\\\|second\")",
       "Bash(python3 -c ' *)",
-      "Bash(shopify version *)"
+      "Bash(shopify version *)",
+      "Bash(git commit -m ' *)",
+      "Bash(gh run *)",
+      "PowerShell(gh run list --limit 5 2>&1)"
     ]
   }
 }
