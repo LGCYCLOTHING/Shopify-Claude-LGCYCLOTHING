@@ -285,13 +285,18 @@
   .rp-tabs-nav {
     display: flex;
     border-bottom: 2px solid rgba(0,0,0,0.10);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
+  .rp-tabs-nav::-webkit-scrollbar { display: none; }
   .rp-tab-btn {
     flex: 1;
+    min-width: 80px;
     text-align: center;
     font-family: 'Inter', Helvetica, 'Helvetica Neue', Arial, sans-serif;
     font-size: 12px; font-weight: 900; letter-spacing: -0.04em; text-transform: uppercase;
-    background: none; border: none; padding: 0 0 14px 0;
+    background: none; border: none; padding: 0 8px 14px;
     cursor: pointer; color: rgba(0,0,0,0.32); position: relative; white-space: nowrap;
   }
   .rp-tab-btn.is-active { color: #111; }
