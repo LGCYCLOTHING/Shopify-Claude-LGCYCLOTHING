@@ -558,37 +558,49 @@
         </div>
       </div>
 
-      <!-- Product Details accordion -->
-      <div class="rp-acc-list">
-        <button class="rp-acc-trigger" type="button" onclick="rpAccToggle('details', this)">
-          Product Details
-          <span class="rp-trigger-icon">+</span>
-        </button>
-        <div class="rp-acc-body" id="rp-acc-details">
-          <div class="rp-acc-body-inner">
-            {{ p.description }}
+      {%- assign desc_has_details = false -%}
+      {%- if p.description contains '<details>' -%}{%- assign desc_has_details = true -%}{%- endif -%}
+
+      {%- if desc_has_details -%}
+        <!-- Glasses-style: description contains <details> — render hidden so JS can extract tabs -->
+        <div id="rp-desc-details-src" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">{{ p.description }}</div>
+      {%- else -%}
+        <!-- Standard: product details accordion -->
+        <div class="rp-acc-list">
+          <button class="rp-acc-trigger" type="button" onclick="rpAccToggle('details', this)">
+            Product Details
+            <span class="rp-trigger-icon">+</span>
+          </button>
+          <div class="rp-acc-body" id="rp-acc-details">
+            <div class="rp-acc-body-inner">
+              {{ p.description }}
+            </div>
           </div>
         </div>
-      </div>
+      {%- endif -%}
 
       <!-- Tabs: Shipping / Size Chart / Care Instructions -->
       <div class="rp-tabs-wrap">
         <div class="rp-tabs-nav">
           <button class="rp-tab-btn is-active" type="button" onclick="rpTabSwitch(this,'shipping')">Shipping &amp; Returns</button>
+          {%- unless desc_has_details -%}
           <button class="rp-tab-btn" type="button" onclick="rpTabSwitch(this,'sizechart')">Size Chart</button>
           <button class="rp-tab-btn" type="button" onclick="rpTabSwitch(this,'care')">Care Instructions</button>
+          {%- endunless -%}
         </div>
         <div class="rp-tab-panel is-active" id="rp-tab-shipping">
           <p>Free shipping on orders over $175.</p>
           <p>Returns accepted within 30 days of delivery. Items must be unworn and in original condition with all tags attached.</p>
           <p>To initiate a return, contact us at <strong>support@lgcyclothing.com</strong> with your order number.</p>
         </div>
+        {%- unless desc_has_details -%}
         <div class="rp-tab-panel" id="rp-tab-sizechart">
           <p>Please refer to our size guide for detailed measurements. Sizes run true to size — when in doubt, size up.</p>
         </div>
         <div class="rp-tab-panel" id="rp-tab-care">
           <p>Machine wash cold with like colours. Tumble dry low. Do not bleach. Do not dry clean. Iron on low heat.</p>
         </div>
+        {%- endunless -%}
       </div>
 
     </div>
