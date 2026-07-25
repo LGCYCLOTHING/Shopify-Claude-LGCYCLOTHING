@@ -92,7 +92,8 @@
       "Bash(shopify version *)",
       "Bash(git commit -m ' *)",
       "Bash(gh run *)",
-      "PowerShell(gh run list --limit 5 2>&1)"
+      "PowerShell(gh run list --limit 5 2>&1)",
+      "Bash(python -m json.tool)"
     ]
   }
 }

@@ -718,41 +718,34 @@
 <style>
   .lgcy-tabs-nav {
     display: flex;
-    gap: 0;
-    border-bottom: 1px solid rgba(0,0,0,0.12);
-    margin-top: 2.4rem;
-    margin-bottom: 0;
+    border-bottom: 2px solid rgba(0,0,0,0.10);
+    margin-top: 24px;
   }
   .lgcy-tab-btn {
-    font-family: var(--font-body-family);
-    font-size: 1.1rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    background: none;
-    border: none;
-    padding: 0 2.4rem 1.2rem 0;
-    cursor: pointer;
-    color: rgba(0,0,0,0.35);
-    position: relative;
-    white-space: nowrap;
+    flex: 1;
+    text-align: center;
+    font-family: 'Inter', Helvetica, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12px; font-weight: 900; letter-spacing: -0.04em; text-transform: uppercase;
+    background: none; border: none; padding: 0 0 14px 0;
+    cursor: pointer; color: rgba(0,0,0,0.32); position: relative; white-space: nowrap;
     line-height: 1;
   }
-  .lgcy-tab-btn.is-active {
-    color: #000;
-  }
+  .lgcy-tab-btn.is-active { color: #111; }
   .lgcy-tab-btn.is-active::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 2.4rem;
-    height: 2px;
-    background: #000;
+    content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 3px; background: #111;
   }
   .lgcy-tab-item__heading { display: none; }
-  .lgcy-tab-item__content { display: none; padding-top: 1.8rem; }
+  .lgcy-tab-item__content {
+    display: none; padding-top: 18px;
+    font-size: 13px; font-weight: 600; color: #444; line-height: 1.85;
+  }
   .lgcy-tab-item.is-active .lgcy-tab-item__content { display: block; }
+  @media (max-width: 400px) {
+    .lgcy-tabs-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .lgcy-tabs-nav::-webkit-scrollbar { display: none; }
+    .lgcy-tab-btn { font-size: 8px; flex: 0 0 auto; padding: 0 10px 12px 0; }
+  }
 </style>
 
 <script>
