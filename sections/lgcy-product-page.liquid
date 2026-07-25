@@ -891,6 +891,208 @@
 })();
 </script>
 
+<style>
+  .lgcy-nl-trigger {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #111;
+    color: #fff;
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    transition: background 0.15s, transform 0.15s;
+  }
+  .lgcy-nl-trigger:hover { background: #2a2a2a; transform: translateY(-1px); }
+  .lgcy-nl-trigger-tag {
+    background: #fff;
+    color: #111;
+    font-size: 9px;
+    font-weight: 900;
+    padding: 2px 5px;
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+  }
+  .lgcy-nl-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0,0,0,0.55);
+    align-items: center;
+    justify-content: center;
+  }
+  .lgcy-nl-overlay.open { display: flex; }
+  .lgcy-nl-modal {
+    display: flex;
+    width: 90vw;
+    max-width: 700px;
+    max-height: 90vh;
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .lgcy-nl-close {
+    position: absolute;
+    top: 14px; right: 14px;
+    background: none; border: none;
+    font-size: 22px; line-height: 1;
+    cursor: pointer; color: #111;
+    z-index: 2; padding: 4px 8px;
+  }
+  .lgcy-nl-left {
+    flex: 1;
+    padding: 52px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .lgcy-nl-eyebrow {
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: 9px; font-weight: 800;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: #999; margin: 0 0 14px;
+  }
+  .lgcy-nl-heading {
+    font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+    font-size: clamp(26px, 3.2vw, 38px);
+    font-weight: 800; letter-spacing: -0.03em;
+    line-height: 1.0; color: #111; margin: 0 0 16px;
+  }
+  .lgcy-nl-body {
+    font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 13px; color: #666; line-height: 1.7;
+    margin: 0 0 28px;
+  }
+  .lgcy-nl-input {
+    width: 100%; padding: 13px 14px;
+    border: 1.5px solid #d0d0d0;
+    font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 13px; background: #f7f7f7; color: #111;
+    outline: none; box-sizing: border-box; margin-bottom: 10px;
+    transition: border-color 0.15s;
+  }
+  .lgcy-nl-input:focus { border-color: #111; background: #fff; }
+  .lgcy-nl-input::placeholder { color: #bbb; }
+  .lgcy-nl-submit {
+    width: 100%; padding: 14px;
+    background: #111; color: #fff;
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: 11px; font-weight: 800;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    border: none; cursor: pointer;
+    transition: background 0.15s; margin-bottom: 14px;
+  }
+  .lgcy-nl-submit:hover { background: #333; }
+  .lgcy-nl-submit:disabled { opacity: 0.5; cursor: default; }
+  .lgcy-nl-legal { font-size: 10px; color: #bbb; line-height: 1.5; margin: 0; }
+  .lgcy-nl-right {
+    width: 240px; flex-shrink: 0;
+    background: #111;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lgcy-nl-right-brand {
+    font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10px; font-weight: 800;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: rgba(255,255,255,0.18);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    user-select: none;
+  }
+  .lgcy-nl-success { display: none; }
+  .lgcy-nl-success.visible { display: block; }
+  .lgcy-nl-form-wrap.hidden { display: none; }
+  @media (max-width: 600px) {
+    .lgcy-nl-right { display: none; }
+    .lgcy-nl-left { padding: 44px 24px 36px; }
+    .lgcy-nl-trigger { bottom: 16px; left: 16px; font-size: 9px; padding: 9px 13px; }
+  }
+</style>
+
+<button class="lgcy-nl-trigger" id="lgcyNlTrigger" aria-label="Get 10% off your first order">
+  <span class="lgcy-nl-trigger-tag">10%</span>
+  GET 10% OFF
+</button>
+
+<div class="lgcy-nl-overlay" id="lgcyNlOverlay" role="dialog" aria-modal="true">
+  <div class="lgcy-nl-modal">
+    <button class="lgcy-nl-close" id="lgcyNlClose" aria-label="Close">&times;</button>
+    <div class="lgcy-nl-left">
+      <div class="lgcy-nl-form-wrap" id="lgcyNlFormWrap">
+        <p class="lgcy-nl-eyebrow">Exclusive Offer</p>
+        <h2 class="lgcy-nl-heading">Get 10%<br>Off Your<br>First Order.</h2>
+        <p class="lgcy-nl-body">Sign up for our newsletter and we'll send you a discount code. Be the first to know about new drops, releases, and more.</p>
+        <input type="email" class="lgcy-nl-input" id="lgcyNlEmail" placeholder="Email address" autocomplete="email">
+        <button class="lgcy-nl-submit" id="lgcyNlSubmit">Claim Offer</button>
+        <p class="lgcy-nl-legal">By subscribing you agree to our Privacy Policy. Offer valid for new subscribers only.</p>
+      </div>
+      <div class="lgcy-nl-success" id="lgcyNlSuccess">
+        <p class="lgcy-nl-eyebrow">You're In</p>
+        <h2 class="lgcy-nl-heading">Check Your<br>Inbox.</h2>
+        <p class="lgcy-nl-body">Your 10% off code is on its way. Keep an eye on your inbox — and your spam folder just in case.</p>
+      </div>
+    </div>
+    <div class="lgcy-nl-right">
+      <span class="lgcy-nl-right-brand">LGCYCLOTHING</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var trigger = document.getElementById('lgcyNlTrigger');
+  var overlay = document.getElementById('lgcyNlOverlay');
+  var closeBtn = document.getElementById('lgcyNlClose');
+  var submitBtn = document.getElementById('lgcyNlSubmit');
+  var emailInput = document.getElementById('lgcyNlEmail');
+  var formWrap = document.getElementById('lgcyNlFormWrap');
+  var success = document.getElementById('lgcyNlSuccess');
+
+  function openModal() { overlay.classList.add('open'); emailInput.focus(); }
+  function closeModal() { overlay.classList.remove('open'); }
+
+  trigger.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+  submitBtn.addEventListener('click', function() {
+    var email = emailInput.value.trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      emailInput.style.borderColor = '#e00';
+      emailInput.focus();
+      return;
+    }
+    emailInput.style.borderColor = '';
+    submitBtn.textContent = '...';
+    submitBtn.disabled = true;
+    var fd = new FormData();
+    fd.append('form_type', 'customer');
+    fd.append('utf8', '✓');
+    fd.append('contact[tags]', 'newsletter');
+    fd.append('contact[email]', email);
+    fetch('/contact', { method: 'POST', body: fd, headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+      .catch(function() {})
+      .finally(function() {
+        formWrap.classList.add('hidden');
+        success.classList.add('visible');
+      });
+  });
+})();
+</script>
+
 {% schema %}
 {
   "name": "LGCY Product Page",
