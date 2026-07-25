@@ -1188,6 +1188,44 @@
 })();
 </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var tabsNav = document.querySelector('.rp-tabs-nav');
+  var tabsWrap = document.querySelector('.rp-tabs-wrap');
+  if (!tabsNav || !tabsWrap) return;
+
+  var lgcyItems = document.querySelectorAll('.lgcy-tab-item');
+  if (!lgcyItems.length) return;
+
+  lgcyItems.forEach(function(item) {
+    var heading = item.querySelector('.lgcy-tab-item__heading');
+    var content = item.querySelector('.lgcy-tab-item__content');
+    if (!heading || !content) return;
+
+    var label = heading.textContent.trim();
+    var key = 'ext-' + label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+    var btn = document.createElement('button');
+    btn.className = 'rp-tab-btn';
+    btn.type = 'button';
+    btn.textContent = label;
+    btn.onclick = function() { rpTabSwitch(btn, key); };
+    tabsNav.appendChild(btn);
+
+    var panel = document.createElement('div');
+    panel.className = 'rp-tab-panel';
+    panel.id = 'rp-tab-' + key;
+    panel.innerHTML = content.innerHTML;
+    tabsWrap.appendChild(panel);
+
+    item.style.display = 'none';
+  });
+
+  var mainNav = document.querySelector('.lgcy-tabs-nav');
+  if (mainNav) mainNav.style.display = 'none';
+});
+</script>
+
 {% schema %}
 {
   "name": "LGCY Product Page",
