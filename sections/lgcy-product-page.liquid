@@ -1200,6 +1200,8 @@
     var tabsWrap = document.querySelector('.rp-tabs-wrap');
     if (!tabsNav || !tabsWrap) return;
 
+    var added = 0;
+
     function addTab(label, contentHtml) {
       var key = 'ext-' + label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       if (document.getElementById('rp-tab-' + key)) return;
@@ -1214,42 +1216,51 @@
       panel.id = 'rp-tab-' + key;
       panel.innerHTML = contentHtml;
       tabsWrap.appendChild(panel);
+      added++;
     }
 
-    // Source 1: product description containing <details> elements (glasses-style products)
-    var descSrc = document.getElementById('rp-desc-details-src');
-    if (descSrc) {
-      descSrc.querySelectorAll('details').forEach(function(d) {
-        var summary = d.querySelector(':scope > summary');
-        if (!summary) return;
-        var label = summary.textContent.trim();
-        if (!label) return;
-        var clone = d.cloneNode(true);
-        var sumClone = clone.querySelector('summary');
-        if (sumClone) sumClone.remove();
-        var inner = clone.innerHTML.trim();
-        if (inner) addTab(label, inner);
-      });
-    }
+    // Search the ENTIRE document for <details>/<summary> accordion items
+    document.querySelectorAll('details').forEach(function(d) {
+      var summary = d.querySelector(':scope > summary');
+      if (!summary) return;
+      var label = summary.textContent.trim();
+      if (!label) return;
+      var clone = d.cloneNode(true);
+      var sumClone = clone.querySelector('summary');
+      if (sumClone) sumClone.remove();
+      var inner = clone.innerHTML.trim();
+      if (!inner) return;
+      addTab(label, inner);
+      d.style.display = 'none';
+    });
 
-    // Source 2: .lgcy-tab-item elements from main-product collapsible_tab blocks
+    // Also find .lgcy-tab-item elements (main-product collapsible_tab blocks)
     document.querySelectorAll('.lgcy-tab-item').forEach(function(item) {
       var h = item.querySelector('.lgcy-tab-item__heading');
       var c = item.querySelector('.lgcy-tab-item__content');
       if (!h || !c) return;
       var label = h.textContent.trim();
       var inner = c.innerHTML.trim();
-      if (label && inner) {
-        addTab(label, inner);
-        item.style.display = 'none';
-      }
+      if (!label || !inner) return;
+      addTab(label, inner);
+      item.style.display = 'none';
     });
+
+    // If product-specific tabs were added, remove SIZE CHART and CARE INSTRUCTIONS
+    // (those are apparel-only tabs; glasses have their own tabs from the description)
+    if (added > 0) {
+      ['sizechart', 'care'].forEach(function(key) {
+        var panel = document.getElementById('rp-tab-' + key);
+        var btn = tabsNav.querySelector('[onclick*="' + key + '"]');
+        if (btn) btn.remove();
+        if (panel) panel.remove();
+      });
+    }
 
     // Hide any standalone nav created by main-product.liquid
     document.querySelectorAll('.lgcy-tabs-nav').forEach(function(n) { n.style.display = 'none'; });
   }
 
-  // Use window load to run AFTER all deferred scripts and DOMContentLoaded handlers
   if (document.readyState === 'complete') {
     mergeExternalTabs();
   } else {
