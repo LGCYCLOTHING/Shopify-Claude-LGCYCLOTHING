@@ -1194,33 +1194,56 @@ document.addEventListener('DOMContentLoaded', function() {
   var tabsWrap = document.querySelector('.rp-tabs-wrap');
   if (!tabsNav || !tabsWrap) return;
 
-  var lgcyItems = document.querySelectorAll('.lgcy-tab-item');
-  if (!lgcyItems.length) return;
-
-  lgcyItems.forEach(function(item) {
-    var heading = item.querySelector('.lgcy-tab-item__heading');
-    var content = item.querySelector('.lgcy-tab-item__content');
-    if (!heading || !content) return;
-
-    var label = heading.textContent.trim();
+  function addTab(label, contentHtml, originalEl) {
     var key = 'ext-' + label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-
+    if (document.getElementById('rp-tab-' + key)) return; // dedupe
     var btn = document.createElement('button');
     btn.className = 'rp-tab-btn';
     btn.type = 'button';
     btn.textContent = label;
     btn.onclick = function() { rpTabSwitch(btn, key); };
     tabsNav.appendChild(btn);
-
     var panel = document.createElement('div');
     panel.className = 'rp-tab-panel';
     panel.id = 'rp-tab-' + key;
-    panel.innerHTML = content.innerHTML;
+    panel.innerHTML = contentHtml;
     tabsWrap.appendChild(panel);
+    if (originalEl) originalEl.style.display = 'none';
+  }
 
-    item.style.display = 'none';
+  // Source 1: <details> elements in product info or description areas
+  var containers = document.querySelectorAll(
+    'product-info, .product__info-container, .product__description, .rp-acc-body-inner'
+  );
+  var seen = new Set();
+  containers.forEach(function(c) {
+    c.querySelectorAll('details').forEach(function(d) {
+      if (seen.has(d)) return;
+      seen.add(d);
+      var summary = d.querySelector('summary');
+      if (!summary) return;
+      var label = summary.textContent.trim();
+      var inner = '';
+      d.childNodes.forEach(function(n) {
+        if (n !== summary) {
+          var tmp = document.createElement('div');
+          tmp.appendChild(n.cloneNode(true));
+          inner += tmp.innerHTML;
+        }
+      });
+      if (label && inner.trim()) addTab(label, inner, d);
+    });
   });
 
+  // Source 2: .lgcy-tab-item elements
+  document.querySelectorAll('.lgcy-tab-item').forEach(function(item) {
+    var h = item.querySelector('.lgcy-tab-item__heading');
+    var c = item.querySelector('.lgcy-tab-item__content');
+    if (!h || !c) return;
+    addTab(h.textContent.trim(), c.innerHTML, item);
+  });
+
+  // Hide any separate tab nav created by main-product.liquid
   var mainNav = document.querySelector('.lgcy-tabs-nav');
   if (mainNav) mainNav.style.display = 'none';
 });
