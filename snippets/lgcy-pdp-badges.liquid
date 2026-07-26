@@ -536,6 +536,73 @@
   })();
 </script>
 
+<script>
+  /* Stock status pill — injected via JS so it works on any product template */
+  (function () {
+    var availMeta = document.querySelector('meta[name="lgcy-variant-available"]');
+    var invMeta   = document.querySelector('meta[name="lgcy-variant-inventory"]');
+    if (!availMeta) return;
+
+    var available = availMeta.getAttribute('content') === 'true';
+    var qty       = parseInt(invMeta ? invMeta.getAttribute('content') : '0', 10);
+
+    var dotClass, label, bg, border;
+    if (!available) {
+      dotClass = 'rp-dot-out'; label = 'Out of Stock';
+      bg = 'rgba(239,68,68,0.15)'; border = '#dc2626';
+    } else if (qty > 0 && qty <= 10) {
+      dotClass = 'rp-dot-low'; label = 'Limited Stock';
+      bg = 'rgba(246,118,55,0.15)'; border = '#ea580c';
+    } else {
+      dotClass = 'rp-dot-in'; label = 'In Stock';
+      bg = 'rgba(34,197,94,0.15)'; border = '#16a34a';
+    }
+
+    function inject() {
+      if (document.getElementById('lgcy-stock-pill')) return true;
+      var atc = document.querySelector('.rp-btn-cart, [name="add"][type="submit"], .product-form__submit');
+      if (!atc) return false;
+      var form = atc.closest('form') || atc.parentElement;
+
+      var pill = document.createElement('div');
+      pill.id = 'lgcy-stock-pill';
+      pill.style.cssText =
+        'display:inline-flex;align-items:center;gap:8px;' +
+        'padding:5px 12px 5px 10px;border-radius:999px;' +
+        'background:' + bg + ';border:1.5px solid ' + border + ';' +
+        'margin-top:6px;width:fit-content;';
+
+      var dot = document.createElement('span');
+      dot.className = 'rp-dot ' + dotClass;
+      dot.style.cssText = 'width:8px;height:8px;border-radius:50%;flex-shrink:0;';
+
+      var txt = document.createElement('span');
+      txt.style.cssText = 'font-size:11px;font-weight:900;letter-spacing:-0.02em;text-transform:uppercase;color:#1a1a1a;font-family:Helvetica,Arial,sans-serif;';
+      txt.textContent = label;
+
+      pill.appendChild(dot);
+      pill.appendChild(txt);
+
+      var nis = form.parentNode.querySelector('.lgcy-nis-injected');
+      if (nis) {
+        nis.parentNode.insertBefore(pill, nis.nextSibling);
+      } else if (form.nextSibling) {
+        form.parentNode.insertBefore(pill, form.nextSibling);
+      } else {
+        form.parentNode.appendChild(pill);
+      }
+      return true;
+    }
+
+    if (inject()) return;
+    var tries = 0;
+    var t = setInterval(function () {
+      tries++;
+      if (inject() || tries >= 40) clearInterval(t);
+    }, 250);
+  })();
+</script>
+
 <style>
   /* === You May Also Like — center the cards === */
   .rp-card-grid {
