@@ -558,25 +558,6 @@
         <button type="submit" name="add" class="rp-btn-cart"><span>Add to Cart</span></button>
       {%- endform -%}
 
-      <!-- USP bar -->
-      <div class="rp-usp">
-        <div class="rp-usp-row">
-          <div class="rp-usp-icon">
-            {%- if v.available == false -%}
-              <span class="rp-dot rp-dot-out"></span>
-            {%- elsif v.inventory_quantity > 0 and v.inventory_quantity <= 10 -%}
-              <span class="rp-dot rp-dot-low"></span>
-            {%- else -%}
-              <span class="rp-dot rp-dot-in"></span>
-            {%- endif -%}
-          </div>
-          <span class="rp-usp-text">
-            {%- if v.available == false -%}Out of Stock
-            {%- elsif v.inventory_quantity > 0 and v.inventory_quantity <= 10 -%}Limited Stock
-            {%- else -%}In Stock{%- endif -%}
-          </span>
-        </div>
-      </div>
 
       <!-- Product Details accordion -->
       <div class="rp-acc-list">
