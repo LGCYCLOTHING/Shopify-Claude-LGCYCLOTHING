@@ -558,7 +558,6 @@
 
     function inject() {
       if (document.getElementById('lgcy-stock-pill')) return true;
-      if (document.querySelector('.rp-usp')) return true; /* lgcy-product-page already has it */
       var atc = document.querySelector('.rp-btn-cart, [name="add"][type="submit"], .product-form__submit');
       if (!atc) return false;
       var form = atc.closest('form') || atc.parentElement;
