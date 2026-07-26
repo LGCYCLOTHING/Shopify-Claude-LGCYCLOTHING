@@ -532,10 +532,8 @@
     var available = availMeta.getAttribute('content') === 'true';
     var qty       = parseInt(invMeta ? invMeta.getAttribute('content') : '0', 10);
 
-    var dotClass, label, bg, border;
+    var dotColor, label, bg, border;
     if (!available) {
-    var dotColor;
-      if (!available) {
       dotColor = '#ef4444'; label = 'Out of Stock';
       bg = 'rgba(239,68,68,0.15)'; border = '#dc2626';
     } else if (qty > 0 && qty <= 10) {
