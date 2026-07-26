@@ -113,8 +113,8 @@
   .rp-gallery {
     position: relative !important;
     top: auto !important;
-    height: 100vh !important;
-    max-height: 100vh !important;
+    height: calc(100vh - var(--header-height, 90px)) !important;
+    max-height: calc(100vh - var(--header-height, 90px)) !important;
     min-height: 0 !important;
     overflow: hidden !important;
     align-self: stretch !important;
@@ -125,7 +125,7 @@
     max-height: none !important;
     min-height: 0 !important;
     overflow: visible !important;
-    padding: 60px 40px 100px 40px !important;
+    padding: 60px 40px 60px 40px !important;
     align-items: unset !important;
     justify-content: unset !important;
   }
