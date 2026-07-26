@@ -152,31 +152,19 @@
     }
   }
 
-  /* === Stock status pill === */
-  .rp-usp-row:has(.rp-dot-in),
-  .rp-usp-row:has(.rp-dot-low),
-  .rp-usp-row:has(.rp-dot-out) {
+  /* === Stock status pill — TEST: force red always === */
+  .rp-usp-row {
     display: inline-flex !important;
     align-items: center;
     gap: 8px !important;
-    padding: 5px 12px 5px 10px !important;
+    padding: 6px 14px 6px 10px !important;
     width: fit-content !important;
     border-radius: 999vw !important;
+    background: #ff0000 !important;
+    border: 2px solid #cc0000 !important;
   }
-  /* In stock — green */
-  .rp-usp-row:has(.rp-dot-in) {
-    background: rgba(34, 197, 94, 0.18) !important;
-    border: 1.5px solid #16a34a !important;
-  }
-  /* Limited — orange */
-  .rp-usp-row:has(.rp-dot-low) {
-    background: rgba(246, 118, 55, 0.18) !important;
-    border: 1.5px solid #ea580c !important;
-  }
-  /* Out of stock — red */
-  .rp-usp-row:has(.rp-dot-out) {
-    background: rgba(239, 68, 68, 0.18) !important;
-    border: 1.5px solid #dc2626 !important;
+  .rp-usp-text {
+    color: #fff !important;
   }
   .rp-usp-row:has(.rp-dot-in) .rp-usp-text,
   .rp-usp-row:has(.rp-dot-low) .rp-usp-text,
