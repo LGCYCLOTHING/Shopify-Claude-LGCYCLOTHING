@@ -1203,7 +1203,27 @@
 
     var added = 0;
 
-    function addTab(label, contentHtml) {
+    // Normalize a label for deduplication comparison
+    function norm(str) { return (str || '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
+
+    // Build map of existing tab labels → button (to detect duplicates)
+    var existingBtns = {};
+    tabsNav.querySelectorAll('.rp-tab-btn').forEach(function(btn) {
+      existingBtns[norm(btn.textContent)] = btn;
+    });
+
+    function addOrUpdateTab(label, contentHtml) {
+      var n = norm(label);
+      if (existingBtns[n]) {
+        // Matching tab already exists — update its panel content instead of duplicating
+        var existing = existingBtns[n];
+        var m = (existing.getAttribute('onclick') || '').match(/'([^']+)'/);
+        if (m) {
+          var p = document.getElementById('rp-tab-' + m[1]);
+          if (p) p.innerHTML = contentHtml;
+        }
+        return;
+      }
       var key = 'ext-' + label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       if (document.getElementById('rp-tab-' + key)) return;
       var btn = document.createElement('button');
@@ -1217,10 +1237,11 @@
       panel.id = 'rp-tab-' + key;
       panel.innerHTML = contentHtml;
       tabsWrap.appendChild(panel);
+      existingBtns[n] = btn;
       added++;
     }
 
-    // Search the ENTIRE document for <details>/<summary> accordion items
+    // Search entire document for <details>/<summary> accordion items
     document.querySelectorAll('details').forEach(function(d) {
       var summary = d.querySelector(':scope > summary');
       if (!summary) return;
@@ -1231,11 +1252,12 @@
       if (sumClone) sumClone.remove();
       var inner = clone.innerHTML.trim();
       if (!inner) return;
-      addTab(label, inner);
-      d.style.display = 'none';
+      addOrUpdateTab(label, inner);
+      // Use CSS class with !important so nothing can override the hide
+      d.classList.add('lgcy-merged-to-tab');
     });
 
-    // Also find .lgcy-tab-item elements (main-product collapsible_tab blocks)
+    // Also find .lgcy-tab-item elements (from main-product collapsible_tab blocks)
     document.querySelectorAll('.lgcy-tab-item').forEach(function(item) {
       var h = item.querySelector('.lgcy-tab-item__heading');
       var c = item.querySelector('.lgcy-tab-item__content');
@@ -1243,12 +1265,11 @@
       var label = h.textContent.trim();
       var inner = c.innerHTML.trim();
       if (!label || !inner) return;
-      addTab(label, inner);
-      item.style.display = 'none';
+      addOrUpdateTab(label, inner);
+      item.classList.add('lgcy-merged-to-tab');
     });
 
-    // If product-specific tabs were added, remove SIZE CHART and CARE INSTRUCTIONS
-    // (those are apparel-only tabs; glasses have their own tabs from the description)
+    // If product-specific tabs were added, remove apparel-only SIZE CHART and CARE INSTRUCTIONS
     if (added > 0) {
       ['sizechart', 'care'].forEach(function(key) {
         var panel = document.getElementById('rp-tab-' + key);
@@ -1258,8 +1279,8 @@
       });
     }
 
-    // Hide any standalone nav created by main-product.liquid
-    document.querySelectorAll('.lgcy-tabs-nav').forEach(function(n) { n.style.display = 'none'; });
+    // Hide standalone nav created by main-product.liquid
+    document.querySelectorAll('.lgcy-tabs-nav').forEach(function(n) { n.classList.add('lgcy-merged-to-tab'); });
   }
 
   if (document.readyState === 'complete') {
