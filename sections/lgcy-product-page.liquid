@@ -1197,6 +1197,10 @@
 
 <script>
 (function() {
+  function hideEl(el) {
+    el.style.setProperty('display', 'none', 'important');
+  }
+
   function mergeExternalTabs() {
     var tabsNav = document.querySelector('.rp-tabs-nav');
     var tabsWrap = document.querySelector('.rp-tabs-wrap');
@@ -1204,10 +1208,8 @@
 
     var added = 0;
 
-    // Normalize a label for deduplication comparison
     function norm(str) { return (str || '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
 
-    // Build map of existing tab labels → button (to detect duplicates)
     var existingBtns = {};
     tabsNav.querySelectorAll('.rp-tab-btn').forEach(function(btn) {
       existingBtns[norm(btn.textContent)] = btn;
@@ -1216,7 +1218,6 @@
     function addOrUpdateTab(label, contentHtml) {
       var n = norm(label);
       if (existingBtns[n]) {
-        // Matching tab already exists — update its panel content instead of duplicating
         var existing = existingBtns[n];
         var m = (existing.getAttribute('onclick') || '').match(/'([^']+)'/);
         if (m) {
@@ -1242,23 +1243,19 @@
       added++;
     }
 
-    // Search entire document for <details>/<summary> accordion items
     document.querySelectorAll('details').forEach(function(d) {
       var summary = d.querySelector(':scope > summary');
       if (!summary) return;
       var label = summary.textContent.trim();
       if (!label) return;
       var clone = d.cloneNode(true);
-      var sumClone = clone.querySelector('summary');
-      if (sumClone) sumClone.remove();
+      clone.querySelector('summary').remove();
       var inner = clone.innerHTML.trim();
       if (!inner) return;
       addOrUpdateTab(label, inner);
-      // Use CSS class with !important so nothing can override the hide
-      d.classList.add('lgcy-merged-to-tab');
+      hideEl(d);
     });
 
-    // Also find .lgcy-tab-item elements (from main-product collapsible_tab blocks)
     document.querySelectorAll('.lgcy-tab-item').forEach(function(item) {
       var h = item.querySelector('.lgcy-tab-item__heading');
       var c = item.querySelector('.lgcy-tab-item__content');
@@ -1270,7 +1267,6 @@
       item.classList.add('lgcy-merged-to-tab');
     });
 
-    // If product-specific tabs were added, remove apparel-only SIZE CHART and CARE INSTRUCTIONS
     if (added > 0) {
       ['sizechart', 'care'].forEach(function(key) {
         var panel = document.getElementById('rp-tab-' + key);
@@ -1280,7 +1276,6 @@
       });
     }
 
-    // Hide standalone nav created by main-product.liquid
     document.querySelectorAll('.lgcy-tabs-nav').forEach(function(n) { n.classList.add('lgcy-merged-to-tab'); });
   }
 
