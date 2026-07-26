@@ -534,14 +534,17 @@
 
     var dotClass, label, bg, border;
     if (!available) {
-      dotClass = 'rp-dot-out'; label = 'Out of Stock';
+    var dotColor;
+      if (!available) {
+      dotColor = '#ef4444'; label = 'Out of Stock';
       bg = 'rgba(239,68,68,0.15)'; border = '#dc2626';
     } else if (qty > 0 && qty <= 10) {
-      dotClass = 'rp-dot-low'; label = 'Limited Stock';
+      dotColor = '#f67637'; label = 'Limited Stock';
       bg = 'rgba(246,118,55,0.15)'; border = '#ea580c';
     } else {
-      dotClass = 'rp-dot-in'; label = 'In Stock';
-      bg = 'rgba(34,197,94,0.15)'; border = '#16a34a';
+      dotColor = '#22c55e'; label = 'In Stock';
+      bg = 'linear-gradient(-75deg,rgba(34,197,94,0.20),rgba(34,197,94,0.32),rgba(34,197,94,0.20))';
+      border = '#16a34a';
     }
 
     function inject() {
@@ -559,8 +562,7 @@
         'margin-top:6px;width:fit-content;';
 
       var dot = document.createElement('span');
-      dot.className = 'rp-dot ' + dotClass;
-      dot.style.cssText = 'width:8px;height:8px;border-radius:50%;flex-shrink:0;';
+      dot.style.cssText = 'width:8px;height:8px;border-radius:50%;flex-shrink:0;background:' + dotColor + ';';
 
       var txt = document.createElement('span');
       txt.style.cssText = 'font-size:11px;font-weight:900;letter-spacing:-0.02em;text-transform:uppercase;color:#1a1a1a;font-family:Helvetica,Arial,sans-serif;';
