@@ -537,6 +537,13 @@
 <script>
   /* Stock status pill — injected via JS so it works on any product template */
   (function () {
+    /* Debug: fixed banner to confirm this script executes on this page */
+    var dbg = document.createElement('div');
+    dbg.id = 'lgcy-pill-debug';
+    dbg.style.cssText = 'position:fixed;top:80px;right:10px;z-index:99999;background:#e00;color:#fff;padding:8px 16px;border-radius:8px;font-weight:900;font-size:13px;font-family:sans-serif;pointer-events:none;';
+    dbg.textContent = 'JS RUNNING';
+    document.body.appendChild(dbg);
+
     var availMeta = document.querySelector('meta[name="lgcy-variant-available"]');
     var invMeta   = document.querySelector('meta[name="lgcy-variant-inventory"]');
     if (!availMeta) return;
