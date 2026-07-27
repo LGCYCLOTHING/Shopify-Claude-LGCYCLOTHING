@@ -893,6 +893,31 @@
 })();
 </script>
 
+<script>
+(function () {
+  function setGalleryHeight() {
+    var gallery = document.querySelector('.rp-gallery');
+    if (!gallery) return;
+    var header =
+      document.querySelector('.shopify-section-group-header-group') ||
+      document.querySelector('#shopify-section-header') ||
+      document.querySelector('sticky-header') ||
+      document.querySelector('.header-wrapper') ||
+      document.querySelector('header');
+    var headerH = header ? header.getBoundingClientRect().height : 0;
+    var h = window.innerHeight - headerH;
+    gallery.style.height = h + 'px';
+    gallery.style.maxHeight = h + 'px';
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setGalleryHeight);
+  } else {
+    setGalleryHeight();
+  }
+  window.addEventListener('resize', setGalleryHeight);
+})();
+</script>
+
 <style>
   @keyframes lgcyNlSlideUp {
     from { opacity: 0; transform: translateY(20px); }
