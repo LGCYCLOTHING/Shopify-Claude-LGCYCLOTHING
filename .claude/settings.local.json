@@ -107,7 +107,8 @@
       "PowerShell($env:GH_TOKEN)",
       "Bash(ls -la --time-style=full-iso \"/c/Users/zaina/Downloads/\" | grep -i \"0dc7p1\\\\|represent-pdp\")",
       "Read(//c/Users/zaina/Downloads//**)",
-      "mcp__claude_ai_Shopify__graphql_schema"
+      "mcp__claude_ai_Shopify__graphql_schema",
+      "mcp__claude_ai_Shopify__validate_graphql_codeblocks"
     ]
   }
 }
