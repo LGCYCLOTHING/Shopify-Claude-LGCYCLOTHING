@@ -158,17 +158,17 @@
   .rp-sizes {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
-    gap: 2px; margin-bottom: 8px;
+    gap: 8px; margin-bottom: 8px;
   }
   .rp-size {
     height: 44px; display: flex; align-items: center; justify-content: center;
     font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
     font-size: 12px; font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase;
-    cursor: pointer; background: #fff; border: none;
-    outline: 1px solid #ccc; outline-offset: -1px; transition: all 0.12s;
+    cursor: pointer; background: #fff; color: #111;
+    border: 1.5px solid #ddd; border-radius: 8px; transition: all 0.12s;
   }
-  .rp-size:hover:not(:disabled) { outline-color: #111; }
-  .rp-size.active { outline: 1px solid #111; }
+  .rp-size:hover:not(:disabled) { border-color: #111; }
+  .rp-size.active { background: #111; color: #fff; border-color: #111; }
   .rp-size.soldout {
     color: #bbb; cursor: not-allowed; font-weight: 900;
     position: relative; overflow: hidden;

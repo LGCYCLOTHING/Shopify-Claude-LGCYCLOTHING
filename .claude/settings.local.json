@@ -100,7 +100,13 @@
       "Bash(curl -s \"https://api.github.com/repos/LGCYCLOTHING/Shopify-Claude-LGCYCLOTHING/actions/runs?per_page=5\")",
       "Bash(curl -s \"https://api.github.com/repos/LGCYCLOTHING/Shopify-Claude-LGCYCLOTHING/actions/runs?per_page=3\")",
       "Bash(curl -s \"https://api.github.com/repos/LGCYCLOTHING/Shopify-Claude-LGCYCLOTHING/actions/runs/30480360518/jobs\")",
-      "Bash(curl -sL \"https://api.github.com/repos/LGCYCLOTHING/Shopify-Claude-LGCYCLOTHING/actions/jobs/90672605166/logs\" -o \"C:/Users/zaina/AppData/Local/Temp/claude/c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE/1a29368a-3902-4755-87e0-bbf78926268f/scratchpad/job.log\" -w \"http_code=%{http_code} size=%{size_download}\\\\n\")"
+      "Bash(curl -sL \"https://api.github.com/repos/LGCYCLOTHING/Shopify-Claude-LGCYCLOTHING/actions/jobs/90672605166/logs\" -o \"C:/Users/zaina/AppData/Local/Temp/claude/c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE/1a29368a-3902-4755-87e0-bbf78926268f/scratchpad/job.log\" -w \"http_code=%{http_code} size=%{size_download}\\\\n\")",
+      "PowerShell(Get-Command gh -ErrorAction SilentlyContinue)",
+      "PowerShell(gh auth status 2>&1)",
+      "PowerShell($env:GITHUB_TOKEN)",
+      "PowerShell($env:GH_TOKEN)",
+      "Bash(ls -la --time-style=full-iso \"/c/Users/zaina/Downloads/\" | grep -i \"0dc7p1\\\\|represent-pdp\")",
+      "Read(//c/Users/zaina/Downloads//**)"
     ]
   }
 }
