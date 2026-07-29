@@ -3065,7 +3065,9 @@ html body .rp-editorial,
 html body .rp-cards-section,
 html body #shopify-section-17739577321e24515e,
 html body #insta-feed,
-html body .instafeed-shopify {
+html body .instafeed-shopify,
+html body .instafeed-new-layout-container,
+html body .instafeed-new-layout-wrapper {
   background: #f6f1e8 !important;
 }
 
