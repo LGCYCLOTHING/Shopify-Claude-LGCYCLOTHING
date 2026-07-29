@@ -849,6 +849,29 @@
 
 {%- render 'lgcy-trust-row' -%}
 
+<script>
+(function() {
+  function reposition() {
+    var trust = document.querySelector('.lgcy-trust');
+    var feed = document.querySelector('#insta-feed, .instafeed-shopify');
+    if (!trust || !feed || !feed.parentNode) return false;
+    if (trust.nextElementSibling === feed) return true;
+    feed.parentNode.insertBefore(trust, feed);
+    return true;
+  }
+  var attempts = 0, max = 60;
+  var timer = setInterval(function() {
+    attempts++;
+    if (reposition() || attempts >= max) clearInterval(timer);
+  }, 250);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', reposition);
+  } else {
+    reposition();
+  }
+})();
+</script>
+
 <style>
   .rp-header-hidden { transform: translateY(-100%) !important; transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important; }
   .rp-header-visible { transform: translateY(0) !important; transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important; }
