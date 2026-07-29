@@ -3062,7 +3062,10 @@ html body.password #password-header-form::before {
    gently darker on both sides. Same on mobile + desktop, no left-right bias. */
 html body .rp-wrap,
 html body .rp-editorial,
-html body .rp-cards-section {
+html body .rp-cards-section,
+html body #shopify-section-17739577321e24515e,
+html body #insta-feed,
+html body .instafeed-shopify {
   background: #f6f1e8 !important;
 }
 
