@@ -94,7 +94,9 @@
       "Bash(gh run *)",
       "PowerShell(gh run list --limit 5 2>&1)",
       "Bash(python -m json.tool)",
-      "Bash(git commit -m 'Fix: hide details elements via head CSS + inline !important style *)"
+      "Bash(git commit -m 'Fix: hide details elements via head CSS + inline !important style *)",
+      "Bash(curl -s \"https://0dc7p1-tw.myshopify.com/products/the-signature-heavyweight\" -o /tmp_product.html -w \"%{http_code}\\\\n\")",
+      "Bash(curl -sL \"https://0dc7p1-tw.myshopify.com/products/the-signature-heavyweight\" -o \"/c/Users/zaina/AppData/Local/Temp/claude/c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE/1a29368a-3902-4755-87e0-bbf78926268f/scratchpad/product.html\" -w \"http_code=%{http_code}\\\\n\")"
     ]
   }
 }

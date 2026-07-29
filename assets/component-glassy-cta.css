@@ -3063,7 +3063,7 @@ html body.password #password-header-form::before {
 html body .rp-wrap,
 html body .rp-editorial,
 html body .rp-cards-section {
-  background: #ffffff !important;
+  background: #f6f1e8 !important;
 }
 
 /* Editorial + cards-section typography — Inter 900 negative letter-spacing */
