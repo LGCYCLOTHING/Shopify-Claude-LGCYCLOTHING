@@ -35,32 +35,43 @@
     (function () {
       var wrapper = document.currentScript.parentElement;
       var strokePath = wrapper.querySelector('.lgcy-logo-draw__stroke');
-      var fillPath = wrapper.querySelector('.lgcy-logo-draw__fill');
-      if (!strokePath || !fillPath || !strokePath.getTotalLength) return;
+      var maskPath = wrapper.querySelector('.lgcy-logo-draw__mask-path');
+      var fillImg = wrapper.querySelector('.lgcy-logo-draw__fill');
+      if (!strokePath || !maskPath || !fillImg || !strokePath.getTotalLength) return;
 
       var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var played = false;
       try { played = sessionStorage.getItem('lgcyLogoIntroPlayed') === '1'; } catch (e) {}
 
-      if (reduceMotion || played) return; // default CSS state already shows the static filled mark
+      if (reduceMotion || played) return; // default state already shows the full-color mark, unmasked
 
-      var len = strokePath.getTotalLength();
+      var strokeLen = strokePath.getTotalLength();
+      var maskLen = maskPath.getTotalLength();
       var duration = 1600;
-      strokePath.style.strokeDasharray = len;
-      strokePath.style.strokeDashoffset = len;
+      var maskId = fillImg.getAttribute('data-mask-id');
+
+      strokePath.style.strokeDasharray = strokeLen;
+      strokePath.style.strokeDashoffset = strokeLen;
       strokePath.style.opacity = '1';
-      fillPath.style.opacity = '0';
+
+      maskPath.style.strokeDasharray = maskLen;
+      maskPath.style.strokeDashoffset = maskLen;
+
+      // Mask only gets applied for the duration of the intro — this is what makes the
+      // color reveal grow in lockstep with the outline instead of a separate fade.
+      fillImg.setAttribute('mask', 'url(#' + maskId + ')');
 
       requestAnimationFrame(function () {
         strokePath.style.transition = 'stroke-dashoffset ' + duration + 'ms cubic-bezier(0.65, 0, 0.35, 1)';
-        fillPath.style.transition = 'opacity ' + duration + 'ms ease';
+        maskPath.style.transition = 'stroke-dashoffset ' + duration + 'ms cubic-bezier(0.65, 0, 0.35, 1)';
         strokePath.style.strokeDashoffset = '0';
-        fillPath.style.opacity = '1';
+        maskPath.style.strokeDashoffset = '0';
       });
 
       setTimeout(function () {
         strokePath.style.transition = 'opacity 0.4s ease';
         strokePath.style.opacity = '0';
+        fillImg.removeAttribute('mask');
       }, duration);
 
       try { sessionStorage.setItem('lgcyLogoIntroPlayed', '1'); } catch (e) {}
