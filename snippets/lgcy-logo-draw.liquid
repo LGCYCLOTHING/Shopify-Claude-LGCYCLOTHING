@@ -1,10 +1,10 @@
 {%- comment -%}
-  LGCY — Animated brand mark. A soft circle grows outward from the cusp
-  where the inner accent line begins, spreading through the mark and
-  revealing the real source image's true color/gradient as it goes.
-  Plays once per browser session (sessionStorage-gated) and respects
-  prefers-reduced-motion; falls back to the static full-color mark otherwise
-  (including no-JS).
+  LGCY — Animated brand mark. A soft reveal travels along a guide curve from
+  the tip, through the bend, down to the tail — following the swoosh's own
+  spine — while progressively revealing the real source image's true color/
+  gradient. Plays once per browser session (sessionStorage-gated) and
+  respects prefers-reduced-motion; falls back to the static full-color mark
+  otherwise (including no-JS).
 
   Accepts: width, height, css_class, alt
 {%- endcomment -%}
@@ -19,10 +19,18 @@
   >
     <defs>
       <filter id="lgcy-logo-soft-{{ section.id }}" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="16"></feGaussianBlur>
+        <feGaussianBlur stdDeviation="14"></feGaussianBlur>
       </filter>
       <mask id="lgcy-logo-mask-{{ section.id }}" maskUnits="userSpaceOnUse" x="-400" y="-400" width="2000" height="2000">
-        <circle class="lgcy-logo-draw__reveal" cx="610" cy="476" r="0" fill="#ffffff" filter="url(#lgcy-logo-soft-{{ section.id }})"></circle>
+        <path
+          class="lgcy-logo-draw__guide"
+          d="M 1127,400 Q 610,476 54,793"
+          fill="none"
+          stroke="#ffffff"
+          stroke-width="380"
+          stroke-linecap="round"
+          filter="url(#lgcy-logo-soft-{{ section.id }})"
+        ></path>
       </mask>
     </defs>
     <image
@@ -40,8 +48,8 @@
     (function () {
       var wrapper = document.currentScript.parentElement;
       var fillImg = wrapper.querySelector('.lgcy-logo-draw__fill');
-      var reveal = wrapper.querySelector('.lgcy-logo-draw__reveal');
-      if (!fillImg || !reveal) return;
+      var guide = wrapper.querySelector('.lgcy-logo-draw__guide');
+      if (!fillImg || !guide || !guide.getTotalLength) return;
 
       var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var played = false;
@@ -52,7 +60,10 @@
       var maskId = fillImg.getAttribute('data-mask-id');
       fillImg.setAttribute('mask', 'url(#' + maskId + ')');
 
-      var maxRadius = 1050;
+      var len = guide.getTotalLength();
+      guide.style.strokeDasharray = len;
+      guide.style.strokeDashoffset = len;
+
       var duration = 1500;
       var start = null;
 
@@ -64,7 +75,7 @@
         if (start === null) start = ts;
         var raw = Math.min((ts - start) / duration, 1);
         var p = ease(raw);
-        reveal.setAttribute('r', maxRadius * p);
+        guide.style.strokeDashoffset = len * (1 - p);
         if (raw < 1) {
           requestAnimationFrame(frame);
         } else {
