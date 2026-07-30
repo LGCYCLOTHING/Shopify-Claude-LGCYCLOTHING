@@ -40,22 +40,23 @@
       if (reduceMotion || played) return; // default CSS state already shows the static filled mark
 
       var len = strokePath.getTotalLength();
+      var duration = 1600;
       strokePath.style.strokeDasharray = len;
       strokePath.style.strokeDashoffset = len;
       strokePath.style.opacity = '1';
       fillPath.style.opacity = '0';
 
       requestAnimationFrame(function () {
-        strokePath.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(0.65, 0, 0.35, 1)';
+        strokePath.style.transition = 'stroke-dashoffset ' + duration + 'ms cubic-bezier(0.65, 0, 0.35, 1)';
+        fillPath.style.transition = 'opacity ' + duration + 'ms ease';
         strokePath.style.strokeDashoffset = '0';
+        fillPath.style.opacity = '1';
       });
 
       setTimeout(function () {
-        fillPath.style.transition = 'opacity 0.5s ease';
-        fillPath.style.opacity = '1';
         strokePath.style.transition = 'opacity 0.4s ease';
         strokePath.style.opacity = '0';
-      }, 1650);
+      }, duration);
 
       try { sessionStorage.setItem('lgcyLogoIntroPlayed', '1'); } catch (e) {}
     })();
