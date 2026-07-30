@@ -1,8 +1,11 @@
 {%- comment -%}
-  LGCY — Animated brand mark. Draws itself in via stroke-dasharray/dashoffset,
-  then crossfades to the solid filled mark. Plays once per browser session
-  (sessionStorage-gated) and respects prefers-reduced-motion; falls back to
-  a static filled mark otherwise (including no-JS).
+  LGCY — Animated brand mark. A thin outline traces the shape via
+  stroke-dasharray/dashoffset while, in lockstep (same dashoffset progress),
+  a wide masking stroke over the real source image reveals its true color/
+  gradient — so the color grows in with the line instead of fading in after.
+  Plays once per browser session (sessionStorage-gated) and respects
+  prefers-reduced-motion; falls back to the static full-color mark otherwise
+  (including no-JS).
 
   Accepts: width, height, css_class, alt
 {%- endcomment -%}
