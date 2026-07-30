@@ -113,7 +113,9 @@
       "Read(//tmp/**)",
       "Bash(npm --version)",
       "Read(//c/Users/zaina/AppData/Local/Temp/claude/c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE/9357ad5a-e722-4c40-aab1-5a0b3b4f7434/scratchpad/logo-trace/**)",
-      "Bash(node render-frames.js)"
+      "Bash(node render-frames.js)",
+      "Bash(curl -s \"https://0dc7p1-tw.myshopify.com/collections/the-legacy-collection\" -o /tmp/live_collection.html -w \"HTTP %{http_code}\\\\n\")",
+      "Bash(curl -sL \"https://0dc7p1-tw.myshopify.com/collections/the-legacy-collection\" -o /tmp/live_collection.html -w \"Final: %{url_effective} HTTP %{http_code}\\\\n\")"
     ]
   }
 }
