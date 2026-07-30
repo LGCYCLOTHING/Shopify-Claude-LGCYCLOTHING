@@ -1,10 +1,11 @@
 {%- comment -%}
-  LGCY — Animated brand mark. A soft reveal travels along a guide curve:
-  starts at the inner cusp, arcs up and over to the tip, then sweeps back
-  around underneath down to the tail — while progressively revealing the
-  real source image's true color/gradient. Plays once per browser session
-  (sessionStorage-gated) and respects prefers-reduced-motion; falls back to
-  the static full-color mark otherwise (including no-JS).
+  LGCY — Animated brand mark. A visible pen-line outline and a soft color
+  reveal both travel together along a smooth guide curve: starts at the
+  inner cusp, sweeps up and around the tip, then down to the tail (no sharp
+  corners — built as a Catmull-Rom spline through those three points).
+  The outline fades out once the reveal completes. Plays once per browser
+  session (sessionStorage-gated) and respects prefers-reduced-motion; falls
+  back to the static full-color mark otherwise (including no-JS).
 
   Accepts: width, height, css_class, alt
 {%- endcomment -%}
@@ -23,8 +24,8 @@
       </filter>
       <mask id="lgcy-logo-mask-{{ section.id }}" maskUnits="userSpaceOnUse" x="-400" y="-400" width="2000" height="2000">
         <path
-          class="lgcy-logo-draw__guide"
-          d="M 610,476 Q 868,340 1127,400 Q 610,476 54,793"
+          class="lgcy-logo-draw__reveal"
+          d="M 610,476 C 696.17,463.33 1219.67,347.17 1127,400 C 1034.33,452.83 232.83,727.5 54,793"
           fill="none"
           stroke="#ffffff"
           stroke-width="380"
@@ -43,13 +44,22 @@
       height="1200"
       preserveAspectRatio="xMidYMid meet"
     ></image>
+    <path
+      class="lgcy-logo-draw__outline"
+      d="M 610,476 C 696.17,463.33 1219.67,347.17 1127,400 C 1034.33,452.83 232.83,727.5 54,793"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="6"
+      stroke-linecap="round"
+    ></path>
   </svg>
   <script>
     (function () {
       var wrapper = document.currentScript.parentElement;
       var fillImg = wrapper.querySelector('.lgcy-logo-draw__fill');
-      var guide = wrapper.querySelector('.lgcy-logo-draw__guide');
-      if (!fillImg || !guide || !guide.getTotalLength) return;
+      var reveal = wrapper.querySelector('.lgcy-logo-draw__reveal');
+      var outline = wrapper.querySelector('.lgcy-logo-draw__outline');
+      if (!fillImg || !reveal || !outline || !outline.getTotalLength) return;
 
       var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var played = false;
@@ -60,9 +70,10 @@
       var maskId = fillImg.getAttribute('data-mask-id');
       fillImg.setAttribute('mask', 'url(#' + maskId + ')');
 
-      var len = guide.getTotalLength();
-      guide.style.strokeDasharray = len;
-      guide.style.strokeDashoffset = len;
+      var len = outline.getTotalLength();
+      outline.style.strokeDasharray = len;
+      outline.style.strokeDashoffset = len;
+      outline.style.opacity = '1';
 
       var duration = 1500;
       var start = null;
@@ -75,11 +86,16 @@
         if (start === null) start = ts;
         var raw = Math.min((ts - start) / duration, 1);
         var p = ease(raw);
-        guide.style.strokeDashoffset = len * (1 - p);
+        var offset = len * (1 - p);
+        reveal.style.strokeDasharray = len;
+        reveal.style.strokeDashoffset = offset;
+        outline.style.strokeDashoffset = offset;
         if (raw < 1) {
           requestAnimationFrame(frame);
         } else {
           fillImg.removeAttribute('mask');
+          outline.style.transition = 'opacity 0.4s ease';
+          outline.style.opacity = '0';
         }
       }
       requestAnimationFrame(frame);
@@ -99,5 +115,8 @@
   }
   .lgcy-logo-draw__fill {
     opacity: 1;
+  }
+  .lgcy-logo-draw__outline {
+    opacity: 0;
   }
 </style>
