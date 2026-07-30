@@ -1,7 +1,7 @@
 {%- comment -%}
-  LGCY — Animated brand mark. A soft radial wedge sweeps out from the cusp
-  where the inner accent line begins, arcing around through the body of the
-  mark, revealing the real source image's true color/gradient as it goes.
+  LGCY — Animated brand mark. A soft circle grows outward from the cusp
+  where the inner accent line begins, spreading through the mark and
+  revealing the real source image's true color/gradient as it goes.
   Plays once per browser session (sessionStorage-gated) and respects
   prefers-reduced-motion; falls back to the static full-color mark otherwise
   (including no-JS).
@@ -19,10 +19,10 @@
   >
     <defs>
       <filter id="lgcy-logo-soft-{{ section.id }}" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="10"></feGaussianBlur>
+        <feGaussianBlur stdDeviation="16"></feGaussianBlur>
       </filter>
       <mask id="lgcy-logo-mask-{{ section.id }}" maskUnits="userSpaceOnUse" x="-400" y="-400" width="2000" height="2000">
-        <path class="lgcy-logo-draw__wedge" fill="#ffffff" filter="url(#lgcy-logo-soft-{{ section.id }})"></path>
+        <circle class="lgcy-logo-draw__reveal" cx="610" cy="476" r="0" fill="#ffffff" filter="url(#lgcy-logo-soft-{{ section.id }})"></circle>
       </mask>
     </defs>
     <image
@@ -40,8 +40,8 @@
     (function () {
       var wrapper = document.currentScript.parentElement;
       var fillImg = wrapper.querySelector('.lgcy-logo-draw__fill');
-      var wedge = wrapper.querySelector('.lgcy-logo-draw__wedge');
-      if (!fillImg || !wedge) return;
+      var reveal = wrapper.querySelector('.lgcy-logo-draw__reveal');
+      if (!fillImg || !reveal) return;
 
       var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var played = false;
@@ -49,35 +49,10 @@
 
       if (reduceMotion || played) return; // default state already shows the full-color mark, unmasked
 
-      // Anchor: the cusp where the inner accent line begins (upper-middle of the mark).
-      var cx = 610;
-      var cy = 476;
-      var radius = 1600;
-      var startAngle = -14; // toward the tip
-      var endAngle = 156; // arcs down and around toward the tail
-
-      function point(angleDeg) {
-        var rad = (angleDeg * Math.PI) / 180;
-        return [cx + radius * Math.cos(rad), cy + radius * Math.sin(rad)];
-      }
-
-      function wedgePath(currentAngle) {
-        var p1 = point(startAngle);
-        var p2 = point(currentAngle);
-        var span = currentAngle - startAngle;
-        var largeArc = span > 180 ? 1 : 0;
-        return (
-          'M ' + cx + ',' + cy +
-          ' L ' + p1[0] + ',' + p1[1] +
-          ' A ' + radius + ',' + radius + ' 0 ' + largeArc + ' 1 ' + p2[0] + ',' + p2[1] +
-          ' Z'
-        );
-      }
-
       var maskId = fillImg.getAttribute('data-mask-id');
       fillImg.setAttribute('mask', 'url(#' + maskId + ')');
-      wedge.setAttribute('d', wedgePath(startAngle));
 
+      var maxRadius = 1050;
       var duration = 1500;
       var start = null;
 
@@ -89,8 +64,7 @@
         if (start === null) start = ts;
         var raw = Math.min((ts - start) / duration, 1);
         var p = ease(raw);
-        var angle = startAngle + (endAngle - startAngle) * p;
-        wedge.setAttribute('d', wedgePath(angle));
+        reveal.setAttribute('r', maxRadius * p);
         if (raw < 1) {
           requestAnimationFrame(frame);
         } else {
