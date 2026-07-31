@@ -674,15 +674,14 @@
     var card = document.querySelector('.rp-inner');
     if (!card) return;
     card.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
       var atTop = card.scrollTop <= 0;
       var atBottom = card.scrollTop + card.clientHeight >= card.scrollHeight - 1;
-      if ((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) {
-        e.preventDefault();
-        return;
-      }
+      if ((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) return;
       card.scrollTop += e.deltaY;
-      e.preventDefault();
-    }, { passive: false });
+    }, { passive: false, capture: true });
   })();
 
   var rpImages = [
