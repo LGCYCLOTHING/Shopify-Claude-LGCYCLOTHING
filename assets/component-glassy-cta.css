@@ -1397,7 +1397,7 @@ html body.template-product .header__icons .header__icon--cart .cart-count-bubble
 @media (max-width: 749px) {
   html body .header__icons {
     gap: 2px;
-    padding: 0;
+    padding: 0 6px 0 0;
   }
   html body .header__icons .header__icon,
   html body .header__icons .header__icon--cart {
