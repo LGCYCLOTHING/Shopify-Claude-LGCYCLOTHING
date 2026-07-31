@@ -4,15 +4,16 @@
 
 <style>
   .lgcy-signup {
-    height: 100vh;
+    height: calc(100vh + var(--header-height, 146px));
     min-height: 600px;
+    margin-top: calc(-1 * var(--header-height, 146px));
     background: #0a0a0a;
     color: #ffffff;
     font-family: 'Inter', sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px 48px;
+    padding: calc(40px + var(--header-height, 146px)) 48px 40px;
     position: relative;
     overflow: hidden;
     box-sizing: border-box;
