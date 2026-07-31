@@ -105,23 +105,28 @@
   }
 
   /* Locked to the viewport height (matching the sticky gallery); just centers
-     the scrollable card below, doesn't scroll itself. */
+     the bordered card below, doesn't scroll itself. */
   .rp-info {
-    height: 100vh;
-    overflow: hidden;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    overflow: hidden !important;
     display: flex;
+    align-items: center;
     justify-content: center;
   }
-  /* The card is the actual scrolling element, sized to its own content width —
-     so its scrollbar sits right against the card instead of way out at the
-     edge of the (much wider) column. */
+  /* The card is a hard-bordered box, sized to its own content width, that clips
+     everything inside it — nothing renders outside this border, ever. It's the
+     actual scrolling element, so its scrollbar sits right against the card. */
   .rp-inner {
     width: 100%;
     max-width: 420px;
-    height: 100vh;
-    overflow-y: scroll;
+    height: 90vh !important;
+    max-height: 90vh !important;
+    overflow-y: scroll !important;
     overscroll-behavior-y: contain;
-    padding: 60px 40px;
+    border: 2px solid #111;
+    border-radius: 4px;
+    padding: 40px 32px;
     display: flex;
     flex-direction: column;
     scrollbar-width: thin;
