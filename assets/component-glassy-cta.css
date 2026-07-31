@@ -1280,7 +1280,11 @@ html body .header__icons {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 0;
+  /* Icons are centered inside their own 36px boxes with empty space around
+     the glyph, so with zero padding the group optically sits closer to the
+     edge than the left-side text does. This right padding is invisible
+     (no background) — it just restores the optical balance. */
+  padding: 0 10px 0 0;
   background: transparent;
 }
 
