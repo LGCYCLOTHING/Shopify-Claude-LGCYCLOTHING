@@ -19,9 +19,9 @@
   .rp-wrap {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height: 100vh;
-    max-height: 100vh;
-    overflow: hidden;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    overflow: hidden !important;
     font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
     font-size: 13px;
     font-weight: 500;
@@ -32,9 +32,10 @@
   .rp-gallery {
     position: sticky;
     top: 0;
-    height: 100vh;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    overflow: hidden !important;
     background: #f0f0ee;
-    overflow: hidden;
   }
   .rp-main-img {
     width: 100%; height: 100%;
