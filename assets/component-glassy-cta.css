@@ -1276,95 +1276,12 @@ html body .facet-filters__sort.select__select {
 /* ============================================================== */
 
 html body .header__icons {
-  --border-width: 1px;
   position: relative;
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 6px 18px 6px 10px;
-  border-radius: 999vw;
+  padding: 0;
   background: transparent;
-}
-
-/* Clear liquid-glass body matching the ATC button — translucent gradient
-   with inset highlights + subtle outer shadow for the floating-glass feel. */
-html body .header__icons::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 999vw;
-  background: linear-gradient(
-    -75deg,
-    rgba(255, 255, 255, 0.05),
-    rgba(255, 255, 255, 0.22),
-    rgba(255, 255, 255, 0.05)
-  );
-  -webkit-backdrop-filter: blur(clamp(1px, 0.125em, 4px));
-          backdrop-filter: blur(clamp(1px, 0.125em, 4px));
-  box-shadow:
-    inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
-    inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
-    0 0.25em 0.125em -0.125em rgba(0, 0, 0, 0.2),
-    0 0 0.1em 0.25em inset rgba(255, 255, 255, 0.2),
-    0 0 0 1px rgba(0, 0, 0, 0.1);
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* Conic-gradient outline ring matching the ATC */
-html body .header__icons::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 999vw;
-  width: calc(100% + 1px);
-  height: calc(100% + 1px);
-  top: -0.5px;
-  left: -0.5px;
-  padding: 1px;
-  box-sizing: border-box;
-  background: conic-gradient(
-    from -75deg at 50% 50%,
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0) 5% 40%,
-    rgba(0, 0, 0, 0.5) 50%,
-    rgba(0, 0, 0, 0) 60% 95%,
-    rgba(0, 0, 0, 0.5)
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Conic outline ring matching the other glassy components */
-html body .header__icons::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  border-radius: 999vw;
-  width: calc(100% + var(--border-width));
-  height: calc(100% + var(--border-width));
-  top: calc(0% - var(--border-width) / 2);
-  left: calc(0% - var(--border-width) / 2);
-  padding: var(--border-width);
-  box-sizing: border-box;
-  background: conic-gradient(
-    from -75deg at 50% 50%,
-    rgba(255, 255, 255, 0.4),
-    rgba(255, 255, 255, 0) 5% 40%,
-    rgba(255, 255, 255, 0.4) 50%,
-    rgba(255, 255, 255, 0) 60% 95%,
-    rgba(255, 255, 255, 0.4)
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  pointer-events: none;
 }
 
 /* Default icon color: WHITE (homepage + collection page over dark hero) */
