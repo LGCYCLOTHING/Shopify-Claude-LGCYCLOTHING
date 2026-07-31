@@ -668,6 +668,23 @@
 </div>
 
 <script>
+  // Hard-lock scroll to the info card while the mouse is over it — wheel/trackpad
+  // scrolling never reaches the page behind it, even at the card's top/bottom edge.
+  (function () {
+    var card = document.querySelector('.rp-inner');
+    if (!card) return;
+    card.addEventListener('wheel', function (e) {
+      var atTop = card.scrollTop <= 0;
+      var atBottom = card.scrollTop + card.clientHeight >= card.scrollHeight - 1;
+      if ((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) {
+        e.preventDefault();
+        return;
+      }
+      card.scrollTop += e.deltaY;
+      e.preventDefault();
+    }, { passive: false });
+  })();
+
   var rpImages = [
     {%- for img in product.images -%}
       "{{ img | img_url: '1600x' }}"{% unless forloop.last %},{% endunless %}
