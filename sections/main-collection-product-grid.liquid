@@ -25,6 +25,7 @@
 {%- style -%}
   .section-{{ section.id }}-padding {
     background: #f6f1e8 !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
