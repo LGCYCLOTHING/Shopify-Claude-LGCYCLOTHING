@@ -34,6 +34,13 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  /* Collection page: tighten the gap between the hero description and the
+     product grid below it — templates/collection.json padding_top setting
+     doesn't auto-deploy, so it's forced here instead. */
+  .section-{{ section.id }}-padding {
+    padding-top: 12px !important;
+  }
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
