@@ -673,7 +673,10 @@
   (function () {
     var card = document.querySelector('.rp-inner');
     if (!card) return;
-    card.addEventListener('wheel', function (e) {
+    // Attached on document with capture:true so this runs before ANY other
+    // script's wheel/scroll handler gets a chance to touch the page.
+    document.addEventListener('wheel', function (e) {
+      if (!card.contains(e.target)) return;
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
