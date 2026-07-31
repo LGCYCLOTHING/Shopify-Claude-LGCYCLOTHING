@@ -3502,7 +3502,7 @@ html body .lgcy-breadcrumbs__current {
 
   /* Tighten the icons row so it doesn't drive the header tall. */
   html body .header__icons {
-    padding: 0 !important;
+    padding: 0 6px 0 0 !important;
     gap: 4px !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
