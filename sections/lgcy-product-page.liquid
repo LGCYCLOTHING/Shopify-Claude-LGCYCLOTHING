@@ -668,23 +668,31 @@
 </div>
 
 <script>
-  // Hard-lock scroll to the info card while the mouse is over it — wheel/trackpad
-  // scrolling never reaches the page behind it, even at the card's top/bottom edge.
+  // Give the info card its own Lenis smooth-scroll instance, same as the rest
+  // of the site uses for the page. `data-lenis-prevent` on the card (see markup)
+  // tells the site's global Lenis instances to ignore wheel events over it, so
+  // this scoped instance is the only thing that reacts — no more double-scroll.
   (function () {
     var card = document.querySelector('.rp-inner');
     if (!card) return;
-    // Attached on document with capture:true so this runs before ANY other
-    // script's wheel/scroll handler gets a chance to touch the page.
-    document.addEventListener('wheel', function (e) {
-      if (!card.contains(e.target)) return;
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-      var atTop = card.scrollTop <= 0;
-      var atBottom = card.scrollTop + card.clientHeight >= card.scrollHeight - 1;
-      if ((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) return;
-      card.scrollTop += e.deltaY;
-    }, { passive: false, capture: true });
+
+    function initCardLenis() {
+      if (typeof Lenis === 'undefined') {
+        requestAnimationFrame(initCardLenis);
+        return;
+      }
+      var cardLenis = new Lenis({
+        wrapper: card,
+        duration: 1.1,
+        easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      });
+      function raf(time) {
+        cardLenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+    }
+    initCardLenis();
   })();
 
   var rpImages = [
