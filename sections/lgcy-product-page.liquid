@@ -103,33 +103,38 @@
     font-size: 36px; cursor: pointer; line-height: 1; z-index: 10001;
   }
 
-  /* Locked to the viewport height (matching the sticky gallery) with its own
-     scrollbar, so expanding a tab/accordion scrolls inside this box instead of
-     growing the whole page. */
+  /* Locked to the viewport height (matching the sticky gallery); just centers
+     the scrollable card below, doesn't scroll itself. */
   .rp-info {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+  }
+  /* The card is the actual scrolling element, sized to its own content width —
+     so its scrollbar sits right against the card instead of way out at the
+     edge of the (much wider) column. */
+  .rp-inner {
+    width: 100%;
+    max-width: 420px;
     height: 100vh;
     overflow-y: scroll;
     padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, 0.35) rgba(0, 0, 0, 0.06);
   }
-  .rp-info::-webkit-scrollbar { width: 10px; }
-  .rp-info::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.06); }
-  .rp-info::-webkit-scrollbar-thumb {
+  .rp-inner::-webkit-scrollbar { width: 10px; }
+  .rp-inner::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.06); }
+  .rp-inner::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.35);
     border-radius: 999vw;
     border: 2px solid transparent;
     background-clip: padding-box;
   }
-  .rp-info::-webkit-scrollbar-thumb:hover {
+  .rp-inner::-webkit-scrollbar-thumb:hover {
     background-color: rgba(0, 0, 0, 0.5);
-  }
-  .rp-inner {
-    width: 100%;
-    max-width: 420px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
   }
 
   .rp-header {
