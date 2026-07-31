@@ -302,10 +302,19 @@
   .rp-acc-body-inner p:last-child { margin-bottom: 0; }
   .rp-acc-close { display: none; }
 
-  /* Tabs: Shipping / Size Chart / Care */
+  /* Tabs: Shipping / Size Chart / Care.
+     Sticks in place once you scroll to it — the title/price/description above
+     scroll away and out of view, while this bar (and the tab content below it)
+     stays pinned as the boundary you keep scrolling under. Purely a visual
+     anchor, not an interactive element itself. */
   .rp-tabs-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #f6f1e8;
     padding-top: 20px;
     border-top: 1px solid #e0e0e0;
+    box-shadow: 0 6px 8px -8px rgba(0, 0, 0, 0.15);
   }
   .rp-tabs-nav {
     display: flex;
