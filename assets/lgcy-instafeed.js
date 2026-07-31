@@ -13,8 +13,9 @@
       a.target = '_blank';
       a.rel = 'noopener';
       while (h.firstChild) a.appendChild(h.firstChild);
-      // App-provided title has a stray space before the handle ("@ _lgcyclothing_") — tighten it.
-      a.textContent = a.textContent.replace(/@\s+_/, '@_');
+      // App-provided title has a stray space before the handle ("@ _lgyclothing_") and
+      // misspells the handle (missing "c") — fix both.
+      a.textContent = a.textContent.replace(/@\s+_/, '@_').replace(/_lgyclothing_/, '_lgcyclothing_');
       h.appendChild(a);
       h.dataset.lgcyLinked = '1';
       any = true;
