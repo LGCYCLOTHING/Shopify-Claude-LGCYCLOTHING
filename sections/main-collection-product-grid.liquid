@@ -37,6 +37,12 @@
     }
   }
 
+  /* When there are fewer products than grid columns, center the row
+     instead of left-aligning it with a wall of empty space beside it. */
+  #product-grid {
+    justify-content: center;
+  }
+
   /* Collection page: tighten the gap between the hero description and the
      product grid below it — templates/collection.json padding_top setting
      doesn't auto-deploy, so it's forced here instead. */
