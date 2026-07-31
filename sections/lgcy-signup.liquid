@@ -301,8 +301,8 @@
   @media (max-width: 749px) {
     .lgcy-signup {
       height: auto;
-      min-height: 100vh;
-      padding: 64px 20px;
+      min-height: calc(100vh + var(--header-height, 120px));
+      padding: calc(64px + var(--header-height, 120px)) 20px 64px;
       align-items: flex-start;
     }
     .lgcy-signup__wrap {
