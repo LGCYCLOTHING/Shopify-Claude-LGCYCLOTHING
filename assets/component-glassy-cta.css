@@ -3368,10 +3368,6 @@ html body .rp-inner .rp-usp {
   margin-top: 16px !important;
 }
 
-html body .rp-inner .rp-acc-list {
-  order: 90;
-}
-
 html body .lgcy-breadcrumbs a {
   color: rgba(0, 0, 0, 0.55);
   text-decoration: none;
