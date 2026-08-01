@@ -43,11 +43,13 @@
 
   var attempts = 0;
   var max = 40;
+  var titlesDone = false;
+  var feedDone = false;
   var timer = setInterval(function () {
     attempts++;
-    var linked = linkTitles();
-    var prevented = preventLenisOnFeed();
-    if ((linked && prevented) || attempts >= max) clearInterval(timer);
+    if (linkTitles()) titlesDone = true;
+    if (preventLenisOnFeed()) feedDone = true;
+    if ((titlesDone && feedDone) || attempts >= max) clearInterval(timer);
   }, 200);
 
   if (document.readyState === 'loading') {
