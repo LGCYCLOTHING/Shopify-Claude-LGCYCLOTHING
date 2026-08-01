@@ -600,7 +600,8 @@ svg.icon.icon-cart {
       if (!inner || !gallery) return;
 
       // ── Breadcrumbs ─────────────────────────────────────────────────
-      if (!inner.querySelector('.lgcy-breadcrumbs')) {
+      var editorialEyebrow = document.querySelector('.rp-editorial-eyebrow');
+      if (editorialEyebrow && !editorialEyebrow.querySelector('.lgcy-breadcrumbs')) {
         var titleEl = inner.querySelector('.rp-title, h1') ||
                       document.querySelector('.rp-title, h1');
         var titleText = (titleEl && titleEl.textContent.trim()) ||
