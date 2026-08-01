@@ -83,9 +83,10 @@ cart-drawer:not(.is-empty) .cart-drawer__collection {
 
 .drawer__heading {
   margin: 0;
+  font-family: 'Inter', sans-serif;
   font-size: 1.3rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  font-weight: 900;
+  letter-spacing: -0.05em;
   color: #111111;
 }
 
