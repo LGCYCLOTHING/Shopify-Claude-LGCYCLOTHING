@@ -130,6 +130,47 @@ class CartDrawer extends HTMLElement {
     subscribe(PUB_SUB_EVENTS.cartUpdate, () => {
       this.loadRecommendations();
     });
+
+    // "You may also like" quick-add — same recipe as the collection card's
+    // plus button (snippets/lgcy-product-card.liquid).
+    this.addEventListener('click', (event) => {
+      const btn = event.target.closest('[data-rec-add]');
+      if (!btn) return;
+      event.preventDefault();
+      event.stopPropagation();
+      this.addRecommendedToCart(btn);
+    });
+  }
+
+  addRecommendedToCart(btn) {
+    const variantId = btn.getAttribute('data-variant-id');
+    if (!variantId || btn.classList.contains('lgcy-adding')) return;
+
+    btn.classList.add('lgcy-adding');
+    btn.disabled = true;
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+      body: JSON.stringify({
+        id: parseInt(variantId, 10),
+        quantity: 1,
+        sections: this.getSectionsToRender().map((s) => s.id),
+        sections_url: window.location.pathname,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status && data.status !== 200) return;
+        this.renderContents(data);
+      })
+      .finally(() => {
+        btn.classList.remove('lgcy-adding');
+        btn.disabled = false;
+      });
   }
 
   loadRecommendations() {
