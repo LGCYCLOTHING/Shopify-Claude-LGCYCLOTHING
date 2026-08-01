@@ -748,8 +748,10 @@ cart-drawer-items::-webkit-scrollbar-track-piece {
 
 .cart-item-rep__variant-line {
   font-size: 1rem;
-  color: #666;
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  color: #555;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
 }
 
 .cart-item-rep__discounts {
