@@ -842,7 +842,8 @@ cart-drawer-items::-webkit-scrollbar-track-piece {
 
 .cart-item-rep__line-total {
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   color: #111111;
   text-align: right;
   position: relative;
