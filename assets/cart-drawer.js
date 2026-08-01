@@ -167,8 +167,20 @@ class CartDrawer extends HTMLElement {
             : '';
           // /products.json doesn't include a url field — build it from handle
           const url = p.url || '/products/' + p.handle;
+          const variant = (p.variants || []).find((v) => v.available) || (p.variants || [])[0];
+          const plusBtn = variant
+            ? `<button type="button" class="cart-rec-card__plus" data-rec-add data-variant-id="${variant.id}" aria-label="Quick add ${p.title.replace(/"/g, '&quot;')}">
+                <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M7 1v12M1 7h12" stroke-width="1.5" stroke-linecap="round" stroke="currentColor"/>
+                </svg>
+              </button>`
+            : '';
           return `<a href="${url}" class="cart-rec-card">
-            <div class="cart-rec-card__img-wrap">${img}</div>
+            <div class="cart-rec-card__img-wrap">
+              <span class="cart-rec-card__badge">New</span>
+              ${img}
+              ${plusBtn}
+            </div>
             <div class="cart-rec-card__info">
               <span class="cart-rec-card__title">${p.title}</span>
               <span class="cart-rec-card__price">$${price}</span>
