@@ -96,74 +96,9 @@
     padding-top: 0 !important;
     padding-bottom: 0 !important;
   }
-  /* === PDP layout — sticky gallery + natural page scroll (HILLS pattern) ===
-     The gallery stays pinned at 100vh while the info column scrolls with
-     the page. Opening an accordion grows the page height naturally; the
-     gallery never stretches because it's locked at 100vh via sticky.
-     Mouse wheel works natively because the page is what scrolls. */
-  .rp-wrap {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    align-items: start !important;
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    overflow: visible !important;
-    position: relative !important;
-  }
-  .rp-counter {
-    position: absolute !important;
-    bottom: 16px !important;
-    left: 24px !important;
-    z-index: 5 !important;
-    color: rgba(255,255,255,0.75) !important;
-    font-size: 11px !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.05em !important;
-  }
-  .rp-gallery {
-    position: relative !important;
-    top: auto !important;
-    height: calc(100vh - var(--header-height, 90px)) !important;
-    max-height: calc(100vh - var(--header-height, 90px)) !important;
-    min-height: 0 !important;
-    overflow: hidden !important;
-    align-self: stretch !important;
-  }
-  .rp-info {
-    display: block !important;
-    height: auto !important;
-    max-height: none !important;
-    min-height: 0 !important;
-    overflow: visible !important;
-    padding: 60px 40px 60px 40px !important;
-    align-items: unset !important;
-    justify-content: unset !important;
-  }
-  .rp-inner {
-    max-width: 560px !important;
-    width: 100% !important;
-    margin: 0 auto !important;
-    display: block !important;
-  }
-
   /* (Injected glasses accordions get max-height set inline on creation so
      they start open — no !important rule here, otherwise rpAccToggle
      couldn't collapse them when the user clicks.) */
-
-  @media (max-width: 749px) {
-    .rp-wrap {
-      grid-template-columns: 1fr !important;
-    }
-    .rp-gallery {
-      position: relative !important;
-      height: auto !important;
-      max-height: none !important;
-    }
-    .rp-info {
-      padding: 30px 20px !important;
-    }
-  }
 
   .rp-usp-row:has(.rp-dot-in) .rp-usp-text,
   .rp-usp-row:has(.rp-dot-low) .rp-usp-text,
