@@ -30,6 +30,7 @@
   transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: #f6f1e8;
   color: #111111;
+  font-family: 'Inter', sans-serif;
 }
 
 .drawer__inner-empty {
