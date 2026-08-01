@@ -576,17 +576,18 @@
 }
 
 /* Temporary — placed in two spots so we can compare, then drop one.
-   filter: brightness(0) forces solid black regardless of the source
-   logo's actual color, so it reads clearly on the beige footer. */
+   Same filter: invert(1) the product page header uses on light backgrounds —
+   keeps the logo's actual gradient/shading, just flips light-on-dark to
+   dark-on-light, unlike brightness(0) which crushes it to a flat silhouette. */
 .lgcy-footer__logo-mark {
   display: block;
-  width: 40px;
+  width: 64px;
   height: auto;
-  margin-top: 18px;
-  filter: brightness(0);
+  margin-top: 8px;
+  filter: invert(1);
 }
 .lgcy-footer__col--nav .lgcy-footer__logo-mark {
-  margin: 18px auto 0;
+  margin: 8px auto 0;
 }
 
 /* ── Center column — nav ── */
