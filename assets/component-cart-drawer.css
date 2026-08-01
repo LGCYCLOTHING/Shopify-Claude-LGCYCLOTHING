@@ -715,8 +715,8 @@ cart-drawer-items::-webkit-scrollbar-track-piece {
 
 .cart-item-rep__name {
   font-size: 1.1rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  font-weight: 900;
+  letter-spacing: -0.03em;
   color: #111111;
   text-decoration: none;
   line-height: 1.3;
@@ -729,7 +729,7 @@ cart-drawer-items::-webkit-scrollbar-track-piece {
 
 .cart-item-rep__unit-price {
   font-size: 1.1rem;
-  font-weight: 400;
+  font-weight: 700;
   color: #111111;
 }
 
