@@ -575,27 +575,21 @@
   display: block;
 }
 
-/* Temporary — placed in two spots so we can compare, then drop one.
-   Same filter: invert(1) the product page header uses on light backgrounds —
+/* Same filter: invert(1) the product page header uses on light backgrounds —
    keeps the logo's actual gradient/shading, just flips light-on-dark to
    dark-on-light, unlike brightness(0) which crushes it to a flat silhouette. */
 .lgcy-footer__logo-mark {
   display: block;
-  width: 64px;
+  width: 96px;
   height: auto;
   margin-top: 8px;
   filter: invert(1);
-}
-.lgcy-footer__col--nav .lgcy-footer__logo-mark {
-  margin: 8px auto 0;
 }
 
 /* ── Center column — nav ── */
 
 .lgcy-footer__col--nav {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
 }
 
