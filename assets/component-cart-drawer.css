@@ -874,21 +874,23 @@ cart-drawer-items::-webkit-scrollbar-track-piece {
 
 .cart-drawer__total-label {
   font-size: 1.4rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
+  font-weight: 900;
+  letter-spacing: -0.03em;
   color: #111111;
 }
 
 .cart-drawer__total-value {
   font-size: 1.4rem;
-  font-weight: 800;
+  font-weight: 900;
+  letter-spacing: -0.02em;
   color: #111111;
 }
 
 .cart-drawer .tax-note {
   margin: 0.4rem 0 0.8rem;
   text-align: left;
-  color: #888;
+  color: #666;
+  font-weight: 500;
   font-size: 1rem;
 }
 
