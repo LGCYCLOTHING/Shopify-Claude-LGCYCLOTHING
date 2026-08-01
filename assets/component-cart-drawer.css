@@ -561,8 +561,8 @@ cart-drawer-items::-webkit-scrollbar-track-piece {
 
 .cart-drawer__rec-header {
   font-size: 1rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  font-weight: 900;
+  letter-spacing: -0.02em;
   color: #111;
   margin-bottom: 1.2rem;
   padding-right: 2.4rem;
