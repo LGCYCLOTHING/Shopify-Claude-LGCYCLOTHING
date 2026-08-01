@@ -158,14 +158,6 @@
                           <a href="{{ item.url }}" class="cart-item-rep__name cart-item__name">
                             {{- item.product.title | upcase | escape -}}
                           </a>
-                          <div class="cart-item-rep__unit-price">
-                            {%- if item.original_price != item.final_price -%}
-                              <s class="cart-item-rep__old-price">{{- item.original_price | money -}}</s>
-                              <span>{{ item.final_price | money }}</span>
-                            {%- else -%}
-                              <span>{{ item.original_price | money }}</span>
-                            {%- endif -%}
-                          </div>
                           {%- if item.product.has_only_default_variant == false
                             or item.properties.size != 0
                             or item.selling_plan_allocation != null
