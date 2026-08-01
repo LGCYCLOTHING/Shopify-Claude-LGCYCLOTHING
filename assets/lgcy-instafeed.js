@@ -23,42 +23,16 @@
     return any;
   }
 
-  // The feed's own image row scrolls horizontally. The site's global Lenis
-  // smooth-scroll instance (layout/theme.liquid) doesn't know that and fights
-  // it for wheel events — that's what makes vertical page scroll feel "stuck"
-  // when the cursor is over this section. data-lenis-prevent tells Lenis to
-  // leave this element alone entirely, same fix used for the PDP info card.
-  function preventLenisOnFeed() {
-    var els = document.querySelectorAll(
-      '#insta-feed, .instafeed-shopify, .instafeed-new-layout-container, .instafeed-new-layout-wrapper'
-    );
-    var any = false;
-    els.forEach(function (el) {
-      if (el.hasAttribute('data-lenis-prevent')) return;
-      el.setAttribute('data-lenis-prevent', '');
-      any = true;
-    });
-    return any;
-  }
-
   var attempts = 0;
   var max = 40;
-  var titlesDone = false;
-  var feedDone = false;
   var timer = setInterval(function () {
     attempts++;
-    if (linkTitles()) titlesDone = true;
-    if (preventLenisOnFeed()) feedDone = true;
-    if ((titlesDone && feedDone) || attempts >= max) clearInterval(timer);
+    if (linkTitles() || attempts >= max) clearInterval(timer);
   }, 200);
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () {
-      linkTitles();
-      preventLenisOnFeed();
-    });
+    document.addEventListener('DOMContentLoaded', linkTitles);
   } else {
     linkTitles();
-    preventLenisOnFeed();
   }
 })();
