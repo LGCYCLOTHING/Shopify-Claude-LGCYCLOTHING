@@ -575,10 +575,26 @@
   display: block;
 }
 
+/* Temporary — placed in two spots so we can compare, then drop one.
+   filter: brightness(0) forces solid black regardless of the source
+   logo's actual color, so it reads clearly on the beige footer. */
+.lgcy-footer__logo-mark {
+  display: block;
+  width: 40px;
+  height: auto;
+  margin-top: 18px;
+  filter: brightness(0);
+}
+.lgcy-footer__col--nav .lgcy-footer__logo-mark {
+  margin: 18px auto 0;
+}
+
 /* ── Center column — nav ── */
 
 .lgcy-footer__col--nav {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
 
