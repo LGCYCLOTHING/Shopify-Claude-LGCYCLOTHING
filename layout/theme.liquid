@@ -648,24 +648,9 @@ svg.icon.icon-cart {
         collectionLink.textContent = collectionLabel;
         crumbs.querySelector('.lgcy-breadcrumbs__current').textContent = titleText;
 
-        // Place breadcrumbs DIRECTLY AFTER the entire title row (.rp-header
-        // wraps the title + price), so they sit on their own line below.
-        var titleHost = inner.querySelector('.rp-header') ||
-                        inner.querySelector('.rp-title');
-        // If only the title was found, walk up to its parent row
-        if (titleHost && titleHost.classList.contains('rp-title')) {
-          titleHost = titleHost.parentElement || titleHost;
-        }
-        if (titleHost && titleHost.parentNode) {
-          var nextSibling = titleHost.nextSibling;
-          if (nextSibling) {
-            titleHost.parentNode.insertBefore(crumbs, nextSibling);
-          } else {
-            titleHost.parentNode.appendChild(crumbs);
-          }
-        } else {
-          inner.insertBefore(crumbs, inner.firstChild);
-        }
+        // Replace the static "The Legacy Collection" eyebrow in the editorial
+        // section below the info card with the breadcrumb trail instead.
+        editorialEyebrow.replaceWith(crumbs);
       }
 
       // ── Gallery dot pagination ──────────────────────────────────────
