@@ -580,7 +580,7 @@
    dark-on-light, unlike brightness(0) which crushes it to a flat silhouette. */
 .lgcy-footer__logo-mark {
   display: block;
-  width: 96px;
+  width: 80px;
   height: auto;
   margin-top: 8px;
   filter: invert(1);
