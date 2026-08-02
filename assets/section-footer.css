@@ -595,9 +595,22 @@
 
 .lgcy-footer__nav {
   display: flex;
-  flex-direction: column;
-  gap: 14px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 22px;
   align-items: center;
+  justify-content: center;
+}
+
+.lgcy-footer__nav-link:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -12px;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 12px;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .lgcy-footer__nav-link {
