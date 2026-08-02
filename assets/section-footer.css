@@ -590,14 +590,21 @@
 
 .lgcy-footer__col--nav {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  gap: 16px;
+}
+
+.lgcy-footer__col--nav .lgcy-footer__logo-mark {
+  margin-top: 0;
 }
 
 .lgcy-footer__nav {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 22px;
+  gap: 26px;
   align-items: center;
   justify-content: center;
 }
@@ -606,16 +613,16 @@
   content: '';
   position: absolute;
   top: 50%;
-  right: -12px;
+  right: -14px;
   transform: translateY(-50%);
   width: 1px;
-  height: 12px;
+  height: 14px;
   background: rgba(0, 0, 0, 0.2);
 }
 
 .lgcy-footer__nav-link {
   font-family: 'Inter', sans-serif;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 900;
   letter-spacing: -0.02em;
   text-transform: uppercase;
