@@ -13,12 +13,12 @@
         <a href="{{ routes.root_url }}" class="lgcy-footer__brand-name">LGCYCLOTHING</a>
         <hr class="lgcy-footer__brand-divider">
         <span class="lgcy-footer__est">Est. 2026</span>
-        {%- if settings.logo != blank -%}
-          {{ settings.logo | image_url: width: 160 | image_tag: class: 'lgcy-footer__logo-mark', alt: shop.name, loading: 'lazy' }}
-        {%- endif -%}
       </div>
 
       <div class="lgcy-footer__col lgcy-footer__col--nav">
+        {%- if settings.logo != blank -%}
+          {{ settings.logo | image_url: width: 160 | image_tag: class: 'lgcy-footer__logo-mark', alt: shop.name, loading: 'lazy' }}
+        {%- endif -%}
         <nav class="lgcy-footer__nav">
           <a href="{{ routes.all_products_collection_url }}" class="lgcy-footer__nav-link">Shop</a>
           <a href="/pages/about" class="lgcy-footer__nav-link">About</a>
