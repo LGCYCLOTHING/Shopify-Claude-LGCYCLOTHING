@@ -926,6 +926,9 @@
 
 <section class="rp-editorial">
   <div class="rp-editorial-text">
+    {%- if settings.logo != blank -%}
+      <div class="rp-editorial-watermark" style="background-image: url('{{ settings.logo | image_url: width: 1600 }}');" aria-hidden="true"></div>
+    {%- endif -%}
     <p class="rp-editorial-eyebrow">The Legacy Collection</p>
     <h2 class="rp-editorial-heading">Driven by Purpose.<br>Built to Last.</h2>
     <p class="rp-editorial-body">
