@@ -847,6 +847,27 @@
   .rp-editorial-text {
     display: flex; flex-direction: column; justify-content: center;
     padding: 80px 72px;
+    position: relative;
+    overflow: hidden;
+  }
+  .rp-editorial-logo-bg {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 1600px;
+    max-width: none;
+    transform: translate(-50%, -50%);
+    opacity: 0.05;
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+  }
+  .rp-editorial-eyebrow,
+  .rp-editorial-heading,
+  .rp-editorial-body,
+  .rp-editorial-link,
+  .rp-editorial-text .lgcy-breadcrumbs {
+    position: relative;
+    z-index: 1;
   }
   .rp-editorial-eyebrow {
     font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
