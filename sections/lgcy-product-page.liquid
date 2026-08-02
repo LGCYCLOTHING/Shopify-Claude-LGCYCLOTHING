@@ -936,6 +936,10 @@
 
 <section class="rp-editorial">
   <div class="rp-editorial-text">
+    {%- if settings.logo != blank -%}
+      {%- assign logo_bg_height = 1600 | divided_by: settings.logo.aspect_ratio -%}
+      <img class="rp-editorial-logo-bg" src="{{ settings.logo | image_url: width: 1600 }}" width="1600" height="{{ logo_bg_height }}" alt="" aria-hidden="true" loading="lazy">
+    {%- endif -%}
     <p class="rp-editorial-eyebrow">The Legacy Collection</p>
     <h2 class="rp-editorial-heading">Driven by Purpose.<br>Built to Last.</h2>
     <p class="rp-editorial-body">
