@@ -115,7 +115,12 @@
       "Read(//c/Users/zaina/AppData/Local/Temp/claude/c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE/9357ad5a-e722-4c40-aab1-5a0b3b4f7434/scratchpad/logo-trace/**)",
       "Bash(node render-frames.js)",
       "Bash(curl -s \"https://0dc7p1-tw.myshopify.com/collections/the-legacy-collection\" -o /tmp/live_collection.html -w \"HTTP %{http_code}\\\\n\")",
-      "Bash(curl -sL \"https://0dc7p1-tw.myshopify.com/collections/the-legacy-collection\" -o /tmp/live_collection.html -w \"Final: %{url_effective} HTTP %{http_code}\\\\n\")"
+      "Bash(curl -sL \"https://0dc7p1-tw.myshopify.com/collections/the-legacy-collection\" -o /tmp/live_collection.html -w \"Final: %{url_effective} HTTP %{http_code}\\\\n\")",
+      "Bash(curl -s \"https://cdn.shopify.com/s/files/1/0688/4537/1578/files/Untitled_Project_-_Standard_6.svg\")",
+      "Bash(curl -s \"https://cdn.shopify.com/s/files/1/0688/4537/1578/files/Untitled_Project_-_Standard_6.svg\" -o \"C:\\\\Users\\\\zaina\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE\\\\b1d7edac-9237-4739-a290-671bed1174b6\\\\scratchpad\\\\logo.svg\")",
+      "Bash(mkdir -p /tmp/lgcy)",
+      "Bash(curl -s \"https://cdn.shopify.com/s/files/1/0688/4537/1578/files/Untitled_Project_-_Standard_6.svg\" -o /tmp/lgcy/logo.svg)",
+      "Bash(echo \"exit:$?\")"
     ]
   }
 }
