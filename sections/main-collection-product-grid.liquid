@@ -180,8 +180,12 @@
         {%- else -%}
           <div
             class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
+            style="position: relative;"
           >
             <div class="loading-overlay gradient"></div>
+            {%- if collection.products.size == 1 -%}
+              <div class="lgcy-collection-empty-decor">Iconic Visionary</div>
+            {%- endif -%}
             <ul
               id="product-grid"
               data-id="{{ section.id }}"
