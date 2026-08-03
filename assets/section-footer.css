@@ -934,11 +934,15 @@
   }
 
   .lgcy-footer__nav-link {
-    font-size: 11px;
+    font-size: 14px;
   }
 
   .lgcy-footer__nav-link:not(:last-child)::before {
     right: -7px;
+  }
+
+  .lgcy-footer__logo-mark {
+    width: 64px;
   }
 
   .lgcy-footer__newsletter-form {
