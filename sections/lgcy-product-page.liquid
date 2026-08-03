@@ -1277,6 +1277,13 @@
     .lgcy-nl-trigger-label { display: none; }
     .lgcy-nl-trigger-logo { border-radius: 13px; }
   }
+
+  /* Below 749px the sticky add-to-cart bar (lgcy-sticky-cart.liquid) switches
+     to a full-width bottom bar at bottom:12px — keep the newsletter trigger
+     clear of it so it doesn't cover the price. */
+  @media (max-width: 749px) {
+    .lgcy-nl-trigger-wrap { bottom: 80px; }
+  }
 </style>
 
 <div class="lgcy-nl-trigger-wrap" id="lgcyNlTriggerWrap">
