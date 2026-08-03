@@ -580,7 +580,7 @@
    dark-on-light, unlike brightness(0) which crushes it to a flat silhouette. */
 .lgcy-footer__logo-mark {
   display: block;
-  width: 96px;
+  width: 72px;
   height: auto;
   margin-top: 8px;
   filter: invert(1);
@@ -592,12 +592,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* Stretch to match the tallest column (newsletter) so the logo below has
+     real extra height to push into via margin-top: auto. */
+  align-self: stretch;
   gap: 28px;
 }
 
 .lgcy-footer__col--nav .lgcy-footer__logo-mark {
-  margin-top: 0;
+  /* Dock the logo near the footer's bottom line instead of sitting right
+     under the nav links. */
+  margin-top: auto;
 }
 
 .lgcy-footer__nav {
