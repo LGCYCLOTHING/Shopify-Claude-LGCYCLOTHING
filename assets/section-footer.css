@@ -957,7 +957,8 @@
     width: 64px;
     order: 4;
     justify-self: center;
-    margin-top: 8px;
+    margin-top: -32px;
+    margin-bottom: 0;
   }
 
   .lgcy-footer__newsletter-form {
