@@ -230,6 +230,7 @@ class CartDrawer extends HTMLElement {
           return `<a href="${url}" class="cart-rec-card">
             <div class="cart-rec-card__img-wrap">
               <span class="cart-rec-card__badge">New</span>
+              ${blueLightBadge}
               ${img}
               ${plusBtn}
             </div>
