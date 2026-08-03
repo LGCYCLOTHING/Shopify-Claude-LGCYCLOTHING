@@ -928,6 +928,19 @@
     align-items: center;
   }
 
+  .lgcy-footer__nav {
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
+
+  .lgcy-footer__nav-link {
+    font-size: 11px;
+  }
+
+  .lgcy-footer__nav-link:not(:last-child)::before {
+    right: -7px;
+  }
+
   .lgcy-footer__newsletter-form {
     max-width: 280px;
     margin: 0 auto;
