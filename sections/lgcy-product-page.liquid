@@ -778,6 +778,16 @@
     document.getElementById('rp-tab-' + key).classList.add('is-active');
   }
 
+  // "Size & Fit Guide" (top of the info column) jumps straight to the
+  // Size Chart tab further down instead of leaving the shopper to find it.
+  function rpShowSizeChartTab() {
+    var wrap = document.querySelector('.rp-tabs-wrap');
+    if (!wrap) return;
+    var tabBtn = wrap.querySelector('.rp-tab-btn[onclick*="sizechart"]');
+    if (tabBtn) rpTabSwitch(tabBtn, 'sizechart');
+    wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
   function rpOpt(el, labelId) {
     el.parentElement.querySelectorAll('.rp-swatch,.rp-swatch-plain').forEach(function(x) { x.classList.remove('active'); });
     el.classList.add('active');
