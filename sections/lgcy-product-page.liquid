@@ -1085,12 +1085,20 @@
     var trust = document.querySelector('.lgcy-trust');
     if (!trust || !trust.parentNode) return false;
 
-    // Move trust next to the feed first (if it exists yet) — the breadcrumb
-    // insertion below always targets trust's current position, so it has
-    // to run after trust has settled into its final spot.
+    // Move trust next to the feed first (if it exists yet), then pull
+    // "You May Also Like" in right after trust so it lands above the feed
+    // instead of below it. The breadcrumb insertion below always targets
+    // trust's current position, so it has to run after trust has settled
+    // into its final spot.
     var feed = document.querySelector('#insta-feed, .instafeed-shopify');
-    if (feed && feed.parentNode && trust.nextElementSibling !== feed) {
-      feed.parentNode.insertBefore(trust, feed);
+    if (feed && feed.parentNode) {
+      if (trust.nextElementSibling !== feed) {
+        feed.parentNode.insertBefore(trust, feed);
+      }
+      var cards = document.querySelector('.rp-cards-section');
+      if (cards && trust.nextElementSibling !== cards) {
+        feed.parentNode.insertBefore(cards, feed);
+      }
     }
 
     if (!crumbs) crumbs = buildCrumbs();
