@@ -52,6 +52,11 @@
   .collection-hero__description {
     max-width: 950px;
   }
+  /* Desktop never shows the mobile "Read more" toggle — it's only ever
+     unhidden by JS inside the max-width: 749px check below. */
+  .collection-hero__desc-toggle {
+    display: none;
+  }
   @media (max-width: 749px) {
     .collection-hero__description {
       max-width: 100%;
