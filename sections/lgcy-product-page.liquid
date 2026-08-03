@@ -808,7 +808,12 @@
     var match = variants.find(function(v) {
       return v.options.every(function(o, i) { return !opts[i] || o === opts[i]; });
     });
-    if (match) document.getElementById('rp-vid').value = match.id;
+    if (match) {
+      document.getElementById('rp-vid').value = match.id;
+      if (typeof window.lgcyUpdateStockPill === 'function') {
+        window.lgcyUpdateStockPill(match.available, match.inventory_quantity);
+      }
+    }
   }
 
   function rpNisOpen() {
