@@ -915,9 +915,45 @@
     gap: 24px;
   }
   .rp-product-card { display: flex; flex-direction: column; text-decoration: none; color: #111; }
-  .rp-product-card-img { width: 100%; aspect-ratio: 3/4; overflow: hidden; background: #f0f0ee; margin-bottom: 12px; }
+  .rp-product-card-img { position: relative; width: 100%; aspect-ratio: 3/4; overflow: hidden; background: #f0f0ee; margin-bottom: 12px; }
   .rp-product-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
   .rp-product-card:hover .rp-product-card-img img { transform: scale(1.04); }
+
+  /* "NEW" / "BLUE LIGHT" badges — same liquid-glass pill treatment as the shop grid */
+  .rp-card-new-badge,
+  .rp-card-bluelight-badge {
+    --border-width: 1px;
+    position: absolute;
+    top: 8px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    isolation: isolate;
+    padding: 5px 9px;
+    border-radius: 999vw;
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-weight: 900;
+    font-size: 8px;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    -webkit-backdrop-filter: blur(8px) saturate(140%);
+            backdrop-filter: blur(8px) saturate(140%);
+    pointer-events: none;
+  }
+  .rp-card-new-badge {
+    left: 8px;
+    color: #000;
+    background: linear-gradient(-75deg, rgba(255,255,255,0.55), rgba(255,255,255,0.85), rgba(255,255,255,0.55));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(0,0,0,0.12), 0 0.25em 0.5em -0.125em rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.06);
+  }
+  .rp-card-bluelight-badge {
+    right: 8px;
+    color: #0a3a6b;
+    background: linear-gradient(-75deg, rgba(200,222,245,0.55), rgba(225,238,252,0.85), rgba(200,222,245,0.55));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(20,60,110,0.15), 0 0.25em 0.5em -0.125em rgba(20,60,110,0.2), 0 0 0 1px rgba(20,60,110,0.08);
+  }
+  .rp-card-bluelight-badge svg { flex-shrink: 0; color: #0a3a6b; }
   .rp-product-card-name { font-size: 12px; font-weight: 700; letter-spacing: 0.02em; margin-bottom: 4px; }
   .rp-product-card-sub { font-size: 11px; font-weight: 400; color: #888; margin-bottom: 6px; }
   .rp-product-card-price { font-size: 12px; font-weight: 600; color: #111; }
