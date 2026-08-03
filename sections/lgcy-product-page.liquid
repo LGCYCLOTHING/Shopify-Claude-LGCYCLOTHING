@@ -1278,11 +1278,13 @@
     .lgcy-nl-trigger-logo { border-radius: 13px; }
   }
 
-  /* Below 749px the sticky add-to-cart bar (lgcy-sticky-cart.liquid) switches
-     to a full-width bottom bar at bottom:12px — keep the newsletter trigger
-     clear of it so it doesn't cover the price. */
-  @media (max-width: 749px) {
-    .lgcy-nl-trigger-wrap { bottom: 80px; }
+  /* Below 860px the sticky size/price/ATC bar (.lgcy-sticky-atc, in
+     component-glassy-cta.css) docks at bottom:0 and runs ~112px tall
+     (10px padding + 34px size row + 6px gap + 52px button + 10px padding)
+     plus the device's safe-area inset — keep the newsletter trigger clear
+     of it so it doesn't cover the price. */
+  @media (max-width: 860px) {
+    .lgcy-nl-trigger-wrap { bottom: calc(124px + env(safe-area-inset-bottom, 0px)); }
   }
 </style>
 
