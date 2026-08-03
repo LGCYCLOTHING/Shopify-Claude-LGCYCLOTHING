@@ -106,7 +106,35 @@
       </h1>
 
       {%- if section.settings.show_collection_description -%}
-        <div class="collection-hero__description rte">{{ collection.description }}</div>
+        <div class="collection-hero__description rte" id="CollectionDesc-{{ section.id }}">{{ collection.description }}</div>
+        <button
+          type="button"
+          class="collection-hero__desc-toggle"
+          id="CollectionDescToggle-{{ section.id }}"
+          aria-expanded="false"
+          aria-controls="CollectionDesc-{{ section.id }}"
+        >Read more</button>
+        <script>
+          (function () {
+            var desc = document.getElementById('CollectionDesc-{{ section.id }}');
+            var toggle = document.getElementById('CollectionDescToggle-{{ section.id }}');
+            if (!desc || !toggle) return;
+
+            function checkOverflow() {
+              if (window.innerWidth > 749 || desc.classList.contains('is-expanded')) return;
+              toggle.style.display = desc.scrollHeight > desc.clientHeight + 2 ? 'inline-block' : 'none';
+            }
+
+            toggle.addEventListener('click', function () {
+              var expanded = desc.classList.toggle('is-expanded');
+              toggle.textContent = expanded ? 'Read less' : 'Read more';
+              toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+            });
+
+            window.addEventListener('resize', checkOverflow);
+            checkOverflow();
+          })();
+        </script>
       {%- endif -%}
     </div>
 
