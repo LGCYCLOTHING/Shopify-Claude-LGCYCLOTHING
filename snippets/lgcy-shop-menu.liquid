@@ -683,12 +683,33 @@
   .lgcy-legacy-disclaimer {
     color: rgba(0, 0, 0, 0.35) !important;
   }
-  .lgcy-legacy-cta {
-    background: #000000 !important;
-    color: #ffffff !important;
+  /* Same specificity as the glassy-cta override in component-glassy-cta.css
+     (html body .lgcy-legacy-cta) so this wins the cascade tie via source
+     order — a plain .lgcy-legacy-cta selector here would lose to it and the
+     button would stay on the white glass style meant for dark backgrounds,
+     nearly invisible against this panel's light tint. */
+  html body .lgcy-legacy-cta {
+    background: linear-gradient(
+      -75deg,
+      rgba(0, 0, 0, 0.08),
+      rgba(0, 0, 0, 0.18),
+      rgba(0, 0, 0, 0.08)
+    ) !important;
+    color: #111111 !important;
+    text-shadow: none !important;
   }
-  .lgcy-legacy-cta:hover {
-    background: rgba(0, 0, 0, 0.85) !important;
+  html body .lgcy-legacy-cta > svg {
+    color: #111111 !important;
+    filter: none !important;
+  }
+  html body .lgcy-legacy-cta:hover {
+    background: linear-gradient(
+      -75deg,
+      rgba(0, 0, 0, 0.12),
+      rgba(0, 0, 0, 0.26),
+      rgba(0, 0, 0, 0.12)
+    ) !important;
+    text-shadow: none !important;
   }
 
   /* Close button (when shown) */
