@@ -968,15 +968,24 @@
       {%- assign logo_bg_height = 1600 | divided_by: settings.logo.aspect_ratio -%}
       <img class="rp-editorial-logo-bg" src="{{ settings.logo | image_url: width: 1600 }}" width="1600" height="{{ logo_bg_height }}" alt="" aria-hidden="true" loading="lazy">
     {%- endif -%}
-    <p class="rp-editorial-eyebrow">The Legacy Collection</p>
-    <h2 class="rp-editorial-heading">Driven by Purpose.<br>Built to Last.</h2>
-    <p class="rp-editorial-body">
-      Every piece in the LGCYCLOTHING legacy collection is crafted with intention.
-      Heavyweight construction, refined detailing and a fit designed to stand apart —
-      this is clothing for those who move with purpose. Worn by the few who understand
-      that quality is never an accident.
-    </p>
-    <a href="/collections/all" class="rp-editorial-link">Explore the Collection &rarr;</a>
+    <div class="rp-editorial-features">
+      <div class="rp-editorial-feature">
+        <h3 class="rp-editorial-feature-title">Oversized Fit</h3>
+        <p class="rp-editorial-feature-desc">Relaxed, structured silhouette built to hold its shape.</p>
+      </div>
+      <div class="rp-editorial-feature">
+        <h3 class="rp-editorial-feature-title">Relaxed Hem &amp; Cuffs</h3>
+        <p class="rp-editorial-feature-desc">Loose, unribbed finish at the waist and sleeves for an effortless drop.</p>
+      </div>
+      <div class="rp-editorial-feature">
+        <h3 class="rp-editorial-feature-title">Contrast Piping</h3>
+        <p class="rp-editorial-feature-desc">White detailing along both sleeves.</p>
+      </div>
+      <div class="rp-editorial-feature">
+        <h3 class="rp-editorial-feature-title">Signature Graphics</h3>
+        <p class="rp-editorial-feature-desc">Front chest logo, bold back print — front to back.</p>
+      </div>
+    </div>
   </div>
   <div class="rp-editorial-media">
     <img src="{{ product.featured_image | img_url: '1200x' }}" alt="{{ product.title | escape }}">
