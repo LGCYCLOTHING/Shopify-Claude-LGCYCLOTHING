@@ -848,8 +848,20 @@ svg.icon.icon-cart {
       syncState();
       new MutationObserver(syncState).observe(atc, { attributes: true });
 
-      // Always visible on mobile (no scroll-trigger)
+      // Always visible on mobile (no scroll-trigger)...
       bar.classList.add('is-visible');
+
+      // ...except once the footer scrolls into view, where it would sit on
+      // top of and hide the footer's content. Hide it there, and bring it
+      // back once the footer scrolls back out of view.
+      var footer = document.querySelector('.lgcy-footer, footer.lgcy-footer, footer[role="contentinfo"], footer.section-footer, footer');
+      if (footer && 'IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            bar.classList.toggle('lgcy-hide-near-footer', entry.isIntersecting);
+          });
+        }, { threshold: 0 }).observe(footer);
+      }
     }
 
     if (document.readyState === 'loading') {
