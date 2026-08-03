@@ -502,10 +502,22 @@
       display: none !important;
     }
 
-    /* Clear the Dawn .link text-decoration underline on the hamburger summary. */
+    /* Clear the Dawn .link text-decoration underline on the hamburger summary,
+       plus the .focus-inset focus outline/box-shadow it also carries — mobile
+       taps trigger :focus-visible the same as a real focus, so that outline
+       (in the light foreground color) shows up looking like a stray white
+       underline right under the icon on open. Desktop keeps its hover
+       underline as-is; this is scoped to the mobile media query only. */
     .header__icon--menu,
+    .header__icon--menu:focus,
+    .header__icon--menu:focus-visible,
+    .header__icon--menu:active,
+    .header__icon--menu.focused,
+    .header__icon--menu *,
     .header__icon--menu * {
       text-decoration: none !important;
+      outline: none !important;
+      box-shadow: none !important;
     }
 
     /* Indent the hamburger to match the right-side .header__icons padding (0.8rem). */
