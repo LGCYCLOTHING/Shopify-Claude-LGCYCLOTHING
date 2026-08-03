@@ -3300,6 +3300,13 @@ html body .lgcy-breadcrumbs.lgcy-breadcrumbs--trust {
   box-sizing: border-box;
 }
 
+html body .lgcy-breadcrumbs--trust,
+html body .lgcy-breadcrumbs--trust a,
+html body .lgcy-breadcrumbs--trust .lgcy-breadcrumbs__sep,
+html body .lgcy-breadcrumbs--trust .lgcy-breadcrumbs__current {
+  color: #000000 !important;
+}
+
 /* ============================================================== */
 /* PDP breadcrumbs (top of the info column)                         */
 /* ============================================================== */
