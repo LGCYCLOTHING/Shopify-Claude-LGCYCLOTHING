@@ -156,8 +156,12 @@
   background: #000 !important;
 }
 
-/* Image contained inside — no crop; black bars fill the difference */
+/* Image/video contained inside — no crop; black bars fill the difference.
+   Includes video/iframe so video posts get sized + stay clickable too,
+   not just the img thumbnail. */
 .instafeed-new-layout-item img,
+.instafeed-new-layout-item video,
+.instafeed-new-layout-item iframe,
 .instafeed-new-layout-item .instafeed-lazy-image {
   width: 100% !important;
   height: 100% !important;
