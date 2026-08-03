@@ -3138,12 +3138,23 @@ html body .rp-counter {
   display: none;
   flex-direction: column;
   gap: 6px;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 280ms ease, transform 280ms ease;
 }
 
 @media (max-width: 860px) {
   .lgcy-sticky-atc {
     display: flex;
   }
+}
+
+/* Hidden once the footer scrolls into view, so it doesn't cover footer
+   content — reappears once the footer scrolls back out of view. */
+.lgcy-sticky-atc.lgcy-hide-near-footer {
+  opacity: 0;
+  transform: translateY(100%);
+  pointer-events: none;
 }
 
 /* Size row above the ATC pill */
