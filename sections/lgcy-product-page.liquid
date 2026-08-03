@@ -1043,13 +1043,74 @@
 
 <script>
 (function() {
+  var crumbs = null;
+
+  // Same breadcrumb trail previously built in layout/theme.liquid — moved
+  // here since it now lands next to the trust row instead of the (removed)
+  // editorial eyebrow.
+  function buildCrumbs() {
+    var titleEl = document.querySelector('.rp-title, h1');
+    var titleText = (titleEl && titleEl.textContent.trim()) ||
+                    document.title.split('|')[0].trim();
+
+    var collectionHandle = null;
+    var pathMatch = window.location.pathname.match(/\/collections\/([^/]+)\/products\//);
+    if (pathMatch) {
+      collectionHandle = pathMatch[1];
+    } else if (document.referrer) {
+      try {
+        var refUrl = new URL(document.referrer);
+        if (refUrl.host === window.location.host) {
+          var refMatch = refUrl.pathname.match(/^\/collections\/([^/]+)\/?$/);
+          if (refMatch) collectionHandle = refMatch[1];
+        }
+      } catch (e) {}
+    }
+
+    var collectionLabel = 'All';
+    var collectionHref = '/collections/all';
+    if (collectionHandle) {
+      collectionHref = '/collections/' + collectionHandle;
+      collectionLabel = collectionHandle
+        .split('-')
+        .map(function (w) { return w.charAt(0).toUpperCase() + w.slice(1); })
+        .join(' ');
+    }
+
+    var nav = document.createElement('nav');
+    nav.className = 'lgcy-breadcrumbs lgcy-breadcrumbs--trust';
+    nav.setAttribute('aria-label', 'Breadcrumb');
+    nav.innerHTML =
+      '<a href="/">Home</a>' +
+      '<span class="lgcy-breadcrumbs__sep" aria-hidden="true">&rsaquo;</span>' +
+      '<a class="lgcy-breadcrumbs__collection" href=""></a>' +
+      '<span class="lgcy-breadcrumbs__sep" aria-hidden="true">&rsaquo;</span>' +
+      '<span class="lgcy-breadcrumbs__current"></span>';
+    var collectionLink = nav.querySelector('.lgcy-breadcrumbs__collection');
+    collectionLink.href = collectionHref;
+    collectionLink.textContent = collectionLabel;
+    nav.querySelector('.lgcy-breadcrumbs__current').textContent = titleText;
+    return nav;
+  }
+
   function reposition() {
     var trust = document.querySelector('.lgcy-trust');
+    if (!trust || !trust.parentNode) return false;
+
+    // Move trust next to the feed first (if it exists yet) — the breadcrumb
+    // insertion below always targets trust's current position, so it has
+    // to run after trust has settled into its final spot.
     var feed = document.querySelector('#insta-feed, .instafeed-shopify');
-    if (!trust || !feed || !feed.parentNode) return false;
-    if (trust.nextElementSibling === feed) return true;
-    feed.parentNode.insertBefore(trust, feed);
-    return true;
+    if (feed && feed.parentNode && trust.nextElementSibling !== feed) {
+      feed.parentNode.insertBefore(trust, feed);
+    }
+
+    if (!crumbs) crumbs = buildCrumbs();
+    if (trust.previousElementSibling !== crumbs) {
+      trust.parentNode.insertBefore(crumbs, trust);
+    }
+
+    return !!feed;
   }
   var attempts = 0, max = 60;
   var timer = setInterval(function() {
