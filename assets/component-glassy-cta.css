@@ -2992,6 +2992,19 @@ html body .instafeed-new-layout-wrapper {
   background: #f6f1e8 !important;
 }
 
+/* Full-bleed so the beige above reaches the true viewport edges — these are
+   the actual top-level wrapper(s) around the Instafeed app widget, not the
+   inner grid/tile elements, so this is safe to apply without also touching
+   .instafeed-new-layout-container/wrapper. */
+html body #shopify-section-17739577321e24515e,
+html body #insta-feed,
+html body .instafeed-shopify {
+  width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  box-sizing: border-box !important;
+}
+
 /* Editorial + cards-section typography — Inter 900 negative letter-spacing */
 html body .rp-editorial-eyebrow,
 html body .rp-editorial-heading,
