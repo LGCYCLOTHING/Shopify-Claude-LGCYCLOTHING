@@ -208,6 +208,17 @@ class CartDrawer extends HTMLElement {
             : '';
           // /products.json doesn't include a url field — build it from handle
           const url = p.url || '/products/' + p.handle;
+          const tagsStr = (Array.isArray(p.tags) ? p.tags.join(',') : (p.tags || '')).toString().toLowerCase();
+          const isBlueLight = tagsStr.indexOf('blue-light') !== -1 || tagsStr.indexOf('bluelight') !== -1 || tagsStr.indexOf('blue light') !== -1;
+          const blueLightBadge = isBlueLight
+            ? `<span class="cart-rec-card__bluelight-badge" aria-label="Blue light filter lens">
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="3.5"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/>
+                  <path d="M2 12h2"/><path d="M20 12h2"/><path d="m4.93 19.07 1.41-1.41"/><path d="m17.66 6.34 1.41-1.41"/>
+                </svg>
+                Blue Light
+              </span>`
+            : '';
           const variant = (p.variants || []).find((v) => v.available) || (p.variants || [])[0];
           const plusBtn = variant
             ? `<button type="button" class="cart-rec-card__plus" data-rec-add data-variant-id="${variant.id}" aria-label="Quick add ${p.title.replace(/"/g, '&quot;')}">
