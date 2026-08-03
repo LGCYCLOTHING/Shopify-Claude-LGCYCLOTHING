@@ -893,11 +893,20 @@
     padding: 64px 48px; font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
     border-top: 1px solid #d8d8d8;
     background: linear-gradient(270deg, #ffffff 0%, #ffffff 55%, #e0e0e0 80%, #909090 100%);
+    /* Full-bleed so the beige background override (component-glassy-cta.css)
+       reaches the true viewport edges instead of stopping at this section's
+       own box — .rp-card-grid below re-constrains the actual card layout. */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    box-sizing: border-box;
   }
   .rp-card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
   }
   .rp-product-card { display: flex; flex-direction: column; text-decoration: none; color: #111; }
   .rp-product-card-img { position: relative; width: 100%; aspect-ratio: 3/4; overflow: hidden; background: #f0f0ee; margin-bottom: 12px; }
