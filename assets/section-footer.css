@@ -952,7 +952,8 @@
     display: none;
   }
 
-  .lgcy-footer__logo-mark {
+  .lgcy-footer__logo-mark,
+  .lgcy-footer__col--nav .lgcy-footer__logo-mark {
     width: 64px;
     order: 4;
     justify-self: center;
