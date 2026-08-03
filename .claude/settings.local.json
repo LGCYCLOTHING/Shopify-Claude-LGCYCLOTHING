@@ -123,7 +123,9 @@
       "Bash(echo \"exit:$?\")",
       "Bash(cp /tmp/lgcy/logo.png \"C:\\\\Users\\\\zaina\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE\\\\b1d7edac-9237-4739-a290-671bed1174b6\\\\scratchpad\\\\logo.png\")",
       "PowerShell(gh --version 2>&1)",
-      "mcp__claude_ai_Shopify__get-product"
+      "mcp__claude_ai_Shopify__get-product",
+      "Bash(curl -s -A \"Mozilla/5.0\" \"https://0dc7p1-tw.myshopify.com/\" -o /tmp_lgcy_home.html --max-time 20 -w \"HTTP %{http_code}\\\\n\")",
+      "Bash(curl -sL -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36\" \"https://0dc7p1-tw.myshopify.com/\" -o \"/c/Users/zaina/AppData/Local/Temp/claude/c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE/91c29f02-b8fb-4a68-80fb-0f44b0f4c6ed/scratchpad/home.html\" --max-time 25 -w \"HTTP %{http_code} FINAL_URL:%{url_effective}\\\\n\")"
     ]
   }
 }

@@ -180,18 +180,19 @@
     padding: 0.2em 0.55em;
   }
 
-  /* Tiles sized to actually fit a 5-up row on phone screens.
+  /* Tiles sized so only 2 are visible at once on phone screens (rest reachable
+     by swiping) instead of the app's default 5-up row that made everything tiny.
      min() keeps them from blowing up on tablet widths just under 750px. */
   .instafeed-new-layout-container {
     min-height: auto !important;
   }
   .instafeed-new-layout-item {
-    width: min(18vw, 130px) !important;
+    width: min(46vw, 210px) !important;
     height: auto !important;
     aspect-ratio: 3 / 4 !important;
-    min-width: min(18vw, 130px) !important;
-    max-width: min(18vw, 130px) !important;
+    min-width: min(46vw, 210px) !important;
+    max-width: min(46vw, 210px) !important;
     min-height: 0 !important;
-    flex: 0 0 min(18vw, 130px) !important;
+    flex: 0 0 min(46vw, 210px) !important;
   }
 }
