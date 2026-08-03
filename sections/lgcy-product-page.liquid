@@ -457,19 +457,20 @@
 
 <script>
 (function() {
+  var main = document.getElementById('MainContent');
+  if (!main) return;
   var obs = new MutationObserver(function(mutations) {
     for (var i = 0; i < mutations.length; i++) {
       var nodes = mutations[i].addedNodes;
       for (var j = 0; j < nodes.length; j++) {
         var node = nodes[j];
-        if (node.nodeType !== 1) continue;
+        if (node.nodeType !== 1 || !main.contains(node)) continue;
         if (node.tagName === 'DETAILS') node.style.setProperty('display', 'none', 'important');
         if (node.querySelectorAll) node.querySelectorAll('details').forEach(function(d) { d.style.setProperty('display', 'none', 'important'); });
       }
     }
   });
-  if (document.body) obs.observe(document.body, { childList: true, subtree: true });
-  else document.addEventListener('DOMContentLoaded', function() { obs.observe(document.body, { childList: true, subtree: true }); });
+  obs.observe(main, { childList: true, subtree: true });
   window.addEventListener('load', function() { obs.disconnect(); });
 })();
 </script>
