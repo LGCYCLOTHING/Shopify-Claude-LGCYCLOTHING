@@ -926,23 +926,37 @@
 
   .lgcy-footer__col--newsletter {
     align-items: center;
+    order: 3;
+  }
+
+  /* Un-wrap the nav column so the nav links and the logo (its two children)
+     become independent items of the footer grid — lets the logo be reordered
+     to below the newsletter/email column instead of stuck next to the nav. */
+  .lgcy-footer__col--nav {
+    display: contents;
   }
 
   .lgcy-footer__nav {
+    flex-direction: column;
     flex-wrap: nowrap;
-    gap: 12px;
+    gap: 14px;
+    order: 2;
   }
 
   .lgcy-footer__nav-link {
     font-size: 14px;
   }
 
+  /* Vertical stack has no need for the horizontal "|" divider between links */
   .lgcy-footer__nav-link:not(:last-child)::before {
-    right: -7px;
+    display: none;
   }
 
   .lgcy-footer__logo-mark {
     width: 64px;
+    order: 4;
+    justify-self: center;
+    margin-top: 8px;
   }
 
   .lgcy-footer__newsletter-form {
