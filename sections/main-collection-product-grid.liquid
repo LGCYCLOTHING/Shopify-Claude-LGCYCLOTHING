@@ -43,6 +43,29 @@
     justify-content: center;
   }
 
+  /* Experimental: decorative cursive fill for the empty space when a
+     collection only has one product — scoped to that exact case so it
+     never overlaps a fuller grid. */
+  .lgcy-collection-empty-decor {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+    font-weight: 600;
+    font-size: clamp(28px, 4vw, 56px);
+    color: rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+    z-index: 0;
+  }
+  @media (max-width: 749px) {
+    .lgcy-collection-empty-decor {
+      display: none;
+    }
+  }
+
   /* Collection page: tighten the gap between the hero description and the
      product grid below it — templates/collection.json padding_top setting
      doesn't auto-deploy, so it's forced here instead. */
