@@ -469,51 +469,68 @@
 </script>
 
 <script>
-  /* Stock status pill — injected via JS so it works on any product template */
+  /* Stock status pill — injected via JS so it works on any product template.
+     Exposes window.lgcyUpdateStockPill(available, qty) so the variant
+     picker (rpVariant() in lgcy-product-page.liquid) can refresh it when
+     the shopper switches size/color — the initial render only reflects
+     product.selected_or_first_available_variant, which goes stale the
+     moment a different variant with different stock is selected. */
   (function () {
-    var availMeta = document.querySelector('meta[name="lgcy-variant-available"]');
-    var invMeta   = document.querySelector('meta[name="lgcy-variant-inventory"]');
-    if (!availMeta) return;
-
-    var available = availMeta.getAttribute('content') === 'true';
-    var qty       = parseInt(invMeta ? invMeta.getAttribute('content') : '0', 10);
-
-    var dotColor, label, bg, shadow;
-    if (!available) {
-      dotColor = '#ef4444'; label = 'Out of Stock';
-      bg = 'linear-gradient(-75deg,rgba(239,68,68,0.20),rgba(239,68,68,0.35),rgba(239,68,68,0.20))';
-      shadow = 'inset 0 1px 0 rgba(255,255,255,0.8),inset 0 -1px 0 rgba(180,40,40,0.25),0 0.25em 0.5em -0.125em rgba(180,40,40,0.20),0 0 0 1px rgba(180,40,40,0.35)';
-    } else if (qty > 0 && qty <= 25) {
-      dotColor = '#f67637'; label = 'Limited Stock';
-      bg = 'linear-gradient(-75deg,rgba(246,118,55,0.20),rgba(246,118,55,0.35),rgba(246,118,55,0.20))';
-      shadow = 'inset 0 1px 0 rgba(255,255,255,0.8),inset 0 -1px 0 rgba(178,80,34,0.25),0 0.25em 0.5em -0.125em rgba(178,80,34,0.20),0 0 0 1px rgba(178,80,34,0.35)';
-    } else {
-      dotColor = '#22c55e'; label = 'In Stock';
-      bg = 'linear-gradient(-75deg,rgba(34,197,94,0.20),rgba(34,197,94,0.35),rgba(34,197,94,0.20))';
-      shadow = 'inset 0 1px 0 rgba(255,255,255,0.8),inset 0 -1px 0 rgba(22,130,60,0.25),0 0.25em 0.5em -0.125em rgba(22,130,60,0.20),0 0 0 1px rgba(22,130,60,0.35)';
+    function styleFor(available, qty) {
+      if (!available) {
+        return {
+          dotColor: '#ef4444', label: 'Out of Stock',
+          bg: 'linear-gradient(-75deg,rgba(239,68,68,0.20),rgba(239,68,68,0.35),rgba(239,68,68,0.20))',
+          shadow: 'inset 0 1px 0 rgba(255,255,255,0.8),inset 0 -1px 0 rgba(180,40,40,0.25),0 0.25em 0.5em -0.125em rgba(180,40,40,0.20),0 0 0 1px rgba(180,40,40,0.35)'
+        };
+      }
+      if (qty > 0 && qty <= 25) {
+        return {
+          dotColor: '#f67637', label: 'Limited Stock',
+          bg: 'linear-gradient(-75deg,rgba(246,118,55,0.20),rgba(246,118,55,0.35),rgba(246,118,55,0.20))',
+          shadow: 'inset 0 1px 0 rgba(255,255,255,0.8),inset 0 -1px 0 rgba(178,80,34,0.25),0 0.25em 0.5em -0.125em rgba(178,80,34,0.20),0 0 0 1px rgba(178,80,34,0.35)'
+        };
+      }
+      return {
+        dotColor: '#22c55e', label: 'In Stock',
+        bg: 'linear-gradient(-75deg,rgba(34,197,94,0.20),rgba(34,197,94,0.35),rgba(34,197,94,0.20))',
+        shadow: 'inset 0 1px 0 rgba(255,255,255,0.8),inset 0 -1px 0 rgba(22,130,60,0.25),0 0.25em 0.5em -0.125em rgba(22,130,60,0.20),0 0 0 1px rgba(22,130,60,0.35)'
+      };
     }
 
-    function inject() {
-      if (document.getElementById('lgcy-stock-pill')) return true;
+    function render(pill, s) {
+      pill.style.background = s.bg;
+      pill.style.boxShadow = s.shadow;
+      pill.querySelector('.lgcy-stock-dot').style.background = s.dotColor;
+      pill.querySelector('.lgcy-stock-label').textContent = s.label;
+    }
+
+    function inject(available, qty) {
+      var existing = document.getElementById('lgcy-stock-pill');
+      if (existing) { render(existing, styleFor(available, qty)); return true; }
+
       var accList = document.querySelector('.rp-acc-list');
       if (!accList) return false;
 
+      var s = styleFor(available, qty);
       var pill = document.createElement('div');
       pill.id = 'lgcy-stock-pill';
       pill.style.cssText =
         'display:inline-flex;align-items:center;gap:5px;' +
         'padding:3px 8px 3px 6px;border-radius:999px;' +
-        'background:' + bg + ';box-shadow:' + shadow + ';' +
+        'background:' + s.bg + ';box-shadow:' + s.shadow + ';' +
         'margin-top:10px;width:fit-content;position:relative;isolation:isolate;';
       pill.style.webkitBackdropFilter = 'blur(8px) saturate(140%)';
       pill.style.backdropFilter = 'blur(8px) saturate(140%)';
 
       var dot = document.createElement('span');
-      dot.style.cssText = 'width:6px;height:6px;border-radius:50%;flex-shrink:0;background:' + dotColor + ';';
+      dot.className = 'lgcy-stock-dot';
+      dot.style.cssText = 'width:6px;height:6px;border-radius:50%;flex-shrink:0;background:' + s.dotColor + ';';
 
       var txt = document.createElement('span');
+      txt.className = 'lgcy-stock-label';
       txt.style.cssText = 'font-size:9px;font-weight:900;letter-spacing:-0.02em;text-transform:uppercase;color:#1a1a1a;font-family:Helvetica,Arial,sans-serif;';
-      txt.textContent = label;
+      txt.textContent = s.label;
 
       pill.appendChild(dot);
       pill.appendChild(txt);
@@ -522,11 +539,22 @@
       return true;
     }
 
-    if (inject()) return;
+    window.lgcyUpdateStockPill = function (available, qty) {
+      inject(available, qty);
+    };
+
+    var availMeta = document.querySelector('meta[name="lgcy-variant-available"]');
+    var invMeta   = document.querySelector('meta[name="lgcy-variant-inventory"]');
+    if (!availMeta) return;
+
+    var available = availMeta.getAttribute('content') === 'true';
+    var qty       = parseInt(invMeta ? invMeta.getAttribute('content') : '0', 10);
+
+    if (inject(available, qty)) return;
     var tries = 0;
     var t = setInterval(function () {
       tries++;
-      if (inject() || tries >= 40) clearInterval(t);
+      if (inject(available, qty) || tries >= 40) clearInterval(t);
     }, 250);
   })();
 </script>
