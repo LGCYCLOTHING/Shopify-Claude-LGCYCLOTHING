@@ -495,9 +495,8 @@
 
     function inject() {
       if (document.getElementById('lgcy-stock-pill')) return true;
-      var atc = document.querySelector('.rp-btn-cart, [name="add"][type="submit"], .product-form__submit');
-      if (!atc) return false;
-      var form = atc.closest('form') || atc.parentElement;
+      var accList = document.querySelector('.rp-acc-list');
+      if (!accList) return false;
 
       var pill = document.createElement('div');
       pill.id = 'lgcy-stock-pill';
@@ -505,7 +504,7 @@
         'display:inline-flex;align-items:center;gap:8px;' +
         'padding:5px 12px 5px 10px;border-radius:999px;' +
         'background:' + bg + ';box-shadow:' + shadow + ';' +
-        'margin-top:6px;width:fit-content;position:relative;isolation:isolate;';
+        'margin-top:18px;width:fit-content;position:relative;isolation:isolate;';
       pill.style.webkitBackdropFilter = 'blur(8px) saturate(140%)';
       pill.style.backdropFilter = 'blur(8px) saturate(140%)';
 
@@ -519,14 +518,7 @@
       pill.appendChild(dot);
       pill.appendChild(txt);
 
-      var nis = form.parentNode.querySelector('.lgcy-nis-injected');
-      if (nis) {
-        nis.parentNode.insertBefore(pill, nis.nextSibling);
-      } else if (form.nextSibling) {
-        form.parentNode.insertBefore(pill, form.nextSibling);
-      } else {
-        form.parentNode.appendChild(pill);
-      }
+      accList.parentNode.insertBefore(pill, accList.nextSibling);
       return true;
     }
 

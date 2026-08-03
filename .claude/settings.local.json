@@ -122,7 +122,8 @@
       "Bash(curl -s \"https://cdn.shopify.com/s/files/1/0688/4537/1578/files/Untitled_Project_-_Standard_6.svg\" -o /tmp/lgcy/logo.svg)",
       "Bash(echo \"exit:$?\")",
       "Bash(cp /tmp/lgcy/logo.png \"C:\\\\Users\\\\zaina\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE\\\\b1d7edac-9237-4739-a290-671bed1174b6\\\\scratchpad\\\\logo.png\")",
-      "PowerShell(gh --version 2>&1)"
+      "PowerShell(gh --version 2>&1)",
+      "mcp__claude_ai_Shopify__get-product"
     ]
   }
 }
