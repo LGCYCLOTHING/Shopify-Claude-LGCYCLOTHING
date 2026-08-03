@@ -599,59 +599,8 @@ svg.icon.icon-cart {
       var gallery = document.querySelector('.rp-gallery');
       if (!inner || !gallery) return;
 
-      // ── Breadcrumbs ─────────────────────────────────────────────────
-      var editorialEyebrow = document.querySelector('.rp-editorial-eyebrow');
-      if (editorialEyebrow && !editorialEyebrow.querySelector('.lgcy-breadcrumbs')) {
-        var titleEl = inner.querySelector('.rp-title, h1') ||
-                      document.querySelector('.rp-title, h1');
-        var titleText = (titleEl && titleEl.textContent.trim()) ||
-                        document.title.split('|')[0].trim();
-
-        // Try to derive the collection from the current URL.
-        // /collections/[handle]/products/[handle] → use the collection in the path.
-        // Otherwise fall back to the document.referrer if it's a collection page.
-        var collectionHandle = null;
-        var pathMatch = window.location.pathname.match(/\/collections\/([^/]+)\/products\//);
-        if (pathMatch) {
-          collectionHandle = pathMatch[1];
-        } else if (document.referrer) {
-          try {
-            var refUrl = new URL(document.referrer);
-            if (refUrl.host === window.location.host) {
-              var refMatch = refUrl.pathname.match(/^\/collections\/([^/]+)\/?$/);
-              if (refMatch) collectionHandle = refMatch[1];
-            }
-          } catch (e) {}
-        }
-
-        var collectionLabel = 'All';
-        var collectionHref = '/collections/all';
-        if (collectionHandle) {
-          collectionHref = '/collections/' + collectionHandle;
-          collectionLabel = collectionHandle
-            .split('-')
-            .map(function (w) { return w.charAt(0).toUpperCase() + w.slice(1); })
-            .join(' ');
-        }
-
-        var crumbs = document.createElement('nav');
-        crumbs.className = 'lgcy-breadcrumbs';
-        crumbs.setAttribute('aria-label', 'Breadcrumb');
-        crumbs.innerHTML =
-          '<a href="/">Home</a>' +
-          '<span class="lgcy-breadcrumbs__sep" aria-hidden="true">&rsaquo;</span>' +
-          '<a class="lgcy-breadcrumbs__collection" href=""></a>' +
-          '<span class="lgcy-breadcrumbs__sep" aria-hidden="true">&rsaquo;</span>' +
-          '<span class="lgcy-breadcrumbs__current"></span>';
-        var collectionLink = crumbs.querySelector('.lgcy-breadcrumbs__collection');
-        collectionLink.href = collectionHref;
-        collectionLink.textContent = collectionLabel;
-        crumbs.querySelector('.lgcy-breadcrumbs__current').textContent = titleText;
-
-        // Replace the static "The Legacy Collection" eyebrow in the editorial
-        // section below the info card with the breadcrumb trail instead.
-        editorialEyebrow.replaceWith(crumbs);
-      }
+      // Breadcrumbs are now built/inserted above the trust row — see the
+      // reposition script in sections/lgcy-product-page.liquid.
 
       // ── Gallery dot pagination ──────────────────────────────────────
       var counter = document.getElementById('rp-counter');
