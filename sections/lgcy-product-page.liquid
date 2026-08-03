@@ -965,6 +965,24 @@
         {%- if rec -%}
           <a href="{{ rec.url }}" class="rp-product-card">
             <div class="rp-product-card-img">
+              <span class="rp-card-new-badge" aria-label="New product">NEW</span>
+              {%- assign _rec_tags = rec.tags | join: ',' | downcase -%}
+              {%- if _rec_tags contains 'blue-light' or _rec_tags contains 'bluelight' or _rec_tags contains 'blue light' -%}
+                <span class="rp-card-bluelight-badge" aria-label="Blue light filter lens">
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="3.5"/>
+                    <path d="M12 2v2"/>
+                    <path d="M12 20v2"/>
+                    <path d="m4.93 4.93 1.41 1.41"/>
+                    <path d="m17.66 17.66 1.41 1.41"/>
+                    <path d="M2 12h2"/>
+                    <path d="M20 12h2"/>
+                    <path d="m4.93 19.07 1.41-1.41"/>
+                    <path d="m17.66 6.34 1.41-1.41"/>
+                  </svg>
+                  Blue Light
+                </span>
+              {%- endif -%}
               <img src="{{ rec.featured_image | img_url: '800x' }}" alt="{{ rec.title | escape }}" loading="lazy">
             </div>
             <span class="rp-product-card-name">{{ rec.title }}</span>
