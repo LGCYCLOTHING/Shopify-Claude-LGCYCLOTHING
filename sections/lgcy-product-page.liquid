@@ -988,22 +988,41 @@
       <img class="rp-editorial-logo-bg" src="{{ settings.logo | image_url: width: 1600 }}" width="1600" height="{{ logo_bg_height }}" alt="" aria-hidden="true" loading="lazy">
     {%- endif -%}
     <div class="rp-editorial-features">
-      <div class="rp-editorial-feature">
-        <h3 class="rp-editorial-feature-title">Oversized Fit</h3>
-        <p class="rp-editorial-feature-desc">Relaxed, structured silhouette built to hold its shape.</p>
-      </div>
-      <div class="rp-editorial-feature">
-        <h3 class="rp-editorial-feature-title">Relaxed Hem &amp; Cuffs</h3>
-        <p class="rp-editorial-feature-desc">Loose, unribbed finish at the waist and sleeves for an effortless drop.</p>
-      </div>
-      <div class="rp-editorial-feature">
-        <h3 class="rp-editorial-feature-title">Contrast Piping</h3>
-        <p class="rp-editorial-feature-desc">White detailing along both sleeves.</p>
-      </div>
-      <div class="rp-editorial-feature">
-        <h3 class="rp-editorial-feature-title">Signature Graphics</h3>
-        <p class="rp-editorial-feature-desc">Front chest logo, bold back print — front to back.</p>
-      </div>
+      {%- if product.handle == 'lgcy-01-aeris-black-clear' -%}
+        <div class="rp-editorial-feature">
+          <h3 class="rp-editorial-feature-title">Blue Light Filtering</h3>
+          <p class="rp-editorial-feature-desc">Clear lenses engineered to reduce eye strain from screens.</p>
+        </div>
+        <div class="rp-editorial-feature">
+          <h3 class="rp-editorial-feature-title">Full Acetate Frame</h3>
+          <p class="rp-editorial-feature-desc">Solid black acetate for structure, durability, and a clean finish.</p>
+        </div>
+        <div class="rp-editorial-feature">
+          <h3 class="rp-editorial-feature-title">Round Silhouette</h3>
+          <p class="rp-editorial-feature-desc">Timeless circular shape with a lightweight, balanced feel.</p>
+        </div>
+        <div class="rp-editorial-feature">
+          <h3 class="rp-editorial-feature-title">Built for Everyday Wear</h3>
+          <p class="rp-editorial-feature-desc">Designed for extended daily use without weighing you down.</p>
+        </div>
+      {%- else -%}
+        <div class="rp-editorial-feature">
+          <h3 class="rp-editorial-feature-title">Oversized Fit</h3>
+          <p class="rp-editorial-feature-desc">Relaxed, structured silhouette built to hold its shape.</p>
+        </div>
+        <div class="rp-editorial-feature">
+          <h3 class="rp-editorial-feature-title">Relaxed Hem &amp; Cuffs</h3>
+          <p class="rp-editorial-feature-desc">Loose, unribbed finish at the waist and sleeves for an effortless drop.</p>
+        </div>
+        <div class="rp-editorial-feature">
+          <h3 class="rp-editorial-feature-title">Contrast Piping</h3>
+          <p class="rp-editorial-feature-desc">White detailing along both sleeves.</p>
+        </div>
+        <div class="rp-editorial-feature">
+          <h3 class="rp-editorial-feature-title">Signature Graphics</h3>
+          <p class="rp-editorial-feature-desc">Front chest logo, bold back print — front to back.</p>
+        </div>
+      {%- endif -%}
     </div>
   </div>
   <div class="rp-editorial-media">
