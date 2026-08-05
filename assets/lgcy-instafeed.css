@@ -157,7 +157,7 @@
   padding-left: 48px !important;
 }
 
-/* Tiles — locked to 340 × 453 (3:4 portrait), black bg for letterbox */
+/* Tiles — locked to 340 × 453 (3:4 portrait), white bg for letterbox */
 .instafeed-new-layout-item {
   width: 340px !important;
   height: 453px !important;
@@ -165,10 +165,10 @@
   max-width: 340px !important;
   min-height: 453px !important;
   flex: 0 0 340px !important;
-  background: #000 !important;
+  background: #fff !important;
 }
 
-/* Image/video contained inside — no crop; black bars fill the difference.
+/* Image/video contained inside — no crop; white bars fill the difference.
    Includes video/iframe so video posts get sized + stay clickable too,
    not just the img thumbnail. */
 .instafeed-new-layout-item img,
@@ -180,7 +180,7 @@
   object-fit: contain !important;
   object-position: center !important;
   display: block !important;
-  background: #000 !important;
+  background: #fff !important;
 }
 
 /* === MOBILE === */
