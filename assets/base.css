@@ -3705,7 +3705,12 @@ details-disclosure > details {
         object-fit: cover; /* Ensures the video fills the screen without distortion */
         object-position: center; /* Centers the video content */
     }
-    
+}
+/* Everything below was appended after the mobile-only block above without
+   noticing it was never closed — these rules (.has-video-hero, product-page
+   header colors, etc.) are meant to apply at all widths, not just <768px,
+   so the closing brace was added here to stop them being unintentionally
+   scoped to mobile. */
 .header__active-menu-item {
   text-decoration: none !important;
   box-shadow: none !important;
