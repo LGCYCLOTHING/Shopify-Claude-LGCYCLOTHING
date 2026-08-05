@@ -187,7 +187,15 @@
       border-radius: 8px;
     }
     #rp-acc-details .rp-acc-body-inner {
-      padding: 12px 18px !important;
+      padding: 8px 18px !important;
+    }
+    /* The shorthand above already gives equal top/bottom padding, but the
+       merchant's first description paragraph still carries its own default
+       browser margin-top, which made the top look bigger than the bottom
+       (where the last-child rule below already zeroes that paragraph's
+       margin). Zero it here too so both sides match. */
+    #rp-acc-details .rp-acc-body-inner > *:first-child {
+      margin-top: 0 !important;
     }
   }
 </style>
