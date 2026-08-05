@@ -3494,6 +3494,11 @@ html body .lgcy-breadcrumbs__current {
     bottom: 14px;
     transform: translateX(50%);
   }
+  .lgcy-gallery-dot,
+  .lgcy-gallery-dot.is-active {
+    width: 7px;
+    height: 7px;
+  }
 }
 
 /* ============================================================== */
