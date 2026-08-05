@@ -468,6 +468,20 @@
   })();
 </script>
 
+<style>
+  /* Stock status — pill on desktop, dot-on-selected-size-button on mobile. */
+  @media (max-width: 749px) {
+    #lgcy-stock-pill {
+      display: none !important;
+    }
+  }
+  @media (min-width: 750px) {
+    .rp-size-dot {
+      display: none !important;
+    }
+  }
+</style>
+
 <script>
   /* Stock status pill — injected via JS so it works on any product template.
      Exposes window.lgcyUpdateStockPill(available, qty) so the variant
