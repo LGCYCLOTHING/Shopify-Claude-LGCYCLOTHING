@@ -133,7 +133,9 @@
       "PowerShell($lines = Get-Content 'assets/base.css'; $depth=0; $out = @\\(\\); for \\($i=3690; $i -lt $lines.Count; $i++\\) { $line = $lines[$i]; $opens = \\([regex]::Matches\\($line,'\\\\{'\\)\\).Count; $closes = \\([regex]::Matches\\($line,'\\\\}'\\)\\).Count; $depth += $opens - $closes; if \\($depth -le 0 -and $i -gt 3691\\) { $out += \\(\"CLOSED at line {0}: {1}\" -f \\($i+1\\), $line\\); break } }; if \\($out.Count -eq 0\\) { \"Never closes, total lines: $\\($lines.Count\\), final depth: $depth\" } else { $out })",
       "Bash(grep -o \"scroll-label[^<]*data-index=\\\\\\\\\\\\\\\\\\\\\"0\\\\\\\\\\\\\\\\\\\\\"[^>]*>[^<]*<\" templates/index.json)",
       "Bash(command -v node)",
-      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('templates/index.json','utf8'\\)\\); console.log\\('VALID JSON'\\)\")"
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('templates/index.json','utf8'\\)\\); console.log\\('VALID JSON'\\)\")",
+      "Bash(curl -s \"https://api.github.com/repos/LGCYCLOTHING/Shopify-Claude-LGCYCLOTHING/actions/runs/31055096041/jobs\")",
+      "Bash(curl -sL \"https://api.github.com/repos/LGCYCLOTHING/Shopify-Claude-LGCYCLOTHING/actions/jobs/92470755384/logs\")"
     ]
   }
 }
