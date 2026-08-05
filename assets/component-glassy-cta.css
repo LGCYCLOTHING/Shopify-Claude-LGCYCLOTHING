@@ -3291,8 +3291,8 @@ html body .rp-counter {
 html body .lgcy-breadcrumbs.lgcy-breadcrumbs--trust {
   justify-content: center;
   margin: 0;
-  padding: 28px 20px;
-  font-size: 10px;
+  padding: 28px 20px 12px;
+  font-size: 9px;
   background: #f6f1e8;
   width: 100vw;
   margin-left: calc(50% - 50vw);
@@ -3305,6 +3305,7 @@ html body .lgcy-breadcrumbs--trust a,
 html body .lgcy-breadcrumbs--trust .lgcy-breadcrumbs__sep,
 html body .lgcy-breadcrumbs--trust .lgcy-breadcrumbs__current {
   color: #000000 !important;
+  font-weight: 400 !important;
 }
 
 /* ============================================================== */
