@@ -1125,7 +1125,11 @@
     return nav;
   }
 
-  function reposition() {
+  // Mobile: the breadcrumb moves up next to the "Limited Stock" pill
+  // (#lgcy-stock-pill, injected by lgcy-pdp-badges.liquid right after
+  // .rp-acc-list) instead of sitting next to the trust row. Desktop keeps
+  // the original placement.
+  function reposition(forceFallback) {
     var trust = document.querySelector('.lgcy-trust');
     if (!trust || !trust.parentNode) return false;
 
@@ -1146,8 +1150,22 @@
     }
 
     if (!crumbs) crumbs = buildCrumbs();
-    if (trust.previousElementSibling !== crumbs) {
-      trust.parentNode.insertBefore(crumbs, trust);
+
+    var isMobile = window.matchMedia('(max-width: 749px)').matches;
+    var pill = isMobile ? document.getElementById('lgcy-stock-pill') : null;
+
+    if (isMobile && pill && pill.parentNode) {
+      crumbs.classList.remove('lgcy-breadcrumbs--trust');
+      if (pill.previousElementSibling !== crumbs) {
+        pill.parentNode.insertBefore(crumbs, pill);
+      }
+    } else if (!isMobile || forceFallback) {
+      crumbs.classList.add('lgcy-breadcrumbs--trust');
+      if (trust.previousElementSibling !== crumbs) {
+        trust.parentNode.insertBefore(crumbs, trust);
+      }
+    } else {
+      return false; // mobile, pill not injected yet — keep waiting
     }
 
     return !!feed;
@@ -1155,12 +1173,12 @@
   var attempts = 0, max = 60;
   var timer = setInterval(function() {
     attempts++;
-    if (reposition() || attempts >= max) clearInterval(timer);
+    if (reposition(attempts >= max) || attempts >= max) clearInterval(timer);
   }, 250);
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', reposition);
+    document.addEventListener('DOMContentLoaded', function () { reposition(false); });
   } else {
-    reposition();
+    reposition(false);
   }
 })();
 </script>
