@@ -181,6 +181,11 @@
 
 /* === MOBILE === */
 @media (max-width: 749px) {
+  #insta-feed,
+  .instafeed-shopify {
+    padding-bottom: 18px !important;
+  }
+
   /* Smaller title + smaller pill padding so it fits comfortably */
   #insta-feed h2,
   .instafeed-shopify h2 {
