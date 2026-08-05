@@ -469,13 +469,17 @@
 </script>
 
 <style>
-  /* Stock status — pill on desktop, dot-on-selected-size-button on mobile. */
-  @media (max-width: 749px) {
+  /* Stock status — pill on desktop, dot-on-selected-size-button on mobile.
+     860px matches the breakpoint where the real .rp-size buttons hand off to
+     the mirrored .lgcy-sticky-atc__size bar (component-glassy-cta.css /
+     theme.liquid) — keeping both cutoffs the same avoids a range where the
+     pill and the dot would show at once. */
+  @media (max-width: 860px) {
     #lgcy-stock-pill {
       display: none !important;
     }
   }
-  @media (min-width: 750px) {
+  @media (min-width: 861px) {
     .rp-size-dot {
       display: none !important;
     }
