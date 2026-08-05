@@ -128,7 +128,8 @@
       "Bash(curl -sL -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36\" \"https://0dc7p1-tw.myshopify.com/\" -o \"/c/Users/zaina/AppData/Local/Temp/claude/c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE/91c29f02-b8fb-4a68-80fb-0f44b0f4c6ed/scratchpad/home.html\" --max-time 25 -w \"HTTP %{http_code} FINAL_URL:%{url_effective}\\\\n\")",
       "Bash(gh --version)",
       "Bash(gh auth *)",
-      "Bash(curl -s \"https://api.github.com/repos/LGCYCLOTHING/Shopify-Claude-LGCYCLOTHING/actions/runs?per_page=10\")"
+      "Bash(curl -s \"https://api.github.com/repos/LGCYCLOTHING/Shopify-Claude-LGCYCLOTHING/actions/runs?per_page=10\")",
+      "PowerShell($lines = Get-Content 'assets/base.css'; $depth=0; $out = @\\(\\); for \\($i=3690; $i -lt $lines.Count; $i++\\) { $line = $lines[$i]; $opens = \\([regex]::Matches\\($line,'\\\\{'\\)\\).Count; $closes = \\([regex]::Matches\\($line,'\\\\}'\\)\\).Count; $depth += $opens - $closes; $out += \\(\"{0}: depth={1} :: {2}\" -f \\($i+1\\), $depth, $line\\); if \\($depth -le 0 -and $i -gt 3691\\) { break } }; $out | Select-Object -First 100)"
     ]
   }
 }

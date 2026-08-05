@@ -522,8 +522,7 @@
   <div class="rp-gallery">
     <img id="rp-main" class="rp-main-img"
          src="{{ p.featured_image | img_url: '1600x' }}"
-         alt="{{ p.featured_image.alt | escape }}"
-         onclick="rpLbOpen()">
+         alt="{{ p.featured_image.alt | escape }}">
 
     {%- if img_count > 1 -%}
       <button class="rp-arrow rp-arrow-left" onclick="rpPrev()" type="button" aria-label="Previous">
