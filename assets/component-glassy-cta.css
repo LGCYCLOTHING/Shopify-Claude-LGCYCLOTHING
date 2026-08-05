@@ -3325,6 +3325,17 @@ html body .lgcy-breadcrumbs {
   flex-wrap: wrap;
 }
 
+/* Mobile — breadcrumb repositioned above the "Limited Stock" pill (no
+   --trust class here, so it's the plain inline version above). Force it
+   to a single line since there's no full-bleed row to wrap inside of. */
+@media (max-width: 749px) {
+  html body .lgcy-breadcrumbs:not(.lgcy-breadcrumbs--trust) {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
 /* Product title — Inter 900 with negative letter-spacing */
 html body .rp-title {
   font-family: 'Inter', sans-serif !important;
