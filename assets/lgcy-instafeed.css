@@ -189,7 +189,7 @@
   /* Smaller title + smaller pill padding so it fits comfortably */
   #insta-feed h2,
   .instafeed-shopify h2 {
-    font-size: 18px !important;
+    font-size: 15px !important;
     margin-bottom: 10px !important;
   }
   #insta-feed h2 a,
