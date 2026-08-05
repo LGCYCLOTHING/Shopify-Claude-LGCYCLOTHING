@@ -799,7 +799,7 @@
     {%- if shop_section.size > 0 -%}
       {%- for block in shop_section -%}
         <a href="{{ block.settings.url }}" class="lgcy-panel-link" {{ block.shopify_attributes }}>
-          <span class="lgcy-panel-link__text">{{ block.settings.label }}</span>
+          <span class="lgcy-panel-link__text">{{ block.settings.label }}{%- if block.settings.label == 'LGCYCLOTHING' -%}<span class="lgcy-panel-link__new">New</span>{%- endif -%}</span>
           {%- if block.settings.show_arrow -%}
             <svg class="lgcy-panel-link__arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -833,7 +833,7 @@
       <div class="lgcy-panel-divider"></div>
       {%- for block in explore_section -%}
         <a href="{{ block.settings.url }}" class="lgcy-panel-link" {{ block.shopify_attributes }}>
-          <span class="lgcy-panel-link__text">{{ block.settings.label }}</span>
+          <span class="lgcy-panel-link__text">{{ block.settings.label }}{%- if block.settings.label == 'LGCYCLOTHING' -%}<span class="lgcy-panel-link__new">New</span>{%- endif -%}</span>
           {%- if block.settings.show_arrow -%}
             <svg class="lgcy-panel-link__arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
