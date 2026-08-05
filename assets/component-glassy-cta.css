@@ -3602,10 +3602,14 @@ html body .rp-lb-close {
     margin-bottom: 0 !important;
   }
 
-  /* Reserve a smaller buffer at the bottom — the sticky bar's own padding
-     keeps content readable. */
+  /* Small buffer at the bottom so the last bit of tab content doesn't sit
+     flush against the sticky ATC bar. Kept modest on purpose — the bar is
+     position:fixed over the whole viewport regardless, so this padding only
+     ever needs to clear the content directly above it, not the bar's full
+     height, and a big reserve here just reads as dead space once the info
+     column switches to normal document flow on mobile. */
   html body .rp-info {
-    padding-bottom: 100px !important;
+    padding-bottom: 32px !important;
   }
   html body .rp-inner .rp-usp {
     margin-bottom: 0 !important;
