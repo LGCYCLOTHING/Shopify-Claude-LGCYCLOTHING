@@ -539,8 +539,27 @@
       return true;
     }
 
+    /* Mobile-only equivalent — instead of the desktop pill, a small dot is
+       appended to the right of the letter on whichever size button is
+       currently selected (CSS hides it again above 749px). Rebuilt on every
+       call since the "selected" button changes as the shopper taps sizes. */
+    function updateSizeDot(available, qty) {
+      var old = document.querySelector('.rp-size-dot');
+      if (old) old.remove();
+
+      var activeSize = document.querySelector('#rp-sizes .rp-size.active');
+      if (!activeSize) return;
+
+      var s = styleFor(available, qty);
+      var dot = document.createElement('span');
+      dot.className = 'rp-size-dot';
+      dot.style.cssText = 'display:inline-block;width:6px;height:6px;border-radius:50%;margin-left:6px;flex-shrink:0;background:' + s.dotColor + ';';
+      activeSize.appendChild(dot);
+    }
+
     window.lgcyUpdateStockPill = function (available, qty) {
       inject(available, qty);
+      updateSizeDot(available, qty);
     };
 
     var availMeta = document.querySelector('meta[name="lgcy-variant-available"]');
@@ -550,6 +569,7 @@
     var available = availMeta.getAttribute('content') === 'true';
     var qty       = parseInt(invMeta ? invMeta.getAttribute('content') : '0', 10);
 
+    updateSizeDot(available, qty);
     if (inject(available, qty)) return;
     var tries = 0;
     var t = setInterval(function () {
