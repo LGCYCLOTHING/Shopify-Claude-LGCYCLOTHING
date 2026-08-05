@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="js" lang="{{ request.locale.iso_code }}">
+<html class="js{% if request.page_type == 'index' or request.page_type == 'collection' %} has-video-hero{% endif %}" lang="{{ request.locale.iso_code }}">
   <head>
  <!-- LGCY GRID WIPE DISABLED — re-enable by uncommenting lines below
  <script>
