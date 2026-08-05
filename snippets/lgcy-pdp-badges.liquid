@@ -584,7 +584,9 @@
       var s = styleFor(available, qty);
       var dot = document.createElement('span');
       dot.className = 'rp-size-dot';
-      dot.style.cssText = 'display:inline-block;width:6px;height:6px;border-radius:50%;margin-left:6px;flex-shrink:0;vertical-align:middle;background:' + s.dotColor + ';';
+      /* Absolutely positioned so it never nudges the centered letter — the
+         button already has position:relative (component-glassy-cta.css). */
+      dot.style.cssText = 'position:absolute;top:50%;right:7px;transform:translateY(-50%);width:6px;height:6px;border-radius:50%;background:' + s.dotColor + ';';
       target.appendChild(dot);
     }
 
