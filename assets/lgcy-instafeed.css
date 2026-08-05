@@ -158,11 +158,11 @@
 }
 
 /* Tiles — locked to 340 × 453 (3:4 portrait), beige bg for letterbox —
-   matches the site's beige (#faf6f0) instead of stark white or black. */
-.instafeed-new-layout-item,
-.instafeed-new-layout-item > * {
-  background: #faf6f0 !important;
-}
+   matches the site's beige (#faf6f0) instead of stark white or black.
+   Uses background-color (not the "background" shorthand) everywhere here:
+   the shorthand resets background-image to none, and some posts render
+   their photo via a background-image on a wrapper div rather than an
+   <img src>, so the shorthand was wiping the actual photo out entirely. */
 .instafeed-new-layout-item {
   width: 340px !important;
   height: 453px !important;
@@ -170,14 +170,15 @@
   max-width: 340px !important;
   min-height: 453px !important;
   flex: 0 0 340px !important;
+  background-color: #faf6f0 !important;
+}
+.instafeed-new-layout-item > * {
+  background-color: #faf6f0 !important;
 }
 
 /* Image/video contained inside — no crop; beige bars fill the difference.
    Includes video/iframe so video posts get sized + stay clickable too,
-   not just the img thumbnail. The extra ">*" rule above also catches any
-   wrapper div the app puts between the tile and the media itself — some
-   posts were still showing black because only the img/video/iframe tags
-   were covered before, not an in-between wrapper. */
+   not just the img thumbnail. */
 .instafeed-new-layout-item img,
 .instafeed-new-layout-item video,
 .instafeed-new-layout-item iframe,
@@ -187,7 +188,7 @@
   object-fit: contain !important;
   object-position: center !important;
   display: block !important;
-  background: #faf6f0 !important;
+  background-color: #faf6f0 !important;
 }
 
 /* === MOBILE === */
