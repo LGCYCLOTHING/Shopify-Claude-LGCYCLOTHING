@@ -340,21 +340,23 @@
   }
   .rp-tab-panel {
     display: none; padding-top: 18px;
-    font-size: 13px; font-weight: 600; color: #000; line-height: 1.85; letter-spacing: -0.01em;
+    font-size: 13px; font-weight: 400; color: #000; line-height: 1.85; letter-spacing: normal;
   }
   .rp-tab-panel.is-active { display: block; }
   /* Tab content can either be the static placeholder text above, or merged in at
      runtime from a product-details accordion elsewhere on the page (see
      mergeExternalTabs()) — that merged HTML brings its own tags/styling, so force
-     every descendant back to the same font, size, and color for consistency. */
+     every descendant back to the same font, size, and color for consistency.
+     Family/weight/letter-spacing match the Product Details description text
+     above (Helvetica stack, normal weight, no negative tracking) per request. */
   .rp-tab-panel,
   .rp-tab-panel * {
-    font-family: 'Inter', Helvetica, 'Helvetica Neue', Arial, sans-serif !important;
+    font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif !important;
     font-size: 13px !important;
-    font-weight: 600 !important;
+    font-weight: 400 !important;
     color: #000 !important;
     line-height: 1.85 !important;
-    letter-spacing: -0.01em !important;
+    letter-spacing: normal !important;
   }
   .rp-tab-panel h3,
   .rp-tab-panel h4 {
