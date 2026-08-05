@@ -555,20 +555,33 @@
 
     /* Mobile-only equivalent — instead of the desktop pill, a small dot is
        appended to the right of the letter on whichever size button is
-       currently selected (CSS hides it again above 749px). Rebuilt on every
-       call since the "selected" button changes as the shopper taps sizes. */
+       currently selected. Rebuilt on every call since the "selected" button
+       changes as the shopper taps sizes.
+
+       Below 860px the real .rp-size buttons are hidden (component-glassy-cta.css)
+       and theme.liquid mirrors them into .lgcy-sticky-atc__size pills in a fixed
+       bottom bar — that mirror is what shoppers actually see and tap on mobile,
+       so the dot has to go there. The mirror's own "is-active" class is kept in
+       sync by a MutationObserver in theme.liquid that fires asynchronously, so
+       matching on it here would race the sync; matching by index (pills are
+       created in the same order as the original buttons) is instant instead. */
     function updateSizeDot(available, qty) {
       var old = document.querySelector('.rp-size-dot');
       if (old) old.remove();
 
+      var origSizes = document.querySelectorAll('#rp-sizes .rp-size');
       var activeSize = document.querySelector('#rp-sizes .rp-size.active');
       if (!activeSize) return;
+
+      var idx = Array.prototype.indexOf.call(origSizes, activeSize);
+      var mirrorPills = document.querySelectorAll('.lgcy-sticky-atc__size');
+      var target = mirrorPills[idx] || activeSize;
 
       var s = styleFor(available, qty);
       var dot = document.createElement('span');
       dot.className = 'rp-size-dot';
-      dot.style.cssText = 'display:inline-block;width:6px;height:6px;border-radius:50%;margin-left:6px;flex-shrink:0;background:' + s.dotColor + ';';
-      activeSize.appendChild(dot);
+      dot.style.cssText = 'display:inline-block;width:6px;height:6px;border-radius:50%;margin-left:6px;flex-shrink:0;vertical-align:middle;background:' + s.dotColor + ';';
+      target.appendChild(dot);
     }
 
     window.lgcyUpdateStockPill = function (available, qty) {
