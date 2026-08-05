@@ -157,7 +157,12 @@
   padding-left: 48px !important;
 }
 
-/* Tiles — locked to 340 × 453 (3:4 portrait), white bg for letterbox */
+/* Tiles — locked to 340 × 453 (3:4 portrait), beige bg for letterbox —
+   matches the site's beige (#faf6f0) instead of stark white or black. */
+.instafeed-new-layout-item,
+.instafeed-new-layout-item > * {
+  background: #faf6f0 !important;
+}
 .instafeed-new-layout-item {
   width: 340px !important;
   height: 453px !important;
@@ -165,12 +170,14 @@
   max-width: 340px !important;
   min-height: 453px !important;
   flex: 0 0 340px !important;
-  background: #fff !important;
 }
 
-/* Image/video contained inside — no crop; white bars fill the difference.
+/* Image/video contained inside — no crop; beige bars fill the difference.
    Includes video/iframe so video posts get sized + stay clickable too,
-   not just the img thumbnail. */
+   not just the img thumbnail. The extra ">*" rule above also catches any
+   wrapper div the app puts between the tile and the media itself — some
+   posts were still showing black because only the img/video/iframe tags
+   were covered before, not an in-between wrapper. */
 .instafeed-new-layout-item img,
 .instafeed-new-layout-item video,
 .instafeed-new-layout-item iframe,
@@ -180,7 +187,7 @@
   object-fit: contain !important;
   object-position: center !important;
   display: block !important;
-  background: #fff !important;
+  background: #faf6f0 !important;
 }
 
 /* === MOBILE === */
