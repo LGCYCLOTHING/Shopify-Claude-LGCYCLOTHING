@@ -3053,7 +3053,7 @@ html body .collection-hero__description * {
   font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif !important;
   font-size: 13px !important;
   font-weight: 500 !important;
-  letter-spacing: normal !important;
+  letter-spacing: 0.1em !important;
   line-height: 1.7 !important;
   color: #444 !important;
 }
