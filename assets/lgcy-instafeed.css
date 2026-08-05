@@ -151,6 +151,10 @@
 .instafeed-new-layout-wrapper {
   height: auto !important;
   align-items: stretch !important;
+  /* Leftmost tile sat flush against the screen edge on desktop too — same
+     gutter fix as the mobile override further down, just a wider value to
+     match the rest of the page's desktop side padding. */
+  padding-left: 48px !important;
 }
 
 /* Tiles — locked to 340 × 453 (3:4 portrait), black bg for letterbox */
