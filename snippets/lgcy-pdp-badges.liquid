@@ -168,6 +168,18 @@
     margin-top: 24px;
   }
 
+  @media (max-width: 860px) {
+    /* Mobile beige ran a touch darker/warmer than the desktop version —
+       lighten both the page background and the details box to match. */
+    html body .rp-wrap,
+    html body .rp-tabs-wrap {
+      background: #faf6f0 !important;
+    }
+    #rp-acc-details {
+      background: #f6eddb;
+    }
+  }
+
   @media (max-width: 749px) {
     #rp-acc-details {
       margin-top: 2px;
