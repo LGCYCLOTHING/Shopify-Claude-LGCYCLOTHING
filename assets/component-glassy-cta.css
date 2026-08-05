@@ -3595,6 +3595,13 @@ html body .rp-lb-close {
     display: none !important;
   }
 
+  /* The size row's wrapping .rp-section still reserves its 20px margin-bottom
+     even with its children hidden above — collapse it so the description box
+     sits right under the title/price instead of leaving a dead gap. */
+  html body .rp-section:has(.rp-sizes) {
+    margin-bottom: 0 !important;
+  }
+
   /* Reserve a smaller buffer at the bottom — the sticky bar's own padding
      keeps content readable. */
   html body .rp-info {
