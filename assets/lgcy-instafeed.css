@@ -21,6 +21,14 @@
 
 /* LGCY — Instafeed overrides */
 
+/* Small gap below the tiles so they don't touch the footer's separator
+   line — the line sits on .lgcy-footer's border-top, right after this
+   section, so the space has to come from here rather than the footer. */
+#insta-feed,
+.instafeed-shopify {
+  padding-bottom: 24px !important;
+}
+
 /* Title — Inter 900, negative tracking, sits close to the grid */
 #insta-feed h2,
 .instafeed-shopify h2 {
