@@ -130,7 +130,8 @@
       "Bash(gh auth *)",
       "Bash(curl -s \"https://api.github.com/repos/LGCYCLOTHING/Shopify-Claude-LGCYCLOTHING/actions/runs?per_page=10\")",
       "PowerShell($lines = Get-Content 'assets/base.css'; $depth=0; $out = @\\(\\); for \\($i=3690; $i -lt $lines.Count; $i++\\) { $line = $lines[$i]; $opens = \\([regex]::Matches\\($line,'\\\\{'\\)\\).Count; $closes = \\([regex]::Matches\\($line,'\\\\}'\\)\\).Count; $depth += $opens - $closes; $out += \\(\"{0}: depth={1} :: {2}\" -f \\($i+1\\), $depth, $line\\); if \\($depth -le 0 -and $i -gt 3691\\) { break } }; $out | Select-Object -First 100)",
-      "PowerShell($lines = Get-Content 'assets/base.css'; $depth=0; $out = @\\(\\); for \\($i=3690; $i -lt $lines.Count; $i++\\) { $line = $lines[$i]; $opens = \\([regex]::Matches\\($line,'\\\\{'\\)\\).Count; $closes = \\([regex]::Matches\\($line,'\\\\}'\\)\\).Count; $depth += $opens - $closes; if \\($depth -le 0 -and $i -gt 3691\\) { $out += \\(\"CLOSED at line {0}: {1}\" -f \\($i+1\\), $line\\); break } }; if \\($out.Count -eq 0\\) { \"Never closes, total lines: $\\($lines.Count\\), final depth: $depth\" } else { $out })"
+      "PowerShell($lines = Get-Content 'assets/base.css'; $depth=0; $out = @\\(\\); for \\($i=3690; $i -lt $lines.Count; $i++\\) { $line = $lines[$i]; $opens = \\([regex]::Matches\\($line,'\\\\{'\\)\\).Count; $closes = \\([regex]::Matches\\($line,'\\\\}'\\)\\).Count; $depth += $opens - $closes; if \\($depth -le 0 -and $i -gt 3691\\) { $out += \\(\"CLOSED at line {0}: {1}\" -f \\($i+1\\), $line\\); break } }; if \\($out.Count -eq 0\\) { \"Never closes, total lines: $\\($lines.Count\\), final depth: $depth\" } else { $out })",
+      "Bash(grep -o \"scroll-label[^<]*data-index=\\\\\\\\\\\\\\\\\\\\\"0\\\\\\\\\\\\\\\\\\\\\"[^>]*>[^<]*<\" templates/index.json)"
     ]
   }
 }
