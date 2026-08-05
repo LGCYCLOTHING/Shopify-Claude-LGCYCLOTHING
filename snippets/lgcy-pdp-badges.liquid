@@ -574,6 +574,7 @@
     var tries = 0;
     var t = setInterval(function () {
       tries++;
+      updateSizeDot(available, qty);
       if (inject(available, qty) || tries >= 40) clearInterval(t);
     }, 250);
   })();
