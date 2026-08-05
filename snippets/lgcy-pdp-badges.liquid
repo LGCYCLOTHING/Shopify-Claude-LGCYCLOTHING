@@ -491,15 +491,12 @@
 </script>
 
 <style>
-  /* Stock status — pill on desktop, dot-on-selected-size-button on mobile.
-     860px matches the breakpoint where the real .rp-size buttons hand off to
-     the mirrored .lgcy-sticky-atc__size bar (component-glassy-cta.css /
-     theme.liquid) — keeping both cutoffs the same avoids a range where the
-     pill and the dot would show at once. */
-  @media (max-width: 860px) {
-    #lgcy-stock-pill {
-      display: none !important;
-    }
+  /* Stock status pill — retired everywhere now that the Product Details
+     description box has its own permanent green/red dot + In Stock/Sold Out
+     line covering the same info (see updateAvailabilityLine below). Still
+     built by the JS below (harmless), just hidden. */
+  #lgcy-stock-pill {
+    display: none !important;
   }
   @media (min-width: 861px) {
     .rp-size-dot {
