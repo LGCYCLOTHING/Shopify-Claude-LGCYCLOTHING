@@ -1,0 +1,245 @@
+{% comment %}
+  LGCY — Homepage hero "Explore Collections" scroll indicator.
+  Was previously a custom-liquid block pasted directly into templates/index.json;
+  moved into its own section file so it can be edited here going forward instead
+  of through the theme editor.
+{% endcomment %}
+
+<p id="explore-label" style="
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, 100px);
+  z-index: 50;
+  font-family: 'Inter', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin: 0 0 6px 0;
+  padding: 0;
+  pointer-events: none;
+  line-height: 1;
+  text-align: center;
+  width: 90vw;
+  max-width: 600px;
+">EXPLORE COLLECTIONS</p>
+
+<div id="scroll-indicator" style="
+  position: fixed;
+  top: 62%;
+  left: 50%;
+  transform: translate(-50%, 100px);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  pointer-events: all;
+  text-align: center;
+  width: 90vw;
+  max-width: 600px;
+">
+  <div style="height: 15px;"></div>
+
+  <span class="scroll-label" data-index="0"
+    data-url="/collections/the-legacy-collection"
+    style="
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: clamp(18px, 3vw, 28px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: rgba(255,255,255,1);
+    opacity: 1;
+    transition: color 0.4s ease, opacity 0.4s ease;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: block;
+    line-height: 1.1;
+    margin: 0;
+    padding: 0;
+  ">'ICONIC VISIONARY'<span style="font-size:0.42em;font-weight:700;letter-spacing:0.05em;color:rgba(255,255,255,0.55);margin-left:6px;vertical-align:super;">New</span></span>
+
+  <span class="scroll-label" data-index="1"
+    data-url="/collections/lgcy-glasses"
+    style="
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: clamp(18px, 3vw, 28px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: rgba(255,255,255,0.3);
+    opacity: 0.5;
+    transition: color 0.4s ease, opacity 0.4s ease;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: block;
+    line-height: 1.1;
+    margin: 0;
+    padding: 0;
+  ">LGCY.</span>
+
+  <div style="height: 48px;"></div>
+  <a id="scroll-discover" href="#" style="margin-top: 48px;">&rarr; DISCOVER</a>
+</div>
+
+<style>
+  /* ─── MOBILE CONTROLS ─── */
+  @media (max-width: 768px) {
+
+    /* Position of the whole indicator on mobile */
+    #scroll-indicator {
+      transform: translate(-50%, 48px) !important;
+      top: 62%; /* change this to move the block up/down */
+    }
+
+    #explore-label {
+      transform: translate(-50%, 48px) !important;
+      top: 60.5%  !important; /* should match or sit just above scroll-indicator top */
+      font-size: 10px !important; /* "EXPLORE COLLECTIONS" font size on mobile */
+      letter-spacing: 0.12em;
+    }
+
+    /* Collection label font sizes on mobile */
+    .scroll-label {
+      font-size: 20px !important; /* overrides the clamp() */
+      letter-spacing: -0.02em !important;
+    }
+
+    /* → DISCOVER link on mobile */
+    #scroll-discover {
+      font-size: 10px !important;
+      letter-spacing: 0.0em !important;
+    }
+
+    /* Gap between collection labels and discover button */
+    #scroll-indicator > div:last-of-type {
+      height: 22px !important;
+    }
+  }
+
+  /* ─── DESKTOP STYLES ─── */
+  #scroll-discover {
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.0em;
+    color: rgba(255,255,255,1);
+    text-transform: uppercase;
+    text-decoration: none;
+    margin: 0;
+    padding: 0 0 3px 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1;
+    position: relative;
+  }
+
+  #scroll-discover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0%;
+    height: 1px;
+    background: rgba(255,255,255,1);
+    opacity: 0;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+  }
+
+  #scroll-discover:hover::after {
+    width: 100%;
+    opacity: 1;
+  }
+</style>
+
+<script>
+(function() {
+  function init() {
+    const labels = document.querySelectorAll('.scroll-label');
+    const discoverBtn = document.getElementById('scroll-discover');
+
+    let SWITCH_THRESHOLD = window.innerHeight * 0.3;
+
+    function safeNavigate(u) {
+      if (!u) return;
+      if (window.lgcyWipe) { window.lgcyWipe.navigate(u); } else { window.location.href = u; }
+    }
+
+    function scrollToSection(index) {
+      if (index === 0) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        var target = document.getElementById('glassesReveal');
+        if (target) { target.scrollIntoView({ behavior: 'smooth' }); }
+      }
+    }
+
+    function setActive(index) {
+      labels.forEach((label, i) => {
+        if (i === index) {
+          label.style.color = 'rgba(255,255,255,1)';
+          label.style.opacity = '1';
+        } else {
+          label.style.color = 'rgba(255,255,255,0.3)';
+          label.style.opacity = '0.5';
+        }
+      });
+      const url = labels[index] ? labels[index].getAttribute('data-url') : '#';
+      discoverBtn.href = url;
+    }
+
+    function update() {
+      const scrollY = window.scrollY;
+      if (scrollY > SWITCH_THRESHOLD) {
+        setActive(1);
+      } else {
+        setActive(0);
+      }
+    }
+
+    labels.forEach((label, i) => {
+      label.addEventListener('click', () => {
+        scrollToSection(i);
+      });
+    });
+
+    discoverBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      safeNavigate(discoverBtn.getAttribute('href'));
+    });
+
+    var videoBox = document.querySelector('.videoBox');
+    if (videoBox) {
+      videoBox.style.cursor = 'pointer';
+      videoBox.addEventListener('click', function(e) {
+        if (e.target.closest('#scroll-indicator') || e.target.closest('#explore-label')) return;
+        var activeIndex = Array.from(labels).findIndex(function(l) { return parseFloat(l.style.opacity) >= 1; });
+        scrollToSection(activeIndex === -1 ? 0 : activeIndex);
+      });
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', function() {
+      SWITCH_THRESHOLD = window.innerHeight * 0.3;
+    }, { passive: true });
+
+    update();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Hero Explore Indicator",
+  "settings": []
+}
+{% endschema %}
