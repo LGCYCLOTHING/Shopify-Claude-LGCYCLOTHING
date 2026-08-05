@@ -3079,15 +3079,28 @@ html body .lgcy-card__color {
   font-weight: 700 !important;
 }
 
-/* Collection page description body — Inter 900 negative letter-spacing */
-html body .collection-hero__description,
-html body .collection-hero__description *,
+/* Collection page heading — Inter 900 negative letter-spacing */
 html body .collection-hero__title,
 html body .lgcy-col-hero__title,
 html body .lgcy-col-hero__sub {
   font-family: 'Inter', sans-serif !important;
   font-weight: 900 !important;
   letter-spacing: -0.05em !important;
+}
+
+/* Collection page description body — matches the PDP "Product Details"
+   description text exactly (same Helvetica stack, size, weight, color,
+   line-height) so the two read as the same body-copy style. Was previously
+   swept into the heading's Inter/900/tight-tracking rule above, which made
+   body copy render far heavier than intended. */
+html body .collection-hero__description,
+html body .collection-hero__description * {
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  letter-spacing: normal !important;
+  line-height: 1.7 !important;
+  color: #444 !important;
 }
 
 /* Injected "Notify When Available" link — left-aligned, tight under the ATC */
