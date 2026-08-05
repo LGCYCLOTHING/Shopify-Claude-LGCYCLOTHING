@@ -1300,7 +1300,13 @@ html body .header__icons .header__icon {
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  overflow: hidden;
+  /* No overflow:hidden here — border-radius already clips the hover
+     background-color to a circle on its own (no clip property needed for
+     that), and keeping overflow visible lets the cart-count-bubble's
+     top-right corner badge render in full. With overflow:hidden, this
+     element's own circular shape (border-radius + overflow) clipped the
+     badge to the *circle*, not just the square box, biting a chunk out of
+     it exactly where it sat near the box corner. */
   transition: transform 200ms cubic-bezier(0.25, 1, 0.5, 1), background-color 200ms ease;
   -webkit-tap-highlight-color: transparent;
 }
