@@ -585,8 +585,11 @@
       var dot = document.createElement('span');
       dot.className = 'rp-size-dot';
       /* Absolutely positioned so it never nudges the centered letter — the
-         button already has position:relative (component-glassy-cta.css). */
-      dot.style.cssText = 'position:absolute;top:50%;right:7px;transform:translateY(-50%);width:6px;height:6px;border-radius:50%;background:' + s.dotColor + ';';
+         button already has position:relative (component-glassy-cta.css).
+         Anchored off the horizontal center (where the letter sits) rather
+         than the button's edge, so it stays snug next to the letter even
+         on wider pills instead of drifting off toward the right edge. */
+      dot.style.cssText = 'position:absolute;top:50%;left:calc(50% + 7px);transform:translateY(-50%);width:6px;height:6px;border-radius:50%;background:' + s.dotColor + ';';
       target.appendChild(dot);
     }
 
