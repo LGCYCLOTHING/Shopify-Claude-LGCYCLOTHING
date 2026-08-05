@@ -199,4 +199,10 @@
     min-height: 0 !important;
     flex: 0 0 min(46vw, 210px) !important;
   }
+
+  /* Leftmost tile was flush against the screen edge — give the scroll row
+     a bit of breathing room to match the rest of the page's mobile gutter. */
+  .instafeed-new-layout-wrapper {
+    padding-left: 16px !important;
+  }
 }
