@@ -262,6 +262,23 @@
     width: 100%;
   }
 
+  /* "New" flag next to LGCYCLOTHING — plain text, no badge/pill chrome.
+     Uses currentColor + reduced opacity so it automatically reads correctly
+     against both the dark panel (white link text) and the light-page panel
+     variant (#3a3a3a link text) without needing separate color overrides. */
+  .lgcy-panel-link__new {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: currentColor;
+    opacity: 0.55;
+    vertical-align: super;
+    white-space: nowrap;
+  }
+
   /* Secondary links */
   .lgcy-panel-link--secondary {
     font-family: 'Inter', sans-serif;
