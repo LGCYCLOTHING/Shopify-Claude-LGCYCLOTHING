@@ -606,9 +606,41 @@
       target.appendChild(dot);
     }
 
+    /* 4th line in the Product Details box — "In Stock" / "Sold Out" for
+       whichever size is currently selected. Only shown once a size has
+       actually been picked (matches the size buttons no longer defaulting
+       to one being pre-selected); appended after the merchant's description
+       copy so it reads like a continuation of the checkmark list above it. */
+    function updateAvailabilityLine(available) {
+      var body = document.querySelector('#rp-acc-details .rp-acc-body-inner');
+      if (!body) return;
+
+      var existing = document.getElementById('lgcy-availability-line');
+      var activeSize = document.querySelector('#rp-sizes .rp-size.active');
+
+      if (!activeSize) {
+        if (existing) existing.remove();
+        return;
+      }
+
+      var html = available
+        ? '&#10003; <span style="color:#16a34a;font-weight:700;">In Stock</span>'
+        : '&#10007; <span style="color:#dc2626;font-weight:700;">Sold Out</span>';
+
+      if (existing) {
+        existing.innerHTML = html;
+      } else {
+        var p = document.createElement('p');
+        p.id = 'lgcy-availability-line';
+        p.innerHTML = html;
+        body.appendChild(p);
+      }
+    }
+
     window.lgcyUpdateStockPill = function (available, qty) {
       inject(available, qty);
       updateSizeDot(available, qty);
+      updateAvailabilityLine(available);
     };
 
     var availMeta = document.querySelector('meta[name="lgcy-variant-available"]');
@@ -619,11 +651,13 @@
     var qty       = parseInt(invMeta ? invMeta.getAttribute('content') : '0', 10);
 
     updateSizeDot(available, qty);
+    updateAvailabilityLine(available);
     if (inject(available, qty)) return;
     var tries = 0;
     var t = setInterval(function () {
       tries++;
       updateSizeDot(available, qty);
+      updateAvailabilityLine(available);
       if (inject(available, qty) || tries >= 40) clearInterval(t);
     }, 250);
   })();
