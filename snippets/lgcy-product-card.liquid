@@ -381,6 +381,24 @@
     opacity: 1;
     transform: translateX(-50%) translateY(0);
   }
+
+  /* Mobile — NEW / BLUE LIGHT badges shrink down; cards are much narrower
+     in a 2-up grid so the desktop pill sizing reads oversized. */
+  @media (max-width: 749px) {
+    .lgcy-card__new-badge,
+    .lgcy-card__bluelight-badge {
+      height: 19px;
+      padding: 0 8px;
+      font-size: 8px;
+    }
+    .lgcy-card__bluelight-badge {
+      gap: 4px;
+    }
+    .lgcy-card__bluelight-badge svg {
+      width: 8px;
+      height: 8px;
+    }
+  }
 </style>
 
 {%- liquid
