@@ -420,7 +420,7 @@
     function injectBlueLight() {
       if (!isBlueLight) return true;
       if (document.querySelector('.lgcy-pdp-bluelight-badge')) return true;
-      var host = findFirst(GALLERY_SELECTORS);
+      var host = findFirst(DETAILS_SELECTORS);
       if (!host || !blTpl) return false;
       if (getComputedStyle(host).position === 'static') {
         host.style.position = 'relative';
