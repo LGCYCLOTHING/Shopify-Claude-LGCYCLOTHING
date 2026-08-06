@@ -2403,6 +2403,18 @@ html body.lgcy-collection-all .lgcy-hero-scroll-wrapper > .shopify-section.video
   height: 85vh !important;
 }
 
+/* The "LGCYCLOTHING" title went missing once the section above it shrank —
+   its centering was computed relative to the wrapper's old (taller) height,
+   so it likely centered itself right out of the now-shorter visible area.
+   Force it to center on the actual viewport instead, independent of any
+   ancestor's height. */
+html body.lgcy-collection-all #hero-title {
+  position: fixed !important;
+  top: 42.5vh !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+
 /* Same page — the wipe-line indicator bar (chevrons + "LGCYCLOTHING" label)
    existed purely to mark the reveal boundary as it swept up the screen; with
    the reveal itself disabled above, it has nothing left to indicate. */
