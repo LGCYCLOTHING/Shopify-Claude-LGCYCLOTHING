@@ -155,7 +155,8 @@
       "Bash(timeout 60 shopify theme push --store 0dc7p1-tw.myshopify.com --theme 142745305274 --allow-live --nodelete --ignore templates/*.json --ignore config/settings_data.json --ignore sections/*-group.json --path 'c:\\\\Users\\\\zaina\\\\OneDrive\\\\Desktop\\\\LGCYCLOTHING- CODE')",
       "Bash(curl -s -b cookies.txt -c cookies.txt -A Mozilla/5.0 https://lgcyclothing.com/products/the-signature-heavyweight -o product.html)",
       "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" -b cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/products/the-signature-heavyweight\")",
-      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/products/lgcy_black-purple\" -o glasses2.html)"
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/products/lgcy_black-purple\" -o glasses2.html)",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/products/lgcy_black-purple\" -o glasses3.html)"
     ]
   }
 }
