@@ -142,7 +142,16 @@
       "Bash(grep -o \"e.preventDefault\\(\\);\\\\\\\\\\\\\\\\n[^;]*;\\\\\\\\\\\\\\\\n *}\\);\" templates/index.json)",
       "WebFetch(domain:lgcyclothing.com)",
       "Bash(curl -s \"https://api.github.com/repos/LGCYCLOTHING/Shopify-Claude-LGCYCLOTHING/actions/runs?per_page=1\")",
-      "Bash(curl -s \"https://api.github.com/repos/LGCYCLOTHING/Shopify-Claude-LGCYCLOTHING/actions/runs?per_page=10&created=%3E%3D2026-08-06\")"
+      "Bash(curl -s \"https://api.github.com/repos/LGCYCLOTHING/Shopify-Claude-LGCYCLOTHING/actions/runs?per_page=10&created=%3E%3D2026-08-06\")",
+      "PowerShell(gh run list --limit 5)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:0dc7p1-tw.myshopify.com)",
+      "Bash(curl -s -c cookies.txt -b cookies.txt -A Mozilla/5.0 -X POST https://lgcyclothing.com/password --data-urlencode form_type=storefront_password --data-urlencode utf8=✓ --data-urlencode 'password=khalifa$!786' -D post_headers.txt -o post_response.html -L)",
+      "Bash(awk '{print $6}')",
+      "Bash(rm -f cookies.txt post_headers.txt)",
+      "Bash(curl -s -c cookies.txt -A Mozilla/5.0 -X POST https://lgcyclothing.com/password --data-urlencode form_type=storefront_password --data-urlencode utf8=✓ --data-urlencode 'password=khalifa$!786' -D post_headers.txt -o post_response.html)",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A Mozilla/5.0 https://lgcyclothing.com/collections/the-legacy-collection -o collection.html)",
+      "Bash(d=/tmp/tmp.qC44DuS57c *)"
     ]
   }
 }
