@@ -2396,6 +2396,13 @@ html body.lgcy-collection-all .lgcy-hero-scroll-wrapper {
   height: 100vh !important;
 }
 
+/* Same page — the wipe-line indicator bar (chevrons + "LGCYCLOTHING" label)
+   existed purely to mark the reveal boundary as it swept up the screen; with
+   the reveal itself disabled above, it has nothing left to indicate. */
+html body.lgcy-collection-all .lgcy-wipe-line {
+  display: none !important;
+}
+
 /* Homepage "EXPLORE COLLECTIONS" eyebrow — Inter 900 negative letter-spacing */
 html body #explore-label {
   font-family: 'Inter', sans-serif !important;
