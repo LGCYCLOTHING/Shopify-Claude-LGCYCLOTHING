@@ -2385,6 +2385,17 @@ html body.lgcy-collection-all .videoBackground video {
   filter: brightness(0.45) contrast(1.0) grayscale(0.4) !important;
 }
 
+/* Same page — the wrapper around the sticky video is 200vh tall to give the
+   wipe-reveal room to animate over two full scroll-lengths; the reveal's own
+   progress math already completes at exactly one viewport's worth of scroll
+   (heroHeight = window.innerHeight), so the second viewport was always just
+   dead space with the pinned video sitting still. Collapsing the wrapper to
+   100vh makes it release right when the math says it's done — one screen
+   of scrolling instead of two. */
+html body.lgcy-collection-all .lgcy-hero-scroll-wrapper {
+  height: 100vh !important;
+}
+
 /* Homepage "EXPLORE COLLECTIONS" eyebrow — Inter 900 negative letter-spacing */
 html body #explore-label {
   font-family: 'Inter', sans-serif !important;
