@@ -174,10 +174,12 @@
   background-color: #faf6f0 !important;
 }
 
-/* Image/video contained inside — no crop, sized to fill the tile. */
+/* Static image contained inside — no crop, sized to fill the tile.
+   Deliberately NOT touching video/iframe here anymore — forcing their
+   sizing/object-fit/display was interfering with the app's own video
+   playback and carousel-swipe logic on multi-image posts. Those elements
+   are left to size themselves via the app's own CSS. */
 .instafeed-new-layout-item img,
-.instafeed-new-layout-item video,
-.instafeed-new-layout-item iframe,
 .instafeed-new-layout-item .instafeed-lazy-image {
   width: 100% !important;
   height: 100% !important;
