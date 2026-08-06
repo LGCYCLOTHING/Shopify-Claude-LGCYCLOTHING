@@ -44,6 +44,16 @@
     justify-content: center;
   }
 
+  /* Cards were running edge-to-edge on mobile, leaving no breathing room —
+     cap each card's width and center it so there's visible side spacing. */
+  @media screen and (max-width: 749px) {
+    #product-grid .grid__item {
+      max-width: 85%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
   /* Experimental: decorative cursive fill for the empty space when a
      collection only has one product — scoped to that exact case so it
      never overlaps a fuller grid. */
