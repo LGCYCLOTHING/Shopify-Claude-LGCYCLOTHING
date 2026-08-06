@@ -2393,7 +2393,14 @@ html body.lgcy-collection-all .videoBackground video {
    100vh makes it release right when the math says it's done — one screen
    of scrolling instead of two. */
 html body.lgcy-collection-all .lgcy-hero-scroll-wrapper {
-  height: 100vh !important;
+  height: 85vh !important;
+}
+
+/* Shrink the actual sticky video section to match, so it no longer fills
+   the full viewport and "All Products" is visible peeking in at the bottom
+   without scrolling at all. */
+html body.lgcy-collection-all .lgcy-hero-scroll-wrapper > .shopify-section.videoBackground {
+  height: 85vh !important;
 }
 
 /* Same page — the wipe-line indicator bar (chevrons + "LGCYCLOTHING" label)
