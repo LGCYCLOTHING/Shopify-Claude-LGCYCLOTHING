@@ -137,7 +137,7 @@
     position: relative;
   }
 
-  /* Permanent underline — always visible. On click it "wipes": the visible
+  /* Permanent underline — always visible. On hover it "wipes": the visible
      bar erodes away starting from the left (clip-path's left inset growing
      0% -> 100%), then regrows the same way (inset shrinking back to 0%). */
   #scroll-discover::after {
@@ -151,7 +151,7 @@
     clip-path: inset(0 0 0 0%);
   }
 
-  #scroll-discover.lgcy-wipe::after {
+  #scroll-discover:hover::after {
     animation: lgcyUnderlineWipe 650ms ease;
   }
 
