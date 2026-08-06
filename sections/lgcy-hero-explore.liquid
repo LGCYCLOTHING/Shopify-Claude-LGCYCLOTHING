@@ -155,10 +155,17 @@
     animation: lgcyUnderlineWipe 650ms ease;
   }
 
+  /* inset() order is (top right bottom left). 0-50% clips growing from the
+     LEFT side inward, so the visible bar erodes left -> right and vanishes.
+     Right at the midpoint we switch to clipping from the RIGHT side instead
+     (same "fully hidden" state either way, so the swap is invisible) — from
+     50% to 100% that right-side clip shrinks back to 0, so the bar regrows
+     starting at the left edge and extending rightward: also left -> right. */
   @keyframes lgcyUnderlineWipe {
-    0%   { clip-path: inset(0 0 0 0%); }
-    50%  { clip-path: inset(0 0 0 100%); }
-    100% { clip-path: inset(0 0 0 0%); }
+    0%     { clip-path: inset(0 0 0 0%); }
+    50%    { clip-path: inset(0 0 0 100%); }
+    50.01% { clip-path: inset(0 100% 0 0); }
+    100%   { clip-path: inset(0 0% 0 0); }
   }
 </style>
 
