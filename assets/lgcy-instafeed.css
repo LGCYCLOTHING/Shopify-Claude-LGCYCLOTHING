@@ -157,13 +157,7 @@
   padding-left: 48px !important;
 }
 
-/* Tiles — locked to 340 × 453 (3:4 portrait). Beige (#faf6f0) shows through
-   in any letterbox gap via the outer tile's own background — deliberately
-   NOT touching the inner img/video/lazy-image elements' own background
-   (even via background-color) anymore. Posts were rendering as empty until
-   clicked after that was added, which points at some interaction with how
-   the app paints the loaded photo on those inner elements specifically;
-   this is the safer, minimal version. */
+/* Tiles — locked to 340 × 453 (3:4 portrait), black bg for letterbox */
 .instafeed-new-layout-item {
   width: 340px !important;
   height: 453px !important;
@@ -171,21 +165,22 @@
   max-width: 340px !important;
   min-height: 453px !important;
   flex: 0 0 340px !important;
-  background-color: #faf6f0 !important;
+  background: #000 !important;
 }
 
-/* Static image contained inside — no crop, sized to fill the tile.
-   Deliberately NOT touching video/iframe here anymore — forcing their
-   sizing/object-fit/display was interfering with the app's own video
-   playback and carousel-swipe logic on multi-image posts. Those elements
-   are left to size themselves via the app's own CSS. */
+/* Image/video contained inside — no crop; black bars fill the difference.
+   Includes video/iframe so video posts get sized + stay clickable too,
+   not just the img thumbnail. */
 .instafeed-new-layout-item img,
+.instafeed-new-layout-item video,
+.instafeed-new-layout-item iframe,
 .instafeed-new-layout-item .instafeed-lazy-image {
   width: 100% !important;
   height: 100% !important;
   object-fit: contain !important;
   object-position: center !important;
   display: block !important;
+  background: #000 !important;
 }
 
 /* === MOBILE === */
