@@ -158,6 +158,14 @@
 
             window.addEventListener('resize', checkOverflow);
             checkOverflow();
+            /* Inter loads via an async @import, so the first check above can
+               run against fallback-font metrics and under-measure the line
+               count — recheck once the real font is in so late reflow isn't
+               left showing a faded cut-off with no way to expand it. */
+            if (document.fonts && document.fonts.ready) {
+              document.fonts.ready.then(checkOverflow);
+            }
+            setTimeout(checkOverflow, 500);
           })();
         </script>
       {%- endif -%}
