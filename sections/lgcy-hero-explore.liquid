@@ -215,9 +215,6 @@
 
     discoverBtn.addEventListener('click', function(e) {
       e.preventDefault();
-      discoverBtn.classList.remove('lgcy-wipe');
-      void discoverBtn.offsetWidth; // restart the animation if clicked again mid-wipe
-      discoverBtn.classList.add('lgcy-wipe');
       safeNavigate(discoverBtn.getAttribute('href'));
     });
 
