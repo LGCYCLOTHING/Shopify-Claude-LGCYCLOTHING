@@ -157,7 +157,9 @@
       "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" -b cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/products/the-signature-heavyweight\")",
       "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/products/lgcy_black-purple\" -o glasses2.html)",
       "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/products/lgcy_black-purple\" -o glasses3.html)",
-      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/products/lgcy_black-purple\" -o glasses4.html)"
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/products/lgcy_black-purple\" -o glasses4.html)",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/products/driven-by-purpose-oversized-t-shirt\" -o sweatshirt2.html)",
+      "Bash(curl -s \"https://lgcyclothing.com/cdn/shop/t/3/assets/component-glassy-cta.css?v=85486924319300180581786054170\" -o glassy.css)"
     ]
   }
 }
