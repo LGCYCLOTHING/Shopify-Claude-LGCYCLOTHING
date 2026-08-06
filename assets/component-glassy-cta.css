@@ -3038,8 +3038,8 @@ html body .collection-hero__description,
 html body .collection-hero__description * {
   font-family: 'Inter', Helvetica, Arial, sans-serif !important;
   font-size: 13px !important;
-  font-weight: 600 !important;
-  letter-spacing: -0.02em !important;
+  font-weight: 400 !important;
+  letter-spacing: normal !important;
   line-height: 1.7 !important;
   color: #000 !important;
 }
