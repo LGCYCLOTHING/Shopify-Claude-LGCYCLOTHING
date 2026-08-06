@@ -2403,6 +2403,15 @@ html body.lgcy-collection-all .lgcy-wipe-line {
   display: none !important;
 }
 
+/* Same page — collapsing the wrapper above exposed the NEXT section's own
+   fixed-position title ("THE LEGACY COLLECTION.", #hero-title-collection)
+   bleeding into view early and overlapping this page's own "LGCYCLOTHING"
+   title on the same line. That title belongs to a different section/page;
+   hide it here specifically. */
+html body.lgcy-collection-all #hero-title-collection {
+  display: none !important;
+}
+
 /* Homepage "EXPLORE COLLECTIONS" eyebrow — Inter 900 negative letter-spacing */
 html body #explore-label {
   font-family: 'Inter', sans-serif !important;
