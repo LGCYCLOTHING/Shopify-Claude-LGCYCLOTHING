@@ -137,7 +137,9 @@
       "Bash(curl -s \"https://api.github.com/repos/LGCYCLOTHING/Shopify-Claude-LGCYCLOTHING/actions/runs/31055096041/jobs\")",
       "Bash(curl -sL \"https://api.github.com/repos/LGCYCLOTHING/Shopify-Claude-LGCYCLOTHING/actions/jobs/92470755384/logs\")",
       "Bash(grep -o \"cursor: \\\\\\\\\\\\\\\\\\\\\"pointer\\\\\\\\\\\\\\\\\\\\\";\\\\\\\\\\\\\\\\n    display: \\\\\\\\\\\\\\\\\\\\\"block\\\\\\\\\\\\\\\\\\\\\"\" templates/index.json)",
-      "Bash(grep -o \"cursor: pointer;\\\\\\\\\\\\\\\\n    display: block;\\\\\\\\\\\\\\\\n    line-height\" templates/index.json)"
+      "Bash(grep -o \"cursor: pointer;\\\\\\\\\\\\\\\\n    display: block;\\\\\\\\\\\\\\\\n    line-height\" templates/index.json)",
+      "Bash(grep -o \"discoverBtn.addEventListener\\('click', function\\(e\\) {\\\\\\\\\\\\\\\\n[^}]*}[^\\)]*}\\);\" templates/index.json)",
+      "Bash(grep -o \"e.preventDefault\\(\\);\\\\\\\\\\\\\\\\n[^;]*;\\\\\\\\\\\\\\\\n *}\\);\" templates/index.json)"
     ]
   }
 }
