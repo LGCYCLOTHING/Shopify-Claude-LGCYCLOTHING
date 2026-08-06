@@ -3738,9 +3738,16 @@ details-disclosure > details {
   background: transparent !important;
 }
 
-/* push content up under header */
-.has-video-hero main {
-  margin-top: -80px;
+/* push content up under header — mobile only. This was accidentally scoped
+   to <768px by the unclosed media query bug fixed above, and desktop has
+   its own separate -55px offset (.main-content .videoBackground in
+   background-video.liquid) that already accounts for the fixed header
+   there — stacking this -80px on top of that on desktop pulled the video
+   section up ~135px, exposing the section below it. */
+@media (max-width: 768px) {
+  .has-video-hero main {
+    margin-top: -80px;
+  }
 }
 /* Header logo blend */
 .header__heading-logo {
