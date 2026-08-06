@@ -38,8 +38,14 @@
     transition: opacity 0.4s ease;
   }
 
-  .lgcy-card:hover .lgcy-card__image--hover {
-    opacity: 1;
+  /* Scoped to devices with real hover (mouse/trackpad) only — on touch
+     screens, :hover fires on the first tap (showing the alt image) and the
+     tap that actually navigates to the product becomes a second, separate
+     tap, so mobile visitors had to tap twice to open a product. */
+  @media (hover: hover) and (pointer: fine) {
+    .lgcy-card:hover .lgcy-card__image--hover {
+      opacity: 1;
+    }
   }
 
   /* Size panel — hidden by default, controlled by JS */
