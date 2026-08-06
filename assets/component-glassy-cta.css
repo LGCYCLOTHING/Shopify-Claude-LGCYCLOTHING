@@ -2421,6 +2421,17 @@ html body.lgcy-collection-all .lgcy-wipe-line {
   display: none !important;
 }
 
+/* Same page — the reveal script still clones the video into a second,
+   sharp copy (.lgcy-clear-layer) and animates its clip-path on scroll,
+   even with the base video's blur already killed above. That clone is what
+   shows up as a hard seam/line partway down — a second copy of the ocean
+   sitting behind the first, revealed as you scroll. Just hide the clone;
+   the one base video underneath is already unblurred and is all that
+   should be visible. */
+html body.lgcy-collection-all .lgcy-clear-layer {
+  display: none !important;
+}
+
 /* Homepage "EXPLORE COLLECTIONS" eyebrow — Inter 900 negative letter-spacing */
 html body #explore-label {
   font-family: 'Inter', sans-serif !important;
