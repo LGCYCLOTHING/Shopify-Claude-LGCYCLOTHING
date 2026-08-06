@@ -1267,17 +1267,12 @@ html body .header__icons .header__icon {
 }
 
 html body .header__icons .header__icon:hover {
-  background-color: rgba(255, 255, 255, 0.12);
   transform: scale(1.05);
 }
 
 /* On product pages — switch icons to BLACK (white-page background) */
 html body.template-product .header__icons .header__icon {
   color: #000;
-}
-
-html body.template-product .header__icons .header__icon:hover {
-  background-color: rgba(0, 0, 0, 0.08);
 }
 
 /* Override Dawn's rectangular focus outline to follow our circle shape */
