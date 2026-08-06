@@ -77,15 +77,21 @@
       max-width: 100%;
     }
 
-    /* Collapsed by default on mobile — only ~3 lines show until "Read more" */
+    /* Collapsed by default on mobile — ~3 lines show, plus a hint of the
+       4th fading out at the bottom (mask-image) rather than a hard cut, so
+       there's a visible "glow" of more text before tapping Read more. */
     .collection-hero__description {
-      max-height: 4.9em;
+      max-height: 5.6em;
       overflow: hidden;
       position: relative;
-      transition: max-height 0.35s ease;
+      transition: max-height 0.35s ease, -webkit-mask-image 0.35s ease, mask-image 0.35s ease;
+      -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+              mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
     }
     .collection-hero__description.is-expanded {
       max-height: 1000px;
+      -webkit-mask-image: none;
+              mask-image: none;
     }
 
     .collection-hero__desc-toggle {
