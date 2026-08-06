@@ -2403,16 +2403,15 @@ html body.lgcy-collection-all .lgcy-hero-scroll-wrapper > .shopify-section.video
   height: 85vh !important;
 }
 
-/* The "LGCYCLOTHING" title went missing once the section above it shrank —
-   its centering was computed relative to the wrapper's old (taller) height,
-   so it likely centered itself right out of the now-shorter visible area.
-   Force it to center on the actual viewport instead, independent of any
-   ancestor's height. */
-html body.lgcy-collection-all #hero-title {
-  position: fixed !important;
-  top: 42.5vh !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
+/* The "LGCYCLOTHING" title is actually the native background-video block's
+   own title field (<h1 class="videoBoxInfoTitle"> inside .videoBoxInfo —
+   confirmed via inspector, not a custom-liquid overlay at all). Its
+   container, .videoBox, is a flex column with justify-content: flex-end,
+   so it was bottom-anchored all along and only looked roughly centered at
+   the old 100vh height. Shrinking the section pushed it down further,
+   off the bottom of the now-shorter visible area. Center it properly. */
+html body.lgcy-collection-all .videoBackground .videoBox {
+  justify-content: center !important;
 }
 
 /* Same page — the wipe-line indicator bar (chevrons + "LGCYCLOTHING" label)
