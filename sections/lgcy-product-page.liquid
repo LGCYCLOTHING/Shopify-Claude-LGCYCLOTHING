@@ -48,7 +48,10 @@
     padding: 14px; z-index: 2; color: #333;
   }
   .rp-arrow:hover { opacity: 0.45; }
-  .rp-arrow-left  { left: 6px; }
+  /* Pushed past the thumbnail column (left:10px, 62px wide) — it used to
+     sit at left:6px, directly underneath the thumbnails (which have a
+     higher z-index), so clicks never reached it. */
+  .rp-arrow-left  { left: 84px; }
   .rp-arrow-right { right: 6px; }
   .rp-counter {
     position: absolute; bottom: 20px; left: 24px;
