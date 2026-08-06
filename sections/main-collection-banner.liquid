@@ -53,11 +53,11 @@
   .collection-hero__description,
   .collection-hero__description p,
   .collection-hero__description li {
-    font-family: Arial, Helvetica, sans-serif !important;
-    font-weight: 400 !important;
-    font-size: 1.05rem !important;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+    font-weight: 300 !important;
+    font-size: 1.2rem !important;
     line-height: 1.7 !important;
-    letter-spacing: 0.05em !important;
+    letter-spacing: 0.02em !important;
     color: #000000 !important;
   }
   .collection-hero__description p {
@@ -66,49 +66,43 @@
   .collection-hero__description p:last-child {
     margin-bottom: 0 !important;
   }
+
+  /* Collapsed by default on all screen sizes — a couple lines show, plus a
+     hint of the next line fading out at the bottom (mask-image) rather than
+     a hard cut, so there's a visible "glow" of more text before expanding. */
   .collection-hero__description {
     max-width: 950px;
+    max-height: 3.6em;
+    overflow: hidden;
+    position: relative;
+    transition: max-height 0.35s ease, -webkit-mask-image 0.35s ease, mask-image 0.35s ease;
+    -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent 95%);
+            mask-image: linear-gradient(to bottom, #000 30%, transparent 95%);
   }
-  /* Desktop never shows the mobile "Read more" toggle — it's only ever
-     unhidden by JS inside the max-width: 749px check below. */
+  .collection-hero__description.is-expanded {
+    max-height: 1000px;
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+
   .collection-hero__desc-toggle {
     display: none;
+    margin-top: 10px;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    color: #000000;
+    text-decoration: underline;
+    cursor: pointer;
   }
+
   @media (max-width: 749px) {
     .collection-hero__description {
       max-width: 100%;
-    }
-
-    /* Collapsed by default on mobile — ~3 lines show, plus a hint of the
-       4th fading out at the bottom (mask-image) rather than a hard cut, so
-       there's a visible "glow" of more text before tapping Read more. */
-    .collection-hero__description {
-      max-height: 5.6em;
-      overflow: hidden;
-      position: relative;
-      transition: max-height 0.35s ease, -webkit-mask-image 0.35s ease, mask-image 0.35s ease;
-      -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent 95%);
-              mask-image: linear-gradient(to bottom, #000 30%, transparent 95%);
-    }
-    .collection-hero__description.is-expanded {
-      max-height: 1000px;
-      -webkit-mask-image: none;
-              mask-image: none;
-    }
-
-    .collection-hero__desc-toggle {
-      display: none;
-      margin-top: 10px;
-      background: none;
-      border: none;
-      padding: 0;
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      font-size: 0.85rem;
-      letter-spacing: 0.02em;
-      color: #000000;
-      text-decoration: underline;
-      cursor: pointer;
     }
   }
 {%- endstyle -%}
