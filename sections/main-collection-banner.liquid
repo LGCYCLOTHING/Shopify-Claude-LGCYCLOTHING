@@ -33,6 +33,21 @@
     color: #2a2a2a !important;
   }
 
+  /* Same "New" flag treatment as the Shop panel / homepage hero — plain
+     text, no badge chrome, muted via opacity so it reads as a subtle flag
+     rather than competing with the heading. */
+  .lgcy-collection-title-new {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 0.32em;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.45);
+    vertical-align: super;
+    white-space: nowrap;
+  }
+
   .collection-hero__description,
   .collection-hero__description p,
   .collection-hero__description li {
