@@ -157,12 +157,13 @@
   padding-left: 48px !important;
 }
 
-/* Tiles — locked to 340 × 453 (3:4 portrait), beige bg for letterbox —
-   matches the site's beige (#faf6f0) instead of stark white or black.
-   Uses background-color (not the "background" shorthand) everywhere here:
-   the shorthand resets background-image to none, and some posts render
-   their photo via a background-image on a wrapper div rather than an
-   <img src>, so the shorthand was wiping the actual photo out entirely. */
+/* Tiles — locked to 340 × 453 (3:4 portrait). Beige (#faf6f0) shows through
+   in any letterbox gap via the outer tile's own background — deliberately
+   NOT touching the inner img/video/lazy-image elements' own background
+   (even via background-color) anymore. Posts were rendering as empty until
+   clicked after that was added, which points at some interaction with how
+   the app paints the loaded photo on those inner elements specifically;
+   this is the safer, minimal version. */
 .instafeed-new-layout-item {
   width: 340px !important;
   height: 453px !important;
@@ -172,13 +173,8 @@
   flex: 0 0 340px !important;
   background-color: #faf6f0 !important;
 }
-.instafeed-new-layout-item > * {
-  background-color: #faf6f0 !important;
-}
 
-/* Image/video contained inside — no crop; beige bars fill the difference.
-   Includes video/iframe so video posts get sized + stay clickable too,
-   not just the img thumbnail. */
+/* Image/video contained inside — no crop, sized to fill the tile. */
 .instafeed-new-layout-item img,
 .instafeed-new-layout-item video,
 .instafeed-new-layout-item iframe,
@@ -188,7 +184,6 @@
   object-fit: contain !important;
   object-position: center !important;
   display: block !important;
-  background-color: #faf6f0 !important;
 }
 
 /* === MOBILE === */
