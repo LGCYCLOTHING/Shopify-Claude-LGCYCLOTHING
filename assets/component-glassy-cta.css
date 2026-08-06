@@ -1275,10 +1275,14 @@ html body.template-product .header__icons .header__icon {
   color: #000;
 }
 
-/* Override Dawn's rectangular focus outline to follow our circle shape */
+/* Override Dawn's rectangular focus outline to follow our circle shape.
+   Deliberately NOT including a plain :focus rule here — that fires on any
+   mouse click/press too (showing a ring while holding the mouse down),
+   whereas :focus-visible (and Dawn's .focused polyfill class for older
+   browsers) only fire for keyboard navigation, which is what an outline is
+   actually for. */
 html body .header__icons .header__icon.focus-inset:focus-visible,
 html body .header__icons .header__icon.focused.focus-inset,
-html body .header__icons .header__icon:focus,
 html body .header__icons .header__icon:focus-visible {
   outline: none !important;
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.55) !important;
