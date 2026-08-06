@@ -785,7 +785,10 @@
     display: none !important;
   }
 
-  /* Dimensions / Frame Details tables */
+  /* Dimensions / Frame Details tables — now rendered inside .rp-tab-panel
+     (see script below), which forces every descendant to a uniform gray
+     500-weight style for cross-tab consistency. !important here reasserts
+     the key/value contrast on top of that. */
   .lgcy-spec-list {
     list-style: none;
     padding: 0;
@@ -796,18 +799,19 @@
     justify-content: space-between;
     padding: 10px 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    font-size: 14px;
+    font-size: 14px !important;
   }
   .lgcy-spec-list li:last-child {
     border-bottom: 0;
   }
   .lgcy-spec-list li .lgcy-spec-key {
-    color: #666;
+    color: #666 !important;
+    font-weight: 500 !important;
     letter-spacing: -0.01em;
   }
   .lgcy-spec-list li .lgcy-spec-val {
-    font-weight: 800;
-    color: #111;
+    font-weight: 800 !important;
+    color: #111 !important;
     letter-spacing: -0.02em;
   }
 </style>
