@@ -146,7 +146,7 @@
             if (!desc || !toggle) return;
 
             function checkOverflow() {
-              if (window.innerWidth > 749 || desc.classList.contains('is-expanded')) return;
+              if (desc.classList.contains('is-expanded')) return;
               toggle.style.display = desc.scrollHeight > desc.clientHeight + 2 ? 'inline-block' : 'none';
             }
 
