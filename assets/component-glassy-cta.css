@@ -2372,6 +2372,19 @@ html body .lgcy-faq3-answer a {
 /* "→ DISCOVER" scroll indicator — glassy pill on the homepage     */
 /* ============================================================== */
 
+/* All Products collection page — the wipe-reveal hero effect there sets an
+   inline blur() filter on the background video via JS (that script lives in
+   templates/collection.json, which can't be edited directly — see project
+   notes on the deploy-ignore list). Overriding from here instead: restore
+   the plain, non-blurred filter background-video.liquid already uses by
+   default elsewhere, scoped to just this collection via the body class
+   added in layout/theme.liquid. !important beats the inline blur regardless
+   of when that script sets it. */
+html body.lgcy-collection-all .videoBackground .video-js,
+html body.lgcy-collection-all .videoBackground video {
+  filter: brightness(0.45) contrast(1.0) grayscale(0.4) !important;
+}
+
 /* Homepage "EXPLORE COLLECTIONS" eyebrow — Inter 900 negative letter-spacing */
 html body #explore-label {
   font-family: 'Inter', sans-serif !important;
