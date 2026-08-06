@@ -3036,7 +3036,7 @@ html body .lgcy-col-hero__sub {
    body copy render far heavier than intended. */
 html body .collection-hero__description,
 html body .collection-hero__description * {
-  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif !important;
+  font-family: 'Inter', Helvetica, Arial, sans-serif !important;
   font-size: 13px !important;
   font-weight: 600 !important;
   letter-spacing: -0.02em !important;
