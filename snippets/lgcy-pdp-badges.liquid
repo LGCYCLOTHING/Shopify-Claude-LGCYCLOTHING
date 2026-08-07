@@ -28,6 +28,17 @@
   <meta name="lgcy-product-is-eyewear" content="1">
 {%- endif -%}
 
+{%- comment -%} Coming Soon gating — Aeris glasses aren't ready to sell yet,
+  but the page (images, description, price, dimensions) should stay fully
+  visible. Add to Cart is hidden and the stock indicator reads "Coming Soon"
+  instead. Add/remove handles here as products launch. {%- endcomment -%}
+{%- assign coming_soon_handles = 'lgcy-01-aeris-black-clear,lgcy_black-purple' | split: ',' -%}
+{%- assign is_coming_soon = false -%}
+{%- if coming_soon_handles contains product.handle -%}{%- assign is_coming_soon = true -%}{%- endif -%}
+{%- if is_coming_soon -%}
+  <meta name="lgcy-product-coming-soon" content="1">
+{%- endif -%}
+
 <style>
   /* === PDP info-panel — bumped text sizes for readability (all products) === */
   .rp-title {

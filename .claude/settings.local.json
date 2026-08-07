@@ -164,7 +164,11 @@
       "mcp__claude_ai_Shopify__search_collections",
       "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/collections/lgcy-glasses\" -o lgcy-collection.html)",
       "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/collections/lgcy-glasses\" -o lgcy-collection2.html)",
-      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o home2.html)"
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o home2.html)",
+      "Bash(timeout 60 shopify theme push --store 0dc7p1-tw.myshopify.com --theme 142745305274 --allow-live --nodelete --only templates/index.json --path 'c:\\\\Users\\\\zaina\\\\OneDrive\\\\Desktop\\\\LGCYCLOTHING- CODE')",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o home4.html)",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o home5.html)",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o home6.html)"
     ]
   }
 }
