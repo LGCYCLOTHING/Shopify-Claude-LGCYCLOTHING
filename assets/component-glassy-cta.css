@@ -952,6 +952,16 @@ body:has(.drawer.active) .lgcy-wipe-line {
   z-index: 50 !important;
 }
 
+/* Instafeed (Mintt app) renders its own stacking context above the drawer
+   overlay by default, so its text/tiles stayed sharp while everything else
+   blurred behind the cart. Same fix as the header/wipe-line above. */
+body:has(cart-drawer.active) #insta-feed,
+body:has(.drawer.active) #insta-feed,
+body:has(cart-drawer.active) .instafeed-shopify,
+body:has(.drawer.active) .instafeed-shopify {
+  z-index: 50 !important;
+}
+
 /* ============================================================== */
 /* Cart drawer: enable scrolling + show a scrollbar on the left.   */
 /* The default cart-drawer-items has overflow:auto + flex:1 but    */
