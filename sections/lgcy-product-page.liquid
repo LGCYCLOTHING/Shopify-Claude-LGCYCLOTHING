@@ -1065,10 +1065,13 @@
   <h2 class="rp-section-label">You May Also Like</h2>
   <div class="rp-card-grid">
     {%- assign ymal_handles = 'driven-by-purpose-oversized-t-shirt,lgcy_black-purple' | split: ',' -%}
+    {%- assign ymal_coming_soon_handles = 'lgcy-01-aeris-black-clear,lgcy_black-purple' | split: ',' -%}
     {%- for handle in ymal_handles -%}
       {%- unless handle == product.handle -%}
         {%- assign rec = all_products[handle] -%}
         {%- if rec -%}
+          {%- assign rec_coming_soon = false -%}
+          {%- if ymal_coming_soon_handles contains rec.handle -%}{%- assign rec_coming_soon = true -%}{%- endif -%}
           <a href="{{ rec.url }}" class="rp-product-card">
             <div class="rp-product-card-img">
               <span class="rp-card-new-badge" aria-label="New product">NEW</span>
@@ -1088,6 +1091,9 @@
                   </svg>
                   Blue Light
                 </span>
+              {%- endif -%}
+              {%- if rec_coming_soon -%}
+                <span class="rp-card-coming-soon-badge">Coming Soon</span>
               {%- endif -%}
               <img src="{{ rec.featured_image | img_url: '800x' }}" alt="{{ rec.title | escape }}" loading="lazy">
             </div>
