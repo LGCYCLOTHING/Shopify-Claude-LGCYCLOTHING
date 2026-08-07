@@ -782,10 +782,18 @@
           'Blue Light</span>'
         : '';
 
+      /* Keep in sync with coming_soon_handles in this file, ymal_coming_soon_handles
+         in sections/lgcy-product-page.liquid, and COMING_SOON_HANDLES elsewhere. */
+      var comingSoonHandles = ['lgcy-01-aeris-black-clear', 'lgcy_black-purple'];
+      var comingSoonBadge = comingSoonHandles.indexOf(p.handle) !== -1
+        ? '<span class="rp-card-coming-soon-badge">Coming Soon</span>'
+        : '';
+
       a.innerHTML =
         '<div class="rp-product-card-img">' +
         '<span class="rp-card-new-badge" aria-label="New product">NEW</span>' +
         blueLightBadge +
+        comingSoonBadge +
         '<img src="' + imgUrl + '" alt="' + (p.title || '') + '" loading="lazy"></div>' +
         '<div class="rp-product-card-info">' +
         '<span class="rp-product-card-name">' + (p.title || '') + '</span>' +
