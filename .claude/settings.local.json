@@ -169,7 +169,9 @@
       "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o home4.html)",
       "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o home5.html)",
       "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o home6.html)",
-      "Bash(curl -s \"https://lgcyclothing.com/cdn/shop/t/3/assets/cart-drawer.js?v=8804890102238044711786135150\" -o cart-drawer-live.js)"
+      "Bash(curl -s \"https://lgcyclothing.com/cdn/shop/t/3/assets/cart-drawer.js?v=8804890102238044711786135150\" -o cart-drawer-live.js)",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o v_home3.html)",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/collections/lgcy-glasses\" -o v_coll.html)"
     ]
   }
 }
