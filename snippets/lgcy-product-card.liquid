@@ -503,6 +503,9 @@
       >
     {%- endif -%}
 
+    {%- if is_coming_soon -%}
+      <span class="lgcy-card__coming-soon-badge">Coming Soon</span>
+    {%- else -%}
     <button
       type="button"
       class="lgcy-card__plus-btn"
@@ -517,8 +520,9 @@
         <path d="M1 1l12 12M13 1L1 13" stroke-width="1.5" stroke-linecap="round" stroke="currentColor"/>
       </svg>
     </button>
+    {%- endif -%}
 
-    {%- if has_sizes -%}
+    {%- if has_sizes and is_coming_soon == false -%}
       <div class="lgcy-card__quick-add" data-quick-add-panel>
         <div class="lgcy-card__sizes">
           {%- for variant in product.variants -%}
