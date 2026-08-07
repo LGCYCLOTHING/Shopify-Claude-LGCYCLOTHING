@@ -665,13 +665,14 @@ svg.icon.icon-cart {
       if (document.querySelector('.lgcy-sticky-atc')) return;
 
       // Build the sticky bar
+      var isComingSoon = !!document.querySelector('meta[name="lgcy-product-coming-soon"]');
       var bar = document.createElement('div');
       bar.className = 'lgcy-sticky-atc';
       bar.innerHTML =
         '<div class="lgcy-sticky-atc__sizes" role="group"></div>' +
         '<button type="button" class="lgcy-sticky-atc__btn">' +
         '<span class="lgcy-sticky-atc__price"></span>' +
-        '<span class="lgcy-sticky-atc__label">ADD TO CART</span>' +
+        '<span class="lgcy-sticky-atc__label">' + (isComingSoon ? 'COMING SOON' : 'ADD TO CART') + '</span>' +
         '<span class="lgcy-sticky-atc__arrow" aria-hidden="true">&rarr;</span>' +
         '</button>';
       document.body.appendChild(bar);
