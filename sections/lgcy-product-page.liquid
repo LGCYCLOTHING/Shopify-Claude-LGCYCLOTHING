@@ -962,6 +962,35 @@
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(20,60,110,0.15), 0 0.25em 0.5em -0.125em rgba(20,60,110,0.2), 0 0 0 1px rgba(20,60,110,0.08);
   }
   .rp-card-bluelight-badge svg { display: block; flex-shrink: 0; color: #0a3a6b; }
+
+  /* "Coming Soon" badge — same glass pill, bottom center of the card */
+  .rp-card-coming-soon-badge {
+    --border-width: 1px;
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    isolation: isolate;
+    height: 26px;
+    padding: 0 12px;
+    border-radius: 999vw;
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-weight: 900;
+    font-size: 10px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #000;
+    background: linear-gradient(-75deg, rgba(255,255,255,0.55), rgba(255,255,255,0.85), rgba(255,255,255,0.55));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(0,0,0,0.12), 0 0.25em 0.5em -0.125em rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.06);
+    -webkit-backdrop-filter: blur(8px) saturate(140%);
+            backdrop-filter: blur(8px) saturate(140%);
+    pointer-events: none;
+  }
   .rp-product-card-info { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
   .rp-product-card-name { font-size: 12px; font-weight: 700; letter-spacing: 0.02em; }
   .rp-product-card-price { font-size: 12px; font-weight: 600; color: #111; flex-shrink: 0; white-space: nowrap; }
