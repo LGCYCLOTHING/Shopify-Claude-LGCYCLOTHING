@@ -640,9 +640,18 @@
       var body = document.querySelector('#rp-acc-details .rp-acc-body-inner');
       if (!body) return;
 
+      /* Coming Soon products: no stock status line at all here — the page
+         already reads "Coming Soon" on the Add to Cart button, and showing
+         a status line (even relabeled) here reads as misleading. */
       var isComingSoon = !!document.querySelector('meta[name="lgcy-product-coming-soon"]');
-      var color = isComingSoon ? '#8a8a8a' : (available ? '#16a34a' : '#dc2626');
-      var label = isComingSoon ? 'Coming Soon' : (available ? 'In Stock' : 'Sold Out');
+      if (isComingSoon) {
+        var existing = document.getElementById('lgcy-availability-line');
+        if (existing) existing.remove();
+        return;
+      }
+
+      var color = available ? '#16a34a' : '#dc2626';
+      var label = available ? 'In Stock' : 'Sold Out';
 
       var p = document.getElementById('lgcy-availability-line');
       if (!p) {
