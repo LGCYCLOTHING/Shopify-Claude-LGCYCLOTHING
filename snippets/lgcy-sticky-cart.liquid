@@ -13,6 +13,11 @@
 
 {%- if template.name == 'product' and product -%}
 
+{%- comment -%} Keep in sync with coming_soon_handles in snippets/lgcy-pdp-badges.liquid {%- endcomment -%}
+{%- assign coming_soon_handles = 'lgcy-01-aeris-black-clear,lgcy_black-purple' | split: ',' -%}
+{%- assign is_coming_soon = false -%}
+{%- if coming_soon_handles contains product.handle -%}{%- assign is_coming_soon = true -%}{%- endif -%}
+
 <div id="lgcy-sticky-cart" class="lgcy-sticky-cart" role="region" aria-label="Quick add to cart" aria-hidden="true">
   <a href="{{ product.url }}" class="lgcy-sticky-cart__media" tabindex="-1" aria-hidden="true">
     {%- if product.featured_image -%}
@@ -33,9 +38,15 @@
     </span>
   </div>
 
-  <button type="button" class="lgcy-sticky-cart__btn" data-lgcy-sticky-add aria-label="Add {{ product.title | escape }} to cart">
-    Add to Cart
-  </button>
+  {%- if is_coming_soon -%}
+    <button type="button" class="lgcy-sticky-cart__btn" data-lgcy-sticky-add disabled aria-label="{{ product.title | escape }} — coming soon">
+      Coming Soon
+    </button>
+  {%- else -%}
+    <button type="button" class="lgcy-sticky-cart__btn" data-lgcy-sticky-add aria-label="Add {{ product.title | escape }} to cart">
+      Add to Cart
+    </button>
+  {%- endif -%}
 </div>
 
 <style>
