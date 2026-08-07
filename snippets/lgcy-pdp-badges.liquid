@@ -526,6 +526,13 @@
      moment a different variant with different stock is selected. */
   (function () {
     function styleFor(available, qty) {
+      if (document.querySelector('meta[name="lgcy-product-coming-soon"]')) {
+        return {
+          dotColor: '#8a8a8a', label: 'Coming Soon',
+          bg: 'linear-gradient(-75deg,rgba(138,138,138,0.20),rgba(138,138,138,0.35),rgba(138,138,138,0.20))',
+          shadow: 'inset 0 1px 0 rgba(255,255,255,0.8),inset 0 -1px 0 rgba(90,90,90,0.25),0 0.25em 0.5em -0.125em rgba(90,90,90,0.20),0 0 0 1px rgba(90,90,90,0.35)'
+        };
+      }
       if (!available) {
         return {
           dotColor: '#ef4444', label: 'Out of Stock',
