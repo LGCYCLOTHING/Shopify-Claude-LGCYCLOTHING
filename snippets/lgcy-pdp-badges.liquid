@@ -640,8 +640,9 @@
       var body = document.querySelector('#rp-acc-details .rp-acc-body-inner');
       if (!body) return;
 
-      var color = available ? '#16a34a' : '#dc2626';
-      var label = available ? 'In Stock' : 'Sold Out';
+      var isComingSoon = !!document.querySelector('meta[name="lgcy-product-coming-soon"]');
+      var color = isComingSoon ? '#8a8a8a' : (available ? '#16a34a' : '#dc2626');
+      var label = isComingSoon ? 'Coming Soon' : (available ? 'In Stock' : 'Sold Out');
 
       var p = document.getElementById('lgcy-availability-line');
       if (!p) {
