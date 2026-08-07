@@ -442,6 +442,15 @@
   unless has_sizes
     assign single_variant_id = product.variants.first.id | append: ''
   endunless
+
+  # Products not yet available for purchase — quick-add is suppressed.
+  # Keep in sync with COMING_SOON_HANDLES in assets/cart-drawer.js and
+  # coming_soon_handles in snippets/lgcy-pdp-badges.liquid.
+  assign coming_soon_handles = 'lgcy-01-aeris-black-clear,lgcy_black-purple' | split: ','
+  assign is_coming_soon = false
+  if coming_soon_handles contains product.handle
+    assign is_coming_soon = true
+  endif
 -%}
 
 <a
