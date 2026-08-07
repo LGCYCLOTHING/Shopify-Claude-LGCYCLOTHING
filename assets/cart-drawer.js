@@ -1,6 +1,12 @@
 // Module-level cache so products aren't re-fetched on every cart update
 let _storeProductsCache = null;
 
+// Products not yet available for purchase — quick-add is suppressed for
+// these everywhere a "You may also like" style card can render one.
+// Keep in sync with COMING_SOON_HANDLES in snippets/lgcy-product-card.liquid
+// and coming_soon_handles in snippets/lgcy-pdp-badges.liquid.
+const COMING_SOON_HANDLES = ['lgcy-01-aeris-black-clear', 'lgcy_black-purple'];
+
 class CartDrawer extends HTMLElement {
   constructor() {
     super();
