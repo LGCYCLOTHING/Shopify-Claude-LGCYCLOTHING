@@ -1040,6 +1040,12 @@
       if (form) {
         form.addEventListener('submit', function (e) { e.preventDefault(); });
       }
+
+      /* Both sticky add-to-cart components (lgcy-sticky-cart.liquid's
+         floating popup, theme.liquid's mobile bar) check this button's
+         .disabled before triggering a click on it — setting it here makes
+         them both inert automatically without duplicating the handle list. */
+      btn.disabled = true;
       return true;
     }
 
