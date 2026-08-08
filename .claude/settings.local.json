@@ -172,7 +172,9 @@
       "Bash(curl -s \"https://lgcyclothing.com/cdn/shop/t/3/assets/cart-drawer.js?v=8804890102238044711786135150\" -o cart-drawer-live.js)",
       "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o v_home3.html)",
       "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/collections/lgcy-glasses\" -o v_coll.html)",
-      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o v_home4.html)"
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o v_home4.html)",
+      "Bash(node \"C:\\\\Users\\\\zaina\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE\\\\9e72fbcd-e046-4fcb-964d-f44471111847\\\\scratchpad\\\\patch_collection_wipe.js\")",
+      "Bash(timeout 60 shopify theme push --store 0dc7p1-tw.myshopify.com --theme 142745305274 --allow-live --nodelete --only templates/collection.json --path 'c:\\\\Users\\\\zaina\\\\OneDrive\\\\Desktop\\\\LGCYCLOTHING- CODE')"
     ]
   }
 }
