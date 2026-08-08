@@ -171,7 +171,7 @@
       {%- endif -%}
     </div>
 
-    {%- if section.settings.show_collection_image and collection.image -%}
+    {%- if section.settings.show_collection_image and collection.image and collection.handle != 'lgcy-glasses' -%}
       <div class="collection-hero__image-container media gradient">
         <img
           srcset="
