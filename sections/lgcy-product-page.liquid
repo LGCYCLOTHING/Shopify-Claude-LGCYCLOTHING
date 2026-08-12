@@ -814,6 +814,57 @@
     }
   }
 
+  /* Require an explicit size pick before Add to Cart goes through — without
+     this, the hidden variant input already holds
+     product.selected_or_first_available_variant from page load, so clicking
+     Add to Cart with no size chosen silently added whatever size sorts
+     first. Runs in the capture phase so it fires (and can fully cancel the
+     event via stopImmediatePropagation) before any other submit handler —
+     e.g. the mobile sticky bar in theme.liquid — gets a chance to AJAX the
+     add through regardless of attachment order. */
+  (function () {
+    var form = document.getElementById('rp-atc-btn') && document.getElementById('rp-atc-btn').closest('form');
+    var btn = document.getElementById('rp-atc-btn');
+    var sizesWrap = document.getElementById('rp-sizes');
+    if (!form || !btn) return;
+
+    var labelEl = btn.querySelector('span');
+    var originalLabel = labelEl ? labelEl.textContent : 'Add to Cart';
+    var revertTimer = null;
+
+    function isSizeSelected() {
+      return !sizesWrap || !!sizesWrap.querySelector('.rp-size.active');
+    }
+
+    window.rpRevertAtcLabel = function () {
+      clearTimeout(revertTimer);
+      if (labelEl) labelEl.textContent = originalLabel;
+      btn.classList.remove('rp-btn-cart--needs-size');
+    };
+
+    function promptForSize() {
+      if (!labelEl) return;
+      clearTimeout(revertTimer);
+      labelEl.textContent = 'Select a Size';
+      btn.classList.add('rp-btn-cart--needs-size');
+      revertTimer = setTimeout(window.rpRevertAtcLabel, 2200);
+    }
+
+    form.addEventListener('submit', function (e) {
+      if (!isSizeSelected()) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        promptForSize();
+      }
+    }, true);
+
+    if (sizesWrap) {
+      sizesWrap.addEventListener('click', function (e) {
+        if (e.target.closest('.rp-size')) window.rpRevertAtcLabel();
+      });
+    }
+  })();
+
   function rpNisOpen() {
     var activeSize = document.querySelector('#rp-sizes .rp-size.active');
     var sel = document.getElementById('rp-nis-size');
