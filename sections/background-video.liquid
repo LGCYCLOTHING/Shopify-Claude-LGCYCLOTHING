@@ -182,17 +182,6 @@
 
 {% endif %}
 
-{%- comment -%} Test: brighter/whiter treatment of the ocean video — homepage
-  hero only. Scoped to this exact section instance (not the shared
-  .videoBackground class) so the collection-page video hero is untouched. {%- endcomment -%}
-{%- if template.name == 'index' -%}
-<style>
-  #shopify-section-{{ section.id }} .fullscreen-video-wrap .video-js {
-    filter: brightness(2.2) contrast(0.85) saturate(0.25) !important;
-  }
-</style>
-{%- endif -%}
-
 
 {% if block.type == 'video' %}
 
