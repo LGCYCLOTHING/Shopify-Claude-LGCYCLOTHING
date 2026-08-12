@@ -265,12 +265,15 @@
 
   .rp-incentives {
     background: transparent; padding: 0;
-    display: flex; flex-direction: column; gap: 6px;
+    display: flex; flex-direction: column; gap: 2px;
     margin-top: 10px; margin-bottom: 0;
   }
-  .rp-incentive-row { display: flex; align-items: center; gap: 10px; }
-  .rp-incentive-icon { width: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #111; }
-  .rp-incentive-text { font-size: 10px; font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase; color: #111; }
+  .rp-incentive-row { display: flex; align-items: center; }
+  .rp-incentive-text {
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: 10px; font-weight: 900; letter-spacing: -0.02em;
+    text-transform: uppercase; color: #111;
+  }
   .rp-dot { width: 8px; height: 8px; border-radius: 50%; position: relative; flex-shrink: 0; }
   .rp-dot::before {
     content: ''; width: 8px; height: 8px; border-radius: 50%;

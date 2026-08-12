@@ -179,7 +179,8 @@
       "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/products/driven-by-purpose-oversized-t-shirt\" -o v_shirt_size.html)",
       "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}, size %{size_download}\\\\n\" -b cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/products/driven-by-purpose-oversized-t-shirt\")",
       "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/products/driven-by-purpose-oversized-t-shirt\" -o v_shirt_usp.html)",
-      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/products/driven-by-purpose-oversized-t-shirt\" -o v_shirt_usp2.html)"
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/products/driven-by-purpose-oversized-t-shirt\" -o v_shirt_usp2.html)",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/products/driven-by-purpose-oversized-t-shirt\" -o v_shirt_fixed.html)"
     ]
   }
 }
