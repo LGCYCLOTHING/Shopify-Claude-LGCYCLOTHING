@@ -850,12 +850,59 @@
       revertTimer = setTimeout(window.rpRevertAtcLabel, 2200);
     }
 
+    /* Take full ownership of this submit — AJAX the add-to-cart through and
+       open the cart drawer ourselves, on every device. Previously only the
+       mobile sticky bar (theme.liquid, <=860px) hijacked this form, so a
+       desktop click did a native POST (full page reload, no drawer) instead
+       of the AJAX + open-drawer behaviour every other add-to-cart path here
+       already has. */
+    function ajaxAddMain() {
+      var variantInput = document.getElementById('rp-vid');
+      var variantId = variantInput && variantInput.value;
+      if (!variantId || btn.disabled) return;
+
+      btn.disabled = true;
+      btn.classList.add('lgcy-adding');
+
+      var cartDrawer = document.querySelector('cart-drawer');
+      var sections = cartDrawer && typeof cartDrawer.getSectionsToRender === 'function'
+        ? cartDrawer.getSectionsToRender().map(function (s) { return s.id; })
+        : ['cart-drawer', 'cart-icon-bubble'];
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify({
+          id: parseInt(variantId, 10),
+          quantity: 1,
+          sections: sections,
+          sections_url: window.location.pathname
+        })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data && data.status && data.status !== 200) return;
+          if (cartDrawer && typeof cartDrawer.renderContents === 'function') {
+            cartDrawer.renderContents(data);
+          }
+        })
+        .finally(function () {
+          btn.disabled = false;
+          btn.classList.remove('lgcy-adding');
+        });
+    }
+
     form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
       if (!isSizeSelected()) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
         promptForSize();
+        return;
       }
+      ajaxAddMain();
     }, true);
 
     if (sizesWrap) {
