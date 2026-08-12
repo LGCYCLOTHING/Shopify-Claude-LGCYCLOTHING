@@ -3596,8 +3596,8 @@ html body .rp-lb-close {
 /* "Buy 2 Get Free Shipping" announcement bar — beige, dismissible */
 /* ============================================================== */
 html body [id*="__announcement_bar_Wzx9ic"] .utility-bar {
-  background: #ece3d1 !important;
-  --gradient-background: #ece3d1 !important;
+  background: #f6f1e8 !important;
+  --gradient-background: #f6f1e8 !important;
   position: relative;
 }
 html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__message,
