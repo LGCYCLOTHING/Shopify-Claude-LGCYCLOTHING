@@ -3595,25 +3595,28 @@ html body .rp-lb-close {
 /* ============================================================== */
 /* "Buy 2 Get Free Shipping" announcement bar — beige, dismissible */
 /* ============================================================== */
-[id*="__announcement_bar_Wzx9ic"] .utility-bar {
-  background: #f6f1e8 !important;
+html body [id*="__announcement_bar_Wzx9ic"] .utility-bar {
+  background: #ece3d1 !important;
+  --gradient-background: #ece3d1 !important;
   position: relative;
 }
-[id*="__announcement_bar_Wzx9ic"] .announcement-bar__message,
-[id*="__announcement_bar_Wzx9ic"] .announcement-bar__link {
+html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__message,
+html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__link {
   color: #111 !important;
 }
-[id*="__announcement_bar_Wzx9ic"] .announcement-bar__message {
+html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__message {
   font-family: 'Inter', Helvetica, Arial, sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 900;
   letter-spacing: -0.01em;
   text-transform: uppercase;
+  padding: 0.4rem 0 !important;
+  min-height: 0 !important;
 }
-[id*="__announcement_bar_Wzx9ic"] .announcement-bar__link svg {
+html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__link svg {
   display: none;
 }
-[id*="__announcement_bar_Wzx9ic"] .utility-bar__grid {
+html body [id*="__announcement_bar_Wzx9ic"] .utility-bar__grid {
   padding-right: 40px;
   box-sizing: border-box;
 }
