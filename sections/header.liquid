@@ -538,7 +538,12 @@
 
       if (this.predictiveSearch && this.predictiveSearch.isOpen) return;
 
-      if (scrollTop > this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
+      /* Extra scroll distance required past the header's own height before
+         it starts hiding on scroll-down — without this it disappears
+         almost the instant you scroll (the header, announcement bar
+         included, is only ~90px tall). Doesn't affect the reveal-on-
+         scroll-up or reset-near-top thresholds below. */
+      if (scrollTop > this.currentScrollTop && scrollTop > this.headerBounds.bottom + 150) {
         this.header.classList.add('scrolled-past-header');
         if (this.preventHide) return;
         requestAnimationFrame(this.hide.bind(this));
