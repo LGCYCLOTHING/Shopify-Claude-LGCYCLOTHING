@@ -728,8 +728,41 @@ svg.icon.icon-cart {
         priceEl.textContent = srcPrice.textContent.trim();
       }
 
+      // Same "no size chosen" guard as the main Add to Cart button — this
+      // bar posts to /cart/add.js directly and never goes through that
+      // button's <form>, so it needs its own copy of the check.
+      var stickyLabelEl = bar.querySelector('.lgcy-sticky-atc__label');
+      var stickyOriginalLabel = stickyLabelEl ? stickyLabelEl.textContent : 'ADD TO CART';
+      var stickyRevertTimer = null;
+      function isSizeSelected() {
+        var sizesWrap = document.getElementById('rp-sizes');
+        return !sizesWrap || !!sizesWrap.querySelector('.rp-size.active');
+      }
+      function promptForSizeSticky() {
+        if (!stickyLabelEl) return;
+        clearTimeout(stickyRevertTimer);
+        stickyLabelEl.textContent = 'SELECT A SIZE';
+        bar.classList.add('lgcy-sticky-atc--needs-size');
+        stickyRevertTimer = setTimeout(function () {
+          stickyLabelEl.textContent = stickyOriginalLabel;
+          bar.classList.remove('lgcy-sticky-atc--needs-size');
+        }, 2200);
+      }
+      if (sizesEl) {
+        sizesEl.addEventListener('click', function () {
+          clearTimeout(stickyRevertTimer);
+          if (stickyLabelEl) stickyLabelEl.textContent = stickyOriginalLabel;
+          bar.classList.remove('lgcy-sticky-atc--needs-size');
+        });
+      }
+
       // AJAX add to cart and open the cart drawer instead of redirecting
       function ajaxAdd() {
+        if (!isSizeSelected()) {
+          promptForSizeSticky();
+          return;
+        }
+
         var variantInput = document.querySelector('#rp-vid, input[name="id"]');
         var variantId = variantInput && variantInput.value;
         if (!variantId || stickyBtn.disabled) return;
