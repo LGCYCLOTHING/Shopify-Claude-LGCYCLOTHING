@@ -3255,12 +3255,6 @@ html body .rp-counter {
   cursor: not-allowed;
 }
 
-/* "Select a Size" prompt state — tapped with no size chosen */
-.lgcy-sticky-atc--needs-size .lgcy-sticky-atc__btn {
-  background: rgba(220, 38, 38, 0.14);
-  color: #b91c1c;
-}
-
 /* ============================================================== */
 /* PDP breadcrumbs — above the trust row                            */
 /* ============================================================== */
