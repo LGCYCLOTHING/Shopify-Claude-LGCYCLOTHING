@@ -333,6 +333,19 @@ html body .rp-btn-cart {
   overflow: visible;
 }
 
+/* "Select a Size" prompt state — Add to Cart clicked with no size chosen */
+html body .rp-btn-cart.rp-btn-cart--needs-size {
+  background: linear-gradient(
+    -75deg,
+    rgba(220, 38, 38, 0.12),
+    rgba(220, 38, 38, 0.22),
+    rgba(220, 38, 38, 0.12)
+  );
+}
+html body .rp-btn-cart.rp-btn-cart--needs-size > span {
+  color: #b91c1c;
+}
+
 /* Neutralize the existing ::before sweep / ::after cursor-glow on the button */
 html body .rp-btn-cart::before {
   display: none;
