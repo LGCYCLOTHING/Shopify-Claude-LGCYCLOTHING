@@ -807,16 +807,9 @@ svg.icon.icon-cart {
         ajaxAdd();
       });
 
-      // Also hijack the original ATC form submit so the inline button (and any
-      // future click on the real ATC) doesn't redirect to /cart either.
-      var atcForm = atc.closest('form');
-      if (atcForm && !atcForm.dataset.lgcyAjax) {
-        atcForm.dataset.lgcyAjax = '1';
-        atcForm.addEventListener('submit', function (e) {
-          e.preventDefault();
-          ajaxAdd();
-        });
-      }
+      // The real ATC form's own submit is now handled directly in
+      // sections/lgcy-product-page.liquid (AJAX + open the cart drawer on
+      // every device, not just mobile) — no hijack needed here anymore.
 
       // Sync disabled / sold-out state from the real ATC
       function syncState() {
