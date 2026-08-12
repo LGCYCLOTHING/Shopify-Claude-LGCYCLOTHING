@@ -3626,8 +3626,8 @@ html body [id*="__announcement_bar_Wzx9ic"] .utility-bar__grid {
   right: 14px;
   top: 50%;
   transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3635,7 +3635,7 @@ html body [id*="__announcement_bar_Wzx9ic"] .utility-bar__grid {
   border: none;
   cursor: pointer;
   color: #111;
-  opacity: 0.55;
+  opacity: 0.9;
   transition: opacity 0.15s ease;
   -webkit-tap-highlight-color: transparent;
   z-index: 2;
