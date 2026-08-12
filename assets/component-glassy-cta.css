@@ -3592,3 +3592,52 @@ html body .rp-lb-close {
 }
 /* redeploy nudge 2 — testing after Actions fix */
 
+/* ============================================================== */
+/* "Buy 2 Get Free Shipping" announcement bar — beige, dismissible */
+/* ============================================================== */
+#shopify-section-announcement_bar_Wzx9ic .utility-bar {
+  background: #f6f1e8 !important;
+  position: relative;
+}
+#shopify-section-announcement_bar_Wzx9ic .announcement-bar__message,
+#shopify-section-announcement_bar_Wzx9ic .announcement-bar__link {
+  color: #111 !important;
+}
+#shopify-section-announcement_bar_Wzx9ic .announcement-bar__message {
+  font-family: 'Inter', Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+#shopify-section-announcement_bar_Wzx9ic .announcement-bar__link svg {
+  display: none;
+}
+#shopify-section-announcement_bar_Wzx9ic .utility-bar__grid {
+  padding-right: 40px;
+  box-sizing: border-box;
+}
+
+.lgcy-announcement-close {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #111;
+  opacity: 0.55;
+  transition: opacity 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 2;
+}
+.lgcy-announcement-close:hover {
+  opacity: 1;
+}
+
