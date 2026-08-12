@@ -3595,25 +3595,25 @@ html body .rp-lb-close {
 /* ============================================================== */
 /* "Buy 2 Get Free Shipping" announcement bar — beige, dismissible */
 /* ============================================================== */
-#shopify-section-announcement_bar_Wzx9ic .utility-bar {
+[id*="__announcement_bar_Wzx9ic"] .utility-bar {
   background: #f6f1e8 !important;
   position: relative;
 }
-#shopify-section-announcement_bar_Wzx9ic .announcement-bar__message,
-#shopify-section-announcement_bar_Wzx9ic .announcement-bar__link {
+[id*="__announcement_bar_Wzx9ic"] .announcement-bar__message,
+[id*="__announcement_bar_Wzx9ic"] .announcement-bar__link {
   color: #111 !important;
 }
-#shopify-section-announcement_bar_Wzx9ic .announcement-bar__message {
+[id*="__announcement_bar_Wzx9ic"] .announcement-bar__message {
   font-family: 'Inter', Helvetica, Arial, sans-serif;
   font-size: 12px;
   font-weight: 900;
   letter-spacing: -0.01em;
   text-transform: uppercase;
 }
-#shopify-section-announcement_bar_Wzx9ic .announcement-bar__link svg {
+[id*="__announcement_bar_Wzx9ic"] .announcement-bar__link svg {
   display: none;
 }
-#shopify-section-announcement_bar_Wzx9ic .utility-bar__grid {
+[id*="__announcement_bar_Wzx9ic"] .utility-bar__grid {
   padding-right: 40px;
   box-sizing: border-box;
 }

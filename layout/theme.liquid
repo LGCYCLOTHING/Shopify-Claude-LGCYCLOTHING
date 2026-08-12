@@ -860,7 +860,7 @@ END LGCY GRID WIPE DISABLED -->
 <script>
   (function () {
     var STORAGE_KEY = 'lgcy_announcement_dismissed_buy2';
-    var section = document.getElementById('shopify-section-announcement_bar_Wzx9ic');
+    var section = document.querySelector('[id*="__announcement_bar_Wzx9ic"]');
     var bar = section && section.querySelector('.utility-bar');
     if (!section || !bar) return;
 
