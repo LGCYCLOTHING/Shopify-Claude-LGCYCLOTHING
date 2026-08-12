@@ -856,5 +856,32 @@ svg.icon.icon-cart {
 END LGCY GRID WIPE DISABLED -->
 {% render 'lgcy-sticky-cart' %}
 {% render 'lgcy-pdp-badges' %}
+
+<script>
+  (function () {
+    var STORAGE_KEY = 'lgcy_announcement_dismissed_buy2';
+    var section = document.getElementById('shopify-section-announcement_bar_Wzx9ic');
+    var bar = section && section.querySelector('.utility-bar');
+    if (!section || !bar) return;
+
+    if (localStorage.getItem(STORAGE_KEY) === '1') {
+      section.style.display = 'none';
+      return;
+    }
+
+    var closeBtn = document.createElement('button');
+    closeBtn.type = 'button';
+    closeBtn.className = 'lgcy-announcement-close';
+    closeBtn.setAttribute('aria-label', 'Dismiss');
+    closeBtn.innerHTML = '<svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+    closeBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      localStorage.setItem(STORAGE_KEY, '1');
+      section.style.display = 'none';
+    });
+    bar.appendChild(closeBtn);
+  })();
+</script>
 </body>
 </html>
