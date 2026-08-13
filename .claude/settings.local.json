@@ -185,7 +185,8 @@
       "Bash(timeout 60 shopify theme push --store 0dc7p1-tw.myshopify.com --theme 142745305274 --allow-live --nodelete --only sections/header-group.json --path 'c:\\\\Users\\\\zaina\\\\OneDrive\\\\Desktop\\\\LGCYCLOTHING- CODE')",
       "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o v_home_scroll.html)",
       "Bash(curl -s \"https://lgcyclothing.com/cdn/shop/t/3/compiled_assets/scripts.js?v=104631678294010894251786572050\" -o compiled_scripts.js)",
-      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o v_home_check.html)"
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o v_home_check.html)",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/collections/lgcy-glasses\" -o v_glasses_final2.html)"
     ]
   }
 }
