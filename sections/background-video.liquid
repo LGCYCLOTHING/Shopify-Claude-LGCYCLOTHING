@@ -182,6 +182,14 @@
 
 {% endif %}
 
+{%- if collection.handle == 'lgcy-glasses' -%}
+<style>
+  #shopify-section-{{ section.id }} .videoBox {
+    min-height: 82vh !important;
+    height: 82vh !important;
+  }
+</style>
+{%- endif -%}
 
 {% if block.type == 'video' %}
 
