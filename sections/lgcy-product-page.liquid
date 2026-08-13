@@ -48,10 +48,11 @@
     padding: 14px; z-index: 2; color: #333;
   }
   .rp-arrow:hover { opacity: 0.45; }
-  /* Pushed past the thumbnail column (left:10px, 62px wide) — it used to
-     sit at left:6px, directly underneath the thumbnails (which have a
-     higher z-index), so clicks never reached it. */
-  .rp-arrow-left  { left: 84px; }
+  /* Same 6px inset as the right arrow. Previously pushed to left:84px to
+     dodge the thumbnail column (left:10px, 62px wide, z-index:3), which
+     otherwise sat on top and ate the clicks — raising this above that
+     z-index instead keeps the click-through fixed without the asymmetry. */
+  .rp-arrow-left  { left: 6px; z-index: 4; }
   .rp-arrow-right { right: 6px; }
   .rp-counter {
     position: absolute; bottom: 20px; left: 24px;
