@@ -2,6 +2,14 @@
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
 {{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
 
+{%- if page.handle == 'data-sharing-opt-out' -%}
+<style>
+  #shopify-section-{{ section.id }} {
+    display: none !important;
+  }
+</style>
+{%- endif -%}
+
 {%- if section.settings.slide_height == 'adapt_image' and section.blocks.first.settings.image != blank -%}
   {%- style -%}
     @media screen and (max-width: 749px) {
