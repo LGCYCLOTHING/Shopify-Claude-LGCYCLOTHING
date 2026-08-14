@@ -188,7 +188,9 @@
       "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o v_home_check.html)",
       "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/collections/lgcy-glasses\" -o v_glasses_final2.html)",
       "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" -b cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/pages/about\")",
-      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/pages/about\" -o v_about3.html)"
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/pages/about\" -o v_about3.html)",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/pages/data-sharing-opt-out\" -o v_optout.html)",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/policies/terms-of-service\" -o v_terms.html)"
     ]
   }
 }
