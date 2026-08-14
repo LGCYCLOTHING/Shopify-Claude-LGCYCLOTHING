@@ -5,6 +5,19 @@
   overflow: hidden;
   background: #f6f1e8;
   padding: 140px 24px 110px;
+  /* #MainContent reserves space for the fixed header (padding-top:
+     calc(var(--header-height) + 24px) desktop / 96px mobile) — pull the
+     section up by that same amount so its own beige background fills
+     behind the header instead of leaving the page's white bg showing
+     through as a gap above it. The section's own 140px/24px top padding
+     (unchanged) keeps the title clear of the header either way. */
+  margin-top: calc(-1 * (var(--header-height, 90px) + 24px));
+}
+
+@media screen and (max-width: 989px) {
+  .lgcy-about {
+    margin-top: -96px;
+  }
 }
 
 /* Soft blurred color blobs behind the text — gives the page some depth
