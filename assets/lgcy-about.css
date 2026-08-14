@@ -7,7 +7,7 @@
   padding: 140px 24px 110px;
 }
 
-/* Soft blurred color blobs behind the hero — gives the page some depth
+/* Soft blurred color blobs behind the text — gives the page some depth
    instead of reading as a flat block of color. */
 .lgcy-about__blob {
   position: absolute;
@@ -48,87 +48,46 @@
   }
 }
 
-/* ── Hero ─────────────────────────────────────────────────────────────── */
+/* ── Story ───────────────────────────────────────────────────────────── */
 
-.lgcy-about__hero {
+.lgcy-about__story {
   position: relative;
   z-index: 1;
-  max-width: 720px;
+  text-align: left;
+  max-width: 560px;
   margin: 0 auto;
-  text-align: center;
 }
 
-.lgcy-about__eyebrow {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(20, 16, 8, 0.5);
-  margin: 0 0 16px;
-}
-
-.lgcy-about__title {
+.lgcy-about__story-title {
   font-family: 'Inter', sans-serif;
   font-weight: 900;
-  font-size: clamp(32px, 6vw, 54px);
-  letter-spacing: -0.03em;
-  line-height: 1.08;
-  color: #171310;
-  margin: 0 0 20px;
+  font-size: clamp(28px, 4.5vw, 40px);
+  letter-spacing: -0.02em;
+  color: #000000;
+  margin: 0 0 28px;
 }
 
-.lgcy-about__body {
+.lgcy-about__story-body {
   font-family: 'Inter', sans-serif;
   font-weight: 300;
-  font-size: 16px;
-  line-height: 1.6;
-  color: rgba(23, 19, 16, 0.65);
-  max-width: 440px;
-  margin: 0 auto 56px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #000000;
+  margin: 0 0 18px;
 }
 
-/* ── Values — plain row, no card chrome ─────────────────────────────── */
-
-.lgcy-about__values {
-  display: flex;
-  justify-content: center;
-  gap: 56px;
-  padding-bottom: 44px;
-  margin-bottom: 44px;
-  border-bottom: 1px solid rgba(23, 19, 16, 0.12);
+.lgcy-about__story-body--close {
+  font-weight: 700;
 }
 
-.lgcy-about__value {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.lgcy-about__value-word {
-  font-family: 'Inter', sans-serif;
-  font-weight: 900;
-  font-size: 20px;
-  letter-spacing: -0.02em;
-  color: #171310;
-}
-
-.lgcy-about__value-desc {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 1.4;
-  color: rgba(23, 19, 16, 0.55);
-  white-space: nowrap;
-}
-
-/* ── CTA — standalone pill, not stretched full-width ────────────────── */
+/* ── CTA ─────────────────────────────────────────────────────────────── */
 
 .lgcy-about__cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  margin-top: 20px;
   padding: 16px 36px;
   border-radius: 999px;
   background: #171310;
@@ -156,82 +115,10 @@
   transform: translateX(2px);
 }
 
-/* ── Long-form story ─────────────────────────────────────────────────── */
-
-.lgcy-about__story {
-  position: relative;
-  z-index: 1;
-  text-align: left;
-  max-width: 560px;
-  margin: 110px auto 0;
-}
-
-.lgcy-about__story-label {
-  display: block;
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(20, 16, 8, 0.5);
-  margin: 0 0 14px;
-}
-
-.lgcy-about__story-title {
-  font-family: 'Inter', sans-serif;
-  font-weight: 900;
-  font-size: clamp(22px, 3.5vw, 30px);
-  letter-spacing: -0.02em;
-  color: #171310;
-  margin: 0 0 24px;
-}
-
-.lgcy-about__story-body {
-  font-family: 'Inter', sans-serif;
-  font-weight: 300;
-  font-size: 15px;
-  line-height: 1.75;
-  color: rgba(23, 19, 16, 0.72);
-  margin: 0 0 18px;
-}
-
-.lgcy-about__story-body:last-child {
-  margin-bottom: 0;
-}
-
-.lgcy-about__story-body--close {
-  font-weight: 700;
-  color: #171310;
-}
-
 /* ── Responsive ───────────────────────────────────────────────────────── */
 
 @media screen and (max-width: 479px) {
   .lgcy-about {
     padding: 100px 20px 72px;
-  }
-
-  .lgcy-about__values {
-    gap: 0;
-  }
-
-  .lgcy-about__value {
-    flex: 1;
-    align-items: center;
-    border-left: 1px solid rgba(23, 19, 16, 0.12);
-    padding: 0 8px;
-  }
-
-  .lgcy-about__value:first-child {
-    border-left: none;
-  }
-
-  .lgcy-about__value-desc {
-    white-space: normal;
-    text-align: center;
-  }
-
-  .lgcy-about__story {
-    margin-top: 80px;
   }
 }
