@@ -262,11 +262,55 @@ color: {{ block.settings.color_text }}!important;
 </a>
  
 {% endif %}
- 
+
 </div>
- 
+
+{%- if collection.handle == 'the-legacy-collection' -%}
+<a href="/pages/about" class="lgcy-hero-read-story">
+  <span>Read The Story</span>
+  <svg width="13" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+    <path d="M0.5 5H13M13 5L9 1M13 5L9 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</a>
+<style>
+  #shopify-section-{{ section.id }} .lgcy-hero-read-story {
+    position: absolute;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    z-index: 15;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-decoration: none;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.65);
+    white-space: nowrap;
+  }
+  #shopify-section-{{ section.id }} .lgcy-hero-read-story svg {
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  #shopify-section-{{ section.id }} .lgcy-hero-read-story:hover svg {
+    transform: translateX(3px);
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .lgcy-hero-read-story {
+      bottom: 22px;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+    }
+  }
+</style>
+{%- endif -%}
+
 </div>
- 
+
 {% else %}
  
 <div class="imageBox" style="background-color: {{ block.settings.color_bg }}; {%- if block.settings.image_bg != blank -%}background-image: url('{{ block.settings.image_bg | img_url: 'master' }}');{%- endif -%}">
