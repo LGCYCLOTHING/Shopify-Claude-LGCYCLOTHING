@@ -122,12 +122,13 @@
         <span class="lgcy-breadcrumb__current">{{ collection_display_title | escape }}</span>
       </nav>
 
-      {%- unless collection.handle == 'the-legacy-collection' -%}
       <h1 class="collection-hero__title">
         <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
         {{- collection_display_title | escape -}}
+        {%- if collection.handle == 'the-legacy-collection' -%}
+          <span class="lgcy-collection-title-new">New</span>
+        {%- endif -%}
       </h1>
-      {%- endunless -%}
 
       {%- if section.settings.show_collection_description -%}
         <div class="collection-hero__description rte" id="CollectionDesc-{{ section.id }}">{{ collection.description }}</div>
