@@ -1,0 +1,45 @@
+{%- if collection.handle == 'the-legacy-collection' -%}
+<div id="hero-title-collection" style="
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  mix-blend-mode: exclusion;
+  pointer-events: none;
+  text-align: center;
+  width: 90vw;
+  max-width: 100%;
+">
+  <h1 style="
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: clamp(28px, 8vw, 77px);
+    font-weight: 900;
+    letter-spacing: -3px;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    line-height: 1.1;
+    text-transform: uppercase;
+    mix-blend-mode: exclusion;
+    -webkit-mix-blend-mode: exclusion;
+    white-space: nowrap;
+  ">DRIVEN BY PURPOSE</h1>
+</div>
+<style>
+  @media (max-width: 768px) {
+    #hero-title-collection h1 {
+      font-size: clamp(20px, 7vw, 45px) !important;
+      letter-spacing: -1px !important;
+      white-space: nowrap;
+    }
+  }
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Legacy Hero Title",
+  "tag": "div"
+}
+{% endschema %}
