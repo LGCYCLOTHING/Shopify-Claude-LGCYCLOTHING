@@ -6,7 +6,7 @@
 (function () {
   var TITLES = {
     'lgcy-glasses': 'LGCY EYEWEAR',
-    'the-legacy-collection': 'THE LEGACY COLLECTION.',
+    'the-legacy-collection': 'DRIVEN BY PURPOSE',
     'all': 'LGCYCLOTHING'
   };
 
