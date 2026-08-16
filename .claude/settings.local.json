@@ -210,7 +210,8 @@
       "Bash(curl -s -c /c/Users/zaina/AppData/Local/Temp/claude/c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE/9e72fbcd-e046-4fcb-964d-f44471111847/scratchpad/cookies.txt https://lgcyclothing.com/password)",
       "Bash(curl -s -b /c/Users/zaina/AppData/Local/Temp/claude/c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE/9e72fbcd-e046-4fcb-964d-f44471111847/scratchpad/cookies.txt -c /c/Users/zaina/AppData/Local/Temp/claude/c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE/9e72fbcd-e046-4fcb-964d-f44471111847/scratchpad/cookies.txt https://lgcyclothing.com/collections/the-legacy-collection?nocache=__CMDSUB_OUTPUT__)",
       "Bash(node rebuild_hero.js)",
-      "Bash(curl -s https://lgcyclothing.com/collections/the-legacy-collection?nocache=__CMDSUB_OUTPUT__ -o /c/Users/zaina/AppData/Local/Temp/claude/c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE/9e72fbcd-e046-4fcb-964d-f44471111847/scratchpad/live_check2.html -w 'HTTP_STATUS:%{http_code}\\\\n')"
+      "Bash(curl -s https://lgcyclothing.com/collections/the-legacy-collection?nocache=__CMDSUB_OUTPUT__ -o /c/Users/zaina/AppData/Local/Temp/claude/c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE/9e72fbcd-e046-4fcb-964d-f44471111847/scratchpad/live_check2.html -w 'HTTP_STATUS:%{http_code}\\\\n')",
+      "Bash(node fix_title_and_reenable.js)"
     ]
   }
 }
