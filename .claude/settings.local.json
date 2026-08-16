@@ -191,7 +191,20 @@
       "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/pages/about\" -o v_about3.html)",
       "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/pages/data-sharing-opt-out\" -o v_optout.html)",
       "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/policies/terms-of-service\" -o v_terms.html)",
-      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o v_home_footer.html)"
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/\" -o v_home_footer.html)",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/collections/the-legacy-collection\" -o v_legacy_titlebug.html)",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/collections/the-legacy-collection\" -o v_legacy_fixed2.html)",
+      "Bash(sed -n '/hero-title-collection {/,/}/p' v_legacy_fixed2.html)",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/collections/lgcy-glasses\" -o v_glasses_recheck.html)",
+      "Bash(sed -n '/hero-title-collection {/,/}/p' v_glasses_recheck.html)",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/collections/the-legacy-collection\" -o v_legacy_newtitle.html)",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/collections/the-legacy-collection\" -o v_legacy_shadow.html)",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/collections/the-legacy-collection\")",
+      "Bash(curl -s -b cookies.txt -c cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/collections/the-legacy-collection?nocache=$\\(date +%s\\)\")",
+      "Bash(curl -s -D - -o /dev/null -b cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/collections/the-legacy-collection\")",
+      "Bash(curl -s -D - -o /dev/null -b cookies.txt -A \"Mozilla/5.0\" \"https://lgcyclothing.com/collections/the-legacy-collection?fresh=$\\(date +%s%N\\)\")",
+      "Bash(git show *)",
+      "Bash(mkdir -p /c/Users/zaina/AppData/Local/Temp/claude/c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE/9e72fbcd-e046-4fcb-964d-f44471111847/scratchpad)"
     ]
   }
 }
