@@ -9,6 +9,9 @@
   endif
 -%}
 {%- if hero_title != blank -%}
+{%- if collection.handle == 'the-legacy-collection' -%}
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+{%- endif -%}
 <div id="hero-title-collection" style="
   position: absolute;
   top: 50%;
@@ -35,6 +38,19 @@
     -webkit-mix-blend-mode: exclusion;
     white-space: nowrap;
   ">{{ hero_title }}</h1>
+  {%- if collection.handle == 'the-legacy-collection' -%}
+  <p id="hero-subtitle-collection" style="
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: clamp(17px, 2.2vw, 26px);
+    color: #ffffff;
+    margin: 14px 0 0;
+    padding: 0;
+    line-height: 1.35;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75), 0 1px 4px rgba(0, 0, 0, 0.9);
+  ">&ldquo;The first chapter: The Signature Heavyweight — the beginning of the legacy.&rdquo;</p>
+  {%- endif -%}
 </div>
 <style>
   @media (max-width: 768px) {
@@ -42,6 +58,10 @@
       font-size: clamp(20px, 7vw, 45px) !important;
       letter-spacing: -1px !important;
       white-space: nowrap;
+    }
+    #hero-subtitle-collection {
+      font-size: clamp(13px, 4vw, 20px) !important;
+      margin-top: 10px !important;
     }
   }
 </style>
