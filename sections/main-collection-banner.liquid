@@ -111,6 +111,8 @@
   assign collection_display_title = collection.title
   if collection.handle == 'all'
     assign collection_display_title = 'All Products'
+  elsif collection.handle == 'the-legacy-collection'
+    assign collection_display_title = 'Driven By Purpose'
   endif
 -%}
 <div class="collection-hero{% if section.settings.show_collection_image and collection.image and collection.handle != 'lgcy-glasses' %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
