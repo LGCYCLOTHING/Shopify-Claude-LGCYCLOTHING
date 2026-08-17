@@ -3593,30 +3593,34 @@ html body .rp-lb-close {
 /* redeploy nudge 2 — testing after Actions fix */
 
 /* ============================================================== */
-/* "Buy 2 Get Free Shipping" announcement bar — no background,     */
-/* dismissible. Same row it's always been in, just no beige box.   */
+/* "Buy 2 Get Free Shipping" — no bar/box. Relocated by JS (see    */
+/* theme.liquid) into the fixed header itself, as a slim line      */
+/* above the logo, so it floats over the video the same way the   */
+/* logo/nav already do. Kept as short as possible to minimize the  */
+/* height it adds above the logo. Color comes from the page-type-  */
+/* aware rule in sections/header.liquid (white on hero pages,      */
+/* dark elsewhere) so it stays legible off the video too.          */
 /* ============================================================== */
-html body [id*="__announcement_bar_Wzx9ic"] .utility-bar {
-  background: transparent !important;
-  --gradient-background: transparent !important;
-  position: relative;
+.lgcy-header-announcement {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 3px 0;
+  box-sizing: border-box;
 }
-html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__message,
-html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__link {
-  color: #111 !important;
-}
-html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__message {
+.lgcy-header-announcement .announcement-bar__message {
   display: inline-flex;
   align-items: center;
   font-family: 'Inter', Helvetica, Arial, sans-serif;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: -0.01em;
   text-transform: uppercase;
-  padding: 0.4rem 0 !important;
+  line-height: 1;
+  padding: 0 !important;
   min-height: 0 !important;
 }
-html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__link svg {
+.lgcy-header-announcement .announcement-bar__link svg {
   display: none;
 }
 
@@ -3625,14 +3629,13 @@ html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__link svg {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
-  margin-left: 8px;
+  width: 16px;
+  height: 16px;
+  margin-left: 6px;
   vertical-align: middle;
   background: none;
   border: none;
   cursor: pointer;
-  color: #111;
   opacity: 0.9;
   transition: opacity 0.15s ease;
   -webkit-tap-highlight-color: transparent;
