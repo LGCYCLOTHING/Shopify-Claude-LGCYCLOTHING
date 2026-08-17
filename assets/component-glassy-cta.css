@@ -3593,31 +3593,30 @@ html body .rp-lb-close {
 /* redeploy nudge 2 — testing after Actions fix */
 
 /* ============================================================== */
-/* "Buy 2 Get Free Shipping" announcement bar — beige, dismissible */
+/* "Buy 2 Get Free Shipping" — floats inside the fixed header, no  */
+/* bar/box. Relocated there by JS (see theme.liquid); color is set */
+/* by the page-type-aware rule in sections/header.liquid so it     */
+/* stays legible on non-hero pages too.                            */
 /* ============================================================== */
-html body [id*="__announcement_bar_Wzx9ic"] .utility-bar {
-  background: transparent !important;
-  --gradient-background: transparent !important;
-  position: relative;
+.lgcy-header-announcement {
+  width: 100%;
+  text-align: center;
+  padding: 6px 0;
+  box-sizing: border-box;
 }
-html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__message,
-html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__link {
-  color: #ffffff !important;
-}
-html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__message {
+.lgcy-header-announcement .announcement-bar__message {
+  display: inline-flex;
+  align-items: center;
   font-family: 'Inter', Helvetica, Arial, sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: -0.01em;
   text-transform: uppercase;
-  padding: 0.4rem 0 !important;
+  padding: 0 !important;
   min-height: 0 !important;
 }
-html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__link svg {
+.lgcy-header-announcement .announcement-bar__link svg {
   display: none;
-}
-html body [id*="__announcement_bar_Wzx9ic"] .utility-bar__grid {
-  box-sizing: border-box;
 }
 
 .lgcy-announcement-close {
@@ -3632,7 +3631,6 @@ html body [id*="__announcement_bar_Wzx9ic"] .utility-bar__grid {
   background: none;
   border: none;
   cursor: pointer;
-  color: #ffffff;
   opacity: 0.9;
   transition: opacity 0.15s ease;
   -webkit-tap-highlight-color: transparent;
