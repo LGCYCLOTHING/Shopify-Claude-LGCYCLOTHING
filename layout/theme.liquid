@@ -501,20 +501,6 @@ svg.icon.icon-cart {
     text-decoration: none;
 }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1/bundled/lenis.min.js"></script>
-<script>
-  console.log("lenis loaded?", typeof Lenis);
-
-  const lenis = new Lenis();
-
-  function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
-  requestAnimationFrame(raf);
-
-  console.log("lenis running");
-</script>
   {%- render "ecom_footer"-%}
 
 <!-- GSAP -->
