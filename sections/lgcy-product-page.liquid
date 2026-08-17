@@ -240,19 +240,6 @@
   .rp-dynamic-checkout {
     width: 100%;
     margin-top: 8px;
-    padding: 7px;
-    box-sizing: border-box;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.55);
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.7), inset 0 -1px 2px rgba(0, 0, 0, 0.04);
-    /* Shopify officially supports this custom property for rounding the
-       button's own corners — everything else about its internal look is
-       rendered inside a secure cross-origin iframe (Apple/Shop Pay brand
-       requirements), so it can't be given the same glass treatment as the
-       frame around it. */
     --shopify-payment-button-border-radius: 999px;
   }
   .rp-dynamic-checkout .shopify-payment-button__button {
