@@ -860,49 +860,27 @@ END LGCY GRID WIPE DISABLED -->
   (function () {
     var STORAGE_KEY = 'lgcy_announcement_dismissed_buy2';
     var section = document.querySelector('[id*="__announcement_bar_Wzx9ic"]');
-    var announcement = section && section.querySelector('.announcement-bar');
-    var headerWrapper = document.querySelector('.header-wrapper');
-    if (!section || !announcement || !headerWrapper) return;
+    var bar = section && section.querySelector('.utility-bar');
+    var message = section && section.querySelector('.announcement-bar__message');
+    if (!section || !bar || !message) return;
 
-    // Boxed announcement-bar section is retired — its text now lives inside
-    // the fixed header itself (same element the logo/nav use to float over
-    // the video), as a slim line above the logo. NOTE: do not use
-    // position:fixed for this — Lenis (site-wide smooth scroll) transforms
-    // the page, which breaks true position:fixed for anything inside its
-    // scroll wrapper. The header floats correctly because it's already
-    // outside that wrapper, so nesting inside it (position:static/absolute
-    // relative to .header-wrapper) is what keeps this correctly pinned.
-    section.style.display = 'none';
-
-    function updateHeaderHeight() {
-      var outerHeader = document.querySelector('.section-header');
-      if (outerHeader) {
-        document.documentElement.style.setProperty('--header-height', outerHeader.offsetHeight + 'px');
-      }
+    if (localStorage.getItem(STORAGE_KEY) === '1') {
+      section.style.display = 'none';
+      return;
     }
-
-    if (localStorage.getItem(STORAGE_KEY) === '1') return;
-
-    announcement.classList.add('lgcy-header-announcement');
 
     var closeBtn = document.createElement('button');
     closeBtn.type = 'button';
     closeBtn.className = 'lgcy-announcement-close';
     closeBtn.setAttribute('aria-label', 'Dismiss');
-    closeBtn.innerHTML = '<svg width="11" height="11" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+    closeBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
     closeBtn.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
       localStorage.setItem(STORAGE_KEY, '1');
-      announcement.style.display = 'none';
-      updateHeaderHeight();
+      section.style.display = 'none';
     });
-    announcement.appendChild(closeBtn);
-
-    var innerHeader = headerWrapper.querySelector('header.header');
-    headerWrapper.insertBefore(announcement, innerHeader || headerWrapper.firstChild);
-
-    updateHeaderHeight();
+    bar.appendChild(closeBtn);
   })();
 </script>
 </body>
