@@ -286,6 +286,20 @@
   }
 {%- endstyle -%}
 
+{%- unless request.page_type == 'index' or request.page_type == 'collection' -%}
+<style>
+  /* Same mobile header-offset fix as above — repeated here because it
+     needs to come after the unconditional .section-header top:0 !important
+     block right above (same specificity + !important, so later source
+     order wins the tie; this was silently overriding the earlier one). */
+  @media screen and (max-width: 989px) {
+    .section-header {
+      top: 24px !important;
+    }
+  }
+</style>
+{%- endunless -%}
+
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
