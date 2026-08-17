@@ -2946,7 +2946,7 @@ html body #insta-feed,
 html body .instafeed-shopify,
 html body .instafeed-new-layout-container,
 html body .instafeed-new-layout-wrapper {
-  background: #f6f1e8 !important;
+  background: #faf8f4 !important;
 }
 
 /* Full-bleed so the beige above reaches the true viewport edges — these are
@@ -3264,7 +3264,7 @@ html body .lgcy-breadcrumbs.lgcy-breadcrumbs--trust {
   margin: 0;
   padding: 20px 20px;
   font-size: 11px;
-  background: #f6f1e8;
+  background: #faf8f4;
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
@@ -3596,8 +3596,8 @@ html body .rp-lb-close {
 /* "Buy 2 Get Free Shipping" announcement bar — beige, dismissible */
 /* ============================================================== */
 html body [id*="__announcement_bar_Wzx9ic"] .utility-bar {
-  background: #f6f1e8 !important;
-  --gradient-background: #f6f1e8 !important;
+  background: #faf8f4 !important;
+  --gradient-background: #faf8f4 !important;
   position: relative;
   z-index: 100;
 }
