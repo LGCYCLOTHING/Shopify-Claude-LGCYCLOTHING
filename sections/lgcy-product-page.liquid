@@ -630,6 +630,9 @@
       {%- form 'product', p -%}
         <input type="hidden" name="id" id="rp-vid" value="{{ v.id }}">
         <button type="submit" name="add" class="rp-btn-cart" id="rp-atc-btn"><span>Add to Cart</span></button>
+        <div class="rp-dynamic-checkout">
+          {{ form | payment_button }}
+        </div>
       {%- endform -%}
 
       <!-- Product Details accordion -->
