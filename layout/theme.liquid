@@ -860,14 +860,24 @@ END LGCY GRID WIPE DISABLED -->
   (function () {
     var STORAGE_KEY = 'lgcy_announcement_dismissed_buy2';
     var section = document.querySelector('[id*="__announcement_bar_Wzx9ic"]');
-    var bar = section && section.querySelector('.utility-bar');
     var announcement = section && section.querySelector('.announcement-bar');
-    if (!section || !bar || !announcement) return;
+    var headerWrapper = document.querySelector('.header-wrapper');
+    if (!section || !announcement || !headerWrapper) return;
 
-    if (localStorage.getItem(STORAGE_KEY) === '1') {
-      section.style.display = 'none';
-      return;
+    // The boxed announcement-bar section is retired — its text now floats
+    // inside the fixed header itself, directly over the video, no bar.
+    section.style.display = 'none';
+
+    function updateHeaderHeight() {
+      var outerHeader = document.querySelector('.section-header');
+      if (outerHeader) {
+        document.documentElement.style.setProperty('--header-height', outerHeader.offsetHeight + 'px');
+      }
     }
+
+    if (localStorage.getItem(STORAGE_KEY) === '1') return;
+
+    announcement.classList.add('lgcy-header-announcement');
 
     var closeBtn = document.createElement('button');
     closeBtn.type = 'button';
@@ -878,9 +888,15 @@ END LGCY GRID WIPE DISABLED -->
       e.preventDefault();
       e.stopPropagation();
       localStorage.setItem(STORAGE_KEY, '1');
-      section.style.display = 'none';
+      announcement.style.display = 'none';
+      updateHeaderHeight();
     });
     announcement.appendChild(closeBtn);
+
+    var innerHeader = headerWrapper.querySelector('header.header');
+    headerWrapper.insertBefore(announcement, innerHeader || headerWrapper.firstChild);
+
+    updateHeaderHeight();
   })();
 </script>
 </body>
