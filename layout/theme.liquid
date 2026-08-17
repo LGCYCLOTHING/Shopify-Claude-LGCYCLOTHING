@@ -861,8 +861,8 @@ END LGCY GRID WIPE DISABLED -->
     var STORAGE_KEY = 'lgcy_announcement_dismissed_buy2';
     var section = document.querySelector('[id*="__announcement_bar_Wzx9ic"]');
     var bar = section && section.querySelector('.utility-bar');
-    var message = section && section.querySelector('.announcement-bar__message');
-    if (!section || !bar || !message) return;
+    var announcement = section && section.querySelector('.announcement-bar');
+    if (!section || !bar || !announcement) return;
 
     if (localStorage.getItem(STORAGE_KEY) === '1') {
       section.style.display = 'none';
