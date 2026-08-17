@@ -41,7 +41,9 @@
   .header-wrapper h1.header__heading span.h2,
   .header-wrapper details>span,
   .header-wrapper .disclosure__button>span,
-  .header-wrapper .disclosure__button svg {
+  .header-wrapper .disclosure__button svg,
+  .lgcy-header-announcement,
+  .lgcy-header-announcement .lgcy-announcement-close {
     color: {% if request.page_type == 'index' or request.page_type == 'collection' or request.page_type == 'cart' or template.suffix == 'legacy-signup' %}#ffffff{% else %}#000000{% endif %} !important;
   }
 
