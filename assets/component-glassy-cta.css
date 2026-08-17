@@ -3599,6 +3599,16 @@ html body [id*="__announcement_bar_Wzx9ic"] .utility-bar {
   background: #f6f1e8 !important;
   --gradient-background: #f6f1e8 !important;
   position: relative;
+  z-index: 100;
+}
+/* On video-hero pages (home/collections) the hero video sits later in the
+   DOM with a negative top margin pulling it upward, and paints over
+   anything above it that doesn't have its own stacking priority — the
+   header nav survives because it's a very high z-index, but the
+   announcement bar had none, so the video was covering it entirely. */
+html body [id*="__announcement_bar_Wzx9ic"] {
+  position: relative;
+  z-index: 100;
 }
 html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__message,
 html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__link {
