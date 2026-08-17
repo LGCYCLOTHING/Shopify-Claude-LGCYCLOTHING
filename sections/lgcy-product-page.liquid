@@ -1602,8 +1602,24 @@
     .lgcy-nl-dismiss {
       top: -10px; right: auto; left: -10px;
     }
+
+    /* Resting transform is translateY(-50%) here (vertical centering), so
+       the intro/dismiss animations need their own keyframes that animate
+       around that instead of the bottom-left pill's translateY(0) rest
+       state — otherwise the animation's end frame would override and
+       un-center it. */
+    .lgcy-nl-trigger-wrap {
+      animation: lgcyNlSlideInRight 0.5s cubic-bezier(0.34, 1.4, 0.64, 1) 1.2s both;
+    }
+    .lgcy-nl-trigger-wrap.dismissed {
+      animation: lgcyNlSlideDownRight 0.28s ease forwards;
+    }
   }
 
+  @keyframes lgcyNlSlideInRight {
+    from { opacity: 0; transform: translateY(-50%) translateX(20px); }
+    to   { opacity: 1; transform: translateY(-50%) translateX(0); }
+  }
   @keyframes lgcyNlSlideDownRight {
     to { opacity: 0; transform: translateY(-50%) translateX(20px); }
   }
