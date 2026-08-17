@@ -3599,10 +3599,18 @@ html body .rp-lb-close {
 /* stays legible on non-hero pages too.                            */
 /* ============================================================== */
 .lgcy-header-announcement {
+  position: absolute;
+  top: 4px;
+  left: 0;
   width: 100%;
   text-align: center;
-  padding: 6px 0;
+  padding: 0;
   box-sizing: border-box;
+  pointer-events: none;
+}
+.lgcy-header-announcement .announcement-bar__link,
+.lgcy-header-announcement .lgcy-announcement-close {
+  pointer-events: auto;
 }
 .lgcy-header-announcement .announcement-bar__message {
   display: inline-flex;
