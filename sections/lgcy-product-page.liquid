@@ -1578,8 +1578,14 @@
       left: auto;
       right: 0;
       bottom: auto;
-      top: 50%;
-      transform: translateY(-50%);
+      /* Fixed pixel offset, not a percentage of viewport height — mobile
+         browsers resize the visible viewport as the address bar hides/
+         shows during scroll, and anything positioned via top:%/vh drifts
+         as that percentage recalculates against the changing total
+         height. A flat pixel value from the true top edge is immune to
+         that, since it doesn't depend on total viewport height at all. */
+      top: 280px;
+      transform: none;
     }
     .lgcy-nl-trigger-wrap.dismissed { animation: lgcyNlSlideDownRight 0.28s ease forwards; }
 
