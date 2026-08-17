@@ -3494,7 +3494,7 @@ html body .lgcy-breadcrumbs__current {
     min-height: 0 !important;
   }
   html body .section-header {
-    top: -12px !important;
+    top: 50px !important;
   }
 
   html body .header {
