@@ -3593,27 +3593,19 @@ html body .rp-lb-close {
 /* redeploy nudge 2 — testing after Actions fix */
 
 /* ============================================================== */
-/* "Buy 2 Get Free Shipping" — floats inside the fixed header, no  */
-/* bar/box. Relocated there by JS (see theme.liquid); color is set */
-/* by the page-type-aware rule in sections/header.liquid so it     */
-/* stays legible on non-hero pages too.                            */
+/* "Buy 2 Get Free Shipping" announcement bar — no background,     */
+/* dismissible. Same row it's always been in, just no beige box.   */
 /* ============================================================== */
-.lgcy-header-announcement {
-  position: fixed;
-  top: 2px;
-  left: 0;
-  width: 100%;
-  z-index: 10011;
-  text-align: center;
-  padding: 0;
-  box-sizing: border-box;
-  pointer-events: none;
+html body [id*="__announcement_bar_Wzx9ic"] .utility-bar {
+  background: transparent !important;
+  --gradient-background: transparent !important;
+  position: relative;
 }
-.lgcy-header-announcement .announcement-bar__link,
-.lgcy-header-announcement .lgcy-announcement-close {
-  pointer-events: auto;
+html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__message,
+html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__link {
+  color: #111 !important;
 }
-.lgcy-header-announcement .announcement-bar__message {
+html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__message {
   display: inline-flex;
   align-items: center;
   font-family: 'Inter', Helvetica, Arial, sans-serif;
@@ -3621,10 +3613,10 @@ html body .rp-lb-close {
   font-weight: 700;
   letter-spacing: -0.01em;
   text-transform: uppercase;
-  padding: 0 !important;
+  padding: 0.4rem 0 !important;
   min-height: 0 !important;
 }
-.lgcy-header-announcement .announcement-bar__link svg {
+html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__link svg {
   display: none;
 }
 
@@ -3640,6 +3632,7 @@ html body .rp-lb-close {
   background: none;
   border: none;
   cursor: pointer;
+  color: #111;
   opacity: 0.9;
   transition: opacity 0.15s ease;
   -webkit-tap-highlight-color: transparent;
