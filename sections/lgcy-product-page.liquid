@@ -1567,20 +1567,55 @@
   .lgcy-nl-success.visible { display: block; }
   .lgcy-nl-form-wrap.hidden { display: none; }
 
+  /* Mobile: instead of a floating bottom-left pill, this becomes a slim
+     sticky tab pinned to the right edge, vertically centered — same "GET
+     10% OFF" text as desktop, just read top-to-bottom to fit the strip. */
   @media (max-width: 600px) {
     .lgcy-nl-right { display: none; }
     .lgcy-nl-left { padding: 40px 22px 32px; }
-    .lgcy-nl-trigger-wrap { left: 12px; }
-    .lgcy-nl-trigger-label { display: none; }
-    .lgcy-nl-trigger-logo { border-radius: 13px; }
+
+    .lgcy-nl-trigger-wrap {
+      left: auto;
+      right: 0;
+      bottom: auto;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .lgcy-nl-trigger-wrap.dismissed { animation: lgcyNlSlideDownRight 0.28s ease forwards; }
+
+    .lgcy-nl-trigger {
+      flex-direction: column;
+      border-radius: 12px 0 0 12px;
+    }
+    .lgcy-nl-trigger-logo {
+      width: 40px; height: 40px;
+      border-radius: 11px 0 0 0;
+    }
+    .lgcy-nl-trigger-label {
+      display: flex;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      padding: 12px 7px;
+      line-height: 1.3;
+    }
+    .lgcy-nl-dismiss {
+      top: -10px; right: auto; left: -10px;
+    }
   }
 
-  /* Below 860px the sticky size/price/ATC bar (.lgcy-sticky-atc, in
-     component-glassy-cta.css) docks at bottom:0 and runs ~112px tall
-     (10px padding + 34px size row + 6px gap + 52px button + 10px padding)
-     plus the device's safe-area inset — keep the newsletter trigger clear
-     of it so it doesn't cover the price. */
-  @media (max-width: 860px) {
+  @keyframes lgcyNlSlideDownRight {
+    to { opacity: 0; transform: translateY(-50%) translateX(20px); }
+  }
+
+  /* Below 860px (but above the mobile right-edge-tab breakpoint) the sticky
+     size/price/ATC bar (.lgcy-sticky-atc, in component-glassy-cta.css)
+     docks at bottom:0 and runs ~112px tall (10px padding + 34px size row +
+     6px gap + 52px button + 10px padding) plus the device's safe-area
+     inset — keep the newsletter trigger clear of it so it doesn't cover
+     the price. Not needed at 600px and below — the trigger lives on the
+     right edge there instead, clear of the bottom bar entirely. */
+  @media (min-width: 601px) and (max-width: 860px) {
     .lgcy-nl-trigger-wrap { bottom: calc(124px + env(safe-area-inset-bottom, 0px)); }
   }
 </style>
