@@ -188,6 +188,16 @@
     min-height: 82vh !important;
     height: 82vh !important;
   }
+  /* On mobile, base.css separately forces the outer section wrapper
+     (.videoBackground, same element as #shopify-section-{{ section.id }})
+     to a flat 100vh regardless of what the inner .videoBox above is set
+     to — leaving an 18vh gap of blank page background between the 82vh
+     video and the next section. Cap the wrapper itself to match. */
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }}.videoBackground {
+      height: 82vh !important;
+    }
+  }
 </style>
 {%- endif -%}
 
