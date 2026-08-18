@@ -67,9 +67,7 @@
           assign lgcy_fs_price_needed = lgcy_fs_avg_item_price | times: lgcy_fs_remaining
         -%}
         <div class="cart-drawer__fs-bar{% if lgcy_fs_unlocked %} cart-drawer__fs-bar--unlocked{% endif %}">
-          <div class="cart-drawer__fs-track">
-            <div class="cart-drawer__fs-fill" style="width: {{ lgcy_fs_percent }}%;"></div>
-          </div>
+          <div class="cart-drawer__fs-track" style="background: linear-gradient(to right, #2e7d32 {{ lgcy_fs_percent }}%, #ececec {{ lgcy_fs_percent }}%);"></div>
           <p class="cart-drawer__fs-text">
             {%- if lgcy_fs_unlocked -%}
               {{- 'icon-checkmark.svg' | inline_asset_content -}}
