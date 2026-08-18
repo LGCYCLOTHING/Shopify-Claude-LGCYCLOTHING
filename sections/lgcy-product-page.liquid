@@ -1005,6 +1005,22 @@
     }
   })();
 
+  function rpNisOpen() {
+    var activeSize = document.querySelector('#rp-sizes .rp-size.active');
+    var sel = document.getElementById('rp-nis-size');
+    if (activeSize && sel) sel.value = activeSize.dataset.val;
+    document.getElementById('rp-nis-modal').classList.add('open');
+  }
+  function rpNisClose() { document.getElementById('rp-nis-modal').classList.remove('open'); }
+  function rpNisClick(e) { if (e.target === document.getElementById('rp-nis-modal')) rpNisClose(); }
+  function rpNisSubmit() {
+    var email = document.getElementById('rp-nis-email').value.trim();
+    var size  = document.getElementById('rp-nis-size').value;
+    if (!email || !size) { alert('Please fill in all fields.'); return; }
+    document.getElementById('rp-nis-success').style.display = 'block';
+    document.getElementById('rp-nis-email').value = '';
+  }
+
   (function() {
     var gallery = document.querySelector('.rp-gallery');
     if (gallery) {
