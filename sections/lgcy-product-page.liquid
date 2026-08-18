@@ -402,25 +402,59 @@
   .rp-tab-panel a { color: #000 !important; text-decoration: underline !important; }
   .lgcy-merged-to-tab { display: none !important; }
 
-  /* TEMPORARY TEST: plain, always-visible block — no modal/overlay/hide
-     tricks at all, to rule out CSS as the reason the Omnisend embed isn't
-     rendering. If this doesn't show the form either, the issue is not
-     visibility-related. */
-  .rp-notify-test {
-    margin: 16px 0;
-    padding: 16px;
-    border: 2px dashed #c00;
-    background: #fff;
+  .rp-nis-modal {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5); z-index: 8888;
+    align-items: center; justify-content: center;
   }
-  .rp-notify-test::before {
-    content: 'Omnisend form test area:';
-    display: block;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #c00;
-    margin-bottom: 8px;
+  .rp-nis-modal.open { display: flex; }
+  .rp-nis-box {
+    background: linear-gradient(180deg, #f4f4f4 0%, #c8c8c8 100%);
+    padding: 36px 32px 28px; width: 100%; max-width: 420px; position: relative;
+    border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.4);
   }
+  .rp-nis-close {
+    position: absolute; top: 14px; right: 18px;
+    background: none; border: none; font-size: 24px; cursor: pointer; color: #555; line-height: 1;
+  }
+  .rp-nis-title { font-size: 14px; font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 6px; color: #111; }
+  .rp-nis-sub { font-size: 12px; font-weight: 900; letter-spacing: -0.02em; color: #444; margin-bottom: 20px; }
+  .rp-nis-form { display: flex; flex-direction: column; gap: 10px; }
+  .rp-nis-form input, .rp-nis-form select {
+    height: 44px; padding: 0 12px; border: 1px solid #aaa;
+    font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12px; font-weight: 900; letter-spacing: -0.02em; color: #111; background: #fff; outline: none; width: 100%;
+    border-radius: 10px;
+  }
+  .rp-nis-form input:focus, .rp-nis-form select:focus { border-color: #111; }
+  .rp-nis-submit {
+    position: relative; overflow: hidden; isolation: isolate;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    color: #111; border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 999px;
+    font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px; font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), inset 0 -1px 2px rgba(255, 255, 255, 0.3), 0 6px 18px rgba(0, 0, 0, 0.12);
+    --mx: 50%; --my: 50%; --mr: 0px;
+  }
+  .rp-nis-submit::before {
+    content: ''; position: absolute; inset: 0; z-index: 1;
+    pointer-events: none; will-change: background-position;
+    background: repeating-linear-gradient(120deg, rgba(255,255,255,0) 0, rgba(255,255,255,0) 90px, rgba(255,255,255,0.85) 150px, rgba(255,255,255,0) 210px, rgba(255,255,255,0) 320px);
+    animation: rp-btn-sweep 5s linear infinite;
+  }
+  .rp-nis-submit::after {
+    content: ''; position: absolute; inset: 0; z-index: 2;
+    pointer-events: none;
+    background: radial-gradient(circle var(--mr) at var(--mx) var(--my), rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.4) 30%, rgba(255,255,255,0.1) 60%, transparent 100%);
+    transition: background 0.12s ease-out;
+  }
+  .rp-nis-submit > span { position: relative; z-index: 3; }
+  .rp-nis-success { display: none; font-size: 12px; font-weight: 600; color: #22c55e; margin-top: 10px; text-align: center; }
 
   @media (max-width: 860px) {
     .rp-wrap { grid-template-columns: 1fr; height: auto !important; max-height: none !important; overflow: visible !important; background: #fff; }
