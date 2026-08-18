@@ -56,6 +56,10 @@
           if lgcy_fs_remaining <= 0
             assign lgcy_fs_unlocked = true
           endif
+          assign lgcy_fs_percent = cart.item_count | times: 100 | divided_by: lgcy_fs_threshold
+          if lgcy_fs_percent > 100
+            assign lgcy_fs_percent = 100
+          endif
           # Priced off the actual average per-item value currently in the
           # cart (not a hardcoded $49.99) so this stays accurate on its own
           # if the sweatshirt's price ever changes.
