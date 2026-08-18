@@ -938,7 +938,10 @@
 
     if (sizesWrap) {
       sizesWrap.addEventListener('click', function (e) {
-        if (e.target.closest('.rp-size')) window.rpRevertAtcLabel();
+        if (e.target.closest('.rp-size')) {
+          window.rpRevertAtcLabel();
+          updateDynamicCheckoutVisibility();
+        }
       });
     }
   })();
