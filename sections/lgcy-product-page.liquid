@@ -855,6 +855,18 @@
       return !sizesWrap || !!sizesWrap.querySelector('.rp-size.active');
     }
 
+    /* Buy with Shop / Apple Pay checks out with whatever variant the
+       hidden id input currently holds — unlike Add to Cart above, it has
+       no submit event to intercept and prompt for a size, so it stays
+       hidden until a size is actually picked (or shows immediately for
+       products with no size option at all). */
+    var dynamicCheckout = document.querySelector('.rp-dynamic-checkout');
+    function updateDynamicCheckoutVisibility() {
+      if (!dynamicCheckout) return;
+      dynamicCheckout.classList.toggle('rp-dynamic-checkout--hidden', !isSizeSelected());
+    }
+    updateDynamicCheckoutVisibility();
+
     window.rpRevertAtcLabel = function () {
       clearTimeout(revertTimer);
       if (labelEl) labelEl.textContent = originalLabel;
