@@ -1,11 +1,13 @@
 <style>
   /* Pin the entire header section to the very top of the viewport.
-     pointer-events:none here + auto on .header-wrapper below means only
-     the actual visible nav content (logo, links, icons) can capture
-     clicks — any empty/transparent space in this box's bounds (e.g. where
-     it happens to sit over the announcement bar above it) lets clicks
-     pass through to whatever's actually there instead of silently
-     swallowing them. */
+     pointer-events:none cascades all the way down through .header-wrapper
+     and .header themselves (their own box — including padding — is much
+     taller than what's visually rendered, verified via DevTools: it
+     extends well down into the hero video, over the announcement bar
+     above it too). Only the actual interactive elements inside (links,
+     buttons — see the rule further down) get pointer-events re-enabled,
+     so empty padding space lets clicks pass through to whatever's really
+     there instead of silently swallowing them. */
   .section-header {
     position: fixed !important;
     top: 0 !important;
