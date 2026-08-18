@@ -67,7 +67,9 @@
           assign lgcy_fs_price_needed = lgcy_fs_avg_item_price | times: lgcy_fs_remaining
         -%}
         <div class="cart-drawer__fs-bar{% if lgcy_fs_unlocked %} cart-drawer__fs-bar--unlocked{% endif %}">
-          <div class="cart-drawer__fs-track" style="background: linear-gradient(to right, #2e7d32 {{ lgcy_fs_percent }}%, #ececec {{ lgcy_fs_percent }}%);"></div>
+          <div class="cart-drawer__fs-track">
+            <span class="cart-drawer__fs-track-fill {% if lgcy_fs_unlocked %}cart-drawer__fs-track-fill--full{% else %}cart-drawer__fs-track-fill--half{% endif %}"></span>
+          </div>
           <p class="cart-drawer__fs-text">
             {%- if lgcy_fs_unlocked -%}
               {{- 'icon-checkmark.svg' | inline_asset_content -}}
