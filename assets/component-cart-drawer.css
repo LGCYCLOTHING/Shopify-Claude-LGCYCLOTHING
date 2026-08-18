@@ -441,16 +441,12 @@ cart-drawer-items::-webkit-scrollbar-track-piece {
   width: 100%;
   height: 4px;
   border-radius: 999px;
+  /* Color split (green done / gray remaining) comes from an inline
+     linear-gradient set in the Liquid, not a separate overlaid fill
+     element — one element, no child-width calculation to go wrong. */
   background: #ececec;
-  overflow: hidden;
+  transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   margin-bottom: 0.9rem;
-}
-
-.cart-drawer__fs-fill {
-  height: 100%;
-  border-radius: 999px;
-  background: #2e7d32;
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .cart-drawer__fs-text {
