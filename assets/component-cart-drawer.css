@@ -438,15 +438,33 @@ cart-drawer-items::-webkit-scrollbar-track-piece {
 }
 
 .cart-drawer__fs-track {
+  display: block;
   width: 100%;
-  height: 4px;
+  height: 6px;
   border-radius: 999px;
-  /* Color split (green done / gray remaining) comes from an inline
-     linear-gradient set in the Liquid, not a separate overlaid fill
-     element — one element, no child-width calculation to go wrong. */
   background: #ececec;
-  transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #dcdcdc;
+  box-sizing: border-box;
+  overflow: hidden;
   margin-bottom: 0.9rem;
+}
+
+/* Only two real states here (1 item = half, 2+ = full/unlocked) — fixed
+   classes instead of a computed inline width/percentage, so there's no
+   Liquid math or dynamic style string that can silently fail. */
+.cart-drawer__fs-track-fill {
+  display: block;
+  height: 100%;
+  background-color: #2e7d32;
+  border-radius: 999px;
+}
+
+.cart-drawer__fs-track-fill--half {
+  width: 50%;
+}
+
+.cart-drawer__fs-track-fill--full {
+  width: 100%;
 }
 
 .cart-drawer__fs-text {
