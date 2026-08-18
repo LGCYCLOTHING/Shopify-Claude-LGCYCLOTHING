@@ -667,12 +667,15 @@
         </div>
       </div>
 
-      <!-- Tabs: Shipping / Size Chart / Care Instructions -->
+      <!-- Tabs: Shipping / Size Chart / Care Instructions / Product Details -->
       <div class="rp-tabs-wrap">
         <div class="rp-tabs-nav">
           <button class="rp-tab-btn is-active" type="button" onclick="rpTabSwitch(this,'shipping')">Shipping &amp; Returns</button>
           <button class="rp-tab-btn" type="button" onclick="rpTabSwitch(this,'sizechart')">Size Chart</button>
           <button class="rp-tab-btn" type="button" onclick="rpTabSwitch(this,'care')">Care Instructions</button>
+          {%- if product.handle == 'driven-by-purpose-oversized-t-shirt' -%}
+          <button class="rp-tab-btn" type="button" onclick="rpTabSwitch(this,'productdetails')">Product Details</button>
+          {%- endif -%}
         </div>
         <div class="rp-tab-panel is-active" id="rp-tab-shipping">
           <h4>Shipping</h4>
@@ -687,6 +690,23 @@
         <div class="rp-tab-panel" id="rp-tab-care">
           <p>Machine wash cold with like colours. Tumble dry low. Do not bleach. Do not dry clean. Iron on low heat.</p>
         </div>
+        {%- if product.handle == 'driven-by-purpose-oversized-t-shirt' -%}
+        <div class="rp-tab-panel" id="rp-tab-productdetails">
+          <p>Introducing The Signature Heavyweight in Deep Jet Black, a relaxed crewneck crafted from a 330GSM high-density cotton-poly blend. Designed to hold its shape and structure wear after wear, the heavyweight fabric delivers real substance and presence &mdash; built for everyday rotation, not a single season.</p>
+          <p>Featuring an open, unribbed hem and cuffs for a relaxed drop, white contrast piping along both sleeves, and a bold signature back graphic paired with a minimal front chest logo. Finished with an oversized, structured silhouette designed to hold its shape over time.</p>
+          <ul>
+            <li>Deep Jet Black Colourway</li>
+            <li>Oversized Relaxed Fit</li>
+            <li>Relaxed Open-Hem &amp; Cuffs</li>
+            <li>White Contrast Sleeve Piping</li>
+            <li>Minimal Front Chest Logo</li>
+            <li>Signature Back Graphic</li>
+            <li>Ribbed Neckline</li>
+          </ul>
+          <p>Composition: 65% Cotton, 35% Polyester<br>330GSM</p>
+          <p>Model Measurements: Model is 5&#39;10&quot; wearing size M</p>
+        </div>
+        {%- endif -%}
       </div>
 
     </div>
