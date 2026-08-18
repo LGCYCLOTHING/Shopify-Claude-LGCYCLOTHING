@@ -614,13 +614,7 @@
                           onclick="rpSize(this)">{{ val }}</button>
                 {%- endfor -%}
               </div>
-              <button class="rp-size-nis" type="button">Size Not In Stock?</button>
-              <!-- TEMPORARY TEST: plain, always-visible Omnisend manual
-                   embed div, no modal/hide tricks, to rule out CSS as the
-                   reason it isn't rendering. -->
-              <div class="rp-notify-test">
-                <div id="omnisend-embedded-v2-6a84a84e199dff7bec6b5593"></div>
-              </div>
+              <button class="rp-size-nis" type="button" onclick="rpNisOpen()">Size Not In Stock?</button>
             </div>
           {%- endif -%}
         {%- endfor -%}
