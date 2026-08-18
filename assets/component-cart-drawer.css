@@ -471,15 +471,19 @@ cart-drawer-items::-webkit-scrollbar-track-piece {
 }
 
 .cart-drawer__fs-bar--unlocked .cart-drawer__fs-text {
-  color: #111111;
+  color: #2e7d32;
   font-weight: 700;
+}
+
+.cart-drawer__fs-bar--unlocked .cart-drawer__fs-text strong {
+  color: #2e7d32;
 }
 
 .cart-drawer__fs-bar--unlocked .cart-drawer__fs-text svg {
   width: 14px;
   height: 14px;
   flex-shrink: 0;
-  color: #111111;
+  color: #2e7d32;
 }
 
 /* ── Subtotal Summary Bar ── */
