@@ -844,17 +844,13 @@ END LGCY GRID WIPE DISABLED -->
 
 <script>
   (function () {
-    var STORAGE_KEY = 'lgcy_announcement_dismissed_buy2';
     var section = document.querySelector('[id*="__announcement_bar_Wzx9ic"]');
     var bar = section && section.querySelector('.utility-bar');
     var message = section && section.querySelector('.announcement-bar__message');
     if (!section || !bar || !message) return;
 
-    if (localStorage.getItem(STORAGE_KEY) === '1') {
-      section.style.display = 'none';
-      return;
-    }
-
+    // Dismissing only hides it for the current page view — no persistence,
+    // so it's back the next time the page loads or is reloaded.
     var closeBtn = document.createElement('button');
     closeBtn.type = 'button';
     closeBtn.className = 'lgcy-announcement-close';
@@ -863,7 +859,6 @@ END LGCY GRID WIPE DISABLED -->
     closeBtn.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
-      localStorage.setItem(STORAGE_KEY, '1');
       section.style.display = 'none';
     });
     bar.appendChild(closeBtn);
