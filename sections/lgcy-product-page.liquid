@@ -514,6 +514,30 @@
   </div>
 </div>
 
+<!-- Size Not In Stock modal -->
+<div class="rp-nis-modal" id="rp-nis-modal" onclick="rpNisClick(event)">
+  <div class="rp-nis-box">
+    <button class="rp-nis-close" onclick="rpNisClose()" type="button">&times;</button>
+    <div class="rp-nis-title">Notify Me When Available</div>
+    <div class="rp-nis-sub">Enter your email and we'll let you know when your size is back in stock.</div>
+    <div class="rp-nis-form">
+      <select id="rp-nis-size">
+        <option value="" disabled selected>Select a size</option>
+        {%- for opt in p.options_with_values -%}
+          {%- if opt.name == 'Size' -%}
+            {%- for val in opt.values -%}
+              <option value="{{ val }}">{{ val }}</option>
+            {%- endfor -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </select>
+      <input type="email" id="rp-nis-email" placeholder="YOUR EMAIL ADDRESS" autocomplete="email">
+      <button class="rp-nis-submit" type="button" onclick="rpNisSubmit()"><span>Notify Me</span></button>
+      <div class="rp-nis-success" id="rp-nis-success">&#10003; You'll be notified when this size is back in stock.</div>
+    </div>
+  </div>
+</div>
+
 <div class="rp-wrap">
 
   <!-- LEFT: Gallery -->
