@@ -983,43 +983,19 @@
     }
   })();
 
-  // "Size Not In Stock?" opens the Omnisend embedded form app block
-  // (section id 1787090490839e4a81, added separately in the theme editor —
-  // not markup this section owns) as an overlay instead of the old custom
-  // rp-nis modal. The section itself becomes the backdrop; its own
-  // rendered form content sits centered inside it via .rp-notify-overlay's
-  // flex centering, so no extra wrapper card is needed.
-  (function () {
-    var appSection = null;
-    var closeBtn = null;
-
-    function getSection() {
-      if (!appSection) appSection = document.querySelector('[id*="1787090490839e4a81"]');
-      return appSection;
-    }
-
-    window.rpNotifyOpen = function () {
-      var el = getSection();
-      if (!el) return;
-      el.classList.add('rp-notify-overlay', 'open');
-      if (!closeBtn) {
-        closeBtn = document.createElement('button');
-        closeBtn.type = 'button';
-        closeBtn.className = 'rp-notify-overlay-close';
-        closeBtn.setAttribute('aria-label', 'Close');
-        closeBtn.innerHTML = '&times;';
-        closeBtn.addEventListener('click', window.rpNotifyClose);
-        el.appendChild(closeBtn);
-        el.addEventListener('click', function (e) {
-          if (e.target === el) window.rpNotifyClose();
-        });
-      }
-    };
-    window.rpNotifyClose = function () {
-      var el = getSection();
-      if (el) el.classList.remove('open');
-    };
-  })();
+  // "Size Not In Stock?" opens the Omnisend "back in stock" form, embedded
+  // directly via its manual #omnisend-embedded-v2-<formId> div (see markup
+  // above) — same mechanism already working on the password page. Open/
+  // close just toggles the .open class; the close button and backdrop
+  // click-to-close are wired inline in the markup itself.
+  window.rpNotifyOpen = function () {
+    var el = document.getElementById('rp-notify-overlay');
+    if (el) el.classList.add('open');
+  };
+  window.rpNotifyClose = function () {
+    var el = document.getElementById('rp-notify-overlay');
+    if (el) el.classList.remove('open');
+  };
 
   (function() {
     var gallery = document.querySelector('.rp-gallery');
