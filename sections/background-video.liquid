@@ -105,26 +105,17 @@
 /* Desktop */
 #password-header-form {
   position: absolute;
-  bottom: 28px;
-  left: 28px;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 9999;
-  width: calc(100vw - 56px);
-  margin: 0;
-  box-sizing: border-box;
-  /* Liquid glass — same frosted look used on the site's buttons/cards
-     elsewhere (blur + translucent dark fill + soft border/shadow). */
-  background: rgba(20, 20, 20, 0.5);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.14), inset 0 -1px 2px rgba(0, 0, 0, 0.2);
-  padding: 26px;
+  width: calc(100vw - 48px);
+  margin: 0 auto;
 }
 
 @media (min-width: 750px) {
   #password-header-form {
-    width: 420px;
+    width: 820px;
   }
 }
 
