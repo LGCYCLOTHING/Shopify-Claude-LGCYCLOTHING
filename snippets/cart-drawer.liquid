@@ -47,6 +47,35 @@
         </button>
       </div>
 
+      <!-- ── Free Shipping Progress ── -->
+      {%- if cart != empty -%}
+        {%- liquid
+          assign lgcy_fs_threshold = 2
+          assign lgcy_fs_remaining = lgcy_fs_threshold | minus: cart.item_count
+          assign lgcy_fs_unlocked = false
+          if lgcy_fs_remaining <= 0
+            assign lgcy_fs_unlocked = true
+          endif
+          assign lgcy_fs_percent = cart.item_count | times: 100 | divided_by: lgcy_fs_threshold
+          if lgcy_fs_percent > 100
+            assign lgcy_fs_percent = 100
+          endif
+        -%}
+        <div class="cart-drawer__fs-bar{% if lgcy_fs_unlocked %} cart-drawer__fs-bar--unlocked{% endif %}">
+          <div class="cart-drawer__fs-track">
+            <div class="cart-drawer__fs-fill" style="width: {{ lgcy_fs_percent }}%;"></div>
+          </div>
+          <p class="cart-drawer__fs-text">
+            {%- if lgcy_fs_unlocked -%}
+              {{- 'icon-checkmark.svg' | inline_asset_content -}}
+              You&rsquo;ve unlocked <strong>free shipping</strong>
+            {%- else -%}
+              You&rsquo;re <strong>{{ lgcy_fs_remaining }} item{% if lgcy_fs_remaining != 1 %}s{% endif %}</strong> away from <strong>free shipping</strong>
+            {%- endif -%}
+          </p>
+        </div>
+      {%- endif -%}
+
       <!-- ── Empty State ── -->
       {%- if cart == empty -%}
         <div class="drawer__inner-empty">
