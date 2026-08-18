@@ -753,6 +753,28 @@
     initCardLenis();
   })();
 
+  // Instafeed (third-party app widget, "FOLLOW THE VISION") loads
+  // asynchronously and has its own horizontally-scrollable wrapper —
+  // without data-lenis-prevent, hovering it while scrolling makes the
+  // page's global Lenis instance and the carousel's own scroll fight over
+  // the same wheel events, which is exactly the "smooth scroll stops
+  // working, needs extra wheel clicks" jank reported around this section.
+  (function () {
+    function markInstafeedScroller() {
+      var wrapper = document.querySelector('.instafeed-new-layout-wrapper');
+      if (wrapper && !wrapper.hasAttribute('data-lenis-prevent')) {
+        wrapper.setAttribute('data-lenis-prevent', '');
+      }
+      return !!wrapper;
+    }
+    if (markInstafeedScroller()) return;
+    var observer = new MutationObserver(function () {
+      if (markInstafeedScroller()) observer.disconnect();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    setTimeout(function () { observer.disconnect(); }, 20000);
+  })();
+
   var rpImages = [
     {%- for img in product.images -%}
       "{{ img | img_url: '1600x' }}"{% unless forloop.last %},{% endunless %}
