@@ -60,6 +60,11 @@
           if lgcy_fs_percent > 100
             assign lgcy_fs_percent = 100
           endif
+          # Priced off the actual average per-item value currently in the
+          # cart (not a hardcoded $49.99) so this stays accurate on its own
+          # if the sweatshirt's price ever changes.
+          assign lgcy_fs_avg_item_price = cart.total_price | divided_by: cart.item_count
+          assign lgcy_fs_price_needed = lgcy_fs_avg_item_price | times: lgcy_fs_remaining
         -%}
         <div class="cart-drawer__fs-bar{% if lgcy_fs_unlocked %} cart-drawer__fs-bar--unlocked{% endif %}">
           <div class="cart-drawer__fs-track">
@@ -70,7 +75,7 @@
               {{- 'icon-checkmark.svg' | inline_asset_content -}}
               You&rsquo;ve unlocked <strong>free shipping</strong>
             {%- else -%}
-              You&rsquo;re <strong>{{ lgcy_fs_remaining }} item{% if lgcy_fs_remaining != 1 %}s{% endif %}</strong> away from <strong>free shipping</strong>
+              You&rsquo;re <strong>{{ lgcy_fs_price_needed | money }}</strong> away from <strong>free shipping</strong>
             {%- endif -%}
           </p>
         </div>
