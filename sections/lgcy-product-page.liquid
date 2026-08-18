@@ -952,20 +952,6 @@
     }
   })();
 
-  // "Size Not In Stock?" opens the Omnisend "back in stock" form, embedded
-  // directly via its manual #omnisend-embedded-v2-<formId> div (see markup
-  // above) — same mechanism already working on the password page. Open/
-  // close just toggles the .open class; the close button and backdrop
-  // click-to-close are wired inline in the markup itself.
-  window.rpNotifyOpen = function () {
-    var el = document.getElementById('rp-notify-overlay');
-    if (el) el.classList.add('open');
-  };
-  window.rpNotifyClose = function () {
-    var el = document.getElementById('rp-notify-overlay');
-    if (el) el.classList.remove('open');
-  };
-
   (function() {
     var gallery = document.querySelector('.rp-gallery');
     if (gallery) {
