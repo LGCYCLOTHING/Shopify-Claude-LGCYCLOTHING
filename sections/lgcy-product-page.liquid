@@ -507,6 +507,15 @@
   </div>
 </div>
 
+<!-- Size Not In Stock — Omnisend "manual embed" div, same mechanism
+     already working on the password page (Omnisend's own sitewide script
+     scans for #omnisend-embedded-v2-<formId> and populates it), rather
+     than relying on the separate Shopify App Block/App Embed toggle. -->
+<div class="rp-notify-overlay" id="rp-notify-overlay" onclick="if (event.target === this) rpNotifyClose();">
+  <button class="rp-notify-overlay-close" type="button" aria-label="Close" onclick="rpNotifyClose()">&times;</button>
+  <div id="omnisend-embedded-v2-6a84a84e199dff7bec6b5593"></div>
+</div>
+
 <div class="rp-wrap">
 
   <!-- LEFT: Gallery -->
