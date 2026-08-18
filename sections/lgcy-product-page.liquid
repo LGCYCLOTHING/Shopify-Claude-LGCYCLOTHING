@@ -670,14 +670,16 @@
       <!-- Tabs: Shipping / Size Chart / Care Instructions / Product Details -->
       <div class="rp-tabs-wrap">
         <div class="rp-tabs-nav">
-          <button class="rp-tab-btn is-active" type="button" onclick="rpTabSwitch(this,'shipping')">Shipping &amp; Returns</button>
+          <button class="rp-tab-btn{% if product.handle != 'driven-by-purpose-oversized-t-shirt' %} is-active{% endif %}" type="button" onclick="rpTabSwitch(this,'shipping')">Shipping &amp; Returns</button>
           <button class="rp-tab-btn" type="button" onclick="rpTabSwitch(this,'sizechart')">Size Chart</button>
+          {%- unless product.handle == 'driven-by-purpose-oversized-t-shirt' -%}
           <button class="rp-tab-btn" type="button" onclick="rpTabSwitch(this,'care')">Care Instructions</button>
+          {%- endunless -%}
           {%- if product.handle == 'driven-by-purpose-oversized-t-shirt' -%}
-          <button class="rp-tab-btn" type="button" onclick="rpTabSwitch(this,'productdetails')">Product Details</button>
+          <button class="rp-tab-btn is-active" type="button" style="order:-1;" onclick="rpTabSwitch(this,'productdetails')">Product Details</button>
           {%- endif -%}
         </div>
-        <div class="rp-tab-panel is-active" id="rp-tab-shipping">
+        <div class="rp-tab-panel{% if product.handle != 'driven-by-purpose-oversized-t-shirt' %} is-active{% endif %}" id="rp-tab-shipping">
           <h4>Shipping</h4>
           <p>Orders are processed within 3&ndash;5 business days (7&ndash;10 days for international orders). We offer Standard, Express, and International shipping, with rates and delivery estimates calculated at checkout. Buy 2 items and get free shipping automatically.</p>
           <h4>Returns</h4>
@@ -687,11 +689,13 @@
         <div class="rp-tab-panel" id="rp-tab-sizechart">
           <p>Please refer to our size guide for detailed measurements. Sizes run true to size — when in doubt, size up.</p>
         </div>
+        {%- unless product.handle == 'driven-by-purpose-oversized-t-shirt' -%}
         <div class="rp-tab-panel" id="rp-tab-care">
           <p>Machine wash cold with like colours. Tumble dry low. Do not bleach. Do not dry clean. Iron on low heat.</p>
         </div>
+        {%- endunless -%}
         {%- if product.handle == 'driven-by-purpose-oversized-t-shirt' -%}
-        <div class="rp-tab-panel" id="rp-tab-productdetails">
+        <div class="rp-tab-panel is-active" id="rp-tab-productdetails">
           <p>Introducing The Signature Heavyweight in Deep Jet Black, a relaxed crewneck crafted from a 330GSM high-density cotton-poly blend. Designed to hold its shape and structure wear after wear, the heavyweight fabric delivers real substance and presence &mdash; built for everyday rotation, not a single season.</p>
           <p>Featuring an open, unribbed hem and cuffs for a relaxed drop, white contrast piping along both sleeves, and a bold signature back graphic paired with a minimal front chest logo. Finished with an oversized, structured silhouette designed to hold its shape over time.</p>
           <ul>
@@ -703,8 +707,16 @@
             <li>Signature Back Graphic</li>
             <li>Ribbed Neckline</li>
           </ul>
-          <p>Composition: 65% Cotton, 35% Polyester<br>330GSM</p>
-          <p>Model Measurements: Model is 5&#39;10&quot; wearing size M</p>
+          <p><strong>Composition:</strong> 65% Cotton, 35% Polyester<br>330GSM</p>
+          <p><strong>Model Measurements:</strong> Model is 5&#39;10&quot; wearing size M</p>
+          <p><strong>Product Care:</strong></p>
+          <ul>
+            <li>Machine wash cold</li>
+            <li>Do not bleach</li>
+            <li>Tumble dry low</li>
+            <li>Do not iron on print</li>
+            <li>Do not dry clean</li>
+          </ul>
         </div>
         {%- endif -%}
       </div>
