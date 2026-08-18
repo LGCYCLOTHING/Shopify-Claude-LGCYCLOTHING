@@ -3626,6 +3626,11 @@ html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__message {
 html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__link svg {
   display: none;
 }
+html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__link,
+html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__link:hover,
+html body [id*="__announcement_bar_Wzx9ic"] .announcement-bar__link:focus {
+  text-decoration: none !important;
+}
 html body [id*="__announcement_bar_Wzx9ic"] .utility-bar__grid {
   padding-right: 40px;
   box-sizing: border-box;
