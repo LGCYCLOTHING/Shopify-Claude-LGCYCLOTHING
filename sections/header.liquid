@@ -1,5 +1,11 @@
 <style>
-  /* Pin the entire header section to the very top of the viewport */
+  /* Pin the entire header section to the very top of the viewport.
+     pointer-events:none here + auto on .header-wrapper below means only
+     the actual visible nav content (logo, links, icons) can capture
+     clicks — any empty/transparent space in this box's bounds (e.g. where
+     it happens to sit over the announcement bar above it) lets clicks
+     pass through to whatever's actually there instead of silently
+     swallowing them. */
   .section-header {
     position: fixed !important;
     top: 0 !important;
@@ -8,6 +14,7 @@
     width: 100% !important;
     z-index: 10010 !important;
     margin: 0 !important;
+    pointer-events: none !important;
   }
 
   sticky-header {
