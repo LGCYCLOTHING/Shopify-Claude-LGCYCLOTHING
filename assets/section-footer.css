@@ -658,14 +658,68 @@
   align-items: flex-end;
 }
 
-/* Omnisend embedded email-capture form — Omnisend renders it at a much
-   larger default size than the original compact form, which was stretching
-   the whole footer taller. zoom (not transform:scale) actually shrinks its
-   layout box, so it stops reserving extra vertical space. */
+/* Omnisend embedded email-capture form — Omnisend renders its heading/body
+   text much larger than the original compact form by default, which wraps
+   awkwardly and stretches the whole footer taller. Force real font sizes
+   back down to match the old compact form instead of scaling the whole
+   widget (scaling doesn't fix the underlying too-narrow-for-the-font wrap).
+   Generic tag + [class*=…] selectors are used since Omnisend doesn't expose
+   stable class names to target directly. */
 .lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] {
   width: 100%;
-  max-width: 260px;
-  zoom: 0.68;
+  max-width: 280px;
+}
+
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] h1,
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] h2,
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] h3,
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] h4,
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] [class*="title" i],
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] [class*="heading" i] {
+  font-size: 22px !important;
+  line-height: 1.1 !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.04em !important;
+  margin: 0 0 4px !important;
+}
+
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] p,
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] [class*="text" i],
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] [class*="description" i],
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] [class*="subtitle" i] {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+  margin: 0 0 10px !important;
+}
+
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] input {
+  height: 34px !important;
+  font-size: 12px !important;
+  padding: 0 10px !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+}
+
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] button {
+  height: 34px !important;
+  min-height: 34px !important;
+  font-size: 11px !important;
+  padding: 0 16px !important;
+  margin: 6px 0 0 !important;
+}
+
+/* Best-effort: if the input sits directly inside its own row container,
+   lay that row out horizontally so the input and button sit side by side
+   instead of stacked. */
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] div:has(> input) {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] div:has(> input) button {
+  margin: 0 !important;
+  flex-shrink: 0 !important;
 }
 
 .lgcy-footer__newsletter-form {
