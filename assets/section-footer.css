@@ -684,30 +684,49 @@
   padding: 0 !important;
 }
 
-.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] h1,
-.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] h2,
-.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] h3,
-.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] h4,
-.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] [class*="title" i],
-.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] [class*="heading" i] {
+/* DevTools confirmed the real markup: there's no h1-h6 anywhere. Both the
+   heading and the subtext are identical <p><strong>…</strong></p> blocks
+   inside a div[class*="-text-..."] wrapper — the only thing telling them
+   apart is order (heading is the first -text- block, subtext is the one
+   after it). Several trailing empty <p></p> tags after the heading were
+   each still taking up margin, which was the real source of the big gap. */
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] p:empty {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] div[class*="-text-"]:first-of-type p,
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] div[class*="-text-"]:first-of-type strong {
   font-size: 24px !important;
   line-height: 1.1 !important;
   font-weight: 900 !important;
   letter-spacing: -0.05em !important;
   color: #111 !important;
-  margin: 0 0 2px !important;
+  margin: 0 !important;
 }
 
-.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] p,
-.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] [class*="text" i],
-.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] [class*="description" i],
-.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] [class*="subtitle" i] {
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] div[class*="-text-"]:first-of-type ~ div[class*="-text-"] p,
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] div[class*="-text-"]:first-of-type ~ div[class*="-text-"] strong {
   font-size: 14px !important;
   font-weight: 900 !important;
   letter-spacing: 0.02em !important;
   line-height: 1.3 !important;
   color: #111 !important;
-  margin: 0 0 10px !important;
+  margin: 0 !important;
+}
+
+/* Fallback in case a different Omnisend layout ever renders real headings. */
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] h1,
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] h2,
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] h3,
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] h4 {
+  font-size: 24px !important;
+  line-height: 1.1 !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.05em !important;
+  color: #111 !important;
+  margin: 0 !important;
 }
 
 /* Wrapper that holds both the input and the button — turn it into the old
