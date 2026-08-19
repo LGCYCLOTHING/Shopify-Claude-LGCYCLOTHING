@@ -402,6 +402,100 @@
   .rp-tab-panel a { color: #000 !important; text-decoration: underline !important; }
   .lgcy-merged-to-tab { display: none !important; }
 
+  /* Size chart table + CM/IN toggle */
+  .rp-sizechart-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .rp-sizechart-toggle-label {
+    font-size: 11px !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.02em !important;
+    color: rgba(0, 0, 0, 0.4) !important;
+    transition: color 0.15s ease;
+  }
+  .rp-sizechart-toggle-label.is-active { color: #111 !important; }
+  .rp-sizechart-switch {
+    position: relative;
+    display: inline-block;
+    width: 38px;
+    height: 21px;
+    flex-shrink: 0;
+  }
+  .rp-sizechart-switch input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+  }
+  .rp-sizechart-switch-track {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 999px;
+    transition: background 0.15s ease;
+  }
+  .rp-sizechart-switch input:checked ~ .rp-sizechart-switch-track {
+    background: #111;
+  }
+  .rp-sizechart-switch-knob {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 17px;
+    height: 17px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease;
+  }
+  .rp-sizechart-switch input:checked ~ .rp-sizechart-switch-track .rp-sizechart-switch-knob {
+    transform: translateX(17px);
+  }
+  .rp-sizechart-table-wrap {
+    overflow-x: auto;
+    border: 2px solid #111;
+  }
+  .rp-sizechart-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 420px;
+  }
+  .rp-sizechart-table th,
+  .rp-sizechart-table td {
+    font-family: 'Inter', Helvetica, 'Helvetica Neue', Arial, sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    color: #111 !important;
+    letter-spacing: normal !important;
+    line-height: 1.4 !important;
+    padding: 12px 14px !important;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    white-space: nowrap;
+  }
+  .rp-sizechart-table th:first-child,
+  .rp-sizechart-table td:first-child {
+    text-align: left;
+  }
+  .rp-sizechart-table thead th {
+    font-weight: 900 !important;
+    text-transform: none;
+    border-bottom: 2px solid #111;
+  }
+  .rp-sizechart-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .rp-sizechart-note {
+    margin: 12px 0 0 !important;
+    font-size: 11px !important;
+    color: rgba(0, 0, 0, 0.45) !important;
+  }
+
   .rp-nis-modal {
     display: none; position: fixed; inset: 0;
     background: rgba(0,0,0,0.5); z-index: 8888;
