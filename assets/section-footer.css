@@ -1050,7 +1050,6 @@
   }
 
   .lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] {
-    max-width: 280px;
     margin: 0 auto;
   }
 
