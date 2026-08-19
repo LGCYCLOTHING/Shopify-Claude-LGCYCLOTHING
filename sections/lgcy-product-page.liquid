@@ -238,21 +238,20 @@
   }
   .rp-sizefinder-panel.open { display: block; }
   .rp-sizefinder-headrow {
-    display: flex;
+    display: grid;
+    grid-template-columns: 20px 1fr 20px;
     align-items: center;
     margin-bottom: 10px;
   }
   .rp-sizefinder-close {
-    flex-shrink: 0;
-    background: none; border: none; font-size: 18px; line-height: 1; cursor: pointer; color: #999;
-    padding: 0 0 0 10px;
-    order: 2;
+    grid-column: 3;
+    justify-self: end;
+    background: none; border: none; font-size: 18px; line-height: 1; cursor: pointer; color: #999; padding: 0;
   }
   .rp-sizefinder-height {
-    flex: 1;
+    grid-column: 2;
     text-align: center;
     font-size: 20px; font-weight: 900; letter-spacing: -0.03em; color: #111;
-    order: 1;
   }
   .rp-sizefinder-slider {
     -webkit-appearance: none;
