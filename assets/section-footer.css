@@ -943,6 +943,11 @@
     order: 3;
   }
 
+  .lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
   /* Un-wrap the nav column so the nav links and the logo (its two children)
      become independent items of the footer grid — lets the logo be reordered
      to below the newsletter/email column instead of stuck next to the nav. */
