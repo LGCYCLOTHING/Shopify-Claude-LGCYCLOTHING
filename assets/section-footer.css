@@ -658,14 +658,14 @@
   align-items: flex-end;
 }
 
-/* Omnisend embedded email-capture form — rebuilt from scratch to match the
-   original thin-underline compact form (no boxed input, no button chrome,
-   just an arrow) instead of Omnisend's own boxed/buttoned default look.
-   Omnisend doesn't expose stable class names, so headings/text/input/button
-   are targeted generically by tag + [class*=…] with !important. */
+/* Omnisend embedded email-capture form — rebuilt to match the original
+   liquid-glass pill design (glass capsule input + round black button)
+   instead of Omnisend's own boxed/buttoned default look. Omnisend doesn't
+   expose stable class names, so headings/text/input/button are targeted
+   generically by tag + [class*=…] with !important. */
 .lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] {
   width: 100%;
-  max-width: 260px;
+  max-width: 420px;
   background: none !important;
 }
 
@@ -678,7 +678,7 @@
   font-size: 22px !important;
   line-height: 1.1 !important;
   font-weight: 900 !important;
-  letter-spacing: -0.04em !important;
+  letter-spacing: -0.05em !important;
   color: #111 !important;
   margin: 0 0 6px !important;
 }
@@ -695,54 +695,70 @@
   margin: 0 0 16px !important;
 }
 
-/* Row wrapper that directly holds the input — strip it to a plain underline. */
+/* Row wrapper that directly holds the input — turn it into the old glass pill. */
 .lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] div:has(> input) {
+  --border-width: 1px;
+  position: relative;
   display: flex !important;
   align-items: center !important;
-  gap: 8px !important;
-  background: none !important;
+  width: 100% !important;
+  max-width: 420px;
+  border-radius: 999vw !important;
+  background: linear-gradient(-75deg, rgba(255,255,255,0.55), rgba(255,255,255,0.85), rgba(255,255,255,0.55)) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+          backdrop-filter: blur(10px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.95),
+    inset 0 -1px 0 rgba(0,0,0,0.1),
+    0 0.3em 0.6em -0.15em rgba(0,0,0,0.18),
+    0 0 0 1px rgba(0,0,0,0.08) !important;
   border: none !important;
-  border-bottom: 1px solid #bbb !important;
-  border-radius: 0 !important;
-  padding: 0 0 7px !important;
-  box-shadow: none !important;
+  padding: 5px !important;
+  box-sizing: border-box !important;
 }
 
 .lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] input {
-  flex: 1 !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
   height: auto !important;
   border: none !important;
   outline: none !important;
   background: none !important;
   box-shadow: none !important;
-  font-size: 13px !important;
-  font-weight: 300 !important;
-  letter-spacing: 0.02em !important;
-  color: #555 !important;
-  padding: 0 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.02em !important;
+  color: #000 !important;
+  padding: 10px 16px !important;
   margin: 0 !important;
 }
 
-/* Button — strip all chrome and swap its label for a bare arrow, matching
-   the old design. font-size:0 hides the original text without needing to
-   know what it says; the arrow is injected via ::after. */
+/* Button — strip all chrome and rebuild as the old round black button with
+   a bare arrow. font-size:0 hides Omnisend's original label (whatever it
+   says) without needing to know it; the arrow is injected via ::after. */
 .lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] button {
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  height: auto !important;
+  flex-shrink: 0 !important;
+  width: 38px !important;
+  height: 38px !important;
   min-height: 0 !important;
-  width: auto !important;
   min-width: 0 !important;
+  border-radius: 999vw !important;
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: linear-gradient(-75deg, rgba(0,0,0,0.85), rgba(40,40,40,0.95), rgba(0,0,0,0.85)) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    inset 0 -1px 0 rgba(0,0,0,0.45),
+    0 0.2em 0.4em -0.1em rgba(0,0,0,0.4) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   font-size: 0 !important;
   line-height: 1 !important;
   color: transparent !important;
-  flex-shrink: 0 !important;
   cursor: pointer !important;
-  transition: opacity 0.2s ease !important;
+  transition: transform 200ms cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 .lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] button svg,
 .lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] button img {
@@ -750,11 +766,12 @@
 }
 .lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] button::after {
   content: '\2192' !important;
-  font-size: 16px !important;
-  color: #111 !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #fff !important;
 }
 .lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] button:hover {
-  opacity: 0.45 !important;
+  transform: scale(1.05) !important;
 }
 
 .lgcy-footer__newsletter-form {
