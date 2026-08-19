@@ -205,17 +205,32 @@
     },
     "1787090490839e4a81": {
       "type": "apps",
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "1787168144dcceb56f": {
+      "type": "apps",
       "blocks": {
-        "omnisend_email_marketing_sms_embedded_form_ULttBe": {
-          "type": "shopify://apps/omnisend-email-marketing-sms/blocks/embedded-form/44704aa2-794f-4c5d-8c8e-039c841158e9",
+        "judge_me_reviews_review_widget_zwfYmh": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {
-            "form_id": "6a84a84e199dff7bec6b5593"
+            "review_data": "real_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
           }
         }
       },
       "block_order": [
-        "omnisend_email_marketing_sms_embedded_form_ULttBe"
+        "judge_me_reviews_review_widget_zwfYmh"
       ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "178716916613e64102": {
+      "type": "apps",
       "settings": {
         "include_margins": true
       }
@@ -230,6 +245,8 @@
     "17739577321e24515e",
     "custom_liquid_NQgBBj",
     "1787078778f1c69a86",
-    "1787090490839e4a81"
+    "1787090490839e4a81",
+    "1787168144dcceb56f",
+    "178716916613e64102"
   ]
 }

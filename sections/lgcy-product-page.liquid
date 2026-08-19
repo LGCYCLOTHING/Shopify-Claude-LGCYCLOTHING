@@ -1672,6 +1672,13 @@
       if (cards && trust.nextElementSibling !== cards) {
         feed.parentNode.insertBefore(cards, feed);
       }
+      // Judge.me reviews app block renders in its own section near the very
+      // end of the template by default — pull it up to sit between trust
+      // and "You May Also Like" instead.
+      var reviews = document.getElementById('shopify-section-1787168144dcceb56f');
+      if (cards && reviews && cards.previousElementSibling !== reviews) {
+        cards.parentNode.insertBefore(reviews, cards);
+      }
     }
 
     if (!crumbs) crumbs = buildCrumbs();
