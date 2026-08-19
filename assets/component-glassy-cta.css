@@ -3694,8 +3694,7 @@ html body [id*="__announcement_bar_Wzx9ic"] .utility-bar__grid {
 #omnisend-forms-wrapper .omnisend-form-6a8499a514bc25fb281c5997-rectangle-teaser-close-btn {
   width: 32px !important;
   height: 32px !important;
-  border-radius: 999vw !important;
-  background: rgba(0, 0, 0, 0.06) !important;
+  background: none !important;
   flex-shrink: 0 !important;
 }
 
