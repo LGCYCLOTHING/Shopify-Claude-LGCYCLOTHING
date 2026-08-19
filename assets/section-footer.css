@@ -711,10 +711,12 @@
 }
 
 /* Wrapper that holds both the input and the button — turn it into the old
-   glass pill so they render connected as one capsule. Matched via :has()
-   without a direct-child restriction so it finds the true shared ancestor
-   regardless of how deep Omnisend nests the input inside it. */
-.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] :is(div, form):has(input):has(button) {
+   glass pill so they render connected as one capsule. Every ancestor up the
+   tree technically "has" input+button as descendants, so without the
+   :not(:has(...)) guard every one of them would paint its own pill,
+   producing stacked/concentric rings. The guard keeps only the innermost
+   (deepest) matching wrapper — the actual field row. */
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] :is(div, form):has(input):has(button):not(:has(:is(div, form):has(input):has(button))) {
   --border-width: 1px;
   position: relative;
   display: flex !important;
