@@ -778,16 +778,22 @@
   flex: 1 1 auto !important;
   min-width: 0 !important;
   height: auto !important;
-  border: none !important;
   outline: none !important;
-  background: none !important;
-  box-shadow: none !important;
   font-size: 14px !important;
   font-weight: 500 !important;
   letter-spacing: -0.02em !important;
   color: #000 !important;
   padding: 10px 16px !important;
   margin: 0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.65) !important;
+  border-radius: 999vw !important;
+  background: rgba(255, 255, 255, 0.35) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(150%) !important;
+          backdrop-filter: blur(6px) saturate(150%) !important;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.5),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.08) !important;
 }
 
 /* Button — strip all chrome and rebuild as the old round black button with
