@@ -820,10 +820,7 @@
       <!-- Height-based size finder -->
       <button class="rp-sizefinder-btn" type="button" onclick="rpSizeFinderToggle()">What size?</button>
       <div class="rp-sizefinder-panel" id="rp-sizefinder-panel">
-        <div class="rp-sizefinder-head">
-          <span class="rp-sizefinder-title">Find Your Size</span>
-          <button class="rp-sizefinder-close" type="button" onclick="rpSizeFinderToggle(false)" aria-label="Close">&times;</button>
-        </div>
+        <button class="rp-sizefinder-close" type="button" onclick="rpSizeFinderToggle(false)" aria-label="Close">&times;</button>
         <div class="rp-sizefinder-height" id="rp-sizefinder-height">5&#39;10&quot;</div>
         <input type="range" class="rp-sizefinder-slider" id="rp-sizefinder-slider" min="60" max="78" step="1" value="70" oninput="rpSizeFinderUpdate(this.value)">
         <div class="rp-sizefinder-scale">
