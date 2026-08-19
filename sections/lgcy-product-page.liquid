@@ -781,7 +781,69 @@
           <p>If your order arrives damaged, faulty, or incorrect, email <strong>lgcyclothing786@gmail.com</strong> within 14 days of delivery with your order number.</p>
         </div>
         <div class="rp-tab-panel" id="rp-tab-sizechart">
-          <p>Please refer to our size guide for detailed measurements. Sizes run true to size — when in doubt, size up.</p>
+          {%- if product.handle == 'driven-by-purpose-oversized-t-shirt' -%}
+            <div class="rp-sizechart-toggle">
+              <span class="rp-sizechart-toggle-label" id="rp-sizechart-label-cm">CM</span>
+              <label class="rp-sizechart-switch">
+                <input type="checkbox" id="rp-sizechart-unit-toggle" checked onchange="rpSizeChartUnit(this.checked ? 'in' : 'cm')">
+                <span class="rp-sizechart-switch-track"><span class="rp-sizechart-switch-knob"></span></span>
+              </label>
+              <span class="rp-sizechart-toggle-label is-active" id="rp-sizechart-label-in">IN</span>
+            </div>
+            <div class="rp-sizechart-table-wrap">
+              <table class="rp-sizechart-table">
+                <thead>
+                  <tr>
+                    <th>Measurement</th>
+                    <th>S</th>
+                    <th>M (Standard)</th>
+                    <th>L</th>
+                    <th>XL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Shoulder Width</td>
+                    <td data-cm="51.5" data-in="20.3">20.3</td>
+                    <td data-cm="53.0" data-in="20.9">20.9</td>
+                    <td data-cm="55.5" data-in="21.9">21.9</td>
+                    <td data-cm="57.0" data-in="22.4">22.4</td>
+                  </tr>
+                  <tr>
+                    <td>Chest Width &frac12;</td>
+                    <td data-cm="56.5" data-in="22.2">22.2</td>
+                    <td data-cm="59.0" data-in="23.2">23.2</td>
+                    <td data-cm="61.5" data-in="24.2">24.2</td>
+                    <td data-cm="64.0" data-in="25.2">25.2</td>
+                  </tr>
+                  <tr>
+                    <td>Body Length</td>
+                    <td data-cm="72.0" data-in="28.3">28.3</td>
+                    <td data-cm="73.5" data-in="28.9">28.9</td>
+                    <td data-cm="75.5" data-in="29.7">29.7</td>
+                    <td data-cm="77.0" data-in="30.3">30.3</td>
+                  </tr>
+                  <tr>
+                    <td>Sleeve Length</td>
+                    <td data-cm="58.0" data-in="22.8">22.8</td>
+                    <td data-cm="60.0" data-in="23.6">23.6</td>
+                    <td data-cm="62.0" data-in="24.4">24.4</td>
+                    <td data-cm="64.0" data-in="25.2">25.2</td>
+                  </tr>
+                  <tr>
+                    <td>Sleeve Opening &frac12;</td>
+                    <td data-cm="11.0" data-in="4.3">4.3</td>
+                    <td data-cm="11.5" data-in="4.5">4.5</td>
+                    <td data-cm="12.0" data-in="4.7">4.7</td>
+                    <td data-cm="12.5" data-in="4.9">4.9</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="rp-sizechart-note">All measurements in {{ '' }}<span id="rp-sizechart-unit-word">inches</span>. Model is 5&#39;10&quot; wearing size M. Sizes run true to size — when in doubt, size up.</p>
+          {%- else -%}
+            <p>Please refer to our size guide for detailed measurements. Sizes run true to size — when in doubt, size up.</p>
+          {%- endif -%}
         </div>
         {%- unless product.handle == 'driven-by-purpose-oversized-t-shirt' -%}
         <div class="rp-tab-panel" id="rp-tab-care">
