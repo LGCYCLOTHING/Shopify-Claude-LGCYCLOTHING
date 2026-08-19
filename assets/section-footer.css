@@ -667,6 +667,20 @@
   width: 100%;
   max-width: 420px;
   background: none !important;
+  margin-top: 0 !important;
+}
+
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] > *:first-child {
+  margin-top: 0 !important;
+}
+
+/* Tighten any wrapper divs Omnisend puts around each block (heading/text/
+   field) — the h/p overrides below only remove margin on the text itself,
+   not on a possible outer div, which is likely where the leftover gap is
+   coming from. */
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] > div {
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] h1,
@@ -680,7 +694,7 @@
   font-weight: 900 !important;
   letter-spacing: -0.05em !important;
   color: #111 !important;
-  margin: 0 0 6px !important;
+  margin: 0 0 4px !important;
 }
 
 .lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] p,
@@ -691,8 +705,8 @@
   font-weight: 700 !important;
   letter-spacing: 0.02em !important;
   line-height: 1.3 !important;
-  color: #444 !important;
-  margin: 0 0 16px !important;
+  color: #111 !important;
+  margin: 0 0 6px !important;
 }
 
 /* Row wrapper that directly holds the input — turn it into the old glass pill. */
