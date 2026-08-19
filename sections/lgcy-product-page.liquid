@@ -1301,6 +1301,35 @@
     document.getElementById('rp-nis-email').value = '';
   }
 
+  // Height-based size finder. Breakpoints are tuned for this specific
+  // garment's fit — 330GSM cotton-poly, oversized-but-fitted (not a fully
+  // baggy oversized cut) — anchored on the product's own reference point:
+  // model is 5'10" (70in) wearing size M.
+  function rpSizeFinderToggle(force) {
+    var panel = document.getElementById('rp-sizefinder-panel');
+    if (!panel) return;
+    var open = typeof force === 'boolean' ? force : !panel.classList.contains('open');
+    panel.classList.toggle('open', open);
+    if (open) {
+      var slider = document.getElementById('rp-sizefinder-slider');
+      if (slider) rpSizeFinderUpdate(slider.value);
+    }
+  }
+  function rpSizeFinderUpdate(inches) {
+    inches = parseInt(inches, 10);
+    var feet = Math.floor(inches / 12);
+    var rem = inches % 12;
+    var heightEl = document.getElementById('rp-sizefinder-height');
+    if (heightEl) heightEl.textContent = feet + "'" + rem + '"';
+    var size;
+    if (inches <= 65) { size = 'S'; }
+    else if (inches <= 70) { size = 'M'; }
+    else if (inches <= 74) { size = 'L'; }
+    else { size = 'XL'; }
+    var resultEl = document.getElementById('rp-sizefinder-result');
+    if (resultEl) resultEl.innerHTML = 'Recommended size: <strong>' + size + '</strong>';
+  }
+
   (function() {
     var gallery = document.querySelector('.rp-gallery');
     if (gallery) {
