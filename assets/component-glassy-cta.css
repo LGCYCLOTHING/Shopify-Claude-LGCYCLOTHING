@@ -3659,3 +3659,43 @@ html body [id*="__announcement_bar_Wzx9ic"] .utility-bar__grid {
   opacity: 1;
 }
 
+/* ============================================================== */
+/* Omnisend "Get 10% OFF" floating teaser button — liquid glass pill,   */
+/* matching the same glass treatment used on the footer form/password   */
+/* page. DevTools confirmed the real markup, so these are the actual    */
+/* stable class names for this campaign (not a generic guess). Only     */
+/* visual properties are touched — position/top/left/bottom are left    */
+/* alone so the on-screen placement doesn't move.                       */
+/* ============================================================== */
+#omnisend-forms-wrapper .omnisend-form-6a8499a514bc25fb281c5997-rectangle-teaser {
+  background: linear-gradient(-75deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.55)) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(150%) !important;
+          backdrop-filter: blur(10px) saturate(150%) !important;
+  border-radius: 999vw !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+    0 0.3em 0.6em -0.15em rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(0, 0, 0, 0.08) !important;
+  border: none !important;
+  padding: 4px 4px 4px 18px !important;
+  gap: 10px !important;
+}
+
+#omnisend-forms-wrapper .omnisend-form-6a8499a514bc25fb281c5997-rectangle-teaser-btn {
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.03em !important;
+  color: #111 !important;
+  background: none !important;
+  padding: 12px 4px !important;
+}
+
+#omnisend-forms-wrapper .omnisend-form-6a8499a514bc25fb281c5997-rectangle-teaser-close-btn {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 999vw !important;
+  background: rgba(0, 0, 0, 0.06) !important;
+  flex-shrink: 0 !important;
+}
+
