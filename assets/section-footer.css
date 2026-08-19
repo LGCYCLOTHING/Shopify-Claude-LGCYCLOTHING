@@ -674,12 +674,12 @@
   margin-top: 0 !important;
 }
 
-/* Tighten any wrapper divs Omnisend puts around each block (heading/text/
-   field) — the h/p overrides below only remove margin on the text itself,
-   not on a possible outer div, which is likely where the leftover gap is
-   coming from. Excludes any div touching the input so the pill rule below
-   still controls its own padding. */
-.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] div:not(:has(input)) {
+/* DevTools showed Omnisend wraps everything in its own section/column/text
+   divs (class names like "omnisend-form-XXXX-section-…", "-column-…") each
+   carrying their own default padding — that's what was indenting the whole
+   block from the left. Reset all of them; the pill rule further below is
+   more specific and still wins for its own 5px padding. */
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] div[class*="omnisend-form-"] {
   margin: 0 !important;
   padding: 0 !important;
 }
