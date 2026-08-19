@@ -1674,8 +1674,11 @@
       }
       // Judge.me reviews app block renders in its own section near the very
       // end of the template by default — pull it up to sit between trust
-      // and "You May Also Like" instead.
-      var reviews = document.getElementById('shopify-section-1787168144dcceb56f');
+      // and "You May Also Like" instead. Judge.me's own widget keeps a
+      // stable id regardless of Shopify's section/block hashing, so walk up
+      // from that to the enclosing section rather than hardcoding the id.
+      var reviewsWidget = document.getElementById('judgeme_product_reviews');
+      var reviews = reviewsWidget ? reviewsWidget.closest('section') : null;
       if (cards && reviews && cards.previousElementSibling !== reviews) {
         cards.parentNode.insertBefore(reviews, cards);
       }
