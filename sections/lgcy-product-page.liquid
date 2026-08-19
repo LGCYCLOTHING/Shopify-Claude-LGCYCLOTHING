@@ -1020,6 +1020,22 @@
     wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  // Size chart CM/IN toggle — swaps each cell's displayed value between its
+  // data-cm and data-in attributes instead of keeping two separate tables.
+  function rpSizeChartUnit(unit) {
+    document.querySelectorAll('.rp-sizechart-table td[data-cm]').forEach(function (td) {
+      td.textContent = unit === 'cm' ? td.getAttribute('data-cm') : td.getAttribute('data-in');
+    });
+    var toggle = document.getElementById('rp-sizechart-unit-toggle');
+    if (toggle) toggle.checked = (unit === 'in');
+    var cmLabel = document.getElementById('rp-sizechart-label-cm');
+    var inLabel = document.getElementById('rp-sizechart-label-in');
+    if (cmLabel) cmLabel.classList.toggle('is-active', unit === 'cm');
+    if (inLabel) inLabel.classList.toggle('is-active', unit === 'in');
+    var unitWord = document.getElementById('rp-sizechart-unit-word');
+    if (unitWord) unitWord.textContent = unit === 'cm' ? 'centimeters' : 'inches';
+  }
+
   function rpOpt(el, labelId) {
     el.parentElement.querySelectorAll('.rp-swatch,.rp-swatch-plain').forEach(function(x) { x.classList.remove('active'); });
     el.classList.add('active');
