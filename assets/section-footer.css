@@ -658,6 +658,16 @@
   align-items: flex-end;
 }
 
+/* Omnisend embedded email-capture form — Omnisend renders it at a much
+   larger default size than the original compact form, which was stretching
+   the whole footer taller. zoom (not transform:scale) actually shrinks its
+   layout box, so it stops reserving extra vertical space. */
+.lgcy-footer__col--newsletter [id^="omnisend-embedded-v2"] {
+  width: 100%;
+  max-width: 260px;
+  zoom: 0.68;
+}
+
 .lgcy-footer__newsletter-form {
   display: flex;
   flex-direction: column;
