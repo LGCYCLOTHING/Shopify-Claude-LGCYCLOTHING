@@ -3737,3 +3737,30 @@ html body [id*="__announcement_bar_Wzx9ic"] .utility-bar__grid {
   }
 }
 
+/* ============================================================== */
+/* Judge.me "Customer Reviews" section — match the site's background   */
+/* color scheme (same desktop/mobile split used everywhere else)       */
+/* instead of Judge.me's own default white, and swap the teal           */
+/* "Write a review" button for a neutral grey.                          */
+/* ============================================================== */
+html body .shopify-app-block:has(#judgeme_product_reviews),
+html body #judgeme_product_reviews {
+  background: #faf8f4 !important;
+}
+@media screen and (max-width: 749px) {
+  html body .shopify-app-block:has(#judgeme_product_reviews),
+  html body #judgeme_product_reviews {
+    background: #f0f0f0 !important;
+  }
+}
+
+html body .jdgm-write-rev-link {
+  background-color: #5c5c5c !important;
+  border-color: #5c5c5c !important;
+  color: #ffffff !important;
+}
+html body .jdgm-write-rev-link:hover {
+  background-color: #3d3d3d !important;
+  border-color: #3d3d3d !important;
+}
+
