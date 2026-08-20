@@ -156,7 +156,7 @@
     top: 0 !important;
     z-index: 10010 !important;
   }
-  {%- unless request.page_type == 'cart' -%}
+  {%- unless request.page_type == 'cart' or page.handle == 'join-the-legacy' -%}
   .header__inline-menu .list-menu__item--link,
 .lgcy-shop-btn,
 .header__heading-link,
