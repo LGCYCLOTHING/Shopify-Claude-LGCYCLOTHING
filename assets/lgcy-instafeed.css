@@ -185,6 +185,10 @@
 
 /* === MOBILE === */
 @media (max-width: 749px) {
+  #shopify-section-banner {
+    background: #f0f0f0 !important;
+  }
+
   #insta-feed,
   .instafeed-shopify {
     padding-bottom: 18px !important;
