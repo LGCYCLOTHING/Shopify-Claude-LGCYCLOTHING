@@ -3258,6 +3258,10 @@ html body .lgcy-breadcrumbs.lgcy-breadcrumbs--trust {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
+}
+@media screen and (max-width: 749px) {
+  html body .lgcy-breadcrumbs.lgcy-breadcrumbs--trust {
+    background: #f0f0f0;
   box-sizing: border-box;
 }
 
