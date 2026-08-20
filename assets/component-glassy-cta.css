@@ -3597,6 +3597,14 @@ html body [id*="__announcement_bar_Wzx9ic"] .utility-bar {
   position: relative;
   z-index: 100;
 }
+
+@media screen and (max-width: 749px) {
+  html body [id*="__announcement_bar_Wzx9ic"] .utility-bar {
+    background: #f0f0f0 !important;
+    --gradient-background: #f0f0f0 !important;
+  }
+}
+
 /* On video-hero pages (home/collections) the hero video sits later in the
    DOM with a negative top margin pulling it upward, and paints over
    anything above it that doesn't have its own stacking priority — the
