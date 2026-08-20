@@ -3663,9 +3663,9 @@ html body [id*="__announcement_bar_Wzx9ic"] .utility-bar__grid {
 /* Omnisend "Get 10% OFF" floating teaser button — liquid glass pill,   */
 /* matching the same glass treatment used on the footer form/password   */
 /* page. DevTools confirmed the real markup, so these are the actual    */
-/* stable class names for this campaign (not a generic guess). Only     */
-/* visual properties are touched — position/top/left/bottom are left    */
-/* alone so the on-screen placement doesn't move.                       */
+/* stable class names for this campaign (not a generic guess). Desktop  */
+/* keeps its original bottom-left position; mobile gets repositioned    */
+/* below into a vertical right-edge tab.                                */
 /* ============================================================== */
 #omnisend-forms-wrapper .omnisend-form-6a8499a514bc25fb281c5997-rectangle-teaser {
   background: linear-gradient(-75deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.55)) !important;
