@@ -2229,7 +2229,12 @@ html body .lgcy-faq3-eyebrow {
 }
 
 html body .lgcy-faq3-section {
-  background: #ffffff !important;
+  background: #faf8f4 !important;
+}
+@media screen and (max-width: 749px) {
+  html body .lgcy-faq3-section {
+    background: #f0f0f0 !important;
+  }
 }
 
 html body .lgcy-faq3-bg,
