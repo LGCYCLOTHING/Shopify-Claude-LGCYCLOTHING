@@ -3743,11 +3743,13 @@ html body [id*="__announcement_bar_Wzx9ic"] .utility-bar__grid {
 /* instead of Judge.me's own default white, and swap the teal           */
 /* "Write a review" button for a neutral grey.                          */
 /* ============================================================== */
+html body .shopify-section:has(#judgeme_product_reviews),
 html body .shopify-app-block:has(#judgeme_product_reviews),
 html body #judgeme_product_reviews {
   background: #faf8f4 !important;
 }
 @media screen and (max-width: 749px) {
+  html body .shopify-section:has(#judgeme_product_reviews),
   html body .shopify-app-block:has(#judgeme_product_reviews),
   html body #judgeme_product_reviews {
     background: #f0f0f0 !important;
