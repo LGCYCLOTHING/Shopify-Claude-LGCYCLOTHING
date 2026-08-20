@@ -886,7 +886,7 @@
       {%- endfor -%}
     {%- else -%}
       <div class="lgcy-panel-divider"></div>
-      <span class="lgcy-panel-section-label">Support</span>
+      <span class="lgcy-panel-section-label">Policies</span>
       <a href="/policies/shipping-policy" class="lgcy-panel-link lgcy-panel-link--secondary">
         <span class="lgcy-panel-link__text">Shipping Policy</span>
       </a>
@@ -905,12 +905,24 @@
     <div class="lgcy-panel-bottom">
       <span class="lgcy-panel-bottom-label">Account</span>
       <div class="lgcy-panel-divider"></div>
-      <a href="{{ routes.account_url }}" class="lgcy-panel-link lgcy-panel-link--bottom">
-        <span class="lgcy-panel-link__text">Orders</span>
-      </a>
-      <a href="{{ routes.account_url }}" class="lgcy-panel-link lgcy-panel-link--bottom">
-        <span class="lgcy-panel-link__text">Profile</span>
-      </a>
+      {%- if customer -%}
+        <a href="{{ routes.account_url }}/orders" class="lgcy-panel-link lgcy-panel-link--bottom">
+          <span class="lgcy-panel-link__text">Orders</span>
+        </a>
+        <a href="{{ routes.account_url }}" class="lgcy-panel-link lgcy-panel-link--bottom">
+          <span class="lgcy-panel-link__text">Profile</span>
+        </a>
+        <a href="{{ routes.account_logout_url }}" class="lgcy-panel-link lgcy-panel-link--bottom">
+          <span class="lgcy-panel-link__text">Sign Out</span>
+        </a>
+      {%- else -%}
+        <a href="{{ routes.account_login_url }}" class="lgcy-panel-link lgcy-panel-link--bottom">
+          <span class="lgcy-panel-link__text">Sign In</span>
+        </a>
+        <a href="{{ routes.account_register_url }}" class="lgcy-panel-link lgcy-panel-link--bottom">
+          <span class="lgcy-panel-link__text">Create Account</span>
+        </a>
+      {%- endif -%}
     </div>
 
   </nav>
