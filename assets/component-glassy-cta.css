@@ -2924,6 +2924,21 @@ html body .instafeed-new-layout-wrapper {
   background: #faf8f4 !important;
 }
 
+/* Mobile intentionally uses a slightly different grey (#f0f0f0) from
+   desktop's beige, per explicit request. */
+@media screen and (max-width: 749px) {
+  html body .rp-wrap,
+  html body .rp-editorial,
+  html body .rp-cards-section,
+  html body #shopify-section-17739577321e24515e,
+  html body #insta-feed,
+  html body .instafeed-shopify,
+  html body .instafeed-new-layout-container,
+  html body .instafeed-new-layout-wrapper {
+    background: #f0f0f0 !important;
+  }
+}
+
 /* Full-bleed so the beige above reaches the true viewport edges — these are
    the actual top-level wrapper(s) around the Instafeed app widget, not the
    inner grid/tile elements, so this is safe to apply without also touching
