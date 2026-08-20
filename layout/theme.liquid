@@ -864,5 +864,53 @@ END LGCY GRID WIPE DISABLED -->
     bar.appendChild(closeBtn);
   })();
 </script>
+
+<script>
+  // "Get 10% OFF" Omnisend teaser — force it into a vertical right-edge tab
+  // on mobile. CSS !important alone isn't reliable here: Omnisend's own
+  // script re-applies its configured "bottomLeft" position as inline
+  // styles after our stylesheet has already loaded, so it can win the
+  // fight even against !important. Setting the same properties via JS
+  // with priority 'important', and re-running whenever Omnisend touches
+  // the element again, guarantees ours is the last word.
+  (function () {
+    function isMobile() { return window.innerWidth <= 749; }
+
+    function force(el) {
+      if (!el) return;
+      if (isMobile()) {
+        el.style.setProperty('position', 'fixed', 'important');
+        el.style.setProperty('top', '50%', 'important');
+        el.style.setProperty('left', 'auto', 'important');
+        el.style.setProperty('bottom', 'auto', 'important');
+        el.style.setProperty('right', '0', 'important');
+        el.style.setProperty('margin', '0', 'important');
+        el.style.setProperty('transform', 'translateY(-50%)', 'important');
+      } else {
+        ['position', 'top', 'left', 'bottom', 'right', 'margin', 'transform'].forEach(function (p) {
+          el.style.removeProperty(p);
+        });
+      }
+    }
+
+    function findAndForce() {
+      var el = document.querySelector('.omnisend-form-6a8499a514bc25fb281c5997-teaser');
+      if (!el) return false;
+      force(el);
+      if (!el.dataset.lgcyForcedObserver) {
+        el.dataset.lgcyForcedObserver = '1';
+        new MutationObserver(function () { force(el); }).observe(el, { attributes: true, attributeFilter: ['style'] });
+      }
+      return true;
+    }
+
+    var attempts = 0, max = 60;
+    var timer = setInterval(function () {
+      attempts++;
+      if (findAndForce() || attempts >= max) clearInterval(timer);
+    }, 250);
+    window.addEventListener('resize', findAndForce);
+  })();
+</script>
 </body>
 </html>
