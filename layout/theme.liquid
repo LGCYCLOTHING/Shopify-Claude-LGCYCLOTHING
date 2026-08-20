@@ -912,5 +912,44 @@ END LGCY GRID WIPE DISABLED -->
     window.addEventListener('resize', findAndForce);
   })();
 </script>
+
+<script>
+  // Judge.me "Write a review" modal — Lenis (this site's smooth-scroll
+  // library) wraps the page in a transformed container, and any CSS
+  // `position: fixed` descendant of a transformed ancestor gets trapped
+  // inside that container's box instead of covering the true viewport —
+  // that's why the modal was scrolling with the page and appearing behind
+  // the header/Instafeed/cart icon instead of staying pinned above them.
+  // Re-parenting the modal to be a direct child of <body> (outside Lenis's
+  // wrapper) as soon as it appears fixes that at the source.
+  (function () {
+    function fixModal(modal) {
+      if (modal.parentElement !== document.body) {
+        document.body.appendChild(modal);
+      }
+      modal.style.setProperty('position', 'fixed', 'important');
+      modal.style.setProperty('z-index', '999999', 'important');
+    }
+
+    var observer = new MutationObserver(function () {
+      var modal = document.querySelector('.jdgm-modal');
+      if (modal) fixModal(modal);
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
+
+<style>
+  /* Cap the modal itself to a smaller, centered, confined box instead of
+     letting it sprawl — content scrolls internally if it's taller than
+     this. */
+  .jdgm-modal {
+    max-width: 480px !important;
+    max-height: 85vh !important;
+    margin: auto !important;
+    overflow-y: auto !important;
+    z-index: 999999 !important;
+  }
+</style>
 </body>
 </html>
