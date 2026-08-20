@@ -3698,3 +3698,38 @@ html body [id*="__announcement_bar_Wzx9ic"] .utility-bar__grid {
   flex-shrink: 0 !important;
 }
 
+/* Mobile: shrink it and turn it into a vertical tab flush against the right
+   edge instead of a horizontal pill bottom-left. writing-mode is used
+   instead of a rotate() transform so the fixed positioning/centering math
+   stays simple (rotate() would require compensating the bounding box for
+   the swapped width/height, which is fragile without live testing). */
+@media (max-width: 749px) {
+  #omnisend-forms-wrapper .omnisend-form-6a8499a514bc25fb281c5997-teaser {
+    position: fixed !important;
+    top: 50% !important;
+    left: auto !important;
+    bottom: auto !important;
+    right: 0 !important;
+    transform: translateY(-50%) !important;
+  }
+  #omnisend-forms-wrapper .omnisend-form-6a8499a514bc25fb281c5997-rectangle-teaser {
+    writing-mode: vertical-rl !important;
+    text-orientation: mixed !important;
+    border-radius: 10px 0 0 10px !important;
+    padding: 4px 4px 12px !important;
+    gap: 6px !important;
+  }
+  #omnisend-forms-wrapper .omnisend-form-6a8499a514bc25fb281c5997-rectangle-teaser-btn {
+    writing-mode: vertical-rl !important;
+    text-orientation: mixed !important;
+    font-size: 12px !important;
+    padding: 4px 8px !important;
+  }
+  #omnisend-forms-wrapper .omnisend-form-6a8499a514bc25fb281c5997-rectangle-teaser-close-btn {
+    writing-mode: vertical-rl !important;
+    text-orientation: mixed !important;
+    width: 22px !important;
+    height: 22px !important;
+  }
+}
+
