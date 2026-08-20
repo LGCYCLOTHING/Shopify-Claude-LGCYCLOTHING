@@ -1089,6 +1089,10 @@
 /* ── Responsive — mobile stacked ── */
 
 @media screen and (max-width: 749px) {
+  .lgcy-footer {
+    background: #f0f0f0;
+  }
+
   .lgcy-footer__main {
     padding: 60px 0 20px;
   }
