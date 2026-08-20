@@ -8,10 +8,17 @@
           "settings": {
             "text": "Early access to every drop"
           }
+        },
+        "omnisend_embedded_form_legacy": {
+          "type": "shopify://apps/omnisend-email-marketing-sms/blocks/embedded-form/44704aa2-794f-4c5d-8c8e-039c841158e9",
+          "settings": {
+            "form_id": "69b47c72e1b57dccf6b8730a"
+          }
         }
       },
       "block_order": [
-        "perk1"
+        "perk1",
+        "omnisend_embedded_form_legacy"
       ],
       "settings": {
         "eyebrow": "The Inner Circle",
