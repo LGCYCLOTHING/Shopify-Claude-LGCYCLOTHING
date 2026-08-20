@@ -309,6 +309,28 @@ color: {{ block.settings.color_text }}!important;
   #shopify-section-{{ section.id }} .lgcy-hero-read-story:hover svg {
     transform: translateX(3px);
   }
+
+  /* Underline hidden by default — reverse of the homepage "Discover" link,
+     which keeps its underline permanently visible. Here it only sweeps in
+     (left to right) on hover, then sweeps back out to nothing when the
+     mouse leaves, via the clip-path transition reversing automatically. */
+  #shopify-section-{{ section.id }} .lgcy-hero-read-story span {
+    position: relative;
+  }
+  #shopify-section-{{ section.id }} .lgcy-hero-read-story span::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 350ms ease;
+  }
+  #shopify-section-{{ section.id }} .lgcy-hero-read-story:hover span::after {
+    clip-path: inset(0 0% 0 0);
+  }
   @media (max-width: 768px) {
     #shopify-section-{{ section.id }} .lgcy-hero-read-story {
       bottom: 22px;
