@@ -1650,7 +1650,11 @@
     </div>
   </div>
   <div class="rp-editorial-media">
-    <img src="{{ product.featured_image | img_url: '1200x' }}" alt="{{ product.title | escape }}">
+    {%- if product.handle == 'driven-by-purpose-oversized-t-shirt' -%}
+      <img src="https://cdn.shopify.com/s/files/1/0688/4537/1578/files/IMG_0152.jpg?v=1787305148" alt="{{ product.title | escape }}">
+    {%- else -%}
+      <img src="{{ product.featured_image | img_url: '1200x' }}" alt="{{ product.title | escape }}">
+    {%- endif -%}
   </div>
 </section>
 
