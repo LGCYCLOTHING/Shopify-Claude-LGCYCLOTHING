@@ -894,7 +894,10 @@ END LGCY GRID WIPE DISABLED -->
     }
 
     function findAndForce() {
-      var el = document.querySelector('.omnisend-form-6a8499a514bc25fb281c5997-teaser');
+      // Match by class prefix/suffix rather than the exact generated ID —
+      // Omnisend re-issues that middle ID whenever the form is edited in
+      // the app, which silently breaks an exact-class selector.
+      var el = document.querySelector('[class*="omnisend-form-"][class*="-teaser"]');
       if (!el) return false;
       force(el);
       if (!el.dataset.lgcyForcedObserver) {
