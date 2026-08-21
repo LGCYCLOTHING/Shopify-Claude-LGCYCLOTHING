@@ -473,15 +473,75 @@
 
   /* Size chart table + CM/IN toggle */
   .rp-sizechart-diagram {
+    position: relative;
     display: flex;
     justify-content: center;
     margin: 0 0 18px;
+    cursor: zoom-in;
   }
   .rp-sizechart-diagram img {
     width: 100%;
     max-width: 220px;
     height: auto;
     display: block;
+  }
+  .rp-sizechart-zoom-badge {
+    position: absolute;
+    right: calc(50% - 110px - 6px);
+    bottom: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .rp-sizechart-zoom-badge svg {
+    width: 15px;
+    height: 15px;
+    stroke: #fff;
+    fill: none;
+    stroke-width: 2.2;
+  }
+  .rp-sizechart-lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: rgba(0, 0, 0, 0.92);
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    cursor: zoom-out;
+  }
+  .rp-sizechart-lightbox.is-open {
+    display: flex;
+  }
+  .rp-sizechart-lightbox img {
+    max-width: 92vw;
+    max-height: 88vh;
+    width: auto;
+    height: auto;
+    display: block;
+    cursor: default;
+    background: #fff;
+    border-radius: 6px;
+  }
+  .rp-sizechart-lightbox-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
   }
   .rp-sizechart-toggle {
     display: flex;
