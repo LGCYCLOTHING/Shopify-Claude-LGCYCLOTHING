@@ -1199,6 +1199,44 @@
     if (unitWord) unitWord.textContent = unit === 'cm' ? 'centimeters' : 'inches';
   }
 
+  // Tap-to-enlarge for the size chart diagram (mainly for mobile, where the
+  // inline image is too small to read). The lightbox is appended directly to
+  // <body> — not left inside the tab panel — so it isn't confined by Lenis's
+  // transformed scroll wrapper, the same fix used for the Judge.me modal.
+  function rpSizeChartZoomOpen(diagramEl) {
+    var img = diagramEl.querySelector('img');
+    if (!img) return;
+    var lightbox = document.getElementById('rp-sizechart-lightbox');
+    if (!lightbox) {
+      lightbox = document.createElement('div');
+      lightbox.className = 'rp-sizechart-lightbox';
+      lightbox.id = 'rp-sizechart-lightbox';
+      lightbox.setAttribute('role', 'dialog');
+      lightbox.setAttribute('aria-modal', 'true');
+      lightbox.innerHTML = '<button type="button" class="rp-sizechart-lightbox-close" aria-label="Close">&times;</button><img alt="">';
+      lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox || e.target.classList.contains('rp-sizechart-lightbox-close')) {
+          rpSizeChartZoomClose();
+        }
+      });
+      document.body.appendChild(lightbox);
+    }
+    lightbox.querySelector('img').src = img.currentSrc || img.src;
+    lightbox.querySelector('img').alt = img.alt;
+    lightbox.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function rpSizeChartZoomClose() {
+    var lightbox = document.getElementById('rp-sizechart-lightbox');
+    if (lightbox) lightbox.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') rpSizeChartZoomClose();
+  });
+
   function rpOpt(el, labelId) {
     el.parentElement.querySelectorAll('.rp-swatch,.rp-swatch-plain').forEach(function(x) { x.classList.remove('active'); });
     el.classList.add('active');
