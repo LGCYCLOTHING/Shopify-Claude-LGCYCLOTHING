@@ -208,9 +208,19 @@
     display: none !important;
   }
   #shopify-section-{{ section.id }} .videoBox {
-    background-image: url('https://cdn.shopify.com/s/files/1/0688/4537/1578/files/copy_8619CF04-617D-4AC6-A02E-DABDA3342914.jpg?v=1787594284') !important;
+    background-image: url('https://cdn.shopify.com/s/files/1/0688/4537/1578/files/copy_7DC94444-0E94-41A3-9AE6-5EF98CA3B024.jpg?v=1787604524') !important;
     background-size: cover !important;
-    background-position: center 20% !important;
+    background-position: center top !important;
+  }
+  /* Desktop: bound the box to a 4:3 shape instead of a full 100vh strip,
+     so less of this (originally mobile-composed) portrait photo gets
+     cropped away. */
+  @media (min-width: 769px) {
+    #shopify-section-{{ section.id }} .videoBox {
+      height: auto !important;
+      min-height: 0 !important;
+      aspect-ratio: 4 / 3 !important;
+    }
   }
 </style>
 {%- endif -%}
