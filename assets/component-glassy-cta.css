@@ -3597,17 +3597,10 @@ html body .rp-lb-close {
 /* "Buy 2 Get Free Shipping" announcement bar — beige, dismissible */
 /* ============================================================== */
 html body [id*="__announcement_bar_Wzx9ic"] .utility-bar {
-  background: #faf8f4 !important;
-  --gradient-background: #faf8f4 !important;
+  background: #111111 !important;
+  --gradient-background: #111111 !important;
   position: relative;
   z-index: 100;
-}
-
-@media screen and (max-width: 749px) {
-  html body [id*="__announcement_bar_Wzx9ic"] .utility-bar {
-    background: #f0f0f0 !important;
-    --gradient-background: #f0f0f0 !important;
-  }
 }
 
 /* On video-hero pages (home/collections) the hero video sits later in the
