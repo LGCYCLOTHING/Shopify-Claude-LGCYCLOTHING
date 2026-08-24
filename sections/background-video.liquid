@@ -201,21 +201,16 @@
 </style>
 {%- endif -%}
 
-<!-- LGCY_DEBUG section.id=[{{ section.id }}] blocks_size=[{{ section.blocks.size }}] template=[{{ template }}] -->
-{%- if section.id == 'background_video_WTHRPk' -%}
+{%- if section.id contains 'background_video_WTHRPk' -%}
 <style>
   /* Homepage hero only: on mobile, swap the video for a static image
      sized/composed specifically for mobile screens instead of playing
-     the (desktop-framed) video. Matched via an ends-with attribute
-     selector — on JSON-template sections the real wrapper id is
-     "shopify-section-template--{templateId}__{section.id}", not the
-     plain "shopify-section-{section.id}" the CSS elsewhere in this file
-     assumes, so a plain #id selector here would silently never match. */
+     the (desktop-framed) video. */
   @media (max-width: 768px) {
-    [id$="__{{ section.id }}"] .fullscreen-video-wrap {
+    #shopify-section-{{ section.id }} .fullscreen-video-wrap {
       display: none !important;
     }
-    [id$="__{{ section.id }}"] .videoBox {
+    #shopify-section-{{ section.id }} .videoBox {
       background-image: url('https://cdn.shopify.com/s/files/1/0688/4537/1578/files/copy_8619CF04-617D-4AC6-A02E-DABDA3342914.jpg?v=1787594284') !important;
       background-size: cover !important;
       background-position: center top !important;
