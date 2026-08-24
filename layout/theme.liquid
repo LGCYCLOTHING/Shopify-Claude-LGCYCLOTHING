@@ -849,8 +849,21 @@ END LGCY GRID WIPE DISABLED -->
     var message = section && section.querySelector('.announcement-bar__message');
     if (!section || !bar || !message) return;
 
-    // Dismissing only hides it for the current page view — no persistence,
-    // so it's back the next time the page loads or is reloaded.
+    var DISMISS_KEY = 'lgcyAnnouncementDismissed';
+
+    // Dismissing persists for the rest of this browsing session (via
+    // sessionStorage) — stays hidden across every page the shopper visits
+    // next, but comes back on their next separate visit rather than being
+    // gone forever.
+    var dismissed = false;
+    try {
+      dismissed = sessionStorage.getItem(DISMISS_KEY) === '1';
+    } catch (e) {}
+    if (dismissed) {
+      section.style.display = 'none';
+      return;
+    }
+
     var closeBtn = document.createElement('button');
     closeBtn.type = 'button';
     closeBtn.className = 'lgcy-announcement-close';
@@ -860,6 +873,9 @@ END LGCY GRID WIPE DISABLED -->
       e.preventDefault();
       e.stopPropagation();
       section.style.display = 'none';
+      try {
+        sessionStorage.setItem(DISMISS_KEY, '1');
+      } catch (e) {}
     });
     bar.appendChild(closeBtn);
   })();
