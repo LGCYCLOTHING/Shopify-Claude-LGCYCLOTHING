@@ -51,6 +51,15 @@
 </div>
 <style>
   @media (max-width: 768px) {
+    /* #hero-title-collection has no positioned ancestor, so its
+       `top: 50%` centers against the viewport height (100vh) anchored at
+       the very top of the page — not against the actual image box, which
+       is capped to 82vh on mobile (see background-video.liquid). That
+       leaves it sitting ~9vh below the image's true center. Re-anchor to
+       41vh (half of 82vh) so it lines up with the image instead. */
+    #hero-title-collection {
+      top: 41vh !important;
+    }
     #hero-title-collection h1 {
       font-size: clamp(20px, 7vw, 45px) !important;
       letter-spacing: -1px !important;
