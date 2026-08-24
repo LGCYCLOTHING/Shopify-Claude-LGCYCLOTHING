@@ -228,10 +228,9 @@
 {%- if collection.handle == 'the-legacy-collection' and section.id contains 'background_video_cGChwt' -%}
 <style>
   /* Legacy collection hero: static image instead of the video, on all
-     devices (not mobile-only like the homepage swap above). */
-  #shopify-section-{{ section.id }} .fullscreen-video-wrap {
-    display: none !important;
-  }
+     devices (not mobile-only like the homepage swap above). The video tag
+     itself is skipped entirely at render time (see the video_link check
+     below), so there's no dead video download to strip via CSS here. */
   #shopify-section-{{ section.id }} .videoBox {
     background-image: url('https://cdn.shopify.com/s/files/1/0688/4537/1578/files/copy_218D62C2-1FA8-4DF7-9AAC-589D4E1FDDFE.jpg?v=1787602152') !important;
     background-size: cover !important;
