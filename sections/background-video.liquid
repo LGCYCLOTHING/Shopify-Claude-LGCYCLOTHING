@@ -212,16 +212,6 @@
     background-size: cover !important;
     background-position: center top !important;
   }
-  /* Desktop: bound the box to a 4:3 shape instead of a full 100vh strip,
-     so less of this (originally mobile-composed) portrait photo gets
-     cropped away. */
-  @media (min-width: 769px) {
-    #shopify-section-{{ section.id }} .videoBox {
-      height: auto !important;
-      min-height: 0 !important;
-      aspect-ratio: 4 / 3 !important;
-    }
-  }
 </style>
 {%- endif -%}
 
