@@ -203,18 +203,14 @@
 
 {%- if section.id contains 'background_video_WTHRPk' -%}
 <style>
-  /* Homepage hero only: on mobile, swap the video for a static image
-     sized/composed specifically for mobile screens instead of playing
-     the (desktop-framed) video. */
-  @media (max-width: 768px) {
-    #shopify-section-{{ section.id }} .fullscreen-video-wrap {
-      display: none !important;
-    }
-    #shopify-section-{{ section.id }} .videoBox {
-      background-image: url('https://cdn.shopify.com/s/files/1/0688/4537/1578/files/copy_8619CF04-617D-4AC6-A02E-DABDA3342914.jpg?v=1787594284') !important;
-      background-size: cover !important;
-      background-position: center top !important;
-    }
+  /* Homepage hero: static image instead of the video, on all devices. */
+  #shopify-section-{{ section.id }} .fullscreen-video-wrap {
+    display: none !important;
+  }
+  #shopify-section-{{ section.id }} .videoBox {
+    background-image: url('https://cdn.shopify.com/s/files/1/0688/4537/1578/files/copy_8619CF04-617D-4AC6-A02E-DABDA3342914.jpg?v=1787594284') !important;
+    background-size: cover !important;
+    background-position: center top !important;
   }
 </style>
 {%- endif -%}
