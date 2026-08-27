@@ -239,13 +239,50 @@
 </style>
 {%- endif -%}
 
+{%- if collection.handle == 'all' and section.id contains 'background_video_cGChwt' -%}
+<style>
+  /* All Products hero: same static images as the homepage hero (mobile /
+     desktop crops), instead of the video. Video tag is skipped at render
+     time below, so there's no dead video download to strip via CSS here. */
+  #shopify-section-{{ section.id }} .videoBox {
+    background-size: cover !important;
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .videoBox {
+      background-image: url('https://cdn.shopify.com/s/files/1/0688/4537/1578/files/copy_8619CF04-617D-4AC6-A02E-DABDA3342914.jpg?v=1787594284') !important;
+      background-position: center top !important;
+    }
+  }
+  @media (min-width: 769px) {
+    #shopify-section-{{ section.id }} .videoBox {
+      background-image: url('https://cdn.shopify.com/s/files/1/0688/4537/1578/files/copy_7DC94444-0E94-41A3-9AE6-5EF98CA3B024_1.jpg?v=1787605409') !important;
+      background-position: center center !important;
+    }
+  }
+</style>
+{%- endif -%}
+
+{%- if collection.handle == 'lgcy-glasses' and section.id contains 'background_video_cGChwt' -%}
+<style>
+  /* LGCY Eyewear hero: same blurred glasses image used in the homepage
+     "Coming Soon" teaser, instead of the video. Video tag is skipped at
+     render time below, so there's no dead video download to strip via
+     CSS here. */
+  #shopify-section-{{ section.id }} .videoBox {
+    background-image: url('https://cdn.shopify.com/s/files/1/0688/4537/1578/files/IMG_3051_c2ecaaa8-c7f4-4e63-8cab-d9098ea1180f.jpg?v=1786121653') !important;
+    background-size: cover !important;
+    background-position: center !important;
+  }
+</style>
+{%- endif -%}
+
 {% if block.type == 'video' %}
 
 <div class="videoBox" style="background-color: #000;{%- if block.settings.video_link == blank and block.settings.video_image != blank -%}background-image: url('{{ block.settings.video_image  | img_url: 'master' }}');{%- endif -%}">
 
 
 
-{%- if block.settings.video_link != blank and collection.handle != 'the-legacy-collection' -%}
+{%- if block.settings.video_link != blank and collection.handle != 'the-legacy-collection' and collection.handle != 'all' and collection.handle != 'lgcy-glasses' -%}
 
 <div class="fullscreen-video-wrap">
 
