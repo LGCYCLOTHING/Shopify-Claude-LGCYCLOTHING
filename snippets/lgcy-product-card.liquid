@@ -629,12 +629,14 @@
         </span>
       {%- endif -%}
     </div>
+    {%- unless is_coming_soon -%}
     <div class="lgcy-card__price{% if on_sale %} lgcy-card__price--sale{% endif %}">
       {%- if on_sale -%}
         <span class="lgcy-card__price--compare">{{ compare_price | money }}</span>
       {%- endif -%}
       <span>{{ price | money }}</span>
     </div>
+    {%- endunless -%}
   </div>
 </a>
 
