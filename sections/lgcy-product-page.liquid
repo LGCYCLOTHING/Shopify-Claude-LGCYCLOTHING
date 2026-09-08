@@ -819,12 +819,14 @@
       <!-- Title + Price -->
       <div class="rp-header">
         <h1 class="rp-title">{{ p.title }}</h1>
+        {%- unless is_coming_soon -%}
         <span class="rp-price">
           {%- if v.compare_at_price > v.price -%}
             <s style="color:#aaa;margin-right:4px;">{{ v.compare_at_price | money }}</s>
           {%- endif -%}
           {{ v.price | money }}
         </span>
+        {%- endunless -%}
       </div>
 
       {%- unless p.has_only_default_variant -%}
