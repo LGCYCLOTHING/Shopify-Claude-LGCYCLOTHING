@@ -33,9 +33,11 @@
 
   <div class="lgcy-sticky-cart__info">
     <a href="{{ product.url }}" class="lgcy-sticky-cart__title">{{ product.title | escape }}</a>
+    {%- unless is_coming_soon -%}
     <span class="lgcy-sticky-cart__price" data-lgcy-sticky-price>
       {{ product.selected_or_first_available_variant.price | money }}
     </span>
+    {%- endunless -%}
   </div>
 
   {%- if is_coming_soon -%}
