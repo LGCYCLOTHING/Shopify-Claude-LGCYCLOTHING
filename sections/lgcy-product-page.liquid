@@ -1702,7 +1702,9 @@
             </div>
             <div class="rp-product-card-info">
               <span class="rp-product-card-name">{{ rec.title }}</span>
+              {%- unless rec_coming_soon -%}
               <span class="rp-product-card-price">{{ rec.price | money }}</span>
+              {%- endunless -%}
             </div>
           </a>
         {%- endif -%}
