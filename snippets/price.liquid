@@ -49,9 +49,16 @@
   if coming_soon_handles contains product.handle
     assign is_coming_soon = true
   endif
+
+  assign skip_price = false
+  if is_coming_soon
+    assign skip_price = true
+  elsif target == null and placeholder == null
+    assign skip_price = true
+  endif
 -%}
 
-{%- unless is_coming_soon or target == null and placeholder == null -%}
+{%- unless skip_price -%}
   <div
     class="
       price
