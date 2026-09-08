@@ -38,9 +38,20 @@
   if target == product and product.price_varies
     assign money_price = 'products.product.price.from_price_html' | t: price: money_price
   endif
+
+  comment
+    Keep in sync with coming_soon_handles in snippets/lgcy-pdp-badges.liquid,
+    snippets/lgcy-sticky-cart.liquid, snippets/lgcy-product-card.liquid, and
+    COMING_SOON_HANDLES in assets/cart-drawer.js.
+  endcomment
+  assign coming_soon_handles = 'lgcy-01-aeris-black-clear,lgcy_black-purple' | split: ','
+  assign is_coming_soon = false
+  if coming_soon_handles contains product.handle
+    assign is_coming_soon = true
+  endif
 -%}
 
-{%- unless target == null and placeholder == null -%}
+{%- unless is_coming_soon or target == null and placeholder == null -%}
   <div
     class="
       price
