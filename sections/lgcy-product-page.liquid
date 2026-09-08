@@ -734,6 +734,10 @@
 
 {%- assign p = product -%}
 {%- assign v = p.selected_or_first_available_variant -%}
+{%- comment -%} Keep in sync with coming_soon_handles in snippets/lgcy-pdp-badges.liquid, snippets/lgcy-sticky-cart.liquid, snippets/lgcy-product-card.liquid, and COMING_SOON_HANDLES in assets/cart-drawer.js. {%- endcomment -%}
+{%- assign coming_soon_handles = 'lgcy-01-aeris-black-clear,lgcy_black-purple' | split: ',' -%}
+{%- assign is_coming_soon = false -%}
+{%- if coming_soon_handles contains p.handle -%}{%- assign is_coming_soon = true -%}{%- endif -%}
 {%- assign img_count = p.images.size -%}
 
 <!-- Lightbox -->
