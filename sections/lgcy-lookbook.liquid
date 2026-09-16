@@ -36,22 +36,32 @@
     margin: 0;
   }
 
-  /* Edge-to-edge, always-2-column layout — large full-bleed photos like
-     Represent's lookbook, with a Pinterest-style vertical stagger between
-     the two columns instead of a lined-up grid. */
+  /* Edge-to-edge, always-2-column layout — large photos like Represent's
+     lookbook. The right column is offset down from the left (Pinterest-
+     style stagger), and within each column, full-bleed and whitespace-
+     framed photos alternate — opposite phase between the two columns —
+     so the bleed corners zigzag diagonally down the page. */
   .lgcy-lookbook-grid {
-    column-count: 2;
-    column-gap: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .lgcy-lookbook-col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .lgcy-lookbook-col--right {
+    margin-top: 80px;
   }
   .lgcy-lookbook-item {
-    break-inside: avoid;
     margin-bottom: 6px;
+    box-sizing: border-box;
   }
-  /* Push the right-hand column down so the two columns never start level —
-     the core of the "not on the same height" masonry look with only 2
-     columns. */
-  .lgcy-lookbook-item:nth-child(even) {
-    margin-top: 80px;
+  .lgcy-lookbook-col--left .lgcy-lookbook-item:nth-child(even),
+  .lgcy-lookbook-col--right .lgcy-lookbook-item:nth-child(odd) {
+    padding: 20px;
   }
   .lgcy-lookbook-thumb {
     display: block;
