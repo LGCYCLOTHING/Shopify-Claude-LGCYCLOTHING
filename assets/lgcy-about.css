@@ -64,18 +64,40 @@
 
 /* ── Story ───────────────────────────────────────────────────────────── */
 
-.lgcy-about__story {
+.lgcy-about__layout {
   position: relative;
   z-index: 1;
-  text-align: left;
-  max-width: 560px;
+  display: flex;
+  align-items: flex-start;
+  gap: 64px;
+  max-width: 1140px;
   margin: 0 auto;
 }
 
+.lgcy-about__story {
+  text-align: left;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
 .lgcy-about__image {
-  margin: 0 0 28px;
+  flex: 0 0 420px;
   border-radius: 20px;
   overflow: hidden;
+}
+
+@media screen and (max-width: 989px) {
+  .lgcy-about__layout {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .lgcy-about__image {
+    flex-basis: auto;
+    width: 100%;
+    order: -1;
+    margin-bottom: 28px;
+  }
 }
 
 .lgcy-about__image img {
