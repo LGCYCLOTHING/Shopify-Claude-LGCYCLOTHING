@@ -258,37 +258,42 @@
   {%- endif -%}
 
   <div class="lgcy-lookbook-grid">
-    {%- for block in section.blocks -%}
-      {%- if block.settings.image != blank -%}
-        <div class="lgcy-lookbook-item" {{ block.shopify_attributes }}>
-          {%- assign lb_alt = block.settings.image.alt | default: block.settings.caption -%}
-          <button
-            type="button"
-            class="lgcy-lookbook-thumb"
-            data-lookbook-trigger
-            data-img="{{ block.settings.image | img_url: '1600x' }}"
-            data-alt="{{ lb_alt | escape }}"
-            {%- if block.settings.product != blank -%}
-              {%- assign lb_variant = block.settings.product.selected_or_first_available_variant -%}
-              {%- if lb_variant.available -%}
-                data-variant-id="{{ lb_variant.id }}"
-                data-product-image="{{ block.settings.product.featured_image | img_url: '200x' }}"
-                data-product-title="{{ block.settings.product.title | escape }}"
-                data-product-price="{{ lb_variant.price | money }}"
+    {%- for lb_side_num in (0..1) -%}
+      <div class="lgcy-lookbook-col {% if lb_side_num == 0 %}lgcy-lookbook-col--left{% else %}lgcy-lookbook-col--right{% endif %}">
+        {%- for block in section.blocks -%}
+          {%- assign lb_side = forloop.index0 | modulo: 2 -%}
+          {%- if block.settings.image != blank and lb_side == lb_side_num -%}
+            <div class="lgcy-lookbook-item" {{ block.shopify_attributes }}>
+              {%- assign lb_alt = block.settings.image.alt | default: block.settings.caption -%}
+              <button
+                type="button"
+                class="lgcy-lookbook-thumb"
+                data-lookbook-trigger
+                data-img="{{ block.settings.image | img_url: '1600x' }}"
+                data-alt="{{ lb_alt | escape }}"
+                {%- if block.settings.product != blank -%}
+                  {%- assign lb_variant = block.settings.product.selected_or_first_available_variant -%}
+                  {%- if lb_variant.available -%}
+                    data-variant-id="{{ lb_variant.id }}"
+                    data-product-image="{{ block.settings.product.featured_image | img_url: '200x' }}"
+                    data-product-title="{{ block.settings.product.title | escape }}"
+                    data-product-price="{{ lb_variant.price | money }}"
+                  {%- endif -%}
+                {%- endif -%}
+              >
+                <img
+                  src="{{ block.settings.image | img_url: '1600x' }}"
+                  alt="{{ lb_alt | escape }}"
+                  loading="lazy"
+                >
+              </button>
+              {%- if block.settings.caption != blank -%}
+                <p class="lgcy-lookbook-caption">{{ block.settings.caption }}</p>
               {%- endif -%}
-            {%- endif -%}
-          >
-            <img
-              src="{{ block.settings.image | img_url: '1600x' }}"
-              alt="{{ lb_alt | escape }}"
-              loading="lazy"
-            >
-          </button>
-          {%- if block.settings.caption != blank -%}
-            <p class="lgcy-lookbook-caption">{{ block.settings.caption }}</p>
+            </div>
           {%- endif -%}
-        </div>
-      {%- endif -%}
+        {%- endfor -%}
+      </div>
     {%- endfor -%}
   </div>
 </div>
