@@ -5,7 +5,7 @@
   }
   .lgcy-lookbook-header {
     max-width: 700px;
-    margin: 0 auto 60px;
+    margin: 0 auto 40px;
     text-align: center;
   }
   .lgcy-lookbook-eyebrow {
@@ -34,17 +34,36 @@
     color: rgba(0, 0, 0, 0.6);
     margin: 0;
   }
+
+  /* Grid: thumbnails sit next to each other instead of stacking full-width */
   .lgcy-lookbook-grid {
     max-width: 1400px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 60px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
   }
-  .lgcy-lookbook-item img {
+  .lgcy-lookbook-thumb {
     display: block;
     width: 100%;
-    height: auto;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .lgcy-lookbook-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .lgcy-lookbook-thumb:hover img {
+    transform: scale(1.04);
   }
   .lgcy-lookbook-caption {
     font-family: 'Inter', Helvetica, Arial, sans-serif;
@@ -53,12 +72,161 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: rgba(0, 0, 0, 0.5);
-    margin: 16px 0 0;
+    margin: 10px 0 0;
   }
+
   @media screen and (max-width: 749px) {
     .lgcy-lookbook { padding: 70px 16px 40px; }
-    .lgcy-lookbook-header { margin-bottom: 40px; }
-    .lgcy-lookbook-grid { gap: 36px; }
+    .lgcy-lookbook-header { margin-bottom: 30px; }
+    .lgcy-lookbook-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  }
+
+  /* Lightbox */
+  .lgcy-lookbook-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .lgcy-lookbook-lightbox[hidden] { display: none; }
+  .lgcy-lookbook-lightbox.is-open { opacity: 1; }
+
+  .lgcy-lookbook-lightbox__img {
+    max-width: min(90vw, 720px);
+    max-height: 82vh;
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.6);
+    cursor: default;
+  }
+
+  .lgcy-lookbook-lightbox__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .lgcy-lookbook-lightbox__cart {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 8px 8px 12px;
+    background: linear-gradient(
+      -75deg,
+      rgba(255, 255, 255, 0.82),
+      rgba(255, 255, 255, 0.94),
+      rgba(255, 255, 255, 0.82)
+    );
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+            backdrop-filter: blur(18px) saturate(160%);
+    border-radius: 14px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.08),
+      0 14px 36px -10px rgba(0, 0, 0, 0.35),
+      0 0 0 1px rgba(0, 0, 0, 0.06);
+    cursor: default;
+    max-width: calc(100vw - 40px);
+  }
+  .lgcy-lookbook-lightbox__cart[hidden] { display: none; }
+
+  .lgcy-lookbook-lightbox__cart-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: #f3f3f3;
+    display: block;
+  }
+
+  .lgcy-lookbook-lightbox__cart-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .lgcy-lookbook-lightbox__cart-title {
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: #000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+  }
+  .lgcy-lookbook-lightbox__cart-price {
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+  }
+
+  .lgcy-lookbook-lightbox__cart-btn {
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #000;
+    background: linear-gradient(
+      -75deg,
+      rgba(255, 255, 255, 0.55),
+      rgba(255, 255, 255, 0.85),
+      rgba(255, 255, 255, 0.55)
+    );
+    -webkit-backdrop-filter: blur(8px) saturate(150%);
+            backdrop-filter: blur(8px) saturate(150%);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+      0 0.25em 0.5em -0.125em rgba(0, 0, 0, 0.18),
+      0 0 0 1px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+  }
+  .lgcy-lookbook-lightbox__cart-btn:hover { transform: scale(0.985); }
+  .lgcy-lookbook-lightbox__cart-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  @media (max-width: 749px) {
+    .lgcy-lookbook-lightbox__cart {
+      left: 12px;
+      right: 12px;
+      bottom: 16px;
+      transform: none;
+      max-width: none;
+    }
+    .lgcy-lookbook-lightbox__cart-title {
+      max-width: none;
+    }
   }
 </style>
 
@@ -79,21 +247,156 @@
 
   <div class="lgcy-lookbook-grid">
     {%- for block in section.blocks -%}
-      <div class="lgcy-lookbook-item" {{ block.shopify_attributes }}>
-        {%- if block.settings.image != blank -%}
-          <img
-            src="{{ block.settings.image | img_url: '1600x' }}"
-            alt="{{ block.settings.image.alt | escape | default: block.settings.caption | escape }}"
-            loading="lazy"
+      {%- if block.settings.image != blank -%}
+        <div class="lgcy-lookbook-item" {{ block.shopify_attributes }}>
+          {%- assign lb_alt = block.settings.image.alt | default: block.settings.caption -%}
+          <button
+            type="button"
+            class="lgcy-lookbook-thumb"
+            data-lookbook-trigger
+            data-img="{{ block.settings.image | img_url: '1600x' }}"
+            data-alt="{{ lb_alt | escape }}"
+            {%- if block.settings.product != blank -%}
+              {%- assign lb_variant = block.settings.product.selected_or_first_available_variant -%}
+              {%- if lb_variant.available -%}
+                data-variant-id="{{ lb_variant.id }}"
+                data-product-image="{{ block.settings.product.featured_image | img_url: '200x' }}"
+                data-product-title="{{ block.settings.product.title | escape }}"
+                data-product-price="{{ lb_variant.price | money }}"
+              {%- endif -%}
+            {%- endif -%}
           >
-        {%- endif -%}
-        {%- if block.settings.caption != blank -%}
-          <p class="lgcy-lookbook-caption">{{ block.settings.caption }}</p>
-        {%- endif -%}
-      </div>
+            <img
+              src="{{ block.settings.image | img_url: '1000x' }}"
+              alt="{{ lb_alt | escape }}"
+              loading="lazy"
+            >
+          </button>
+          {%- if block.settings.caption != blank -%}
+            <p class="lgcy-lookbook-caption">{{ block.settings.caption }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
     {%- endfor -%}
   </div>
 </div>
+
+<div class="lgcy-lookbook-lightbox" id="lgcy-lookbook-lightbox" hidden>
+  <button type="button" class="lgcy-lookbook-lightbox__close" aria-label="Close">
+    <svg width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+      <path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <img class="lgcy-lookbook-lightbox__img" src="" alt="">
+  <div class="lgcy-lookbook-lightbox__cart" hidden>
+    <img class="lgcy-lookbook-lightbox__cart-img" src="" alt="">
+    <div class="lgcy-lookbook-lightbox__cart-info">
+      <span class="lgcy-lookbook-lightbox__cart-title"></span>
+      <span class="lgcy-lookbook-lightbox__cart-price"></span>
+    </div>
+    <button type="button" class="lgcy-lookbook-lightbox__cart-btn">Add to Cart</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var lightbox = document.getElementById('lgcy-lookbook-lightbox');
+  if (!lightbox) return;
+
+  var imgEl = lightbox.querySelector('.lgcy-lookbook-lightbox__img');
+  var cartWrap = lightbox.querySelector('.lgcy-lookbook-lightbox__cart');
+  var cartImg = lightbox.querySelector('.lgcy-lookbook-lightbox__cart-img');
+  var cartTitle = lightbox.querySelector('.lgcy-lookbook-lightbox__cart-title');
+  var cartPrice = lightbox.querySelector('.lgcy-lookbook-lightbox__cart-price');
+  var cartBtn = lightbox.querySelector('.lgcy-lookbook-lightbox__cart-btn');
+  var closeBtn = lightbox.querySelector('.lgcy-lookbook-lightbox__close');
+
+  function openLightbox(trigger) {
+    imgEl.src = trigger.getAttribute('data-img') || '';
+    imgEl.alt = trigger.getAttribute('data-alt') || '';
+
+    var variantId = trigger.getAttribute('data-variant-id');
+    if (variantId) {
+      cartImg.src = trigger.getAttribute('data-product-image') || '';
+      cartTitle.textContent = trigger.getAttribute('data-product-title') || '';
+      cartPrice.textContent = trigger.getAttribute('data-product-price') || '';
+      cartBtn.setAttribute('data-variant-id', variantId);
+      cartWrap.hidden = false;
+    } else {
+      cartWrap.hidden = true;
+    }
+
+    lightbox.hidden = false;
+    requestAnimationFrame(function () {
+      lightbox.classList.add('is-open');
+    });
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('is-open');
+    setTimeout(function () {
+      lightbox.hidden = true;
+    }, 250);
+  }
+
+  document.querySelectorAll('[data-lookbook-trigger]').forEach(function (trigger) {
+    trigger.addEventListener('click', function () {
+      openLightbox(trigger);
+    });
+  });
+
+  lightbox.addEventListener('click', closeLightbox);
+
+  cartWrap.addEventListener('click', function (e) {
+    e.stopPropagation();
+  });
+
+  closeBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    closeLightbox();
+  });
+
+  cartBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var variantId = cartBtn.getAttribute('data-variant-id');
+    if (!variantId || cartBtn.classList.contains('is-adding')) return;
+
+    cartBtn.classList.add('is-adding');
+    cartBtn.disabled = true;
+
+    var cartDrawer = document.querySelector('cart-drawer');
+    var sections = (cartDrawer && typeof cartDrawer.getSectionsToRender === 'function')
+      ? cartDrawer.getSectionsToRender().map(function (s) { return s.id; })
+      : [];
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+      body: JSON.stringify({
+        id: parseInt(variantId, 10),
+        quantity: 1,
+        sections: sections,
+        sections_url: window.location.pathname,
+      }),
+    })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (data.status && data.status !== 200) return;
+        if (cartDrawer && typeof cartDrawer.renderContents === 'function') {
+          cartDrawer.renderContents(data);
+        }
+        closeLightbox();
+      })
+      .finally(function () {
+        cartBtn.classList.remove('is-adding');
+        cartBtn.disabled = false;
+      });
+  });
+})();
+</script>
 
 {% schema %}
 {
@@ -133,6 +436,12 @@
           "type": "text",
           "id": "caption",
           "label": "Caption (optional)"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Linked product (optional)",
+          "info": "Shows a quick Add to Cart button when this photo is opened."
         }
       ]
     }
