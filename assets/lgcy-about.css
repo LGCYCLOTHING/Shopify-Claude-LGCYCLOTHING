@@ -98,6 +98,11 @@
     order: -1;
     margin-bottom: 28px;
   }
+
+  .lgcy-about__story {
+    max-width: 560px;
+    margin: 0 auto;
+  }
 }
 
 .lgcy-about__image img {
