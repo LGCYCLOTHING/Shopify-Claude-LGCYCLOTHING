@@ -170,6 +170,12 @@
 
 /* ── Responsive ───────────────────────────────────────────────────────── */
 
+@media screen and (max-width: 749px) {
+  .lgcy-about__story-title {
+    letter-spacing: -0.06em;
+  }
+}
+
 @media screen and (max-width: 479px) {
   .lgcy-about {
     padding: 100px 20px 72px;
