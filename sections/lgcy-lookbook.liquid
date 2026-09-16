@@ -37,14 +37,15 @@
   }
 
   /* Edge-to-edge, always-2-column layout — large photos like Represent's
-     lookbook. The right column is offset down from the left (Pinterest-
-     style stagger), and within each column, full-bleed and whitespace-
-     framed photos alternate — opposite phase between the two columns —
-     so the bleed corners zigzag diagonally down the page. */
+     lookbook. Left column photos are full-bleed (exactly half the screen,
+     no border). Right column photos are the same width slot but rendered
+     smaller (padding shrinks them inward, same aspect ratio) so they float
+     with a clean white border. The right column also sits offset down
+     from the left for the Pinterest-style stagger. */
   .lgcy-lookbook-grid {
     display: flex;
     align-items: flex-start;
-    gap: 6px;
+    gap: 0;
   }
   .lgcy-lookbook-col {
     flex: 1;
@@ -58,10 +59,10 @@
   .lgcy-lookbook-item {
     margin-bottom: 6px;
     box-sizing: border-box;
+    padding: 0;
   }
-  .lgcy-lookbook-col--left .lgcy-lookbook-item:nth-child(even),
-  .lgcy-lookbook-col--right .lgcy-lookbook-item:nth-child(odd) {
-    padding: 20px;
+  .lgcy-lookbook-col--right .lgcy-lookbook-item {
+    padding: 24px;
   }
   .lgcy-lookbook-thumb {
     display: block;
