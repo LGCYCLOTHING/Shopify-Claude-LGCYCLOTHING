@@ -48,6 +48,15 @@
     break-inside: avoid;
     margin-bottom: 12px;
   }
+  /* Force a visible stagger even when the source photos happen to share a
+     similar crop — offsets alternating items so columns never read as
+     even rows, matching a Pinterest-style masonry look. */
+  .lgcy-lookbook-item:nth-child(3n+2) {
+    margin-top: 36px;
+  }
+  .lgcy-lookbook-item:nth-child(3n+3) {
+    margin-top: 68px;
+  }
   .lgcy-lookbook-thumb {
     display: block;
     width: 100%;
