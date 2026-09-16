@@ -1,0 +1,155 @@
+<style>
+  .lgcy-lookbook {
+    background: #ffffff;
+    padding: 100px 20px 60px;
+  }
+  .lgcy-lookbook-header {
+    max-width: 700px;
+    margin: 0 auto 60px;
+    text-align: center;
+  }
+  .lgcy-lookbook-eyebrow {
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.4);
+    margin: 0 0 10px;
+  }
+  .lgcy-lookbook-title {
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    color: #000000;
+    line-height: 0.95;
+    margin: 0 0 16px;
+  }
+  .lgcy-lookbook-subtext {
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(0, 0, 0, 0.6);
+    margin: 0;
+  }
+  .lgcy-lookbook-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+  }
+  .lgcy-lookbook-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .lgcy-lookbook-caption {
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
+    margin: 16px 0 0;
+  }
+  @media screen and (max-width: 749px) {
+    .lgcy-lookbook { padding: 70px 16px 40px; }
+    .lgcy-lookbook-header { margin-bottom: 40px; }
+    .lgcy-lookbook-grid { gap: 36px; }
+  }
+</style>
+
+<div class="lgcy-lookbook">
+  {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.subtext != blank -%}
+    <div class="lgcy-lookbook-header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="lgcy-lookbook-eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h1 class="lgcy-lookbook-title">{{ section.settings.heading }}</h1>
+      {%- endif -%}
+      {%- if section.settings.subtext != blank -%}
+        <p class="lgcy-lookbook-subtext">{{ section.settings.subtext }}</p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="lgcy-lookbook-grid">
+    {%- for block in section.blocks -%}
+      <div class="lgcy-lookbook-item" {{ block.shopify_attributes }}>
+        {%- if block.settings.image != blank -%}
+          <img
+            src="{{ block.settings.image | img_url: '1600x' }}"
+            alt="{{ block.settings.image.alt | escape | default: block.settings.caption | escape }}"
+            loading="lazy"
+          >
+        {%- endif -%}
+        {%- if block.settings.caption != blank -%}
+          <p class="lgcy-lookbook-caption">{{ block.settings.caption }}</p>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Lookbook",
+  "class": "lgcy-lookbook-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "LGCYCLOTHING"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Lookbook."
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "A closer look at the pieces, out in the world."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption (optional)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "Lookbook",
+      "category": "Main",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}
