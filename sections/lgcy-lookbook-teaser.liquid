@@ -61,7 +61,7 @@
 <div class="lgcy-lookbook-teaser">
   <div class="lgcy-lookbook-teaser-head">
     <h2 class="lgcy-lookbook-teaser-title">{{ section.settings.heading }}</h2>
-    <a href="{{ section.settings.link }}" class="lgcy-lookbook-teaser-link">{{ section.settings.link_label }}</a>
+    <a href="{{ section.settings.link | default: '/pages/lookbook' }}" class="lgcy-lookbook-teaser-link">{{ section.settings.link_label }}</a>
   </div>
   <div class="lgcy-lookbook-teaser-grid">
     {%- for block in section.blocks -%}
