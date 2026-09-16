@@ -36,27 +36,22 @@
     margin: 0;
   }
 
-  /* Masonry: a Pinterest-style staggered layout via CSS columns. Images
-     keep their natural aspect ratio (no forced crop), so each column item
-     ends up a different height and the rows never line up straight. */
+  /* Edge-to-edge, always-2-column layout — large full-bleed photos like
+     Represent's lookbook, with a Pinterest-style vertical stagger between
+     the two columns instead of a lined-up grid. */
   .lgcy-lookbook-grid {
-    max-width: 1100px;
-    margin: 0 auto;
-    column-count: 3;
-    column-gap: 12px;
+    column-count: 2;
+    column-gap: 6px;
   }
   .lgcy-lookbook-item {
     break-inside: avoid;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
   }
-  /* Force a visible stagger even when the source photos happen to share a
-     similar crop — offsets alternating items so columns never read as
-     even rows, matching a Pinterest-style masonry look. */
-  .lgcy-lookbook-item:nth-child(3n+2) {
-    margin-top: 36px;
-  }
-  .lgcy-lookbook-item:nth-child(3n+3) {
-    margin-top: 68px;
+  /* Push the right-hand column down so the two columns never start level —
+     the core of the "not on the same height" masonry look with only 2
+     columns. */
+  .lgcy-lookbook-item:nth-child(even) {
+    margin-top: 80px;
   }
   .lgcy-lookbook-thumb {
     display: block;
@@ -66,8 +61,6 @@
     border: none;
     background: none;
     cursor: pointer;
-    border-radius: 8px;
-    overflow: hidden;
   }
   .lgcy-lookbook-thumb img {
     display: block;
@@ -76,7 +69,7 @@
     transition: transform 0.4s ease;
   }
   .lgcy-lookbook-thumb:hover img {
-    transform: scale(1.04);
+    transform: scale(1.02);
   }
   .lgcy-lookbook-caption {
     font-family: 'Inter', Helvetica, Arial, sans-serif;
@@ -86,21 +79,17 @@
     text-transform: uppercase;
     color: rgba(0, 0, 0, 0.5);
     margin: 10px 0 0;
+    padding: 0 6px;
   }
 
   @media screen and (max-width: 749px) {
-    .lgcy-lookbook { padding: 12px 10px 40px; }
+    .lgcy-lookbook { padding: 12px 0 0; }
     .lgcy-lookbook-header { margin-bottom: 16px; }
     .lgcy-lookbook-title { letter-spacing: -0.08em; }
-    .lgcy-lookbook-grid { column-count: 2; column-gap: 8px; }
-    .lgcy-lookbook-item { margin-bottom: 8px; }
-    /* Re-stagger for 2 columns instead of the desktop 3-column pattern. */
-    .lgcy-lookbook-item:nth-child(3n+2),
-    .lgcy-lookbook-item:nth-child(3n+3) {
-      margin-top: 0;
-    }
+    .lgcy-lookbook-grid { column-gap: 4px; }
+    .lgcy-lookbook-item { margin-bottom: 4px; }
     .lgcy-lookbook-item:nth-child(even) {
-      margin-top: 28px;
+      margin-top: 40px;
     }
   }
 
