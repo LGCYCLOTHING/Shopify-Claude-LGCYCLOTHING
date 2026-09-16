@@ -88,10 +88,19 @@
   }
 
   @media screen and (max-width: 749px) {
-    .lgcy-lookbook { padding: 24px 12px 40px; }
-    .lgcy-lookbook-header { margin-bottom: 20px; }
+    .lgcy-lookbook { padding: 12px 10px 40px; }
+    .lgcy-lookbook-header { margin-bottom: 16px; }
+    .lgcy-lookbook-title { letter-spacing: -0.08em; }
     .lgcy-lookbook-grid { column-count: 2; column-gap: 8px; }
     .lgcy-lookbook-item { margin-bottom: 8px; }
+    /* Re-stagger for 2 columns instead of the desktop 3-column pattern. */
+    .lgcy-lookbook-item:nth-child(3n+2),
+    .lgcy-lookbook-item:nth-child(3n+3) {
+      margin-top: 0;
+    }
+    .lgcy-lookbook-item:nth-child(even) {
+      margin-top: 28px;
+    }
   }
 
   /* Lightbox */
