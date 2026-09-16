@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "lookbook": {
+      "type": "lgcy-lookbook",
+      "settings": {
+        "eyebrow": "LGCYCLOTHING",
+        "heading": "Lookbook.",
+        "subtext": "A closer look at the pieces, out in the world."
+      },
+      "blocks": {
+        "image-1": { "type": "image", "settings": { "caption": "" } },
+        "image-2": { "type": "image", "settings": { "caption": "" } },
+        "image-3": { "type": "image", "settings": { "caption": "" } },
+        "image-4": { "type": "image", "settings": { "caption": "" } },
+        "image-5": { "type": "image", "settings": { "caption": "" } }
+      },
+      "block_order": ["image-1", "image-2", "image-3", "image-4", "image-5"]
+    }
+  },
+  "order": ["lookbook"]
+}
