@@ -1,21 +1,90 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "lookbook": {
       "type": "lgcy-lookbook",
-      "settings": {
-        "eyebrow": "LGCYCLOTHING",
-        "heading": "Lookbook.",
-        "subtext": "A closer look at the pieces, out in the world."
-      },
       "blocks": {
-        "image-1": { "type": "image", "settings": { "caption": "" } },
-        "image-2": { "type": "image", "settings": { "caption": "" } },
-        "image-3": { "type": "image", "settings": { "caption": "" } },
-        "image-4": { "type": "image", "settings": { "caption": "" } },
-        "image-5": { "type": "image", "settings": { "caption": "" } }
+        "image-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/copy_BFEC219A-260A-49A6-833D-B9D90AC4307A_1.jpg",
+            "caption": "",
+            "product": ""
+          }
+        },
+        "image-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/copy_57DAC088-1D01-4476-896A-AB5BD79E4F41.jpg",
+            "caption": "",
+            "product": ""
+          }
+        },
+        "image-3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/copy_0279B33D-0075-4B88-9946-47FC752537BD.jpg",
+            "caption": "",
+            "product": ""
+          }
+        },
+        "image-4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/copy_9ED7EC15-8C4A-4EDB-8EF0-6F8C87E5608F.jpg",
+            "caption": "",
+            "product": ""
+          }
+        },
+        "image-5": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/copy_A6BF1552-CAEA-4A35-95A7-5DDB47B128CD.jpg",
+            "caption": "",
+            "product": ""
+          }
+        },
+        "image_3dyA4U": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/copy_964EC84F-DDD7-4A97-8C1A-46A12842DD6E.jpg",
+            "caption": "",
+            "product": ""
+          }
+        },
+        "image_Y9L7ra": {
+          "type": "image",
+          "settings": {
+            "caption": "",
+            "product": ""
+          }
+        }
       },
-      "block_order": ["image-1", "image-2", "image-3", "image-4", "image-5"]
+      "block_order": [
+        "image-1",
+        "image-2",
+        "image-3",
+        "image-4",
+        "image-5",
+        "image_3dyA4U",
+        "image_Y9L7ra"
+      ],
+      "settings": {
+        "eyebrow": "",
+        "heading": "Lookbook.",
+        "subtext": ""
+      }
     }
   },
-  "order": ["lookbook"]
+  "order": [
+    "lookbook"
+  ]
 }
