@@ -213,7 +213,9 @@
       "Bash(curl -s https://lgcyclothing.com/collections/the-legacy-collection?nocache=__CMDSUB_OUTPUT__ -o /c/Users/zaina/AppData/Local/Temp/claude/c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE/9e72fbcd-e046-4fcb-964d-f44471111847/scratchpad/live_check2.html -w 'HTTP_STATUS:%{http_code}\\\\n')",
       "Bash(node fix_title_and_reenable.js)",
       "Bash(node hide_video_title.js)",
-      "Bash(node add_driven_by_purpose.js)"
+      "Bash(node add_driven_by_purpose.js)",
+      "Bash(curl -sL \"https://cdn.shopify.com/s/files/1/0688/4537/1578/files/copy_BFEC219A-260A-49A6-833D-B9D90AC4307A.jpg?v=1789580904\" -o \"C:\\\\Users\\\\zaina\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE\\\\d25aa58e-f299-44b8-81a4-729babce1c36\\\\scratchpad\\\\about-img.jpg\")",
+      "Bash(node -e \"const fs=require\\('fs'\\); const b=fs.readFileSync\\('C:\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\zaina\\\\\\\\\\\\\\\\AppData\\\\\\\\\\\\\\\\Local\\\\\\\\\\\\\\\\Temp\\\\\\\\\\\\\\\\claude\\\\\\\\\\\\\\\\c--Users-zaina-OneDrive-Desktop-LGCYCLOTHING--CODE\\\\\\\\\\\\\\\\d25aa58e-f299-44b8-81a4-729babce1c36\\\\\\\\\\\\\\\\scratchpad\\\\\\\\\\\\\\\\about-img.jpg'\\); console.log\\('size bytes', b.length\\);\")"
     ]
   }
 }

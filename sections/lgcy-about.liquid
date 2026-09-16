@@ -10,6 +10,25 @@
 
   <div class="lgcy-about__story lgcy-about__fade" style="--d: 0s">
     <h2 class="lgcy-about__story-title">Legacy.</h2>
+
+    <div class="lgcy-about__image lgcy-about__fade" style="--d: 0.05s">
+      {%- assign about_img = 'https://cdn.shopify.com/s/files/1/0688/4537/1578/files/copy_BFEC219A-260A-49A6-833D-B9D90AC4307A.jpg?v=1789580904' -%}
+      <img
+        src="{{ about_img }}&width=900"
+        srcset="
+          {{ about_img }}&width=480 480w,
+          {{ about_img }}&width=720 720w,
+          {{ about_img }}&width=960 960w,
+          {{ about_img }}&width=1200 1200w
+        "
+        sizes="(min-width: 990px) 560px, 100vw"
+        width="2632"
+        height="3511"
+        alt="LGCYCLOTHING — behind the scenes"
+        loading="lazy"
+      >
+    </div>
+
     <p class="lgcy-about__story-body">LGCYCLOTHING is quiet confidence, made real.</p>
     <p class="lgcy-about__story-body">Every piece starts with a simple question: does this look right. Just clothing made the way it should be worn — clean silhouettes, heavyweight fabric, typography that carries weight without needing to shout. This is what good looks like — restrained, deliberate, built to last.</p>
     <p class="lgcy-about__story-body">This is for the ones who move with purpose. People who understand that presence comes from the details. The fit that sits right. The fabric that holds its shape. The quiet certainty of knowing exactly what you stand for.</p>
