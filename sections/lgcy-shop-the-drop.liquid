@@ -1,21 +1,12 @@
 <style>
   .lgcy-drop {
     background: #faf8f4;
-    padding: 56px 20px 64px;
+    padding: 4px 20px 24px;
   }
   .lgcy-drop-header {
     max-width: 700px;
-    margin: 0 auto 32px;
+    margin: 0 auto 14px;
     text-align: center;
-  }
-  .lgcy-drop-eyebrow {
-    font-family: 'Inter', Helvetica, Arial, sans-serif;
-    font-size: 11px;
-    font-weight: 900;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(0, 0, 0, 0.4);
-    margin: 0 0 10px;
   }
   .lgcy-drop-title {
     font-family: 'Inter', Helvetica, Arial, sans-serif;
@@ -28,188 +19,34 @@
     margin: 0;
   }
 
+  /* Reuses the site's shared product card (snippets/lgcy-product-card.liquid)
+     for every slot, so badges, bold title/price, and the real quick-add ->
+     size picker -> cart drawer flow all match the collection pages exactly.
+     Capping the grid width (rather than a separate mobile breakpoint) is
+     what makes the cards noticeably smaller on every device. */
   .lgcy-drop-grid {
-    max-width: 1300px;
+    max-width: 620px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-
-  .lgcy-drop-card {
-    display: block;
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 16px 16px 18px;
-    text-decoration: none;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 10px 26px -14px rgba(0, 0, 0, 0.16);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  .lgcy-drop-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 16px 34px -14px rgba(0, 0, 0, 0.22);
-  }
-
-  .lgcy-drop-card__media {
-    position: relative;
-  }
-  .lgcy-drop-card__image {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-
-  /* "NEW" badge — same liquid-glass pill recipe used across the site */
-  .lgcy-drop-card__new-badge {
-    --border-width: 1px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 2;
-    display: inline-flex;
-    align-items: center;
-    isolation: isolate;
-    height: 24px;
-    padding: 0 12px;
-    border-radius: 999vw;
-    font-family: 'Inter', Helvetica, Arial, sans-serif;
-    font-weight: 900;
-    font-size: 10px;
-    line-height: 1;
-    letter-spacing: -0.04em;
-    text-transform: uppercase;
-    color: #000;
-    background: linear-gradient(-75deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.55));
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.95),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.12),
-      0 0.25em 0.5em -0.125em rgba(0, 0, 0, 0.18),
-      0 0 0 1px rgba(0, 0, 0, 0.06);
-    -webkit-backdrop-filter: blur(8px) saturate(140%);
-            backdrop-filter: blur(8px) saturate(140%);
-  }
-
-  /* Bottom-center pill — shared position/shape, two looks: a solid black
-     "Add to Cart" CTA for the in-stock product, and the site's usual white
-     glass "Coming Soon" pill for the rest. */
-  .lgcy-drop-card__pill {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    display: inline-flex;
-    align-items: center;
-    height: 30px;
-    padding: 0 18px;
-    border-radius: 999vw;
-    font-family: 'Inter', Helvetica, Arial, sans-serif;
-    font-weight: 900;
-    font-size: 11px;
-    line-height: 1;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-  .lgcy-drop-card__pill--buy {
-    color: #ffffff;
-    background: #111111;
-    box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.5);
-    transition: transform 0.2s ease;
-  }
-  .lgcy-drop-card:hover .lgcy-drop-card__pill--buy {
-    transform: translateX(-50%) scale(1.04);
-  }
-  .lgcy-drop-card__pill--soon {
-    --border-width: 1px;
-    color: #000;
-    background: linear-gradient(-75deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.55));
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.95),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.12),
-      0 0.25em 0.5em -0.125em rgba(0, 0, 0, 0.18),
-      0 0 0 1px rgba(0, 0, 0, 0.06);
-    -webkit-backdrop-filter: blur(8px) saturate(140%);
-            backdrop-filter: blur(8px) saturate(140%);
-  }
-
-  .lgcy-drop-card__info {
-    margin-top: 14px;
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 10px;
-  }
-  .lgcy-drop-card__title {
-    font-family: 'Inter', Helvetica, Arial, sans-serif;
-    font-weight: 900;
-    font-size: 13px;
-    letter-spacing: -0.02em;
-    color: #000;
-  }
-  .lgcy-drop-card__price {
-    font-family: 'Inter', Helvetica, Arial, sans-serif;
-    font-weight: 600;
-    font-size: 12px;
-    color: #555;
-    flex-shrink: 0;
-  }
-
-  @media screen and (max-width: 749px) {
-    .lgcy-drop { padding: 40px 16px 48px; }
-    .lgcy-drop-header { margin-bottom: 24px; }
-    .lgcy-drop-grid { grid-template-columns: 1fr; gap: 16px; max-width: 420px; }
+    gap: 12px;
   }
 </style>
 
 <div class="lgcy-drop">
-  {%- if section.settings.eyebrow != blank or section.settings.heading != blank -%}
+  {%- if section.settings.heading != blank -%}
     <div class="lgcy-drop-header">
-      {%- if section.settings.eyebrow != blank -%}
-        <p class="lgcy-drop-eyebrow">{{ section.settings.eyebrow }}</p>
-      {%- endif -%}
-      {%- if section.settings.heading != blank -%}
-        <h2 class="lgcy-drop-title">{{ section.settings.heading }}</h2>
-      {%- endif -%}
+      <h2 class="lgcy-drop-title">{{ section.settings.heading }}</h2>
     </div>
   {%- endif -%}
 
   <div class="lgcy-drop-grid">
-    {%- comment -%} Keep in sync with coming_soon_handles in snippets/lgcy-pdp-badges.liquid, snippets/lgcy-sticky-cart.liquid, snippets/lgcy-product-card.liquid, and COMING_SOON_HANDLES in assets/cart-drawer.js. {%- endcomment -%}
-    {%- assign coming_soon_handles = 'lgcy-01-aeris-black-clear,lgcy_black-purple' | split: ',' -%}
     {%- for block in section.blocks -%}
       {%- assign drop_product = block.settings.product -%}
       {%- if drop_product != blank -%}
-        {%- assign is_coming_soon = false -%}
-        {%- if coming_soon_handles contains drop_product.handle -%}
-          {%- assign is_coming_soon = true -%}
-        {%- endif -%}
-        <a href="{{ drop_product.url }}" class="lgcy-drop-card" {{ block.shopify_attributes }}>
-          <div class="lgcy-drop-card__media">
-            <span class="lgcy-drop-card__new-badge">New</span>
-            {%- if drop_product.featured_image -%}
-              <img
-                class="lgcy-drop-card__image"
-                src="{{ drop_product.featured_image | image_url: width: 900 }}"
-                alt="{{ drop_product.featured_image.alt | escape | default: drop_product.title | escape }}"
-                width="{{ drop_product.featured_image.width }}"
-                height="{{ drop_product.featured_image.height }}"
-                loading="lazy"
-              >
-            {%- endif -%}
-            {%- if is_coming_soon -%}
-              <span class="lgcy-drop-card__pill lgcy-drop-card__pill--soon">Coming Soon</span>
-            {%- else -%}
-              <span class="lgcy-drop-card__pill lgcy-drop-card__pill--buy">Add to Cart</span>
-            {%- endif -%}
-          </div>
-          <div class="lgcy-drop-card__info">
-            <span class="lgcy-drop-card__title">{{ drop_product.title }}</span>
-            {%- unless is_coming_soon -%}
-              <span class="lgcy-drop-card__price">{{ drop_product.price | money }}</span>
-            {%- endunless -%}
-          </div>
-        </a>
+        <div {{ block.shopify_attributes }}>
+          {%- render 'lgcy-product-card', product: drop_product, lazy: false -%}
+        </div>
       {%- endif -%}
     {%- endfor -%}
   </div>
@@ -219,12 +56,6 @@
 {
   "name": "Shop The Drop",
   "settings": [
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow text",
-      "default": "LGCYCLOTHING"
-    },
     {
       "type": "text",
       "id": "heading",
