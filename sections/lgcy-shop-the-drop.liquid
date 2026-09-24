@@ -53,10 +53,16 @@
   {%- endif -%}
 
   <div class="lgcy-drop-grid">
+    {%- comment -%} Keep in sync with coming_soon_handles in snippets/lgcy-pdp-badges.liquid, snippets/lgcy-sticky-cart.liquid, snippets/lgcy-product-card.liquid, and COMING_SOON_HANDLES in assets/cart-drawer.js. {%- endcomment -%}
+    {%- assign coming_soon_handles = 'lgcy-01-aeris-black-clear,lgcy_black-purple' | split: ',' -%}
     {%- for block in section.blocks -%}
       {%- assign drop_product = block.settings.product -%}
       {%- if drop_product != blank -%}
-        <div {{ block.shopify_attributes }}>
+        {%- assign is_muted = false -%}
+        {%- if coming_soon_handles contains drop_product.handle -%}
+          {%- assign is_muted = true -%}
+        {%- endif -%}
+        <div class="{% if is_muted %}lgcy-drop-item--muted{% endif %}" {{ block.shopify_attributes }}>
           {%- render 'lgcy-product-card', product: drop_product, lazy: false, cta_label: 'Add to Cart' -%}
         </div>
       {%- endif -%}
