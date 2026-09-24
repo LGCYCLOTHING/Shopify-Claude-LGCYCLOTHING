@@ -348,26 +348,19 @@
 
   /* Labeled variant — an "Add to Cart" pill instead of the bare plus icon.
      Opt-in via the `cta_label` render param; default usage (collection
-     grids) is untouched. Same bottom-center liquid-glass pill as the
-     "Coming Soon" badge above, so an in-stock card sits flush with one. */
+     grids) is untouched. Solid black pill (not the frosted-glass look used
+     for "Coming Soon") so white text stays legible over any photo. */
   .lgcy-card__plus-btn--label {
-    --border-width: 1px;
     bottom: 10px;
     left: 50%;
     right: auto;
     transform: translateX(-50%);
     width: auto;
-    height: 24px;
-    padding: 0 12px;
+    height: 26px;
+    padding: 0 14px;
     border-radius: 999vw;
-    background: linear-gradient(-75deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.55));
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.95),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.12),
-      0 0.25em 0.5em -0.125em rgba(0, 0, 0, 0.18),
-      0 0 0 1px rgba(0, 0, 0, 0.06);
-    -webkit-backdrop-filter: blur(8px) saturate(140%);
-            backdrop-filter: blur(8px) saturate(140%);
+    background: #111111;
+    box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.5);
   }
   .lgcy-card__plus-btn--label .lgcy-plus-icon,
   .lgcy-card__plus-btn--label .lgcy-close-icon {
@@ -380,7 +373,7 @@
     line-height: 1;
     letter-spacing: -0.04em;
     text-transform: uppercase;
-    color: #000;
+    color: #ffffff;
     white-space: nowrap;
   }
 
