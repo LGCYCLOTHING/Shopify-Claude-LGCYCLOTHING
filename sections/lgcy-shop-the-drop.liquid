@@ -31,6 +31,18 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
   }
+
+  /* Coming-soon products (the 2 glasses) recede visually so the one
+     product people can actually buy right now stands out. */
+  .lgcy-drop-item--muted {
+    opacity: 0.5;
+    filter: grayscale(0.5);
+    transition: opacity 0.2s ease, filter 0.2s ease;
+  }
+  .lgcy-drop-item--muted:hover {
+    opacity: 0.8;
+    filter: grayscale(0.2);
+  }
 </style>
 
 <div class="lgcy-drop">
