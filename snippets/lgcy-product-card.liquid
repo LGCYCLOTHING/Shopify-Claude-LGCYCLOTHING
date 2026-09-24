@@ -574,10 +574,10 @@
     {%- else -%}
     <button
       type="button"
-      class="lgcy-card__plus-btn"
+      class="lgcy-card__plus-btn{% if cta_label %} lgcy-card__plus-btn--label{% endif %}"
       data-plus-btn
       {% unless has_sizes %}data-single-variant="{{ single_variant_id }}"{% endunless %}
-      aria-label="Quick add {{ product_title | escape }}"
+      aria-label="{% if cta_label %}{{ cta_label }} {{ product_title | escape }}{% else %}Quick add {{ product_title | escape }}{% endif %}"
     >
       <svg class="lgcy-plus-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="14" height="14">
         <path d="M7 1v12M1 7h12" stroke-width="1.1" stroke-linecap="round" stroke="currentColor"/>
@@ -585,6 +585,9 @@
       <svg class="lgcy-close-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="14" height="14">
         <path d="M1 1l12 12M13 1L1 13" stroke-width="1.5" stroke-linecap="round" stroke="currentColor"/>
       </svg>
+      {%- if cta_label -%}
+        <span class="lgcy-card__plus-label">{{ cta_label }}</span>
+      {%- endif -%}
     </button>
     {%- endif -%}
 
