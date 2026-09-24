@@ -59,6 +59,38 @@
         "padding_bottom": 0
       }
     },
+    "lgcy_shop_the_drop": {
+      "type": "lgcy-shop-the-drop",
+      "blocks": {
+        "product-1": {
+          "type": "product",
+          "settings": {
+            "product": "driven-by-purpose-oversized-t-shirt"
+          }
+        },
+        "product-2": {
+          "type": "product",
+          "settings": {
+            "product": "lgcy-01-aeris-black-clear"
+          }
+        },
+        "product-3": {
+          "type": "product",
+          "settings": {
+            "product": "lgcy_black-purple"
+          }
+        }
+      },
+      "block_order": [
+        "product-1",
+        "product-2",
+        "product-3"
+      ],
+      "settings": {
+        "eyebrow": "LGCYCLOTHING",
+        "heading": "Shop The Drop."
+      }
+    },
     "lgcy_ticker_main": {
       "type": "custom-liquid",
       "name": "Brand Divider",
