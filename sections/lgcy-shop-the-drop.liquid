@@ -45,7 +45,7 @@
       {%- assign drop_product = block.settings.product -%}
       {%- if drop_product != blank -%}
         <div {{ block.shopify_attributes }}>
-          {%- render 'lgcy-product-card', product: drop_product, lazy: false -%}
+          {%- render 'lgcy-product-card', product: drop_product, lazy: false, cta_label: 'Add to Cart' -%}
         </div>
       {%- endif -%}
     {%- endfor -%}
