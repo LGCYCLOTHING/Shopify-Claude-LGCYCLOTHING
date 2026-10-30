@@ -242,6 +242,16 @@
       background-image: linear-gradient(rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.28)), url('https://cdn.shopify.com/s/files/1/0688/4537/1578/files/IMG_3329_1.jpg?v=1793397238') !important;
     }
   }
+  /* Portrait phones: enlarge the photo and pin it to the top so it sits lower
+     in the hero, putting the back print below the centered title. The aspect
+     guard keeps the enlarged image wide enough to cover the box (landscape
+     phones fall back to the plain cover above). */
+  @media (max-width: 768px) and (max-aspect-ratio: 4/5) {
+    #shopify-section-{{ section.id }} .videoBox {
+      background-size: cover, auto 125% !important;
+      background-position: center, 75% 0 !important;
+    }
+  }
 </style>
 {%- endif -%}
 
